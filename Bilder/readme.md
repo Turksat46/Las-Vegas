@@ -3,3 +3,4 @@
 
 ## Links:
 - Würfeln: https://www.boardgamegeek.com/image/1405557/las-vegas
+- Geldkarten: https://www.boardgamegeek.com/image/1405559/las-vegas
