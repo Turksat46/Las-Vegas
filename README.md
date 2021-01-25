@@ -6,4 +6,5 @@ Bitte auf den Link https://github.com/Turksat46/Las-Vegas/projects/1 die Aufgabe
 und auf Done verschieben falls fertig.
 
 ## Allgemeines
-Eigentlich gar keine Lust auf dieses Projekt
+Um das dargestellte Spiel zu öffnen, öfne dafür programm/Anwendung in Darstellung/x64/Release/LasVegas.exe
+
