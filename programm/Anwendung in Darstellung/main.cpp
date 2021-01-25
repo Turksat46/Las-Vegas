@@ -127,10 +127,18 @@ int main()
         text.setCharacterSize(30);
         text.setStyle(sf::Text::Bold);
         text.setFillColor(sf::Color::Black);
-        text.setPosition(250.0f, 430.0f);
+        text.setPosition(230.0f, 430.0f);
+
+        //Versiontext
+        sf::Text vertext("Version: 0.1.1 Alpha", font);
+        vertext.setCharacterSize(25);
+        vertext.setStyle(sf::Text::Regular);
+        vertext.setFillColor(sf::Color::Black);
+        vertext.setPosition(20.0f, 760.0f);
 
         //Zeichne Elemente in das Frame
         window.draw(text);
+        window.draw(vertext);
         window.draw(sprite);
         playbtn1.drawTo(window);
         leavebtn1.drawTo(window);
