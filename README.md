@@ -8,3 +8,5 @@ und auf Done verschieben falls fertig.
 ## Allgemeines
 Um das dargestellte Spiel zu öffnen, öfne dafür programm/Anwendung in Darstellung/x64/Release/LasVegas.exe
 
+## Screenshots
+![Version 0.1.1 Alpha](https://user-images.githubusercontent.com/50042338/105722050-884b5880-5f25-11eb-8448-34c9ec5ce668.jpg)
