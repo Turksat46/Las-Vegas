@@ -10,6 +10,24 @@
 //Selbstgeschriebene Header-Dateien
 #include "Button.h"
 
+//Eine Einstellungsklasse, um es einfach aufzurufen, wann man es braucht!
+void Einstellungen() {
+    sf::RenderWindow settings(sf::VideoMode(800, 800), "Einstellungen");
+
+    while (settings.isOpen()) {
+
+        sf::Event event;
+        while (settings.pollEvent(event))
+        {
+            // Schließt das Fenster, falls schließen gedrückt wird
+            if (event.type == sf::Event::Closed)
+                settings.close();
+        }
+
+        settings.clear(sf::Color::White);
+        settings.display();
+    }
+}
 
 int main()
 {
@@ -71,7 +89,7 @@ int main()
             case sf::Event::MouseButtonPressed:
                 if (playbtn1.isMouseOver(window)) {
                     //Wenn Spielen-Knopf gedrückt wird
-                    printf("Knopf wurde gedrueckt!");
+                    //debug printf("Knopf wurde gedrueckt!");
                 }
 
                 if (leavebtn1.isMouseOver(window)) {
@@ -81,6 +99,7 @@ int main()
 
                 if (settingsbtn1.isMouseOver(window)) {
                     //Öffne Einstellungen
+                    Einstellungen();
                 }
 
                 if (loadbtn1.isMouseOver(window)) {
@@ -116,6 +135,12 @@ int main()
                     loadbtn1.setBackColor(sf::Color(0, 162, 232, 255));
                 }
 
+                if (sf::Event::KeyPressed) {
+                    if (event.key.code == sf::Keyboard::Escape) {
+                        window.close();
+                    }
+                }
+
                 break;
         }
 
@@ -130,7 +155,7 @@ int main()
         text.setPosition(230.0f, 430.0f);
 
         //Versiontext
-        sf::Text vertext("Version: 0.1.1 Alpha", font);
+        sf::Text vertext("Version: 0.2 Alpha", font);
         vertext.setCharacterSize(25);
         vertext.setStyle(sf::Text::Regular);
         vertext.setFillColor(sf::Color::Black);
