@@ -14,7 +14,7 @@
 int main()
 {
     //Erzeuge das Fenster-Objekt
-    sf::RenderWindow window(sf::VideoMode(1280, 700), "Las Vegas");
+    sf::RenderWindow window(sf::VideoMode(1280, 800), "Las Vegas");
 
     //Erzeuge das Audio-Objekt und fange an zu spielen!
     sf::Music music;
@@ -36,14 +36,24 @@ int main()
     sf::Sprite sprite(texture);
 
     //SpielenKnopf
-    Button playbtn1("Start", { 100, 50 }, 30, sf::Color(195,195,195,255), sf::Color::Black);
+    Button playbtn1("Start", { 200, 100 }, 30, sf::Color(0,255,0,255), sf::Color::Black);
     playbtn1.setFont(font);
     playbtn1.setPosition({ 350.0f, 500.0f });
 
+    //LadenKnopf
+    Button loadbtn1("Laden", { 200, 100 }, 30, sf::Color(195, 195, 195, 255), sf::Color::Black);
+    loadbtn1.setFont(font);
+    loadbtn1.setPosition({ 350.0f, 650.0f });
+
     //Beendenknopf
-    Button leavebtn1("Beenden", { 100, 50 }, 30, sf::Color(195, 195, 195, 255), sf::Color::Black);
+    Button leavebtn1("Beenden", { 200, 100 }, 30, sf::Color(255, 0, 0, 255), sf::Color::Black);
     leavebtn1.setFont(font);
-    leavebtn1.setPosition({ 650.0f, 500.0f });
+    leavebtn1.setPosition({ 650.0f, 650.0f });
+
+    //Einstellungknopf
+    Button settingsbtn1("Einstellungen", { 200, 100 }, 30, sf::Color(195, 195, 195, 255), sf::Color::Black);
+    settingsbtn1.setFont(font);
+    settingsbtn1.setPosition({ 650.0f, 500.0f });
 
     // Eine Schleife, dass das Programm solange laufen lässt, bis es geschlossen wird
     while (window.isOpen())
@@ -56,29 +66,56 @@ int main()
             if (event.type == sf::Event::Closed)
                 window.close();
         }
-
+        
         switch (event.type) {
             case sf::Event::MouseButtonPressed:
                 if (playbtn1.isMouseOver(window)) {
+                    //Wenn Spielen-Knopf gedrückt wird
                     printf("Knopf wurde gedrueckt!");
-                }
-                if (leavebtn1.isMouseOver(window)) {
-                    window.close();
-                }
-            case sf::Event::MouseMoved:
-                if (playbtn1.isMouseOver(window)) {
-                    playbtn1.setBackColor(sf::Color(127,127,127,255));
-                }
-                else {
-                    playbtn1.setBackColor(sf::Color(195,195,195,255));
                 }
 
                 if (leavebtn1.isMouseOver(window)) {
-                    leavebtn1.setBackColor(sf::Color(127, 127, 127, 255));
+                    //Wenn Beenden-Knopf gedrückt wird
+                    window.close();
+                }
+
+                if (settingsbtn1.isMouseOver(window)) {
+                    //Öffne Einstellungen
+                }
+
+                if (loadbtn1.isMouseOver(window)) {
+                    //Öffne Ladebildschirm für Spielstand
+                }
+
+            case sf::Event::MouseMoved:
+                if (playbtn1.isMouseOver(window)) {
+                    playbtn1.setBackColor(sf::Color(0, 127, 0, 255));
                 }
                 else {
-                    leavebtn1.setBackColor(sf::Color(195, 195, 195, 255));
+                    playbtn1.setBackColor(sf::Color(0, 255, 0, 255));
                 }
+
+                if (leavebtn1.isMouseOver(window)) {
+                    leavebtn1.setBackColor(sf::Color(127, 10, 16, 255));
+                }
+                else {
+                    leavebtn1.setBackColor(sf::Color(255, 0, 0, 255));
+                }
+
+                if (settingsbtn1.isMouseOver(window)) {
+                    settingsbtn1.setBackColor(sf::Color(127, 127, 127, 255));
+                }
+                else {
+                    settingsbtn1.setBackColor(sf::Color(195, 195, 195, 255));
+                }
+
+                if (loadbtn1.isMouseOver(window)) {
+                    loadbtn1.setBackColor(sf::Color(0, 100, 127, 255));
+                }
+                else {
+                    loadbtn1.setBackColor(sf::Color(0, 162, 232, 255));
+                }
+
                 break;
         }
 
@@ -97,6 +134,8 @@ int main()
         window.draw(sprite);
         playbtn1.drawTo(window);
         leavebtn1.drawTo(window);
+        settingsbtn1.drawTo(window);
+        loadbtn1.drawTo(window);
 
         // Zeige den Frame an
         window.display();
