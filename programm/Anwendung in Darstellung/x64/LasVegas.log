@@ -1,0 +1,38 @@
+﻿  main.cpp
+C:\Users\KeremOkumus\source\repos\LasVegas\Button.h(17,24): warning C4244: "=": Konvertierung von "T" in "int", möglicher Datenverlust
+          with
+          [
+              T=float
+          ]
+C:\Users\KeremOkumus\source\repos\LasVegas\Button.h(18,25): warning C4244: "=": Konvertierung von "T" in "int", möglicher Datenverlust
+          with
+          [
+              T=float
+          ]
+C:\Users\KeremOkumus\source\repos\LasVegas\Button.h(46,14): warning C4244: "Initialisierung": Konvertierung von "double" in "float", möglicher Datenverlust
+C:\Users\KeremOkumus\source\repos\LasVegas\Button.h(61,15): warning C4244: "Initialisierung": Konvertierung von "const T" in "int", möglicher Datenverlust
+          with
+          [
+              T=float
+          ]
+C:\Users\KeremOkumus\source\repos\LasVegas\Button.h(62,15): warning C4244: "Initialisierung": Konvertierung von "const T" in "int", möglicher Datenverlust
+          with
+          [
+              T=float
+          ]
+C:\Users\KeremOkumus\source\repos\LasVegas\Button.h(64,20): warning C4244: "Initialisierung": Konvertierung von "T" in "int", möglicher Datenverlust
+          with
+          [
+              T=float
+          ]
+C:\Users\KeremOkumus\source\repos\LasVegas\Button.h(65,21): warning C4244: "Initialisierung": Konvertierung von "T" in "int", möglicher Datenverlust
+          with
+          [
+              T=float
+          ]
+  Code wird generiert.
+  1 of 82 functions ( 1.2%) were compiled, the rest were copied from previous compilation.
+    0 functions were new in current compilation
+    1 functions had inline decision re-evaluated but remain unchanged
+  Codegenerierung ist abgeschlossen.
+  LasVegas.vcxproj -> C:\Users\KeremOkumus\source\repos\LasVegas\x64\Release\LasVegas.exe

@@ -1,5 +1,5 @@
 //Autor: Kerem Okumus
-//geändert am: 25.01.2021(Datei erstellt und ersten Code geschrieben)
+//geändert am: 25.01.2021(Datei erstellt und ersten Code geschrieben); 26.01.2021 (Code verändert und Menü hinzugefügt)
 
 
 #include<SFML/Graphics.hpp>
@@ -7,14 +7,40 @@
 #include<SFML/Graphics/Text.hpp>
 #include<SFML/Audio.hpp>
 
+#include<Windows.h>
+
 //Selbstgeschriebene Header-Dateien
 #include "Button.h"
 
+
 //Eine Einstellungsklasse, um es einfach aufzurufen, wann man es braucht!
 void Einstellungen() {
+
+    sf::Font font;
+    if (!font.loadFromFile("res/Fonts/font.ttf")) {
+        printf("Konnte die Schriftart nicht laden! Bitte konsultieren Sie die Bedienungsanleitung!");
+    }
+
     sf::RenderWindow settings(sf::VideoMode(800, 800), "Einstellungen");
 
+    Button applybtn1("Anwenden", { 800, 100 }, 30, sf::Color::Green, sf::Color::Black);
+    applybtn1.setFont(font);
+    applybtn1.setPosition({ 0.0f, 700.0f });
+
     while (settings.isOpen()) {
+
+        //Zeichne Menü
+        sf::ConvexShape convexShape;
+        convexShape.setPointCount(4);
+        convexShape.setFillColor(sf::Color::White);
+        //rechtsunten
+        convexShape.setPoint(0, sf::Vector2f(750.0f, 700.0f));
+        //Rechtsoben
+        convexShape.setPoint(1, sf::Vector2f(750.0f, 50.0f));
+        //linksoben
+        convexShape.setPoint(2, sf::Vector2f(50.0f, 50.0f));
+        //linksunten
+        convexShape.setPoint(3, sf::Vector2f(50.0f, 700.0f));
 
         sf::Event event;
         while (settings.pollEvent(event))
@@ -22,13 +48,31 @@ void Einstellungen() {
             // Schließt das Fenster, falls schließen gedrückt wird
             if (event.type == sf::Event::Closed)
                 settings.close();
+
+            switch (event.type) {
+                //Wenn es geklickt hat
+                case sf::Event::MouseButtonPressed:
+                    if (applybtn1.isMouseOver(settings)) {
+                        //Übernehm die Einstellungen
+                        printf("Einstellungen wurden uebernommen!");
+                        settings.close();
+                    }
+            }
+
         }
 
-        settings.clear(sf::Color::White);
+        settings.clear(sf::Color(64, 224, 208, 255));
+
+        applybtn1.drawTo(settings);
+        settings.draw(convexShape);
+        
         settings.display();
+        
     }
 }
 
+
+//Main-Funktion - Hier befinden sich alle Hauptfunktionen wie Erzeugung des Bildschirms etc.
 int main()
 {
     //Erzeuge das Fenster-Objekt
@@ -76,6 +120,8 @@ int main()
     // Eine Schleife, dass das Programm solange laufen lässt, bis es geschlossen wird
     while (window.isOpen())
     {
+        
+
         // Überprüft alle Eventtrigger nach dem letzten Frame
         sf::Event event;
         while (window.pollEvent(event))
@@ -85,7 +131,9 @@ int main()
                 window.close();
         }
         
+        // Switch, um zu prüfen, welcher Event passiert ist und was getan werden soll
         switch (event.type) {
+            //Wenn es geklickt hat
             case sf::Event::MouseButtonPressed:
                 if (playbtn1.isMouseOver(window)) {
                     //Wenn Spielen-Knopf gedrückt wird
@@ -102,11 +150,15 @@ int main()
                     Einstellungen();
                 }
 
+
                 if (loadbtn1.isMouseOver(window)) {
                     //Öffne Ladebildschirm für Spielstand
+                    
                 }
 
+                //Wenn sich die Maus bewegt hat
             case sf::Event::MouseMoved:
+                //Über dem Spielen-Knopf
                 if (playbtn1.isMouseOver(window)) {
                     playbtn1.setBackColor(sf::Color(0, 127, 0, 255));
                 }
@@ -114,6 +166,7 @@ int main()
                     playbtn1.setBackColor(sf::Color(0, 255, 0, 255));
                 }
 
+                //Über dem Beenden-Konpf
                 if (leavebtn1.isMouseOver(window)) {
                     leavebtn1.setBackColor(sf::Color(127, 10, 16, 255));
                 }
@@ -121,6 +174,7 @@ int main()
                     leavebtn1.setBackColor(sf::Color(255, 0, 0, 255));
                 }
 
+                //Über dem Einstellungen-Knopf
                 if (settingsbtn1.isMouseOver(window)) {
                     settingsbtn1.setBackColor(sf::Color(127, 127, 127, 255));
                 }
@@ -128,6 +182,7 @@ int main()
                     settingsbtn1.setBackColor(sf::Color(195, 195, 195, 255));
                 }
 
+                //Über dem Laden-Knopf
                 if (loadbtn1.isMouseOver(window)) {
                     loadbtn1.setBackColor(sf::Color(0, 100, 127, 255));
                 }
@@ -135,8 +190,10 @@ int main()
                     loadbtn1.setBackColor(sf::Color(0, 162, 232, 255));
                 }
 
+                //Wenn die Escape-Taste gedrückt wird
                 if (sf::Event::KeyPressed) {
-                    if (event.key.code == sf::Keyboard::Escape) {
+                    if (event.key.code == sf::Keyboard::End) {
+                        printf("Escape-Taste wird gedrückt!");
                         window.close();
                     }
                 }
@@ -161,10 +218,21 @@ int main()
         vertext.setFillColor(sf::Color::Black);
         vertext.setPosition(20.0f, 760.0f);
 
+        //Zeichne Umrandung um Buttons
+        sf::ConvexShape convexShape;
+        convexShape.setPointCount(4);
+        convexShape.setFillColor(sf::Color(245, 245, 220, 255));
+        convexShape.setOutlineThickness(3.0f);
+        convexShape.setPoint(0, sf::Vector2f(300.0f, 800.0f));
+        convexShape.setPoint(1, sf::Vector2f(300.0f, 475.0f));
+        convexShape.setPoint(2, sf::Vector2f(900.0f, 475.0f));
+        convexShape.setPoint(3, sf::Vector2f(900.0f, 800.0f));
+
         //Zeichne Elemente in das Frame
         window.draw(text);
         window.draw(vertext);
         window.draw(sprite);
+        window.draw(convexShape);
         playbtn1.drawTo(window);
         leavebtn1.drawTo(window);
         settingsbtn1.drawTo(window);
