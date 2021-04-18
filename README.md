@@ -1,6 +1,6 @@
 # Las-Vegas
 Als risikofreudiger Zocker in der Glitzerwelt von Las Vegas würfeln die Spieler um den Erhalt von sehr viel Bargeld.
-Dieses Programm wird in C++ als zwei Varianten (dargestellt und Konsole) entwickelt.
+Dieses Programm wird in C++ und mit Bibliotheken von Drittanbietern entwickelt.
 Für weitere Hilfe einfach https://github.com/Turksat46/Las-Vegas/wiki aufrufen
 
 # WICHTIG!!!
