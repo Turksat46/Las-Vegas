@@ -1,4 +1,4 @@
-//Autor: Kerem Okumus,Kiriakos Avramidis,Moritz Biedenbacher
+//Autor: Kerem Okumus, Kiriakos Avramidis, Moritz Biedenbacher
 //Las Vegas Spiel als grafische Anwendung
 //Dieses Programm nutzt die SFML-Bibliothek, dass zur Programmierung von grafischen Benutzeroberflächen erleichtern soll!
 //geändert am: 25.01.2021(Datei erstellt und ersten Code geschrieben); 26.01.2021 (Code verändert und Menü hinzugefügt)
@@ -13,11 +13,57 @@
 #include<fstream>
  
 using namespace std;
+using namespace sf;
 
 //Selbstgeschriebene Header-Dateien
 #include "Button.h"
 
+//
+//Eine Fehlermethode, der eine Fehlermeldung auf dem Bildschirm erscheinen lässt
+//
+void fehleranzeige(string titel, string nachricht, bool beenden) {
+    sf::Font font;
+    if (!font.loadFromFile("res/Fonts/font.ttf")) {
+        printf("Konnte die Schriftart nicht laden! Bitte konsultieren Sie die Bedienungsanleitung! \n");
+    }
+
+    sf::RenderWindow fehler(sf::VideoMode(600, 200), "Fehlermeldung");
+
+    sf::Event event;
+    while (fehler.isOpen()) {
+        //Titel
+        sf::Text titeltext(titel, font);
+        titeltext.setCharacterSize(40);
+        titeltext.setFillColor(sf::Color::Black);
+        titeltext.setStyle(sf::Text::Bold);
+        titeltext.setPosition(175.0f, 10.0f);
+
+        //Nachricht
+        sf::Text nachrichtentext(nachricht, font);
+        nachrichtentext.setCharacterSize(30);
+        nachrichtentext.setFillColor(sf::Color::Black);
+        nachrichtentext.setPosition(100.0f, 80.0f);
+
+        //Button
+        Button verlassbutton("OK", { 100, 50 }, 30, sf::Color(209, 209, 209, 184), sf::Color::Black);
+        verlassbutton.setFont(font);
+        verlassbutton.setPosition(sf::Vector2f(250.0f, 150.0f));
+
+        //Fehler zeichnen
+        fehler.clear(sf::Color(255, 255, 255, 255));
+        fehler.draw(titeltext);
+        fehler.draw(nachrichtentext);
+        verlassbutton.drawTo(fehler);
+
+        //Fehlermeldung anzeigen
+        fehler.display();
+    }
+}
+
+
+//
 //Eine Startklasse, die den Start des Spiels vorbereitet. (Wird nur einmal aufgerufen!)
+//
 void startup() {
     /*INFO:
     * IN DER ARRAY GIBT ES FOLGENDE EINSTELLUNGEN:
@@ -36,6 +82,7 @@ void startup() {
     std::ofstream schreiber("einstellungen.einstellungen", std::ios::out | std::ios::binary);
 
     //Nenne alles, was geschrieben werden muss
+    //Siehe oben, um zu verstehen, für was was steht!
     einstellung writer[1];
     writer[0].stellung = 1;
     writer[1].stellung = 50;
@@ -47,6 +94,7 @@ void startup() {
         schreiber.write((char*) &writer[i], sizeof(einstellung));
     }
 
+    //Datei schließen
     schreiber.close();
 
     //Prüfe, ob alles erfolgreich war!
@@ -56,9 +104,10 @@ void startup() {
     }
 }
 
+//
 //Eine Einstellungsklasse, um es einfach aufzurufen, wann man es braucht!
+//
 void Einstellungen() {
-
     //Lade die Schriftart
     sf::Font font;
     if (!font.loadFromFile("res/Fonts/font.ttf")) {
@@ -85,8 +134,10 @@ void Einstellungen() {
         return;
     }
 
+    //Array für gelesene Daten erstellen
     einstellung items[1];
 
+    //Daten von Datei einlesen
     for(int i = 0; i < 2; i++) {
         leser.read((char*) &items[i], sizeof(einstellung));
         cout << "Ergebnis: " << items[i].stellung << endl;
@@ -120,12 +171,10 @@ void Einstellungen() {
         farbe = sf::Color::Red;
     }
 
-    //Button soundbutton(text, { 200, 100 }, 30, farbe, sf::Color::Black);
-    //soundbutton.setPosition({520.0f, 80.0f});
-    //soundbutton.setFont(font);
-
     while (settings.isOpen()) {
+        //
         //Zeichne Menü
+        //
         sf::ConvexShape convexShape;
         convexShape.setPointCount(4);
         convexShape.setFillColor(sf::Color::White);
@@ -143,11 +192,13 @@ void Einstellungen() {
         soundtext.setCharacterSize(30);
         soundtext.setPosition(sf::Vector2f(100.0f, 100.0f));
         soundtext.setFillColor(sf::Color::Black);
-
+        //Sound Button
         Button soundbutton(text, { 200, 100 }, 30, farbe, sf::Color::Black);
         soundbutton.setPosition({520.0f, 80.0f});
         soundbutton.setFont(font);
 
+        //Eventhandler
+        //Hier alles, was man mit dem Programm interagieren kann (Maus über Dinge, Klick und co.)) schreiben.
         sf::Event event;
         while (settings.pollEvent(event))
         {
@@ -158,20 +209,26 @@ void Einstellungen() {
             switch (event.type) {
                 //Wenn es geklickt hat
                 case sf::Event::MouseButtonPressed:
+                    //Wenn es über dem Anwenden-Button geklickt hat
                     if (applybtn1.isMouseOver(settings)) {
                         //Übernehm die Einstellungen
                         std::ofstream schreiber("einstellungen.einstellungen", std::ios::out | std::ios::trunc);
+                        //Array für Daten erstellen und beschriften
                         einstellung items[1];
+                        //p = Ob Sound laufen soll
+                        //v = Lautstärke
                         items[0].stellung = p;
                         items[1].stellung = v;
 
+                        //Indizen in die Datei schreiben
                         for (int i = 0; i < 2; i++) {
                             schreiber.write((char*)&items[i], sizeof(einstellung));
                         }
 
+                        //Datei schließen
                         schreiber.close();
-
                         printf("Einstellungen wurden uebernommen! \n");
+                        //Einstellungen schließen
                         settings.close();
                     }
 
@@ -194,25 +251,62 @@ void Einstellungen() {
 
         }
 
-        //
+        //Alles auf die Oberfläche zeichnen
         settings.clear(sf::Color(64, 224, 208, 255));
         applybtn1.drawTo(settings);
         settings.draw(convexShape);
         soundbutton.drawTo(settings);
         settings.draw(soundtext);
         
+        //Einstellungen anzeigen
         settings.display();
     }
 }
+//
+//MAIN SPIEL
+//
 
+void neuesSpiel() {
+    sf::RenderWindow spiel(sf::VideoMode(1920, 1080), "Las Vegas", sf::Style::Fullscreen);
 
+    // Icon für das Spiel setzen
+    sf::Image icon;
+    if (!icon.loadFromFile("res/Bilder/icon.jpg")) {
+        printf("Icon konnte nicht geladen! \n");
+        return;
+    }
+    spiel.setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
+
+    while(spiel.isOpen()){
+        spiel.clear();
+
+        sf::ConvexShape testkarte;
+        testkarte.setPointCount(4);
+        testkarte.setFillColor(sf::Color(192, 126, 220, 255));
+        testkarte.setOutlineThickness(3.0f);
+        //Linksoben
+        testkarte.setPoint(0, sf::Vector2f(100.0f, 100.0f));
+        //Rechtsoben
+        testkarte.setPoint(1, sf::Vector2f(300.0f, 100.0f));
+        //Rechtsunten
+        testkarte.setPoint(2, sf::Vector2f(300.0f, 600.0f));
+        //Linksunten
+        testkarte.setPoint(3, sf::Vector2f(100.0f, 600.0f));
+
+        spiel.draw(testkarte);
+        spiel.display();
+    }
+}
+
+//
 //Main-Funktion - Hier befinden sich alle Hauptfunktionen wie Erzeugung des Bildschirms etc.
+//
 int main()
 {
     //Erzeuge das Fenster-Objekt
     sf::RenderWindow window(sf::VideoMode(1220, 800), "Las Vegas");
 
-    // Set the Icon
+    // Icon für das Spiel setzen
     sf::Image icon;
     if (!icon.loadFromFile("res/Bilder/icon.jpg")) {
         printf("Icon konnte nicht geladen! \n");
@@ -234,11 +328,11 @@ int main()
     
     //Prüfe, ob Einstellung auf An ist
     einstellung items[1];
-
+    //Daten lesen
     for (int i = 0; i < 2; i++) {
         leser.read((char*)&items[i], sizeof(einstellung));
     }
-
+    //Erster Wert im Array als Variable speichern
     int e = items[0].stellung;
 
     //Erzeuge das Audio-Objekt und fange an zu spielen!
@@ -246,6 +340,7 @@ int main()
     music.openFromFile("res/Audio/titelmusik.wav");
     music.setVolume(50);
     music.setLoop(true);
+    //Musik spielen, falls Einstellung erlaubt
     if (e == 1) {
         music.play();
     }
@@ -293,13 +388,17 @@ int main()
                 window.close();
         }
         
-        // Switch, um zu prüfen, welcher Event passiert ist und was getan werden soll
+        // Switch, um zu prüfen, welches Event passiert ist und was getan werden soll
         switch (event.type) {
             //Wenn es geklickt hat
             case sf::Event::MouseButtonPressed:
                 if (playbtn1.isMouseOver(window)) {
                     //Wenn Spielen-Knopf gedrückt wird
                     //debug printf("Knopf wurde gedrueckt!");
+                    //fehleranzeige("Kritischer Fehler", "Fehler! Bitte starten Sie das Spiel neu!", false);
+                    neuesSpiel();
+                    window.close();
+                    window.setActive(false);
                 }
 
                 if (leavebtn1.isMouseOver(window)) {
@@ -364,7 +463,7 @@ int main()
                 break;
         }
 
-        // setze das Bildschirm zurück
+        // setze den Bildschirm zurück
         window.clear(sf::Color::White);
         
         // Erzeuge einen Text
@@ -375,7 +474,7 @@ int main()
         text.setPosition(230.0f, 430.0f);
 
         //Versiontext
-        sf::Text vertext("Version: 0.3 Alpha", font);
+        sf::Text vertext("Version: 0.3.4 Alpha", font);
         vertext.setCharacterSize(25);
         vertext.setStyle(sf::Text::Regular);
         vertext.setFillColor(sf::Color::Black);
