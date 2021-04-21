@@ -11,6 +11,8 @@
 #include<iostream>
 #include<Windows.h>
 #include<fstream>
+#include<stdlib.h>
+#include<conio.h>
  
 using namespace std;
 using namespace sf;
@@ -21,13 +23,16 @@ using namespace sf;
 //
 //Eine Fehlermethode, der eine Fehlermeldung auf dem Bildschirm erscheinen lässt
 //
-void fehleranzeige(string titel, string nachricht, bool beenden) {
+//Nutzung: fehleranzeige(TITEL, NACHRICHT);
+void fehleranzeige(string titel, string nachricht) {
     sf::Font font;
     if (!font.loadFromFile("res/Fonts/font.ttf")) {
-        printf("Konnte die Schriftart nicht laden! Bitte konsultieren Sie die Bedienungsanleitung! \n");
+        printf("FONT-FEHLER: SCHRIFTART KONNTE NICHT GELADEN WERDEN!\nBitte konsultieren Sie die Bedienungsanleitung!\nDr%ccken Sie eine Taste um das Programm zu beenden!", (char)129);
+        _getch();
+        exit(0);
     }
 
-    sf::RenderWindow fehler(sf::VideoMode(600, 200), "Fehlermeldung");
+    sf::RenderWindow fehler(sf::VideoMode(600, 200), "Fehlermeldung", sf::Style::None);
 
     sf::Event event;
     while (fehler.isOpen()) {
@@ -45,9 +50,22 @@ void fehleranzeige(string titel, string nachricht, bool beenden) {
         nachrichtentext.setPosition(100.0f, 80.0f);
 
         //Button
-        Button verlassbutton("OK", { 100, 50 }, 30, sf::Color(209, 209, 209, 184), sf::Color::Black);
+        Button verlassbutton("Beenden", { 100, 50 }, 30, sf::Color(209, 209, 209, 184), sf::Color::Black);
         verlassbutton.setFont(font);
         verlassbutton.setPosition(sf::Vector2f(250.0f, 150.0f));
+
+        sf::Event event;
+        while (fehler.pollEvent(event)) {
+            // Schließt das Fenster, falls schließen gedrückt wird
+
+            switch (event.type) {
+                //Wenn es geklickt hat
+                case sf::Event::MouseButtonPressed:
+                    if (verlassbutton.isMouseOver(fehler)) {
+                        fehler.close();
+                    }
+            }
+        }
 
         //Fehler zeichnen
         fehler.clear(sf::Color(255, 255, 255, 255));
@@ -90,6 +108,7 @@ void startup() {
     //schreiber.write((char*)&writer[0].stellung, sizeof(einstellung));
 
     //Schreibe alle Daten ein
+    printf("Schreiben wird gestartet!\n");
     for (int i = 0; i < 2; i++) {
         schreiber.write((char*) &writer[i], sizeof(einstellung));
     }
@@ -99,9 +118,17 @@ void startup() {
 
     //Prüfe, ob alles erfolgreich war!
     if (!schreiber.good()) {
-        printf("Einstellungsdatei konnte nicht geschrieben werden werden!");
+        fehleranzeige("Datei-Fehler", "Einstellungsdatei konnte nicht geöffnet werden.");
         return;
     }
+
+    //Musik starten, da es keine Einstellung existiert!
+    //Erzeuge das Audio-Objekt und fange an zu spielen!
+    sf::Music music;
+    music.openFromFile("res/Audio/titelmusik.wav");
+    music.setVolume(50);
+    music.setLoop(true);
+    music.play();
 }
 
 //
@@ -111,7 +138,7 @@ void Einstellungen() {
     //Lade die Schriftart
     sf::Font font;
     if (!font.loadFromFile("res/Fonts/font.ttf")) {
-        printf("Konnte die Schriftart nicht laden! Bitte konsultieren Sie die Bedienungsanleitung! \n");
+        fehleranzeige("Font-Fehler", "Schriftart konnte nicht geladen werden!");
     }
 
     //Erstelle ein Einstellungsfenster-Objekt
@@ -130,7 +157,7 @@ void Einstellungen() {
     //Einstellungendatei im Lesen-Modus öffnen
     std::ifstream leser("einstellungen.einstellungen", std::ios::out | std::ios::binary);
     if (!leser) {
-        printf("Datei konnte nicht geöffnet werden!");
+        fehleranzeige("Datei-Fehler", "Einstellungsdatei konnte nicht geöffnet werden.");
         return;
     }
 
@@ -140,7 +167,6 @@ void Einstellungen() {
     //Daten von Datei einlesen
     for(int i = 0; i < 2; i++) {
         leser.read((char*) &items[i], sizeof(einstellung));
-        cout << "Ergebnis: " << items[i].stellung << endl;
     }
 
     //Datei schließen
@@ -148,7 +174,7 @@ void Einstellungen() {
 
     //Falls Fehler, anzeigen
     if (!leser.good()) {
-        printf("Einstellungdatei konnte nicht gelesen werden! \n");
+        fehleranzeige("Datei-Fehler", "Einstellungsdatei konnte nicht gelesen werden.");
         return;
     }
     
@@ -265,21 +291,25 @@ void Einstellungen() {
 //
 //MAIN SPIEL
 //
-
+//Eine Function fürs neue Spiel erstellen (nicht vollständig)
 void neuesSpiel() {
     sf::RenderWindow spiel(sf::VideoMode(1920, 1080), "Las Vegas", sf::Style::Fullscreen);
 
     // Icon für das Spiel setzen
     sf::Image icon;
     if (!icon.loadFromFile("res/Bilder/icon.jpg")) {
-        printf("Icon konnte nicht geladen! \n");
+        //fehleranzeige("Icon-Fehler", "Icon konnte nicht geladen werden.");
+        spiel.close();
         return;
     }
     spiel.setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
 
+    //Hauptschleife des Spiels
     while(spiel.isOpen()){
         spiel.clear();
 
+        //TestKarte
+        //Dies wird mit Punkten gezeichnet sprich an jeder Ecke ein Punkt
         sf::ConvexShape testkarte;
         testkarte.setPointCount(4);
         testkarte.setFillColor(sf::Color(192, 126, 220, 255));
@@ -292,7 +322,7 @@ void neuesSpiel() {
         testkarte.setPoint(2, sf::Vector2f(300.0f, 600.0f));
         //Linksunten
         testkarte.setPoint(3, sf::Vector2f(100.0f, 600.0f));
-
+        //Zeichnen
         spiel.draw(testkarte);
         spiel.display();
     }
@@ -309,7 +339,7 @@ int main()
     // Icon für das Spiel setzen
     sf::Image icon;
     if (!icon.loadFromFile("res/Bilder/icon.jpg")) {
-        printf("Icon konnte nicht geladen! \n");
+        fehleranzeige("Icon-Fehler", "Icon konnte nicht geladen werden.");
         return 0;
     }
     window.setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
@@ -318,7 +348,7 @@ int main()
     struct einstellung {
         int stellung;
     };
-
+    
     //Prüfe, ob es Einstellungdatei existiert und erstelle sie, falls nicht
     std::ifstream leser("einstellungen.einstellungen", std::ios::out | std::ios::binary);
     if (!leser) {
@@ -348,7 +378,7 @@ int main()
     //Lade die Schriftart
     sf::Font font;
     if (!font.loadFromFile("res/Fonts/font.ttf")) {
-        printf("Konnte die Schriftart nicht laden!\n");
+        fehleranzeige("Font-Fehler", "Schriftart konnte nicht geladen werden.");
     }
 
     //Lade das Titelbild
@@ -395,10 +425,8 @@ int main()
                 if (playbtn1.isMouseOver(window)) {
                     //Wenn Spielen-Knopf gedrückt wird
                     //debug printf("Knopf wurde gedrueckt!");
-                    //fehleranzeige("Kritischer Fehler", "Fehler! Bitte starten Sie das Spiel neu!", false);
+                    //test fehleranzeige("Kritischer Fehler", "Fehler! Bitte starten Sie das Spiel neu!");
                     neuesSpiel();
-                    window.close();
-                    window.setActive(false);
                 }
 
                 if (leavebtn1.isMouseOver(window)) {
@@ -474,7 +502,7 @@ int main()
         text.setPosition(230.0f, 430.0f);
 
         //Versiontext
-        sf::Text vertext("Version: 0.3.4 Alpha", font);
+        sf::Text vertext("Version: 0.3.6 Alpha", font);
         vertext.setCharacterSize(25);
         vertext.setStyle(sf::Text::Regular);
         vertext.setFillColor(sf::Color::Black);
