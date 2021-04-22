@@ -31,9 +31,11 @@ C:\Users\KeremOkumus\source\repos\LasVegas\Button.h(65,21): warning C4244: "Init
               T=float
           ]
 C:\Users\KeremOkumus\source\repos\LasVegas\main.cpp(37,15): warning C4101: "event": Unreferenzierte lokale Variable
+C:\Users\KeremOkumus\source\repos\LasVegas\main.cpp(171,16): warning C4477: "printf": Die Formatzeichenfolge "%i" erfordert ein Argument vom Typ "int", das variadic-Argument "1" weist aber den Typ "int *" auf.
+C:\Users\KeremOkumus\source\repos\LasVegas\main.cpp(171,16): warning C4313: "printf": "%i" in der Formatzeichenfolge steht mit dem Argument "1" vom Typ "int *" in Konflikt.
   Code wird generiert.
-  1 of 172 functions ( 0.6%) were compiled, the rest were copied from previous compilation.
+  2 of 172 functions ( 1.2%) were compiled, the rest were copied from previous compilation.
     0 functions were new in current compilation
-    1 functions had inline decision re-evaluated but remain unchanged
+    2 functions had inline decision re-evaluated but remain unchanged
   Codegenerierung ist abgeschlossen.
   LasVegas.vcxproj -> C:\Users\KeremOkumus\source\repos\LasVegas\x64\Release\LasVegas.exe

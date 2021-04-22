@@ -101,9 +101,9 @@ void startup() {
 
     //Nenne alles, was geschrieben werden muss
     //Siehe oben, um zu verstehen, für was was steht!
-    einstellung writer[1];
-    writer[0].stellung = 1;
-    writer[1].stellung = 50;
+    int writer[3];
+    writer[0] = 1;
+    writer[1] = 50;
 
     //schreiber.write((char*)&writer[0].stellung, sizeof(einstellung));
 
@@ -162,11 +162,13 @@ void Einstellungen() {
     }
 
     //Array für gelesene Daten erstellen
-    einstellung items[1];
+    int items[3];
+    //einstellung items[1];
 
     //Daten von Datei einlesen
     for(int i = 0; i < 2; i++) {
         leser.read((char*) &items[i], sizeof(einstellung));
+        printf("%i", &items[i]);
     }
 
     //Datei schließen
@@ -181,11 +183,11 @@ void Einstellungen() {
     //Variablen für Button
     string text;
     sf::Color farbe;
-    int p = items[0].stellung;
+    int p = items[0];
 
     //Variablen für Lautstärke
     string volumetext;
-    int v = items[1].stellung;
+    int v = items[1];
 
     //Knopfalgorithmus
     if (p == 1) {
@@ -240,11 +242,12 @@ void Einstellungen() {
                         //Übernehm die Einstellungen
                         std::ofstream schreiber("einstellungen.einstellungen", std::ios::out | std::ios::trunc);
                         //Array für Daten erstellen und beschriften
-                        einstellung items[1];
+                        int items[2];
+                        //einstellung items[1];
                         //p = Ob Sound laufen soll
                         //v = Lautstärke
-                        items[0].stellung = p;
-                        items[1].stellung = v;
+                        items[0]= p;
+                        items[1]= v;
 
                         //Indizen in die Datei schreiben
                         for (int i = 0; i < 2; i++) {
