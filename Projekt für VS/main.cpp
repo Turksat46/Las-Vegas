@@ -3,7 +3,7 @@
 //Dieses Programm nutzt die SFML-Bibliothek, dass zur Programmierung von grafischen Benutzeroberflächen erleichtern soll!
 //geändert am: 25.01.2021(Datei erstellt und ersten Code geschrieben); 26.01.2021 (Code verändert und Menü hinzugefügt)
 
-
+//Einbindung wichtiger Bibliotheken
 #include<SFML/Graphics.hpp>
 #include<SFML/Graphics/Text.hpp>
 #include<SFML/Audio.hpp>
@@ -168,7 +168,7 @@ void Einstellungen() {
     //Daten von Datei einlesen
     for(int i = 0; i < 2; i++) {
         leser.read((char*) &items[i], sizeof(einstellung));
-        printf("%i", &items[i]);
+        printf("%p", &items[i]);
     }
 
     //Datei schließen
@@ -296,7 +296,7 @@ void Einstellungen() {
 //
 //Eine Function fürs neue Spiel erstellen (nicht vollständig)
 void neuesSpiel() {
-    sf::RenderWindow spiel(sf::VideoMode(1920, 1080), "Las Vegas", sf::Style::Fullscreen);
+    sf::RenderWindow spiel(sf::VideoMode(1800, 1200), "Las Vegas", sf::Style::None);
 
     // Icon für das Spiel setzen
     sf::Image icon;
@@ -309,11 +309,11 @@ void neuesSpiel() {
 
     //Hauptschleife des Spiels
     while(spiel.isOpen()){
-        spiel.clear();
+        spiel.clear(sf::Color::Green);
 
         //TestKarte
         //Dies wird mit Punkten gezeichnet sprich an jeder Ecke ein Punkt
-        sf::ConvexShape testkarte;
+        /*sf::ConvexShape testkarte;
         testkarte.setPointCount(4);
         testkarte.setFillColor(sf::Color(192, 126, 220, 255));
         testkarte.setOutlineThickness(3.0f);
@@ -327,6 +327,24 @@ void neuesSpiel() {
         testkarte.setPoint(3, sf::Vector2f(100.0f, 600.0f));
         //Zeichnen
         spiel.draw(testkarte);
+        spiel.display();*/
+
+        sf::Texture golden_nugget;
+        golden_nugget.loadFromFile("res/Bilder/Assets/golden_nugget.png");
+        sf::Sprite golden_nuggetsprite(golden_nugget);
+        golden_nuggetsprite.setPosition({ 100.0f, 100.0f });
+        //golden_nuggetsprite.setScale(1.5, 1.5);
+        spiel.draw(golden_nuggetsprite);
+        
+
+        sf::Texture caesars;
+        caesars.loadFromFile("res/Bilder/Assets/caesars.png");
+        sf::Sprite caesarssprite(caesars);
+        caesarssprite.setPosition({ 300.0f, 100.0f });
+        //caesarssprite.setScale(1.5, 1.5);
+        spiel.draw(caesarssprite);
+        
+        //Spiel zeichnen
         spiel.display();
     }
 }
@@ -369,14 +387,15 @@ int main()
     int e = items[0].stellung;
 
     //Erzeuge das Audio-Objekt und fange an zu spielen!
-    sf::Music music;
+    //AUSLASSEN BITTE KEIN BOCK MEHR DASS ES SPACKT
+    /*sf::Music music;
     music.openFromFile("res/Audio/titelmusik.wav");
     music.setVolume(50);
     music.setLoop(true);
     //Musik spielen, falls Einstellung erlaubt
     if (e == 1) {
         music.play();
-    }
+    }*/
     
     //Lade die Schriftart
     sf::Font font;
