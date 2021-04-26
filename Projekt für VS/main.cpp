@@ -168,7 +168,7 @@ void Einstellungen() {
     //Daten von Datei einlesen
     for(int i = 0; i < 2; i++) {
         leser.read((char*) &items[i], sizeof(einstellung));
-        printf("%p", &items[i]);
+        //printf("%p", &items[i]);
     }
 
     //Datei schließen
@@ -296,7 +296,7 @@ void Einstellungen() {
 //
 //Eine Function fürs neue Spiel erstellen (nicht vollständig)
 void neuesSpiel() {
-    sf::RenderWindow spiel(sf::VideoMode(1800, 1200), "Las Vegas", sf::Style::None);
+    sf::RenderWindow spiel(sf::VideoMode(1600, 1000), "Las Vegas");
 
     // Icon für das Spiel setzen
     sf::Image icon;
@@ -309,7 +309,7 @@ void neuesSpiel() {
 
     //Hauptschleife des Spiels
     while(spiel.isOpen()){
-        spiel.clear(sf::Color::Green);
+        spiel.clear(sf::Color(53, 104, 45, 255));
 
         //TestKarte
         //Dies wird mit Punkten gezeichnet sprich an jeder Ecke ein Punkt
@@ -329,21 +329,63 @@ void neuesSpiel() {
         spiel.draw(testkarte);
         spiel.display();*/
 
+        //Einzelne Casinos
         sf::Texture golden_nugget;
         golden_nugget.loadFromFile("res/Bilder/Assets/golden_nugget.png");
         sf::Sprite golden_nuggetsprite(golden_nugget);
-        golden_nuggetsprite.setPosition({ 100.0f, 100.0f });
+        golden_nuggetsprite.setPosition({ 100.0f, 450.0f });
         //golden_nuggetsprite.setScale(1.5, 1.5);
         spiel.draw(golden_nuggetsprite);
         
-
         sf::Texture caesars;
         caesars.loadFromFile("res/Bilder/Assets/caesars.png");
+        //caesars.setSmooth(true);
         sf::Sprite caesarssprite(caesars);
-        caesarssprite.setPosition({ 300.0f, 100.0f });
-        //caesarssprite.setScale(1.5, 1.5);
+        caesarssprite.setPosition({ 300.0f, 450.0f });
+        //caesarssprite.setScale(3, 3);
         spiel.draw(caesarssprite);
-        
+
+        //Menü unten
+        sf::ConvexShape menuunten;
+        menuunten.setPointCount(4);
+        //Linksoben
+        menuunten.setPoint(0, sf::Vector2f(0.0f, 935.0f));
+        //Rechtsoben
+        menuunten.setPoint(1, sf::Vector2f(1600.0f, 935.0f));
+        //Rechtsunten
+        menuunten.setPoint(2, sf::Vector2f(1600.0f, 1000.0f));
+        //Linksunten
+        menuunten.setPoint(3, sf::Vector2f(0.0f, 1000.0f));
+        spiel.draw(menuunten);
+
+        //Schrifttab über Menü
+        sf::ConvexShape schrifttab;
+        schrifttab.setPointCount(4);
+        //Linksoben
+        schrifttab.setPoint(0, sf::Vector2f(0.0f, 900.0f));
+        //Rechtsoben
+        schrifttab.setPoint(1, sf::Vector2f(1600.0f, 900.0f));
+        //Rechtsunten
+        schrifttab.setPoint(2, sf::Vector2f(1600.0f, 935.0f));
+        //Linksunten
+        schrifttab.setPoint(3, sf::Vector2f(0.0f, 935.0f));
+        schrifttab.setFillColor(sf::Color(53, 53, 53, 150));
+        spiel.draw(schrifttab);
+        /*
+        sf::Texture wuerfel;
+        wuerfel.loadFromFile("res/Bilder/würfel/dice-png-1.png");
+        sf::Sprite wuerfelsprite;
+        wuerfelsprite.setColor(sf::Color::Blue);
+        wuerfelsprite.setTexture(wuerfel, true);
+        wuerfelsprite.setPosition({ 300.0f, 300.0f });
+        spiel.draw(wuerfelsprite);*/
+
+        //Event-Handling
+        sf::Event event;
+        while (spiel.pollEvent(event)) {
+            if (event.type == sf::Event::Closed)
+                spiel.close();
+        }
         //Spiel zeichnen
         spiel.display();
     }
@@ -441,13 +483,15 @@ int main()
         }
         
         // Switch, um zu prüfen, welches Event passiert ist und was getan werden soll
-        switch (event.type) {
+        switch (event.type) 
+        {
             //Wenn es geklickt hat
             case sf::Event::MouseButtonPressed:
                 if (playbtn1.isMouseOver(window)) {
                     //Wenn Spielen-Knopf gedrückt wird
                     //debug printf("Knopf wurde gedrueckt!");
                     //test fehleranzeige("Kritischer Fehler", "Fehler! Bitte starten Sie das Spiel neu!");
+                    window.setActive(false);
                     neuesSpiel();
                 }
 
