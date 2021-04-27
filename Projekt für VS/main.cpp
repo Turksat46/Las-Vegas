@@ -97,7 +97,7 @@ void startup() {
     };
 
     //Schreibe eine Einstellungsdatei in Binär
-    std::ofstream schreiber("einstellungen.einstellungen", std::ios::out | std::ios::binary);
+    ofstream schreiber("einstellungen.einstellungen", std::ios::out | std::ios::binary);
 
     //Nenne alles, was geschrieben werden muss
     //Siehe oben, um zu verstehen, für was was steht!
@@ -155,7 +155,7 @@ void Einstellungen() {
     };
 
     //Einstellungendatei im Lesen-Modus öffnen
-    std::ifstream leser("einstellungen.einstellungen", std::ios::out | std::ios::binary);
+    ifstream leser("einstellungen.einstellungen", std::ios::out | std::ios::binary);
     if (!leser) {
         fehleranzeige("Datei-Fehler", "Einstellungsdatei konnte nicht geöffnet werden.");
         return;
@@ -240,7 +240,7 @@ void Einstellungen() {
                     //Wenn es über dem Anwenden-Button geklickt hat
                     if (applybtn1.isMouseOver(settings)) {
                         //Übernehm die Einstellungen
-                        std::ofstream schreiber("einstellungen.einstellungen", std::ios::out | std::ios::trunc);
+                        ofstream schreiber("einstellungen.einstellungen", std::ios::out | std::ios::trunc);
                         //Array für Daten erstellen und beschriften
                         int items[2];
                         //einstellung items[1];
@@ -292,11 +292,17 @@ void Einstellungen() {
     }
 }
 //
-//MAIN SPIEL
+//MAIN SPIEL (TEST)
 //
 //Eine Function fürs neue Spiel erstellen (nicht vollständig)
 void neuesSpiel() {
     sf::RenderWindow spiel(sf::VideoMode(1600, 1000), "Las Vegas");
+
+    //Schriftart laden
+    sf::Font font;
+    if (!font.loadFromFile("res/Fonts/font.ttf")) {
+        fehleranzeige("Font-Fehler", "Schriftart konnte nicht geladen werden!");
+    }
 
     // Icon für das Spiel setzen
     sf::Image icon;
@@ -329,21 +335,138 @@ void neuesSpiel() {
         spiel.draw(testkarte);
         spiel.display();*/
 
+        //Las Vegas Logo
+        sf::Texture logo;
+        logo.loadFromFile("res/Bilder/Assets/vegas.gif");
+        logo.setSmooth(true);
+        sf::Sprite logosprite(logo);
+        logosprite.setPosition({1300.0f, 10.0f});
+        logosprite.setScale(0.5f, 0.5f);
+        spiel.draw(logosprite);
+        //
+        // Trennlinie
+        sf::ConvexShape trennlinie;
+        trennlinie.setPointCount(4);
+        trennlinie.setFillColor(sf::Color::Black);
+        trennlinie.setPoint(0, sf::Vector2f(1250.0f, 0.0f));
+        trennlinie.setPoint(1, sf::Vector2f(1250.0f, 900.0f));
+        trennlinie.setPoint(2, sf::Vector2f(1251.0f, 900.0f));
+        trennlinie.setPoint(3, sf::Vector2f(1251.0f, 0.0f));
+        spiel.draw(trennlinie);
+
+        //
+        //Kasten für Casinos
+        sf::ConvexShape goldennuggetkasten;
+        goldennuggetkasten.setPointCount(4);
+        goldennuggetkasten.setFillColor(sf::Color(251,209,100,165));
+        goldennuggetkasten.setOutlineThickness(3.0f);
+        goldennuggetkasten.setOutlineColor(sf::Color(251, 209, 100, 50));
+        goldennuggetkasten.setPoint(0, sf::Vector2f(18.0f, 20.0f));
+        goldennuggetkasten.setPoint(1, sf::Vector2f(202.0f, 20.0f));
+        goldennuggetkasten.setPoint(2, sf::Vector2f(202.0f, 750.0f));
+        goldennuggetkasten.setPoint(3, sf::Vector2f(18.0f, 750.0f));
+        spiel.draw(goldennuggetkasten);
+
+        sf::ConvexShape caesarskasten;
+        caesarskasten.setPointCount(4);
+        caesarskasten.setFillColor(sf::Color(248, 131, 49, 140));
+        caesarskasten.setOutlineThickness(3.0f);
+        caesarskasten.setOutlineColor(sf::Color(248, 131, 49, 50));
+        caesarskasten.setPoint(0, sf::Vector2f(218.0f, 20.0f));
+        caesarskasten.setPoint(1, sf::Vector2f(402.0f, 20.0f));
+        caesarskasten.setPoint(2, sf::Vector2f(402.0f, 750.0f));
+        caesarskasten.setPoint(3, sf::Vector2f(218.0f, 750.0f));
+        spiel.draw(caesarskasten);
+
+        sf::ConvexShape miragekasten;
+        miragekasten.setPointCount(4);
+        miragekasten.setFillColor(sf::Color(180, 110, 198, 145));
+        miragekasten.setOutlineThickness(3.0f);
+        miragekasten.setOutlineColor(sf::Color(180, 110, 198, 50));
+        miragekasten.setPoint(0, sf::Vector2f(418.0f, 20.0f));
+        miragekasten.setPoint(1, sf::Vector2f(602.0f, 20.0f));
+        miragekasten.setPoint(2, sf::Vector2f(602.0f, 750.0f));
+        miragekasten.setPoint(3, sf::Vector2f(418.0f, 750.0f));
+        spiel.draw(miragekasten);
+
+        sf::ConvexShape saharakasten;
+        saharakasten.setPointCount(4);
+        saharakasten.setFillColor(sf::Color(212, 76, 48, 122));
+        saharakasten.setOutlineThickness(3.0f);
+        saharakasten.setOutlineColor(sf::Color(212, 76, 48, 50));
+        saharakasten.setPoint(0, sf::Vector2f(618.0f, 20.0f));
+        saharakasten.setPoint(1, sf::Vector2f(802.0f, 20.0f));
+        saharakasten.setPoint(2, sf::Vector2f(802.0f, 750.0f));
+        saharakasten.setPoint(3, sf::Vector2f(618.0f, 750.0f));
+        spiel.draw(saharakasten);
+
+        sf::ConvexShape luxorkasten;
+        luxorkasten.setPointCount(4);
+        luxorkasten.setFillColor(sf::Color(83, 135, 149, 109));
+        luxorkasten.setOutlineThickness(3.0f);
+        luxorkasten.setOutlineColor(sf::Color(83, 135, 149, 50));
+        luxorkasten.setPoint(0, sf::Vector2f(818.0f, 20.0f));
+        luxorkasten.setPoint(1, sf::Vector2f(1002.0f, 20.0f));
+        luxorkasten.setPoint(2, sf::Vector2f(1002.0f, 750.0f));
+        luxorkasten.setPoint(3, sf::Vector2f(818.0f, 750.0f));
+        spiel.draw(luxorkasten);
+
+        sf::ConvexShape circuskasten;
+        circuskasten.setPointCount(4);
+        circuskasten.setFillColor(sf::Color(121, 147, 200, 151));
+        circuskasten.setOutlineThickness(3.0f);
+        circuskasten.setOutlineColor(sf::Color(121, 147, 200, 50));
+        circuskasten.setPoint(0, sf::Vector2f(1018.0f, 20.0f));
+        circuskasten.setPoint(1, sf::Vector2f(1202.0f, 20.0f));
+        circuskasten.setPoint(2, sf::Vector2f(1202.0f, 750.0f));
+        circuskasten.setPoint(3, sf::Vector2f(1018.0f, 750.0f));
+        spiel.draw(circuskasten);
+
+        //
         //Einzelne Casinos
         sf::Texture golden_nugget;
         golden_nugget.loadFromFile("res/Bilder/Assets/golden_nugget.png");
+        golden_nugget.setSmooth(true);
         sf::Sprite golden_nuggetsprite(golden_nugget);
-        golden_nuggetsprite.setPosition({ 100.0f, 450.0f });
-        //golden_nuggetsprite.setScale(1.5, 1.5);
+        golden_nuggetsprite.setPosition({ 20.0f, 350.0f });
+        //golden_nuggetsprite.setScale(0.75, 0.75);
         spiel.draw(golden_nuggetsprite);
         
         sf::Texture caesars;
         caesars.loadFromFile("res/Bilder/Assets/caesars.png");
-        //caesars.setSmooth(true);
+        caesars.setSmooth(true);
         sf::Sprite caesarssprite(caesars);
-        caesarssprite.setPosition({ 300.0f, 450.0f });
-        //caesarssprite.setScale(3, 3);
+        caesarssprite.setPosition({ 220.0f, 350.0f });
+        //caesarssprite.setScale(0.75, 0.75);
         spiel.draw(caesarssprite);
+
+        sf::Texture mirage;
+        mirage.loadFromFile("res/Bilder/Assets/mirage.png");
+        mirage.setSmooth(true);
+        sf::Sprite miragesprite(mirage);
+        miragesprite.setPosition({ 420.0f, 350.0f });
+        spiel.draw(miragesprite);
+
+        sf::Texture sahara;
+        sahara.loadFromFile("res/Bilder/Assets/sahara.png");
+        sahara.setSmooth(true);
+        sf::Sprite saharasprite(sahara);
+        saharasprite.setPosition({ 620.0f, 350.0f });
+        spiel.draw(saharasprite);
+
+        sf::Texture luxor;
+        luxor.loadFromFile("res/Bilder/Assets/luxor.png");
+        luxor.setSmooth(true);
+        sf::Sprite luxorsprite(luxor);
+        luxorsprite.setPosition({ 820.0f, 350.0f });
+        spiel.draw(luxorsprite);
+
+        sf::Texture circus;
+        circus.loadFromFile("res/Bilder/Assets/circus.png");
+        circus.setSmooth(true);
+        sf::Sprite circussprite(circus);
+        circussprite.setPosition({ 1020.0f, 350.0f });
+        spiel.draw(circussprite);
 
         //Menü unten
         sf::ConvexShape menuunten;
@@ -371,14 +494,93 @@ void neuesSpiel() {
         schrifttab.setPoint(3, sf::Vector2f(0.0f, 935.0f));
         schrifttab.setFillColor(sf::Color(53, 53, 53, 150));
         spiel.draw(schrifttab);
-        /*
+        
         sf::Texture wuerfel;
         wuerfel.loadFromFile("res/Bilder/würfel/dice-png-1.png");
+        wuerfel.setSmooth(true);
         sf::Sprite wuerfelsprite;
-        wuerfelsprite.setColor(sf::Color::Blue);
+        //wuerfelsprite.setColor(sf::Color::Blue);
         wuerfelsprite.setTexture(wuerfel, true);
-        wuerfelsprite.setPosition({ 300.0f, 300.0f });
-        spiel.draw(wuerfelsprite);*/
+        wuerfelsprite.setPosition({ 20.0f, 800.0f });
+        wuerfelsprite.setScale(0.15, 0.15);
+        spiel.draw(wuerfelsprite);
+
+        sf::Texture wuerfel2;
+        wuerfel2.loadFromFile("res/Bilder/würfel/dice-png-2.png");
+        wuerfel2.setSmooth(true);
+        sf::Sprite wuerfelsprite2;
+        //wuerfelsprite2.setColor(sf::Color::Blue);
+        wuerfelsprite2.setTexture(wuerfel2, true);
+        wuerfelsprite2.setPosition({ 120.0f, 800.0f });
+        wuerfelsprite2.setScale(0.15, 0.15);
+        spiel.draw(wuerfelsprite2);
+
+        sf::Texture wuerfel3;
+        wuerfel3.loadFromFile("res/Bilder/würfel/dice-png-3.png");
+        wuerfel3.setSmooth(true);
+        sf::Sprite wuerfelsprite3;
+        //wuerfelsprite3.setColor(sf::Color::Blue);
+        wuerfelsprite3.setTexture(wuerfel3, true);
+        wuerfelsprite3.setPosition({ 220.0f, 800.0f });
+        wuerfelsprite3.setScale(0.15, 0.15);
+        spiel.draw(wuerfelsprite3);
+
+        sf::Texture wuerfel4;
+        wuerfel4.loadFromFile("res/Bilder/würfel/dice-png-4.png");
+        wuerfel4.setSmooth(true);
+        sf::Sprite wuerfelsprite4;
+        //wuerfelsprite4.setColor(sf::Color::Blue);
+        wuerfelsprite4.setTexture(wuerfel4, true);
+        wuerfelsprite4.setPosition({ 320.0f, 800.0f });
+        wuerfelsprite4.setScale(0.15, 0.15);
+        spiel.draw(wuerfelsprite4);
+
+        sf::Texture wuerfel5;
+        wuerfel5.loadFromFile("res/Bilder/würfel/dice-png-5.png");
+        wuerfel5.setSmooth(true);
+        sf::Sprite wuerfelsprite5;
+        //wuerfelsprite5.setColor(sf::Color::Blue);
+        wuerfelsprite5.setTexture(wuerfel5, true);
+        wuerfelsprite5.setPosition({ 420.0f, 800.0f });
+        wuerfelsprite5.setScale(0.15, 0.15);
+        spiel.draw(wuerfelsprite5);
+
+        sf::Texture wuerfel6;
+        wuerfel6.loadFromFile("res/Bilder/würfel/dice-png-6.png");
+        wuerfel6.setSmooth(true);
+        sf::Sprite wuerfelsprite6;
+        //wuerfelsprite6.setColor(sf::Color::Blue);
+        wuerfelsprite6.setTexture(wuerfel6, true);
+        wuerfelsprite6.setPosition({ 520.0f, 800.0f });
+        wuerfelsprite6.setScale(0.15, 0.15);
+        spiel.draw(wuerfelsprite6);
+
+        sf::Texture wuerfel7;
+        wuerfel7.loadFromFile("res/Bilder/würfel/dice-png-1.png");
+        wuerfel7.setSmooth(true);
+        sf::Sprite wuerfelsprite7;
+        //wuerfelsprite7.setColor(sf::Color::Blue);
+        wuerfelsprite7.setTexture(wuerfel7, true);
+        wuerfelsprite7.setPosition({ 620.0f, 800.0f });
+        wuerfelsprite7.setScale(0.15, 0.15);
+        spiel.draw(wuerfelsprite7);
+
+        sf::Texture wuerfel8;
+        wuerfel8.loadFromFile("res/Bilder/würfel/dice-png-2.png");
+        wuerfel8.setSmooth(true);
+        sf::Sprite wuerfelsprite8;
+        //wuerfelsprite8.setColor(sf::Color::Blue);
+        wuerfelsprite8.setTexture(wuerfel8, true);
+        wuerfelsprite8.setPosition({ 720.0f, 800.0f });
+        wuerfelsprite8.setScale(0.15, 0.15);
+        spiel.draw(wuerfelsprite8);
+
+        //Eigentliche Einstellungen
+        sf::Text subtext("+++ Spieler 1 ist dran! +++", font);
+        subtext.setCharacterSize(25);
+        subtext.setPosition(sf::Vector2f(700.0f, 900.0f));
+        subtext.setFillColor(sf::Color::Black);
+        spiel.draw(subtext);
 
         //Event-Handling
         sf::Event event;
@@ -396,6 +598,9 @@ void neuesSpiel() {
 //
 int main()
 {
+    //Konsolenausgabe
+    printf("Las Vegas - Das Spiel\nDiese Konsole wird als Fehlerausgabe benutzt!\nSprich, falls etwas falsch laufen sollte,\nwird es hier ausgegeben!\n\n");
+
     //Erzeuge das Fenster-Objekt
     sf::RenderWindow window(sf::VideoMode(1220, 800), "Las Vegas");
 
@@ -413,7 +618,7 @@ int main()
     };
     
     //Prüfe, ob es Einstellungdatei existiert und erstelle sie, falls nicht
-    std::ifstream leser("einstellungen.einstellungen", std::ios::out | std::ios::binary);
+    ifstream leser("einstellungen.einstellungen", std::ios::out | std::ios::binary);
     if (!leser) {
         printf("Einstellungsdatei wird erstellt! \n");
         startup();
