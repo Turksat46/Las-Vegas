@@ -1,0 +1,47 @@
+﻿  main.cpp
+C:\Users\KeremOkumus\source\repos\LasVegas\Button.h(17,24): warning C4244: "=": Konvertierung von "T" in "int", möglicher Datenverlust
+          with
+          [
+              T=float
+          ]
+C:\Users\KeremOkumus\source\repos\LasVegas\Button.h(18,25): warning C4244: "=": Konvertierung von "T" in "int", möglicher Datenverlust
+          with
+          [
+              T=float
+          ]
+C:\Users\KeremOkumus\source\repos\LasVegas\Button.h(46,14): warning C4244: "Initialisierung": Konvertierung von "double" in "float", möglicher Datenverlust
+C:\Users\KeremOkumus\source\repos\LasVegas\Button.h(61,15): warning C4244: "Initialisierung": Konvertierung von "const T" in "int", möglicher Datenverlust
+          with
+          [
+              T=float
+          ]
+C:\Users\KeremOkumus\source\repos\LasVegas\Button.h(62,15): warning C4244: "Initialisierung": Konvertierung von "const T" in "int", möglicher Datenverlust
+          with
+          [
+              T=float
+          ]
+C:\Users\KeremOkumus\source\repos\LasVegas\Button.h(64,20): warning C4244: "Initialisierung": Konvertierung von "T" in "int", möglicher Datenverlust
+          with
+          [
+              T=float
+          ]
+C:\Users\KeremOkumus\source\repos\LasVegas\Button.h(65,21): warning C4244: "Initialisierung": Konvertierung von "T" in "int", möglicher Datenverlust
+          with
+          [
+              T=float
+          ]
+C:\Users\KeremOkumus\source\repos\LasVegas\main.cpp(37,15): warning C4101: "event": Unreferenzierte lokale Variable
+C:\Users\KeremOkumus\source\repos\LasVegas\main.cpp(505,42): warning C4305: "Argument": Verkürzung von "double" in "float"
+C:\Users\KeremOkumus\source\repos\LasVegas\main.cpp(515,43): warning C4305: "Argument": Verkürzung von "double" in "float"
+C:\Users\KeremOkumus\source\repos\LasVegas\main.cpp(525,43): warning C4305: "Argument": Verkürzung von "double" in "float"
+C:\Users\KeremOkumus\source\repos\LasVegas\main.cpp(535,43): warning C4305: "Argument": Verkürzung von "double" in "float"
+C:\Users\KeremOkumus\source\repos\LasVegas\main.cpp(545,43): warning C4305: "Argument": Verkürzung von "double" in "float"
+C:\Users\KeremOkumus\source\repos\LasVegas\main.cpp(555,43): warning C4305: "Argument": Verkürzung von "double" in "float"
+C:\Users\KeremOkumus\source\repos\LasVegas\main.cpp(565,43): warning C4305: "Argument": Verkürzung von "double" in "float"
+C:\Users\KeremOkumus\source\repos\LasVegas\main.cpp(575,43): warning C4305: "Argument": Verkürzung von "double" in "float"
+  Code wird generiert.
+  1 of 173 functions ( 0.6%) were compiled, the rest were copied from previous compilation.
+    0 functions were new in current compilation
+    1 functions had inline decision re-evaluated but remain unchanged
+  Codegenerierung ist abgeschlossen.
+  LasVegas.vcxproj -> C:\Users\KeremOkumus\source\repos\LasVegas\x64\Release\LasVegas.exe
