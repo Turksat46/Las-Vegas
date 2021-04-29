@@ -153,6 +153,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Button.h" />
+    <ClInclude Include="Dice.h" />
     <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>
@@ -160,6 +161,9 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\..\..\Downloads\Las Vegas Icon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="hilfe.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

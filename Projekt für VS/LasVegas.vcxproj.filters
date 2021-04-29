@@ -26,6 +26,9 @@
     <ClInclude Include="Button.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
+    <ClInclude Include="Dice.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Font Include="Fonts\font.ttf" />
@@ -34,5 +37,8 @@
     <Image Include="..\..\..\Downloads\Las Vegas Icon.ico">
       <Filter>Ressourcendateien</Filter>
     </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="hilfe.txt" />
   </ItemGroup>
 </Project>
