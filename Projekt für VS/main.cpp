@@ -643,12 +643,42 @@ void neuesSpiel() {
     }
     spiel.setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
 
+    //Unsortiert aus der Konsole ausdrucken
     for (int i = 0; i <=7; i++) {
         wuerfelwert[i] = gen();
-        cout << wuerfelwert[i];
+        //Fehlersuche
+        if (wuerfelwert[i] <= 0 || wuerfelwert[i] > 6) {
+            printf("Ein Problem wird im Hintergrund behandelt! Fehlercode: \"genproblem\"\nSpiel wird fortgesetzt!\n");
+            wuerfelwert[i] = gen();
+        }
+        //cout << wuerfelwert[i];
     }
     
-    
+    //Würfel sortieren
+    bool bflag;
+    do {
+        bflag = false;
+        for (int izaehler = 0; izaehler <= 7; izaehler++) {
+            if (wuerfelwert[izaehler] > wuerfelwert[izaehler + 1]) {
+                int itemp;
+                itemp = wuerfelwert[izaehler];
+                wuerfelwert[izaehler] = wuerfelwert[izaehler + 1];
+                wuerfelwert[izaehler + 1] = itemp;
+                bflag = true;
+            }
+        }
+    } while (bflag == true);
+
+    //Sortiert in der Konsole ausdrucken
+    for (int i = 0; i <= 7; i++) {
+        cout << wuerfelwert[i];
+        //Fehlersuche
+        if (wuerfelwert[i] <= 0 || wuerfelwert[i] > 6) {
+            printf("Ein Problem wird im Hintergrund behandelt! Fehlercode: \"genproblem\"\nSpiel wird fortgesetzt!\n");
+            wuerfelwert[i] = 1;
+        }
+    }
+    printf("\n");
     //wuerfel(120.0f, wuerfelwert[1]);
     //wuerfel()
     
@@ -1104,6 +1134,7 @@ int main(){
     //Prüfe, ob es Einstellungdatei existiert und erstelle sie, falls nicht
     ifstream leser("einstellungen.einstellungen", std::ios::out | std::ios::binary);
     if (!leser) {
+        fehleranzeige("Fehler", "Einstellungsdatei nicht gefunden! Es wird neuerstellt!");
         printf("Einstellungsdatei wird erstellt! \n");
         startup();
     }
@@ -1181,6 +1212,7 @@ int main(){
                     //debug printf("Knopf wurde gedrueckt!");
                     //test fehleranzeige("Kritischer Fehler", "Fehler! Bitte starten Sie das Spiel neu!");
                     window.setActive(false);
+                    window.setVisible(false);
                     neuesSpiel();
                 }
 
