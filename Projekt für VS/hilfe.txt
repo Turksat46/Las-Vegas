@@ -35,13 +35,25 @@ Am Ende:
 		Spieler 2= 2 Würfel 
 		Spieler 3 =4 Würfel 
 
-dice[8];
 
-for(i = 0; i = 8; i++){
-dice[i] = rand() % 6 + 1;
+
+
+//Geldscheine
+array mit geldwert
+random
+inswert = array[randomwert]
+if(inswert<50000){
+nochmal random ziehen
 }
 
-
-switch(dice[i]){
+//Dateiformat
+funktion A{
+variable x
+funktion b{
 
 }
+}
+
+funktion b(variable x){
+
+....}
