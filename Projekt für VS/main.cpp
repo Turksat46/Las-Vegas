@@ -34,6 +34,12 @@ int casinogelder3[5];
 int casinogelder4[5];
 int casinogelder5[5];
 int casinogelder6[5];
+int summe1 = 0;
+int summe2 = 0;
+int summe3 = 0;
+int summe4 = 0;
+int summe5 = 0;
+int summe6 = 0;
 int wuerfelwert1[8];
 int spielernummer;
 Color farben[3] = { Color::Cyan, Color::Green, Color::Yellow };
@@ -1751,6 +1757,15 @@ void Spielzeichnung() {
         subtext.setFillColor(sf::Color::Black);
         spiel.draw(subtext);
 
+        //Testgeldschein
+        sf::Texture testgeldschein;
+        testgeldschein.loadFromFile("res/Bilder/Assets/10000.png");
+        testgeldschein.setSmooth(true);
+        sf::Sprite testgeldscheinsprite(testgeldschein);
+        testgeldscheinsprite.setPosition(sf::Vector2f( 25.0f, 25.0f ));
+        testgeldscheinsprite.setScale(1.5f, 1.5f);
+        spiel.draw(testgeldscheinsprite);
+
         //Würfelsprites zeichnen
         wuerfelsprite.setColor(farben[spielernummer]);
         wuerfelsprite2.setColor(farben[spielernummer]);
@@ -1976,15 +1991,8 @@ void neuesSpiel() {
     bool spielBeendet = false;
     while(spielBeendet == false) {
         //Geldscheine zufällig auswählen und anzeigen (i <=5 machen nicht vergessen)
-        int summe1 = 0;
-        int summe2 = 0;
-        int summe3 = 0;
-        int summe4 = 0;
-        int summe5 = 0;
-        int summe6 = 0;
-
+        srand(time(NULL));
         for (int i = 0; i <= 5; i++) {
-            srand(time(NULL));
             switch (i) {
             case 0:
                 for(int k = 0; ; k++){
