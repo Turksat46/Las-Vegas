@@ -16,6 +16,7 @@
 #include<conio.h>
 #include<random>
 #include<numeric>
+#include<filesystem>
  
 using namespace std;
 using namespace sf;
@@ -34,18 +35,26 @@ int casinogelder3[5];
 int casinogelder4[5];
 int casinogelder5[5];
 int casinogelder6[5];
+int casinowuerfelanzahl1[3];
+int casinowuerfelanzahl2[3];
+int casinowuerfelanzahl3[3];
+int casinowuerfelanzahl4[3];
+int casinowuerfelanzahl5[3];
+int casinowuerfelanzahl6[3];
 int summe1 = 0;
 int summe2 = 0;
 int summe3 = 0;
 int summe4 = 0;
 int summe5 = 0;
 int summe6 = 0;
+int wuerfelanzahl[3] = { 8, 8, 8 };
 int wuerfelwert1[8];
 int spielernummer;
 Color farben[3] = { Color::Cyan, Color::Green, Color::Yellow };
 string subtextstring;
 bool aufWuerfelGedrueckt = false;
 bool spielBeendet = false;
+bool speichertbool = false;
 
 //Dateiformat Speicher
 
@@ -53,6 +62,7 @@ struct spieldaten {
     int wuerfelwerte[8];
     int kontostand;
     int casino1, casino2, casino3, casino4, casino5, casino6;
+    int wuerfelanzahl[3];
 };
 
 //
@@ -1341,6 +1351,45 @@ void neuesSpieltest2() {
 //
 // AKTUELLER CODE
 //
+
+//Eine Funktion für das Pausenmenü
+void Pausenmenu() {
+    sf::RenderWindow pause(sf::VideoMode(500, 750), "Pause", sf::Style::None);
+
+    sf::Font font;
+    if (!font.loadFromFile("res/Fonts/font.ttf")) {
+        printf("FONT-FEHLER: SCHRIFTART KONNTE NICHT GELADEN WERDEN!\nBitte konsultieren Sie die Bedienungsanleitung!\nDr%ccken Sie eine Taste um das Programm zu beenden!", (char)129);
+        _getch();
+        exit(0);
+    }
+
+    sf::Event event;
+    while (pause.isOpen())
+    {
+        pause.clear(sf::Color::White);
+
+        sf::Text titeltext("Pausemenü", font);
+        titeltext.setCharacterSize(40);
+        titeltext.setFillColor(sf::Color::Black);
+        titeltext.setPosition(20.0f, 20.0f);
+
+        Button fortsetzenbutton("Fortsetzen", { 100, 50 }, 20, sf::Color::Green, sf::Color::Black);
+        fortsetzenbutton.setPosition({ 400.0f, 20.0f });
+        fortsetzenbutton.setFont(font);
+        fortsetzenbutton.drawTo(pause);
+
+        pause.draw(titeltext);
+        pause.display();
+        while (pause.pollEvent(event)) {
+            if (event.type == sf::Event::KeyPressed) {
+                if (event.key.code == sf::Keyboard::Escape) {
+                    pause.close();
+                }
+            }
+        }
+    }
+}
+
 void Spielzeichnung() {
     sf::RenderWindow spiel(sf::VideoMode(1600, 1000), "Las Vegas");
 
@@ -1386,6 +1435,7 @@ void Spielzeichnung() {
         case 6:
             wuerfel.loadFromFile("res/Bilder/würfel/dice-png-6.png");
             break;
+        
         }
         wuerfel.setSmooth(true);
         sf::Sprite wuerfelsprite;
@@ -1789,8 +1839,17 @@ void Spielzeichnung() {
         while (spiel.pollEvent(event)) {
             //Wenn Fenster geschlossen wird
             if (event.type == sf::Event::Closed) {
+                //Dies mit einer Speicherwarung oder Speichern ändern
                 spiel.close();
+                exit(0);
             }
+
+            if (event.type == sf::Event::KeyPressed) {
+                if (event.key.code == sf::Keyboard::Escape) {
+                    Pausenmenu();
+                }
+            }
+
             if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
             {
                 // transform the mouse position from window coordinates to world coordinates
@@ -1982,7 +2041,6 @@ void Spielzeichnung() {
     }
 }
 
-
 void neuesSpiel() {
     sf::Thread zeichenthread(&Spielzeichnung);
     zeichenthread.launch();
@@ -2079,10 +2137,17 @@ void neuesSpiel() {
 
         for (int spieler = 0; spieler <= 2; spieler++) {
             spielernummer = spieler;
+            int anzahlwuerfel = wuerfelanzahl[spieler];
             //Würfel würfeln
             for (int i = 0; i <= 7; i++) {
-                wuerfelwert1[i] = gen();
-                cout << wuerfelwert1[i];
+                if (i > anzahlwuerfel - 1) {
+                    wuerfelwert1[i] = 8;
+                    cout << wuerfelwert1[i];
+                }
+                else {
+                    wuerfelwert1[i] = gen();
+                    cout << wuerfelwert1[i];
+                }
             }
             printf("\n");
 
@@ -2136,7 +2201,7 @@ int main(){
     printf("Las Vegas - Das Spiel\nDiese Konsole wird als Fehlerausgabe benutzt!\nSprich, falls etwas falsch laufen sollte,\nwird es hier ausgegeben!\n\n");
 
     //Erzeuge das Fenster-Objekt
-    sf::RenderWindow window(sf::VideoMode(1220, 800), "Las Vegas");
+    sf::RenderWindow window(sf::VideoMode(1220, 800), "Las Vegas", sf::Style::Close);
 
     // Icon für das Spiel setzen
     sf::Image icon;
@@ -2309,7 +2374,7 @@ int main(){
         text.setPosition(230.0f, 430.0f);
 
         //Versiontext
-        sf::Text vertext("Version: 0.3.6 Alpha", font);
+        sf::Text vertext("Version: 0.6.9 Alpha", font);
         vertext.setCharacterSize(25);
         vertext.setStyle(sf::Text::Regular);
         vertext.setFillColor(sf::Color::Black);
@@ -2329,7 +2394,7 @@ int main(){
         window.draw(text);
         window.draw(vertext);
         window.draw(sprite);
-        window.draw(convexShape);
+        //window.draw(convexShape);
         playbtn1.drawTo(window);
         leavebtn1.drawTo(window);
         settingsbtn1.drawTo(window);
