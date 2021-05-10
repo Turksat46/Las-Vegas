@@ -55,6 +55,8 @@ string subtextstring;
 bool aufWuerfelGedrueckt = false;
 bool spielBeendet = false;
 bool speichertbool = false;
+bool zugbeendet = false;
+string vergangenezeitstring;
 
 //Dateiformat Speicher
 
@@ -1354,13 +1356,11 @@ void neuesSpieltest2() {
 
 //Eine Funktion für das Pausenmenü
 void Pausenmenu() {
-    sf::RenderWindow pause(sf::VideoMode(500, 750), "Pause", sf::Style::None);
+    sf::RenderWindow pause(sf::VideoMode(500, 500), "Pause", sf::Style::None);
 
     sf::Font font;
     if (!font.loadFromFile("res/Fonts/font.ttf")) {
-        printf("FONT-FEHLER: SCHRIFTART KONNTE NICHT GELADEN WERDEN!\nBitte konsultieren Sie die Bedienungsanleitung!\nDr%ccken Sie eine Taste um das Programm zu beenden!", (char)129);
-        _getch();
-        exit(0);
+        fehleranzeige("Font-Fehler", "Font konnte nicht geladen werden!");
     }
 
     sf::Event event;
@@ -1373,10 +1373,25 @@ void Pausenmenu() {
         titeltext.setFillColor(sf::Color::Black);
         titeltext.setPosition(20.0f, 20.0f);
 
-        Button fortsetzenbutton("Fortsetzen", { 100, 50 }, 20, sf::Color::Green, sf::Color::Black);
-        fortsetzenbutton.setPosition({ 400.0f, 20.0f });
+        Button fortsetzenbutton("Fortsetzen", { 200, 100 }, 30, sf::Color::Magenta, sf::Color::Black);
         fortsetzenbutton.setFont(font);
+        fortsetzenbutton.setPosition(sf::Vector2f(20.0f, 100.0f));
         fortsetzenbutton.drawTo(pause);
+
+        Button neuesspielbutton("Neues Spiel", { 200, 100 }, 30, sf::Color(0, 255, 0, 255), sf::Color::Black);
+        neuesspielbutton.setFont(font);
+        neuesspielbutton.setPosition({ 270.0f, 100.0f });
+        neuesspielbutton.drawTo(pause);
+
+        Button spielladenbutton("Spiel laden", { 200, 100 }, 30, sf::Color(0, 162, 232, 255), sf::Color::Black);
+        spielladenbutton.setFont(font);
+        spielladenbutton.setPosition({ 20.0f, 350.0f });
+        spielladenbutton.drawTo(pause);
+
+        Button beendenbtn("Beenden", { 200, 100 }, 30, sf::Color(255, 0, 0, 255), sf::Color::Black);
+        beendenbtn.setFont(font);
+        beendenbtn.setPosition({ 270.0f, 350.0f });
+        beendenbtn.drawTo(pause);
 
         pause.draw(titeltext);
         pause.display();
@@ -1784,6 +1799,7 @@ void Spielzeichnung() {
         menuunten.setPoint(2, sf::Vector2f(1600.0f, 1000.0f));
         //Linksunten
         menuunten.setPoint(3, sf::Vector2f(0.0f, 1000.0f));
+        menuunten.setFillColor(sf::Color(195, 195, 195, 184));
         spiel.draw(menuunten);
 
         //Schrifttab über Menü
@@ -1806,6 +1822,38 @@ void Spielzeichnung() {
         subtext.setPosition(sf::Vector2f(600.0f, 900.0f));
         subtext.setFillColor(sf::Color::Black);
         spiel.draw(subtext);
+
+        //Buttonfarbe (195, 195, 195, 184)
+
+        //Buttonflächen
+        sf::RectangleShape undobackground;
+        undobackground.setSize({ 200, 50 });
+        undobackground.setFillColor(sf::Color::Yellow);
+        undobackground.setPosition({ 15.0f, 942.5f });
+        spiel.draw(undobackground);
+
+        sf::RectangleShape donebackground;
+        donebackground.setSize({ 200, 50 });
+        donebackground.setFillColor(sf::Color::Yellow);
+        donebackground.setPosition({ 1385.0f, 942.5f });
+        spiel.draw(donebackground);
+
+        //Schritt zurücksetzen Button
+        Button undobutton("Einen Schritt zurück", { 200, 50 }, 20, sf::Color::Yellow, sf::Color::Black);
+        undobutton.setFont(font);
+        undobutton.setPosition({15.0f, 942.5f});
+        if (aufWuerfelGedrueckt == true) {
+            undobutton.drawTo(spiel);
+        }
+        
+
+        //Zug Beenden Button
+        Button donebutton("Zug beenden", { 170, 50 }, 20, sf::Color::Yellow, sf::Color::Black);
+        donebutton.setFont(font);
+        donebutton.setPosition({ 1385.0f, 942.5f });
+        if (aufWuerfelGedrueckt == true) {
+            donebutton.drawTo(spiel);
+        }
 
         //Testgeldschein
         sf::Texture testgeldschein;
@@ -1847,6 +1895,18 @@ void Spielzeichnung() {
             if (event.type == sf::Event::KeyPressed) {
                 if (event.key.code == sf::Keyboard::Escape) {
                     Pausenmenu();
+                }
+            }
+
+            if (event.type == sf::Event::MouseButtonPressed) {
+                if (donebutton.isMouseOver(spiel)) {
+                    if (aufWuerfelGedrueckt == true) {
+                        zugbeendet = true;
+                    }
+                }
+
+                if (undobutton.isMouseOver(spiel)) {
+                    aufWuerfelGedrueckt = false;
                 }
             }
 
@@ -2041,7 +2101,8 @@ void Spielzeichnung() {
     }
 }
 
-void neuesSpiel() {
+void neuesSpiel() { 
+    //Zeichenthread erstellen und starten
     sf::Thread zeichenthread(&Spielzeichnung);
     zeichenthread.launch();
 
@@ -2057,7 +2118,7 @@ void neuesSpiel() {
                     //int k = 0;
                     int j = rand() % 6;
                     casinogelder1[k] = geldwerte[j];
-                    printf("Grade gezogen: %i\n", casinogelder1[k]);
+                    printf("Gerade gezogen: %i\n", casinogelder1[k]);
                     summe1 += casinogelder1[k];
                     if (summe1 >= 50000) {
                         printf("Summe Casino 1: %i\n", summe1);
@@ -2071,7 +2132,7 @@ void neuesSpiel() {
                     //int k = 0;
                     int j = rand() % 6;
                     casinogelder2[k] = geldwerte[j];
-                    printf("Grade gezogen: %i\n", casinogelder2[k]);
+                    printf("Gerade gezogen: %i\n", casinogelder2[k]);
                     summe2 += casinogelder2[k];
                     if (summe2 >= 50000) {
                         printf("Summe Casino 2: %i\n", summe2);
@@ -2085,7 +2146,7 @@ void neuesSpiel() {
                     //int k = 0;
                     int j = rand() % 6;
                     casinogelder3[k] = geldwerte[j];
-                    printf("Grade gezogen: %i\n", casinogelder3[k]);
+                    printf("Gerade gezogen: %i\n", casinogelder3[k]);
                     summe3 += casinogelder3[k];
                     if (summe3 >= 50000) {
                         printf("Summe Casino 3: %i\n", summe3);
@@ -2098,7 +2159,7 @@ void neuesSpiel() {
                     //int k = 0;
                     int j = rand() % 6;
                     casinogelder4[k] = geldwerte[j];
-                    printf("Grade gezogen: %i\n", casinogelder4[k]);
+                    printf("Gerade gezogen: %i\n", casinogelder4[k]);
                     summe4 += casinogelder4[k];
                     if (summe4 >= 50000) {
                         printf("Summe Casino 4: %i\n", summe4);
@@ -2111,7 +2172,7 @@ void neuesSpiel() {
                     //int k = 0;
                     int j = rand() % 6;
                     casinogelder5[k] = geldwerte[j];
-                    printf("Grade gezogen: %i\n", casinogelder5[k]);
+                    printf("Gerade gezogen: %i\n", casinogelder5[k]);
                     summe5 += casinogelder5[k];
                     if (summe5 >= 50000) {
                         printf("Summe Casino 5: %i\n", summe5);
@@ -2124,7 +2185,7 @@ void neuesSpiel() {
                     //int k = 0;
                     int j = rand() % 6;
                     casinogelder6[k] = geldwerte[j];
-                    printf("Grade gezogen: %i\n", casinogelder6[k]);
+                    printf("Gerade gezogen: %i\n", casinogelder6[k]);
                     summe6 += casinogelder6[k];
                     if (summe6 >= 50000) {
                         printf("Summe Casino 6: %i\n", summe6);
@@ -2142,7 +2203,6 @@ void neuesSpiel() {
             for (int i = 0; i <= 7; i++) {
                 if (i > anzahlwuerfel - 1) {
                     wuerfelwert1[i] = 8;
-                    cout << wuerfelwert1[i];
                 }
                 else {
                     wuerfelwert1[i] = gen();
@@ -2167,7 +2227,7 @@ void neuesSpiel() {
             }
 
             //Warten bis auf Würfel gedrückt wird
-            while (aufWuerfelGedrueckt == false) {
+            while (zugbeendet == false) {
                 //Unten den Nutzer drauf hinweisen, auf einen Würfel zu klicken!
                 switch (spielernummer) {
                     case 0:
@@ -2185,7 +2245,10 @@ void neuesSpiel() {
             }
             //Resetten
             aufWuerfelGedrueckt = false;
+            zugbeendet = false;
+
             //Würfelableger-Algorithmus
+
 
         }
     }
@@ -2235,6 +2298,7 @@ int main(){
 
     //Erzeuge das Audio-Objekt und fange an zu spielen!
     //AUSLASSEN BITTE KEIN BOCK MEHR DASS ES SPACKT
+    //Fehler: Es spackt, wenn man im Anruf ist und der ganze Audiotreiber ist dann verwirrt
     /*sf::Music music;
     music.openFromFile("res/Audio/titelmusik.wav");
     music.setVolume(50);
@@ -2261,7 +2325,7 @@ int main(){
     playbtn1.setPosition({ 350.0f, 500.0f });
 
     //LadenKnopf
-    Button loadbtn1("Laden", { 200, 100 }, 30, sf::Color(195, 195, 195, 255), sf::Color::Black);
+    Button loadbtn1("Laden", { 200, 100 }, 30, sf::Color(0, 162, 232, 255), sf::Color::Black);
     loadbtn1.setFont(font);
     loadbtn1.setPosition({ 350.0f, 650.0f });
 
