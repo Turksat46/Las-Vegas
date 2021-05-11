@@ -1,5 +1,6 @@
 //Autor: Kerem Okumus
 //geändert am 25.01.2021 (Angefangen mit Konzept und einfache Programmierung mit Darstellung ohne Funktion); 26.01.2021 (finalisiert und hoffentlich ohne Fehler ;) )
+//Ich bin sehr sehr objektorientiert :(
 
 #pragma once
 #include <iostream>
@@ -7,15 +8,19 @@
 
 class Button {
 
-	//Eine öffentliche Klasse um das Button zu erzeugen! 
+	//Eine öffentliche Klasse, um das Button zu erzeugen! 
 public:
 	Button(std::string btnText, sf::Vector2f buttonSize, int charSize, sf::Color bgColor, sf::Color textColor) {
 		button.setSize(buttonSize);
 		button.setFillColor(bgColor);
 
-		// Get these for later use:
+		// Längen und Breiten als Variable speichern
 		btnWidth = buttonSize.x;
 		btnHeight = buttonSize.y;
+
+		//Design
+		shadow.setSize({ btnWidth + 5.0f, btnHeight + 5.0f });
+		shadow.setFillColor(bgColor - sf::Color(100, 100, 100, 100));
 
 		text.setString(btnText);
 		text.setCharacterSize(charSize);
@@ -40,7 +45,7 @@ public:
 	//Setzt die Position
 	void setPosition(sf::Vector2f point) {
 		button.setPosition(point);
-
+		shadow.setPosition(point);
 		//Setze den Text automatisch in die Mitte
 		float xPos = (point.x + btnWidth / 2) - (text.getLocalBounds().width / 2);
 		float yPos = (point.y + btnHeight / 2.2) - (text.getLocalBounds().height / 2);
@@ -50,6 +55,7 @@ public:
 	//Befehl fürs Rendering auf das Fenster
 	void drawTo(sf::RenderWindow& window) {
 		window.draw(button);
+		window.draw(shadow);
 		window.draw(text);
 	}
 
@@ -73,6 +79,7 @@ public:
 	// Variablen für den Button
 private:
 	sf::RectangleShape button;
+	sf::RectangleShape shadow;
 	sf::Text text;
 
 	int btnWidth;

@@ -339,19 +339,6 @@ void Einstellungen() {
     }
 }
 
-void wuerfel(float positionx, int augenanzahl) {
-    float position = positionx; //< Position des Würfels
-    int augen = augenanzahl;
-    sf::Texture wuerfeltextur;
-    Sprite wuerfelsprite;
-    wuerfeltextur.loadFromFile(wuerfelaugen[augen]);
-    //wuerfeltextur.setSmooth(true);
-    //wuerfelsprite.setColor(sf::Color::Blue);
-    wuerfelsprite.setTexture(wuerfeltextur, true);
-    wuerfelsprite.setPosition(sf::Vector2f(position, 800.0f));
-    wuerfelsprite.setScale(0.15, 0.15);
-}
-
 
 //
 //MAIN SPIEL (TEST)
@@ -664,25 +651,6 @@ int gen() {
     return dist(gen);
 }
 
-bool spieler1() {
-  
-    //Würfel sortieren
-    for (int i = 0; i <= 6; i++)
-    {
-        for (int j = i + 1; j <= 7; j++)
-        {
-            if (wuerfelwert1[i] > wuerfelwert1[j])
-            {
-                //-----Tausch-----
-                int h = wuerfelwert1[i];
-                wuerfelwert1[i] = wuerfelwert1[j];
-                wuerfelwert1[j] = h;
-            }
-        }
-    }
-
-
-}
 
 //--------------------------------------------------------------------------------------
 //--------------------------------------------------------------------------------------
@@ -1406,7 +1374,7 @@ void Pausenmenu() {
 }
 
 void Spielzeichnung() {
-    sf::RenderWindow spiel(sf::VideoMode(1600, 1000), "Las Vegas");
+    sf::RenderWindow spiel(sf::VideoMode(1600, 1000), "Las Vegas", sf::Style::Close);
 
     //Schriftart laden
     sf::Font font;
@@ -1654,8 +1622,10 @@ void Spielzeichnung() {
         wuerfelsprite8.setTexture(wuerfel8, true);
         wuerfelsprite8.setPosition({ 720.0f, 800.0f });
         wuerfelsprite8.setScale(0.15, 0.15);
-        //Main-Ansicht zeichnen
-         //Las Vegas Logo
+
+        //
+        //Main-Ansicht/Hintergrund zeichnen
+        //Las Vegas Logo
         sf::Texture logo;
         logo.loadFromFile("res/Bilder/Assets/vegas.gif");
         logo.setSmooth(true);
@@ -1663,6 +1633,7 @@ void Spielzeichnung() {
         logosprite.setPosition({ 1300.0f, 10.0f });
         logosprite.setScale(0.5f, 0.5f);
         spiel.draw(logosprite);
+
         //
         // Trennlinie
         sf::ConvexShape trennlinie;
@@ -1827,30 +1798,29 @@ void Spielzeichnung() {
 
         //Buttonflächen
         sf::RectangleShape undobackground;
-        undobackground.setSize({ 200, 50 });
+        undobackground.setSize({ 170, 50 });
         undobackground.setFillColor(sf::Color::Yellow);
         undobackground.setPosition({ 15.0f, 942.5f });
         spiel.draw(undobackground);
 
         sf::RectangleShape donebackground;
-        donebackground.setSize({ 200, 50 });
+        donebackground.setSize({ 170, 50 });
         donebackground.setFillColor(sf::Color::Yellow);
-        donebackground.setPosition({ 1385.0f, 942.5f });
+        donebackground.setPosition({ 1410.0f, 942.5f });
         spiel.draw(donebackground);
 
         //Schritt zurücksetzen Button
-        Button undobutton("Einen Schritt zurück", { 200, 50 }, 20, sf::Color::Yellow, sf::Color::Black);
+        Button undobutton("Einen Schritt zurück", { 170, 50 }, 20, sf::Color::Yellow, sf::Color::Black);
         undobutton.setFont(font);
         undobutton.setPosition({15.0f, 942.5f});
         if (aufWuerfelGedrueckt == true) {
             undobutton.drawTo(spiel);
         }
         
-
         //Zug Beenden Button
         Button donebutton("Zug beenden", { 170, 50 }, 20, sf::Color::Yellow, sf::Color::Black);
         donebutton.setFont(font);
-        donebutton.setPosition({ 1385.0f, 942.5f });
+        donebutton.setPosition({ 1410.0f, 942.5f });
         if (aufWuerfelGedrueckt == true) {
             donebutton.drawTo(spiel);
         }
@@ -1905,7 +1875,7 @@ void Spielzeichnung() {
                     }
                 }
 
-                if (undobutton.isMouseOver(spiel)) {
+                if (undobutton.isMouseOver(spiel)) { 
                     aufWuerfelGedrueckt = false;
                 }
             }
@@ -2197,8 +2167,14 @@ void neuesSpiel() {
         }
 
         for (int spieler = 0; spieler <= 2; spieler++) {
+            //Temporäre Variable fürs Überprüfen, ob ein Spieler kein Würfel hat
+            int tempanzwuerfel = wuerfelanzahl[spieler];
+            if(tempanzwuerfel == 0) {
+                continue;
+            }
             spielernummer = spieler;
             int anzahlwuerfel = wuerfelanzahl[spieler];
+
             //Würfel würfeln
             for (int i = 0; i <= 7; i++) {
                 if (i > anzahlwuerfel - 1) {
