@@ -48,8 +48,9 @@ int summe4 = 0;
 int summe5 = 0;
 int summe6 = 0;
 int wuerfelanzahl[3] = { 8, 8, 8 };
-int wuerfelwert1[8];
+int wuerfelwert[8];
 int spielernummer;
+int ausgewählteAuge = 0;
 Color farben[3] = { Color::Cyan, Color::Green, Color::Yellow };
 string subtextstring;
 bool aufWuerfelGedrueckt = false;
@@ -675,8 +676,8 @@ void neuesSpieltest2() {
 
     //Würfel würfeln für jeden Spieler
     for (int i = 0; i <= 7; i++) {
-        wuerfelwert1[i] = gen();
-        cout << wuerfelwert1[i];
+        wuerfelwert[i] = gen();
+        cout << wuerfelwert[i];
     }
     printf("\n");
     
@@ -685,26 +686,26 @@ void neuesSpieltest2() {
     {
         for (int j = i + 1; j <= 7; j++)
         {
-            if (wuerfelwert1[i] > wuerfelwert1[j])
+            if (wuerfelwert[i] > wuerfelwert[j])
             {
                 //-----Tausch-----
-                int h = wuerfelwert1[i];
-                wuerfelwert1[i] = wuerfelwert1[j];
-                wuerfelwert1[j] = h;
+                int h = wuerfelwert[i];
+                wuerfelwert[i] = wuerfelwert[j];
+                wuerfelwert[j] = h;
             }
         }
     }
     
 
-    //wuerfel(120.0f, wuerfelwert1[1]);
+    //wuerfel(120.0f, wuerfelwert[1]);
     //wuerfel()
     
     /*
     do {
         for (int spielerzahl = 0; spielerzahl <= 3; spielerzahl++) {
             for (int wuerfelzahl = 0; wuerfelzahl <= 9; wuerfelzahl++) {
-                wuerfelwert1[wuerfelzahl] = rand() % 6 + 1;
-                switch (wuerfelwert1[wuerfelzahl]) {
+                wuerfelwert[wuerfelzahl] = rand() % 6 + 1;
+                switch (wuerfelwert[wuerfelzahl]) {
                     case 1:
                        //wuerfel.loadFromFile(wuerfelaugen[0]);
                         break;
@@ -714,7 +715,7 @@ void neuesSpieltest2() {
     } while (spielBeendet == false);*/
 
     sf::Texture wuerfel;
-    switch (wuerfelwert1[0]) {
+    switch (wuerfelwert[0]) {
         case 1:
             wuerfel.loadFromFile("res/Bilder/würfel/dice-png-1.png");
             break;
@@ -742,7 +743,7 @@ void neuesSpieltest2() {
     wuerfelsprite.setScale(0.15, 0.15);
 
     sf::Texture wuerfel2;
-    switch (wuerfelwert1[1]) {
+    switch (wuerfelwert[1]) {
     case 1:
         wuerfel2.loadFromFile("res/Bilder/würfel/dice-png-1.png");
         break;
@@ -770,7 +771,7 @@ void neuesSpieltest2() {
     wuerfelsprite2.setScale(0.15, 0.15);
 
     sf::Texture wuerfel3;
-    switch (wuerfelwert1[2]) {
+    switch (wuerfelwert[2]) {
     case 1:
         wuerfel3.loadFromFile("res/Bilder/würfel/dice-png-1.png");
         break;
@@ -798,7 +799,7 @@ void neuesSpieltest2() {
     wuerfelsprite3.setScale(0.15, 0.15);
 
     sf::Texture wuerfel4;
-    switch (wuerfelwert1[3]) {
+    switch (wuerfelwert[3]) {
     case 1:
         wuerfel4.loadFromFile("res/Bilder/würfel/dice-png-1.png");
         break;
@@ -826,7 +827,7 @@ void neuesSpieltest2() {
     wuerfelsprite4.setScale(0.15, 0.15);
     
     sf::Texture wuerfel5;
-    switch (wuerfelwert1[4]) {
+    switch (wuerfelwert[4]) {
     case 1:
         wuerfel5.loadFromFile("res/Bilder/würfel/dice-png-1.png");
         break;
@@ -854,7 +855,7 @@ void neuesSpieltest2() {
     wuerfelsprite5.setScale(0.15, 0.15);
 
     sf::Texture wuerfel6;
-    switch (wuerfelwert1[5]) {
+    switch (wuerfelwert[5]) {
     case 1:
         wuerfel6.loadFromFile("res/Bilder/würfel/dice-png-1.png");
         break;
@@ -882,7 +883,7 @@ void neuesSpieltest2() {
     wuerfelsprite6.setScale(0.15, 0.15);
 
     sf::Texture wuerfel7;
-    switch (wuerfelwert1[6]) {
+    switch (wuerfelwert[6]) {
     case 1:
         wuerfel7.loadFromFile("res/Bilder/würfel/dice-png-1.png");
         break;
@@ -910,7 +911,7 @@ void neuesSpieltest2() {
     wuerfelsprite7.setScale(0.15, 0.15);
 
     sf::Texture wuerfel8;
-    switch (wuerfelwert1[7]) {
+    switch (wuerfelwert[7]) {
     case 1:
         wuerfel8.loadFromFile("res/Bilder/würfel/dice-png-1.png");
         break;
@@ -1151,7 +1152,7 @@ void neuesSpieltest2() {
                 if (wuerfelcoords1.contains(mouse))
                 {
                     // mouse is on sprite!
-                    int wuerfelplatzwert = wuerfelwert1[0];
+                    int wuerfelplatzwert = wuerfelwert[0];
                     switch (wuerfelplatzwert) {
                     case 1:
                         break;
@@ -1170,7 +1171,7 @@ void neuesSpieltest2() {
                 if (wuerfelcoords2.contains(mouse))
                 {
                     // mouse is on sprite!
-                    int wuerfelplatzwert = wuerfelwert1[1];
+                    int wuerfelplatzwert = wuerfelwert[1];
                     switch (wuerfelplatzwert) {
                     case 1:
                         break;
@@ -1190,7 +1191,7 @@ void neuesSpieltest2() {
                 if (wuerfelcoords3.contains(mouse))
                 {
                     // mouse is on sprite!
-                    int wuerfelplatzwert = wuerfelwert1[2];
+                    int wuerfelplatzwert = wuerfelwert[2];
                     switch (wuerfelplatzwert) {
                     case 1:
                         break;
@@ -1210,7 +1211,7 @@ void neuesSpieltest2() {
                 if (wuerfelcoords4.contains(mouse))
                 {
                     // mouse is on sprite!
-                    int wuerfelplatzwert = wuerfelwert1[3];
+                    int wuerfelplatzwert = wuerfelwert[3];
                     switch (wuerfelplatzwert) {
                     case 1:
                         break;
@@ -1230,7 +1231,7 @@ void neuesSpieltest2() {
                 if (wuerfelcoords5.contains(mouse))
                 {
                     // mouse is on sprite!
-                    int wuerfelplatzwert = wuerfelwert1[4];
+                    int wuerfelplatzwert = wuerfelwert[4];
                     switch (wuerfelplatzwert) {
                     case 1:
                         break;
@@ -1250,7 +1251,7 @@ void neuesSpieltest2() {
                 if (wuerfelcoords6.contains(mouse))
                 {
                     // mouse is on sprite!
-                    int wuerfelplatzwert = wuerfelwert1[5];
+                    int wuerfelplatzwert = wuerfelwert[5];
                     switch (wuerfelplatzwert) {
                     case 1:
                         break;
@@ -1270,7 +1271,7 @@ void neuesSpieltest2() {
                 if (wuerfelcoords7.contains(mouse))
                 {
                     // mouse is on sprite!
-                    int wuerfelplatzwert = wuerfelwert1[6];
+                    int wuerfelplatzwert = wuerfelwert[6];
                     switch (wuerfelplatzwert) {
                     case 1:
                         break;
@@ -1290,7 +1291,7 @@ void neuesSpieltest2() {
                 if (wuerfelcoords8.contains(mouse))
                 {
                     // mouse is on sprite!
-                    int wuerfelplatzwert = wuerfelwert1[7];
+                    int wuerfelplatzwert = wuerfelwert[7];
                     switch (wuerfelplatzwert) {
                     case 1:
                         break;
@@ -1399,7 +1400,7 @@ void Spielzeichnung() {
         //Würfel zeichnen
         //
         sf::Texture wuerfel;
-        switch (wuerfelwert1[0]) {
+        switch (wuerfelwert[0]) {
         case 1:
             wuerfel.loadFromFile("res/Bilder/würfel/dice-png-1.png");
             break;
@@ -1428,7 +1429,7 @@ void Spielzeichnung() {
         wuerfelsprite.setScale(0.15, 0.15);
 
         sf::Texture wuerfel2;
-        switch (wuerfelwert1[1]) {
+        switch (wuerfelwert[1]) {
         case 1:
             wuerfel2.loadFromFile("res/Bilder/würfel/dice-png-1.png");
             break;
@@ -1456,7 +1457,7 @@ void Spielzeichnung() {
         wuerfelsprite2.setScale(0.15, 0.15);
 
         sf::Texture wuerfel3;
-        switch (wuerfelwert1[2]) {
+        switch (wuerfelwert[2]) {
         case 1:
             wuerfel3.loadFromFile("res/Bilder/würfel/dice-png-1.png");
             break;
@@ -1484,7 +1485,7 @@ void Spielzeichnung() {
         wuerfelsprite3.setScale(0.15, 0.15);
 
         sf::Texture wuerfel4;
-        switch (wuerfelwert1[3]) {
+        switch (wuerfelwert[3]) {
         case 1:
             wuerfel4.loadFromFile("res/Bilder/würfel/dice-png-1.png");
             break;
@@ -1512,7 +1513,7 @@ void Spielzeichnung() {
         wuerfelsprite4.setScale(0.15, 0.15);
 
         sf::Texture wuerfel5;
-        switch (wuerfelwert1[4]) {
+        switch (wuerfelwert[4]) {
         case 1:
             wuerfel5.loadFromFile("res/Bilder/würfel/dice-png-1.png");
             break;
@@ -1540,7 +1541,7 @@ void Spielzeichnung() {
         wuerfelsprite5.setScale(0.15, 0.15);
 
         sf::Texture wuerfel6;
-        switch (wuerfelwert1[5]) {
+        switch (wuerfelwert[5]) {
         case 1:
             wuerfel6.loadFromFile("res/Bilder/würfel/dice-png-1.png");
             break;
@@ -1568,7 +1569,7 @@ void Spielzeichnung() {
         wuerfelsprite6.setScale(0.15, 0.15);
 
         sf::Texture wuerfel7;
-        switch (wuerfelwert1[6]) {
+        switch (wuerfelwert[6]) {
         case 1:
             wuerfel7.loadFromFile("res/Bilder/würfel/dice-png-1.png");
             break;
@@ -1596,7 +1597,7 @@ void Spielzeichnung() {
         wuerfelsprite7.setScale(0.15, 0.15);
 
         sf::Texture wuerfel8;
-        switch (wuerfelwert1[7]) {
+        switch (wuerfelwert[7]) {
         case 1:
             wuerfel8.loadFromFile("res/Bilder/würfel/dice-png-1.png");
             break;
@@ -1825,14 +1826,222 @@ void Spielzeichnung() {
             donebutton.drawTo(spiel);
         }
 
-        //Testgeldschein
-        sf::Texture testgeldschein;
-        testgeldschein.loadFromFile("res/Bilder/Assets/10000.png");
-        testgeldschein.setSmooth(true);
-        sf::Sprite testgeldscheinsprite(testgeldschein);
-        testgeldscheinsprite.setPosition(sf::Vector2f( 25.0f, 25.0f ));
-        testgeldscheinsprite.setScale(1.5f, 1.5f);
-        spiel.draw(testgeldscheinsprite);
+        //
+        //Geldscheine
+        sf::Texture c1gs1;
+        printf("Wert: %i", casinogelder1[0]);
+        switch (casinogelder1[0]) {
+            case 10000:
+                c1gs1.loadFromFile("res/Bilder/Assets/10000.png");
+            case 20000:
+                c1gs1.loadFromFile("res/Bilder/Assets/20000.png");
+            case 30000:
+                c1gs1.loadFromFile("res/Bilder/Assets/30000.png");
+            case 50000:
+                c1gs1.loadFromFile("res/Bilder/Assets/50000.png");
+            case 70000:
+                c1gs1.loadFromFile("res/Bilder/Assets/70000.png");
+            case 90000:
+                c1gs1.loadFromFile("res/Bilder/Assets/90000.png");
+        }
+        c1gs1.setSmooth(true);
+        sf::Sprite c1gs1sprite(c1gs1);
+        c1gs1sprite.setPosition(sf::Vector2f( 25.0f, 25.0f ));
+        c1gs1sprite.setScale(1.5f, 1.5f);
+        spiel.draw(c1gs1sprite);
+
+        sf::Texture c1gs2;
+        printf("Wert: %i", casinogelder1[1]);
+        switch (casinogelder1[1]) {
+        case 10000:
+            c1gs2.loadFromFile("res/Bilder/Assets/10000.png");
+        case 20000:
+            c1gs2.loadFromFile("res/Bilder/Assets/20000.png");
+        case 30000:
+            c1gs2.loadFromFile("res/Bilder/Assets/30000.png");
+        case 50000:
+            c1gs2.loadFromFile("res/Bilder/Assets/50000.png");
+        case 70000:
+            c1gs2.loadFromFile("res/Bilder/Assets/70000.png");
+        case 90000:
+            c1gs2.loadFromFile("res/Bilder/Assets/90000.png");
+        }
+        c1gs2.setSmooth(true);
+        sf::Sprite c1gs2sprite(c1gs2);
+        c1gs2sprite.setPosition(sf::Vector2f(25.0f, 55.0f));
+        c1gs2sprite.setScale(1.5f, 1.5f);
+        spiel.draw(c1gs2sprite);
+
+        sf::Texture c1gs3;
+        printf("Wert: %i", casinogelder1[2]);
+        switch (casinogelder1[2]) {
+        case 10000:
+            c1gs3.loadFromFile("res/Bilder/Assets/10000.png");
+        case 20000:
+            c1gs3.loadFromFile("res/Bilder/Assets/20000.png");
+        case 30000:
+            c1gs3.loadFromFile("res/Bilder/Assets/30000.png");
+        case 50000:
+            c1gs3.loadFromFile("res/Bilder/Assets/50000.png");
+        case 70000:
+            c1gs3.loadFromFile("res/Bilder/Assets/70000.png");
+        case 90000:
+            c1gs3.loadFromFile("res/Bilder/Assets/90000.png");
+        }
+        c1gs3.setSmooth(true);
+        sf::Sprite c1gs3sprite(c1gs3);
+        c1gs3sprite.setPosition(sf::Vector2f(25.0f, 85.0f));
+        c1gs3sprite.setScale(1.5f, 1.5f);
+        spiel.draw(c1gs3sprite);
+
+        sf::Texture c1gs4;
+        printf("Wert: %i", casinogelder1[3]);
+        switch (casinogelder1[3]) {
+        case 10000:
+            c1gs4.loadFromFile("res/Bilder/Assets/10000.png");
+        case 20000:
+            c1gs4.loadFromFile("res/Bilder/Assets/20000.png");
+        case 30000:
+            c1gs4.loadFromFile("res/Bilder/Assets/30000.png");
+        case 50000:
+            c1gs4.loadFromFile("res/Bilder/Assets/50000.png");
+        case 70000:
+            c1gs4.loadFromFile("res/Bilder/Assets/70000.png");
+        case 90000:
+            c1gs4.loadFromFile("res/Bilder/Assets/90000.png");
+        }
+        c1gs4.setSmooth(true);
+        sf::Sprite c1gs4sprite(c1gs4);
+        c1gs4sprite.setPosition(sf::Vector2f(25.0f, 115.0f));
+        c1gs4sprite.setScale(1.5f, 1.5f);
+        spiel.draw(c1gs4sprite);
+
+        sf::Texture c1gs5;
+        printf("Wert: %i", casinogelder1[4]);
+        switch (casinogelder1[4]) {
+        case 10000:
+            c1gs5.loadFromFile("res/Bilder/Assets/10000.png");
+        case 20000:
+            c1gs5.loadFromFile("res/Bilder/Assets/20000.png");
+        case 30000:
+            c1gs5.loadFromFile("res/Bilder/Assets/30000.png");
+        case 50000:
+            c1gs5.loadFromFile("res/Bilder/Assets/50000.png");
+        case 70000:
+            c1gs5.loadFromFile("res/Bilder/Assets/70000.png");
+        case 90000:
+            c1gs5.loadFromFile("res/Bilder/Assets/90000.png");
+        }
+        c1gs5.setSmooth(true);
+        sf::Sprite c1gs5sprite(c1gs5);
+        c1gs5sprite.setPosition(sf::Vector2f(25.0f, 145.0f));
+        c1gs5sprite.setScale(1.5f, 1.5f);
+        spiel.draw(c1gs5sprite);
+
+        sf::Texture c2gs1;
+        switch (casinogelder2[0]) {
+        case 10000:
+            c2gs1.loadFromFile("res/Bilder/Assets/10000.png");
+        case 20000:
+            c2gs1.loadFromFile("res/Bilder/Assets/20000.png");
+        case 30000:
+            c2gs1.loadFromFile("res/Bilder/Assets/30000.png");
+        case 50000:
+            c2gs1.loadFromFile("res/Bilder/Assets/50000.png");
+        case 70000:
+            c2gs1.loadFromFile("res/Bilder/Assets/70000.png");
+        case 90000:
+            c2gs1.loadFromFile("res/Bilder/Assets/90000.png");
+        }
+        c2gs1.setSmooth(true);
+        sf::Sprite c2gs1sprite(c2gs1);
+        c2gs1sprite.setPosition(sf::Vector2f(225.0f, 25.0f));
+        c2gs1sprite.setScale(1.5f, 1.5f);
+        spiel.draw(c2gs1sprite);
+
+        sf::Texture c2gs2;
+        switch (casinogelder2[1]) {
+        case 10000:
+            c2gs2.loadFromFile("res/Bilder/Assets/10000.png");
+        case 20000:
+            c2gs2.loadFromFile("res/Bilder/Assets/20000.png");
+        case 30000:
+            c2gs2.loadFromFile("res/Bilder/Assets/30000.png");
+        case 50000:
+            c2gs2.loadFromFile("res/Bilder/Assets/50000.png");
+        case 70000:
+            c2gs2.loadFromFile("res/Bilder/Assets/70000.png");
+        case 90000:
+            c2gs2.loadFromFile("res/Bilder/Assets/90000.png");
+        }
+        c2gs2.setSmooth(true);
+        sf::Sprite c2gs2sprite(c2gs2);
+        c2gs1sprite.setPosition(sf::Vector2f(225.0f, 55.0f));
+        c2gs2sprite.setScale(1.5f, 1.5f);
+        spiel.draw(c2gs2sprite);
+
+        sf::Texture c2gs3;
+        switch (casinogelder2[2]) {
+        case 10000:
+            c2gs3.loadFromFile("res/Bilder/Assets/10000.png");
+        case 20000:
+            c2gs3.loadFromFile("res/Bilder/Assets/20000.png");
+        case 30000:
+            c2gs3.loadFromFile("res/Bilder/Assets/30000.png");
+        case 50000:
+            c2gs3.loadFromFile("res/Bilder/Assets/50000.png");
+        case 70000:
+            c2gs3.loadFromFile("res/Bilder/Assets/70000.png");
+        case 90000:
+            c2gs3.loadFromFile("res/Bilder/Assets/90000.png");
+        }
+        c2gs3.setSmooth(true);
+        sf::Sprite c2gs3sprite(c2gs3);
+        c2gs1sprite.setPosition(sf::Vector2f(225.0f, 85.0f));
+        c2gs3sprite.setScale(1.5f, 1.5f);
+        spiel.draw(c2gs3sprite);
+
+        sf::Texture c2gs4;
+        switch (casinogelder2[3]) {
+        case 10000:
+            c2gs4.loadFromFile("res/Bilder/Assets/10000.png");
+        case 20000:
+            c2gs4.loadFromFile("res/Bilder/Assets/20000.png");
+        case 30000:
+            c2gs4.loadFromFile("res/Bilder/Assets/30000.png");
+        case 50000:
+            c2gs4.loadFromFile("res/Bilder/Assets/50000.png");
+        case 70000:
+            c2gs4.loadFromFile("res/Bilder/Assets/70000.png");
+        case 90000:
+            c2gs4.loadFromFile("res/Bilder/Assets/90000.png");
+        }
+        c2gs4.setSmooth(true);
+        sf::Sprite c2gs4sprite(c2gs4);
+        c2gs1sprite.setPosition(sf::Vector2f(225.0f, 115.0f));
+        c2gs4sprite.setScale(1.5f, 1.5f);
+        spiel.draw(c2gs4sprite);
+
+        sf::Texture c2gs5;
+        switch (casinogelder2[4]) {
+        case 10000:
+            c2gs5.loadFromFile("res/Bilder/Assets/10000.png");
+        case 20000:
+            c2gs5.loadFromFile("res/Bilder/Assets/20000.png");
+        case 30000:
+            c2gs5.loadFromFile("res/Bilder/Assets/30000.png");
+        case 50000:
+            c2gs5.loadFromFile("res/Bilder/Assets/50000.png");
+        case 70000:
+            c2gs5.loadFromFile("res/Bilder/Assets/70000.png");
+        case 90000:
+            c2gs5.loadFromFile("res/Bilder/Assets/90000.png");
+        }
+        c2gs5.setSmooth(true);
+        sf::Sprite c2gs5sprite(c2gs5);
+        c2gs1sprite.setPosition(sf::Vector2f(225.0f, 145.0f));
+        c2gs5sprite.setScale(1.5f, 1.5f);
+        spiel.draw(c2gs5sprite);
 
         //Würfelsprites zeichnen
         wuerfelsprite.setColor(farben[spielernummer]);
@@ -1900,7 +2109,7 @@ void Spielzeichnung() {
                 {
                     // mouse is on sprite!
                     //TODO: Setze Würfel auf Casino
-                    int wuerfelplatzwert = wuerfelwert1[0];
+                    int wuerfelplatzwert = wuerfelwert[0];
                     aufWuerfelGedrueckt = true;
                     switch (wuerfelplatzwert) {
                     case 1:
@@ -1920,7 +2129,7 @@ void Spielzeichnung() {
                 if (wuerfelcoords2.contains(mouse))
                 {
                     // mouse is on sprite!
-                    int wuerfelplatzwert = wuerfelwert1[1];
+                    int wuerfelplatzwert = wuerfelwert[1];
                     aufWuerfelGedrueckt = true;
                     switch (wuerfelplatzwert) {
                     case 1:
@@ -1941,7 +2150,7 @@ void Spielzeichnung() {
                 if (wuerfelcoords3.contains(mouse))
                 {
                     // mouse is on sprite!
-                    int wuerfelplatzwert = wuerfelwert1[2];
+                    int wuerfelplatzwert = wuerfelwert[2];
                     aufWuerfelGedrueckt = true;
                     switch (wuerfelplatzwert) {
                     case 1:
@@ -1962,7 +2171,7 @@ void Spielzeichnung() {
                 if (wuerfelcoords4.contains(mouse))
                 {
                     // mouse is on sprite!
-                    int wuerfelplatzwert = wuerfelwert1[3];
+                    int wuerfelplatzwert = wuerfelwert[3];
                     aufWuerfelGedrueckt = true;
                     switch (wuerfelplatzwert) {
                     case 1:
@@ -1983,7 +2192,7 @@ void Spielzeichnung() {
                 if (wuerfelcoords5.contains(mouse))
                 {
                     // mouse is on sprite!
-                    int wuerfelplatzwert = wuerfelwert1[4];
+                    int wuerfelplatzwert = wuerfelwert[4];
                     aufWuerfelGedrueckt = true;
                     switch (wuerfelplatzwert) {
                     case 1:
@@ -2004,7 +2213,7 @@ void Spielzeichnung() {
                 if (wuerfelcoords6.contains(mouse))
                 {
                     // mouse is on sprite!
-                    int wuerfelplatzwert = wuerfelwert1[5];
+                    int wuerfelplatzwert = wuerfelwert[5];
                     aufWuerfelGedrueckt = true;
                     switch (wuerfelplatzwert) {
                     case 1:
@@ -2025,7 +2234,7 @@ void Spielzeichnung() {
                 if (wuerfelcoords7.contains(mouse))
                 {
                     // mouse is on sprite!
-                    int wuerfelplatzwert = wuerfelwert1[6];
+                    int wuerfelplatzwert = wuerfelwert[6];
                     aufWuerfelGedrueckt = true;
                     switch (wuerfelplatzwert) {
                     case 1:
@@ -2046,7 +2255,7 @@ void Spielzeichnung() {
                 if (wuerfelcoords8.contains(mouse))
                 {
                     // mouse is on sprite!
-                    int wuerfelplatzwert = wuerfelwert1[7];
+                    int wuerfelplatzwert = wuerfelwert[7];
                     aufWuerfelGedrueckt = true;
                     switch (wuerfelplatzwert) {
                     case 1:
@@ -2072,7 +2281,7 @@ void Spielzeichnung() {
 }
 
 void neuesSpiel() { 
-    //Zeichenthread erstellen und starten
+    //Zeichenthread erstellen
     sf::Thread zeichenthread(&Spielzeichnung);
     zeichenthread.launch();
 
@@ -2088,7 +2297,7 @@ void neuesSpiel() {
                     //int k = 0;
                     int j = rand() % 6;
                     casinogelder1[k] = geldwerte[j];
-                    printf("Gerade gezogen: %i\n", casinogelder1[k]);
+                    printf("Gerade für Casino %i gezogen: %i\n",k , casinogelder1[k]);
                     summe1 += casinogelder1[k];
                     if (summe1 >= 50000) {
                         printf("Summe Casino 1: %i\n", summe1);
@@ -2178,11 +2387,11 @@ void neuesSpiel() {
             //Würfel würfeln
             for (int i = 0; i <= 7; i++) {
                 if (i > anzahlwuerfel - 1) {
-                    wuerfelwert1[i] = 8;
+                    wuerfelwert[i] = 8;
                 }
                 else {
-                    wuerfelwert1[i] = gen();
-                    cout << wuerfelwert1[i];
+                    wuerfelwert[i] = gen();
+                    cout << wuerfelwert[i];
                 }
             }
             printf("\n");
@@ -2192,12 +2401,12 @@ void neuesSpiel() {
             {
                 for (int j = i + 1; j <= 7; j++)
                 {
-                    if (wuerfelwert1[i] > wuerfelwert1[j])
+                    if (wuerfelwert[i] > wuerfelwert[j])
                     {
                         //-----Tausch-----
-                        int h = wuerfelwert1[i];
-                        wuerfelwert1[i] = wuerfelwert1[j];
-                        wuerfelwert1[j] = h;
+                        int h = wuerfelwert[i];
+                        wuerfelwert[i] = wuerfelwert[j];
+                        wuerfelwert[j] = h;
                     }
                 }
             }
