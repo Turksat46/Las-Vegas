@@ -3,6 +3,8 @@ Als risikofreudiger Zocker in der Glitzerwelt von Las Vegas würfeln die Spieler
 Dieses Programm wird in C++ und mit Bibliotheken von Drittanbietern entwickelt.
 Für weitere Hilfe einfach https://github.com/Turksat46/Las-Vegas/wiki aufrufen
 
+Außerdem gibt es die Aufgabenliste [Hier](https://github.com/Turksat46/Las-Vegas/projects/1)
+
 ## Ordner
 ### programm: In diesem Ordner befindet sich das eigentliche Programm, dass dem Nutzer weitergegeben wird.
 ### Projekt für VS: In diesem Ordner befindet sich alles für den Projektaufbau mithilfe von Visual Studio 2019.
