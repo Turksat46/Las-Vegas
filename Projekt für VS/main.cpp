@@ -1488,6 +1488,8 @@ void setzeWürfel(int spieler, int wert) {
                 }
             }
         }
+        //Gesamtwürfelzahl des Spielers ändern
+        wuerfelanzahl[spielernummer] -= anzahl;
     }
 }
 
