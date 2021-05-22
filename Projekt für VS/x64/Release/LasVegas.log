@@ -49,17 +49,17 @@ C:\Users\Kerem Okumus\source\repos\Las-Vegas\Projekt für VS\main.cpp(855,39): w
 C:\Users\Kerem Okumus\source\repos\Las-Vegas\Projekt für VS\main.cpp(883,39): warning C4305: "Argument": Verkürzung von "double" in "float"
 C:\Users\Kerem Okumus\source\repos\Las-Vegas\Projekt für VS\main.cpp(911,39): warning C4305: "Argument": Verkürzung von "double" in "float"
 C:\Users\Kerem Okumus\source\repos\Las-Vegas\Projekt für VS\main.cpp(939,39): warning C4305: "Argument": Verkürzung von "double" in "float"
-C:\Users\Kerem Okumus\source\repos\Las-Vegas\Projekt für VS\main.cpp(1429,42): warning C4305: "Argument": Verkürzung von "double" in "float"
-C:\Users\Kerem Okumus\source\repos\Las-Vegas\Projekt für VS\main.cpp(1457,43): warning C4305: "Argument": Verkürzung von "double" in "float"
-C:\Users\Kerem Okumus\source\repos\Las-Vegas\Projekt für VS\main.cpp(1485,43): warning C4305: "Argument": Verkürzung von "double" in "float"
-C:\Users\Kerem Okumus\source\repos\Las-Vegas\Projekt für VS\main.cpp(1513,43): warning C4305: "Argument": Verkürzung von "double" in "float"
-C:\Users\Kerem Okumus\source\repos\Las-Vegas\Projekt für VS\main.cpp(1541,43): warning C4305: "Argument": Verkürzung von "double" in "float"
-C:\Users\Kerem Okumus\source\repos\Las-Vegas\Projekt für VS\main.cpp(1569,43): warning C4305: "Argument": Verkürzung von "double" in "float"
-C:\Users\Kerem Okumus\source\repos\Las-Vegas\Projekt für VS\main.cpp(1597,43): warning C4305: "Argument": Verkürzung von "double" in "float"
-C:\Users\Kerem Okumus\source\repos\Las-Vegas\Projekt für VS\main.cpp(1625,43): warning C4305: "Argument": Verkürzung von "double" in "float"
-C:\Users\Kerem Okumus\source\repos\Las-Vegas\Projekt für VS\main.cpp(2887,19): warning C4244: "Argument": Konvertierung von "time_t" in "unsigned int", möglicher Datenverlust
+C:\Users\Kerem Okumus\source\repos\Las-Vegas\Projekt für VS\main.cpp(1600,42): warning C4305: "Argument": Verkürzung von "double" in "float"
+C:\Users\Kerem Okumus\source\repos\Las-Vegas\Projekt für VS\main.cpp(1628,43): warning C4305: "Argument": Verkürzung von "double" in "float"
+C:\Users\Kerem Okumus\source\repos\Las-Vegas\Projekt für VS\main.cpp(1656,43): warning C4305: "Argument": Verkürzung von "double" in "float"
+C:\Users\Kerem Okumus\source\repos\Las-Vegas\Projekt für VS\main.cpp(1684,43): warning C4305: "Argument": Verkürzung von "double" in "float"
+C:\Users\Kerem Okumus\source\repos\Las-Vegas\Projekt für VS\main.cpp(1712,43): warning C4305: "Argument": Verkürzung von "double" in "float"
+C:\Users\Kerem Okumus\source\repos\Las-Vegas\Projekt für VS\main.cpp(1740,43): warning C4305: "Argument": Verkürzung von "double" in "float"
+C:\Users\Kerem Okumus\source\repos\Las-Vegas\Projekt für VS\main.cpp(1768,43): warning C4305: "Argument": Verkürzung von "double" in "float"
+C:\Users\Kerem Okumus\source\repos\Las-Vegas\Projekt für VS\main.cpp(1796,43): warning C4305: "Argument": Verkürzung von "double" in "float"
+C:\Users\Kerem Okumus\source\repos\Las-Vegas\Projekt für VS\main.cpp(3099,19): warning C4244: "Argument": Konvertierung von "time_t" in "unsigned int", möglicher Datenverlust
   Code wird generiert.
-  1 of 217 functions ( 0.5%) were compiled, the rest were copied from previous compilation.
+  1 of 219 functions ( 0.5%) were compiled, the rest were copied from previous compilation.
     0 functions were new in current compilation
     2 functions had inline decision re-evaluated but remain unchanged
   Codegenerierung ist abgeschlossen.

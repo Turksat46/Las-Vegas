@@ -50,7 +50,7 @@ int summe6 = 0;
 int wuerfelanzahl[3] = { 8, 8, 8 };
 int wuerfelwert[8];
 int spielernummer;
-int ausgewählteAuge = 0;
+int ausgewählteAuge[2] = { 0,0 }; //Ein leeres Array erstellen für den ersten Index, welcher Würfel und der zweite Index, wie viele.
 Color farben[3] = { Color::Cyan, Color::Green, Color::Yellow };
 string subtextstring;
 bool aufWuerfelGedrueckt = false;
@@ -1352,6 +1352,16 @@ void Pausenmenu() {
         neuesspielbutton.setPosition({ 270.0f, 100.0f });
         neuesspielbutton.drawTo(pause);
 
+        Button speichernbutton("Speichern", { 200, 100 }, 30, sf::Color::Cyan, sf::Color::Black);
+        speichernbutton.setFont(font);
+        speichernbutton.setPosition({ 20.0f, 225.0f });
+        speichernbutton.drawTo(pause);
+
+        Button einstellungsbutton("Einstellungen", { 200, 100 }, 30, sf::Color::Yellow, sf::Color::Black);
+        einstellungsbutton.setFont(font);
+        einstellungsbutton.setPosition({ 270.0f, 225.0f });
+        einstellungsbutton.drawTo(pause);
+
         Button spielladenbutton("Spiel laden", { 200, 100 }, 30, sf::Color(0, 162, 232, 255), sf::Color::Black);
         spielladenbutton.setFont(font);
         spielladenbutton.setPosition({ 20.0f, 350.0f });
@@ -1371,6 +1381,167 @@ void Pausenmenu() {
                 }
             }
         }
+    }
+}
+
+//Wichtige Spielfunktionen
+//Dient zur Aussortierung von Würfel, auf den geklickt wurde
+void setzeWürfel(int spieler, int wert) {
+    //Prüfen, ob schon ein Würfel angeklickt wurde!
+    if (aufWuerfelGedrueckt == false) {
+        //Da auf ein Würfel gedrückt wurde, würde ich auch lieber den Bool dafür auf true setzen XD
+        aufWuerfelGedrueckt = true;
+
+        //Variable für das Zählen der Würfel, mit den gleichen Wert
+        int anzahl = 0;
+        switch (wert) {
+        case 1:
+            //Schaue nach weiteren Würfeln gleiche Wertes
+            //Schleife durch jede Zahl durch
+            for (int i = 0; i <= 7; i++) {
+                if (wuerfelwert[i] == wert) {
+                    anzahl++;
+                    //Setze den Wert auf Acht, damit der Würfel verschwindet
+                    wuerfelwert[i] = 8;
+                }
+            }
+            ausgewählteAuge[0] = wert;
+            ausgewählteAuge[1] = anzahl;
+            break;
+        case 2:
+            //Schaue nach weiteren Würfeln gleiche Wertes
+            //Schleife durch jede Zahl durch
+            for (int i = 0; i <= 7; i++) {
+                if (wuerfelwert[i] == wert) {
+                    anzahl++;
+                    //Setze den Wert auf Acht, damit der Würfel verschwindet
+                    wuerfelwert[i] = 8;
+                }
+            }
+            ausgewählteAuge[0] = wert;
+            ausgewählteAuge[1] = anzahl;
+            break;
+        case 3:
+            //Schaue nach weiteren Würfeln gleiche Wertes
+            //Schleife durch jede Zahl durch
+            for (int i = 0; i <= 7; i++) {
+                if (wuerfelwert[i] == wert) {
+                    anzahl++;
+                    //Setze den Wert auf Acht, damit der Würfel verschwindet
+                    wuerfelwert[i] = 8;
+                }
+            }
+            ausgewählteAuge[0] = wert;
+            ausgewählteAuge[1] = anzahl;
+            break;
+        case 4:
+            //Schaue nach weiteren Würfeln gleiche Wertes
+            //Schleife durch jede Zahl durch
+            for (int i = 0; i <= 7; i++) {
+                if (wuerfelwert[i] == wert) {
+                    anzahl++;
+                    //Setze den Wert auf Acht, damit der Würfel verschwindet
+                    wuerfelwert[i] = 8;
+                }
+            }
+            ausgewählteAuge[0] = wert;
+            ausgewählteAuge[1] = anzahl;
+            break;
+        case 5:
+            //Schaue nach weiteren Würfeln gleiche Wertes
+            //Schleife durch jede Zahl durch
+            for (int i = 0; i <= 7; i++) {
+                if (wuerfelwert[i] == wert) {
+                    anzahl++;
+                    //Setze den Wert auf Acht, damit der Würfel verschwindet
+                    wuerfelwert[i] = 8;
+                }
+            }
+            ausgewählteAuge[0] = wert;
+            ausgewählteAuge[1] = anzahl;
+            break;
+        case 6:
+            //Schaue nach weiteren Würfeln gleiche Wertes
+            //Schleife durch jede Zahl durch
+            for (int i = 0; i <= 7; i++) {
+                if (wuerfelwert[i] == wert) {
+                    anzahl++;
+                    //Setze den Wert auf Acht, damit der Würfel verschwindet
+                    wuerfelwert[i] = 8;
+                }
+            }
+            ausgewählteAuge[0] = wert;
+            ausgewählteAuge[1] = anzahl;
+            break;
+        }
+        //Abschließende Sortierung der Würfel starten und anzeigen
+        for (int i = 0; i <= 6; i++)
+        {
+            for (int j = i + 1; j <= 7; j++)
+            {
+                if (wuerfelwert[i] > wuerfelwert[j])
+                {
+                    //-----Tausch-----
+                    int h = wuerfelwert[i];
+                    wuerfelwert[i] = wuerfelwert[j];
+                    wuerfelwert[j] = h;
+                }
+            }
+        }
+    }
+}
+
+void setzeSchrittZurück() {
+    //Prüfen, ob die Funktion überhaupt was bringen würde
+    if(aufWuerfelGedrueckt == true){
+        aufWuerfelGedrueckt = false;
+        int wert = ausgewählteAuge[0];
+        int anzahl = ausgewählteAuge[1];
+
+        //Einsetzungsverfahren
+        for (int i = 0; i <= 7; i++) {
+            if (wuerfelwert[i] == 8) {
+                if (anzahl != 0) {
+                    printf("Wuerfel wird zur%cckgesetzt!", (char)129);
+                    wuerfelwert[i] = wert;
+                    anzahl--;
+                }
+            }
+        }
+
+        //Würfel sortieren
+        for (int i = 0; i <= 6; i++)
+        {
+            for (int j = i + 1; j <= 7; j++)
+            {
+                if (wuerfelwert[i] > wuerfelwert[j])
+                {
+                    //-----Tausch-----
+                    int h = wuerfelwert[i];
+                    wuerfelwert[i] = wuerfelwert[j];
+                    wuerfelwert[j] = h;
+                }
+            }
+        }
+
+        //Abschließende Sortierung der Würfel starten und anzeigen
+        for (int i = 0; i <= 6; i++)
+        {
+            for (int j = i + 1; j <= 7; j++)
+            {
+                if (wuerfelwert[i] > wuerfelwert[j])
+                {
+                    //-----Tausch-----
+                    int h = wuerfelwert[i];
+                    wuerfelwert[i] = wuerfelwert[j];
+                    wuerfelwert[j] = h;
+                }
+            }
+        }
+
+        //Array zurücksetzen
+        ausgewählteAuge[0] = 0;
+        ausgewählteAuge[1] = 0;
     }
 }
 
@@ -2068,7 +2239,7 @@ void Spielzeichnung() {
         }
         c2gs4.setSmooth(true);
         sf::Sprite c2gs4sprite(c2gs4);
-        c2gs1sprite.setPosition(sf::Vector2f(225.0f, 115.0f));
+        c2gs4sprite.setPosition(sf::Vector2f(225.0f, 115.0f));
         c2gs4sprite.setScale(1.5f, 1.5f);
         spiel.draw(c2gs4sprite);
 
@@ -2677,11 +2848,12 @@ void Spielzeichnung() {
                 if (donebutton.isMouseOver(spiel)) {
                     if (aufWuerfelGedrueckt == true) {
                         zugbeendet = true;
+                        aufWuerfelGedrueckt = false;
                     }
                 }
 
                 if (undobutton.isMouseOver(spiel)) { 
-                    aufWuerfelGedrueckt = false;
+                    setzeSchrittZurück();
                 }
             }
 
@@ -2706,19 +2878,24 @@ void Spielzeichnung() {
                     // mouse is on sprite!
                     //TODO: Setze Würfel auf Casino
                     int wuerfelplatzwert = wuerfelwert[0];
-                    aufWuerfelGedrueckt = true;
                     switch (wuerfelplatzwert) {
                     case 1:
+                        setzeWürfel(spielernummer, 1);
                         break;
                     case 2:
+                        setzeWürfel(spielernummer, 2);
                         break;
                     case 3:
+                        setzeWürfel(spielernummer, 3);
                         break;
                     case 4:
+                        setzeWürfel(spielernummer, 4);
                         break;
                     case 5:
+                        setzeWürfel(spielernummer, 5);
                         break;
                     case 6:
+                        setzeWürfel(spielernummer, 6);
                         break;
                     }
                 }
@@ -2726,19 +2903,24 @@ void Spielzeichnung() {
                 {
                     // mouse is on sprite!
                     int wuerfelplatzwert = wuerfelwert[1];
-                    aufWuerfelGedrueckt = true;
                     switch (wuerfelplatzwert) {
                     case 1:
+                        setzeWürfel(spielernummer, 1);
                         break;
                     case 2:
+                        setzeWürfel(spielernummer, 2);
                         break;
                     case 3:
+                        setzeWürfel(spielernummer, 3);
                         break;
                     case 4:
+                        setzeWürfel(spielernummer, 4);
                         break;
                     case 5:
+                        setzeWürfel(spielernummer, 5);
                         break;
                     case 6:
+                        setzeWürfel(spielernummer, 6);
                         break;
                     }
 
@@ -2747,19 +2929,24 @@ void Spielzeichnung() {
                 {
                     // mouse is on sprite!
                     int wuerfelplatzwert = wuerfelwert[2];
-                    aufWuerfelGedrueckt = true;
                     switch (wuerfelplatzwert) {
                     case 1:
+                        setzeWürfel(spielernummer, 1);
                         break;
                     case 2:
+                        setzeWürfel(spielernummer, 2);
                         break;
                     case 3:
+                        setzeWürfel(spielernummer, 3);
                         break;
                     case 4:
+                        setzeWürfel(spielernummer, 4);
                         break;
                     case 5:
+                        setzeWürfel(spielernummer, 5);
                         break;
                     case 6:
+                        setzeWürfel(spielernummer, 6);
                         break;
                     }
 
@@ -2768,19 +2955,24 @@ void Spielzeichnung() {
                 {
                     // mouse is on sprite!
                     int wuerfelplatzwert = wuerfelwert[3];
-                    aufWuerfelGedrueckt = true;
                     switch (wuerfelplatzwert) {
                     case 1:
+                        setzeWürfel(spielernummer, 1);
                         break;
                     case 2:
+                        setzeWürfel(spielernummer, 2);
                         break;
                     case 3:
+                        setzeWürfel(spielernummer, 3);
                         break;
                     case 4:
+                        setzeWürfel(spielernummer, 4);
                         break;
                     case 5:
+                        setzeWürfel(spielernummer, 5);
                         break;
                     case 6:
+                        setzeWürfel(spielernummer, 6);
                         break;
                     }
 
@@ -2789,19 +2981,24 @@ void Spielzeichnung() {
                 {
                     // mouse is on sprite!
                     int wuerfelplatzwert = wuerfelwert[4];
-                    aufWuerfelGedrueckt = true;
                     switch (wuerfelplatzwert) {
                     case 1:
+                        setzeWürfel(spielernummer, 1);
                         break;
                     case 2:
+                        setzeWürfel(spielernummer, 2);
                         break;
                     case 3:
+                        setzeWürfel(spielernummer, 3);
                         break;
                     case 4:
+                        setzeWürfel(spielernummer, 4);
                         break;
                     case 5:
+                        setzeWürfel(spielernummer, 5);
                         break;
                     case 6:
+                        setzeWürfel(spielernummer, 6);
                         break;
                     }
 
@@ -2810,19 +3007,24 @@ void Spielzeichnung() {
                 {
                     // mouse is on sprite!
                     int wuerfelplatzwert = wuerfelwert[5];
-                    aufWuerfelGedrueckt = true;
                     switch (wuerfelplatzwert) {
                     case 1:
+                        setzeWürfel(spielernummer, 1);
                         break;
                     case 2:
+                        setzeWürfel(spielernummer, 2);
                         break;
                     case 3:
+                        setzeWürfel(spielernummer, 3);
                         break;
                     case 4:
+                        setzeWürfel(spielernummer, 4);
                         break;
                     case 5:
+                        setzeWürfel(spielernummer, 5);
                         break;
                     case 6:
+                        setzeWürfel(spielernummer, 6);
                         break;
                     }
 
@@ -2831,19 +3033,24 @@ void Spielzeichnung() {
                 {
                     // mouse is on sprite!
                     int wuerfelplatzwert = wuerfelwert[6];
-                    aufWuerfelGedrueckt = true;
                     switch (wuerfelplatzwert) {
                     case 1:
+                        setzeWürfel(spielernummer, 1);
                         break;
                     case 2:
+                        setzeWürfel(spielernummer, 2);
                         break;
                     case 3:
+                        setzeWürfel(spielernummer, 3);
                         break;
                     case 4:
+                        setzeWürfel(spielernummer, 4);
                         break;
                     case 5:
+                        setzeWürfel(spielernummer, 5);
                         break;
                     case 6:
+                        setzeWürfel(spielernummer, 6);
                         break;
                     }
 
@@ -2852,19 +3059,24 @@ void Spielzeichnung() {
                 {
                     // mouse is on sprite!
                     int wuerfelplatzwert = wuerfelwert[7];
-                    aufWuerfelGedrueckt = true;
                     switch (wuerfelplatzwert) {
                     case 1:
+                        setzeWürfel(spielernummer, 1);
                         break;
                     case 2:
+                        setzeWürfel(spielernummer, 2);
                         break;
                     case 3:
+                        setzeWürfel(spielernummer, 3);
                         break;
                     case 4:
+                        setzeWürfel(spielernummer, 4);
                         break;
                     case 5:
+                        setzeWürfel(spielernummer, 5);
                         break;
                     case 6:
+                        setzeWürfel(spielernummer, 6);
                         break;
                     }
 
@@ -2972,9 +3184,9 @@ void neuesSpiel() {
 
         //Geldscheine sortieren
         //Casino 1
-        for (int i = 0; i <= 4; i++)
+        for (int i = 0; i <= 3; i++)
         {
-            for (int j = i + 1; j <= 5; j++)
+            for (int j = i + 1; j <= 4; j++)
             {
                 if (casinogelder1[i] < casinogelder1[j])
                 {
@@ -2987,9 +3199,9 @@ void neuesSpiel() {
         }
 
         //Casino 2
-        for (int i = 0; i <= 4; i++)
+        for (int i = 0; i <= 3; i++)
         {
-            for (int j = i + 1; j <= 5; j++)
+            for (int j = i + 1; j <= 4; j++)
             {
                 if (casinogelder2[i] < casinogelder2[j])
                 {
@@ -3002,9 +3214,9 @@ void neuesSpiel() {
         }
 
         //Casino 3
-        for (int i = 0; i <= 4; i++)
+        for (int i = 0; i <= 3; i++)
         {
-            for (int j = i + 1; j <= 5; j++)
+            for (int j = i + 1; j <= 4; j++)
             {
                 if (casinogelder3[i] < casinogelder3[j])
                 {
@@ -3017,9 +3229,9 @@ void neuesSpiel() {
         }
 
         //Casino 4
-        for (int i = 0; i <= 4; i++)
+        for (int i = 0; i <= 3; i++)
         {
-            for (int j = i + 1; j <= 5; j++)
+            for (int j = i + 1; j <= 4; j++)
             {
                 if (casinogelder4[i] < casinogelder4[j])
                 {
@@ -3032,9 +3244,9 @@ void neuesSpiel() {
         }
 
         //Casino 5
-        for (int i = 0; i <= 4; i++)
+        for (int i = 0; i <= 3; i++)
         {
-            for (int j = i + 1; j <= 5; j++)
+            for (int j = i + 1; j <= 4; j++)
             {
                 if (casinogelder5[i] < casinogelder5[j])
                 {
@@ -3047,9 +3259,9 @@ void neuesSpiel() {
         }
 
         //Casino 6
-        for (int i = 0; i <= 4; i++)
+        for (int i = 0; i <= 3; i++)
         {
-            for (int j = i + 1; j <= 5; j++)
+            for (int j = i + 1; j <= 4; j++)
             {
                 if (casinogelder6[i] < casinogelder6[j])
                 {
@@ -3060,6 +3272,7 @@ void neuesSpiel() {
                 }
             }
         }
+
 
         for (int spieler = 0; spieler <= 2; spieler++) {
             //Temporäre Variable fürs Überprüfen, ob ein Spieler kein Würfel hat
