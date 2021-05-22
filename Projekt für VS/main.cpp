@@ -1829,20 +1829,26 @@ void Spielzeichnung() {
         //
         //Geldscheine
         sf::Texture c1gs1;
-        printf("Wert: %i", casinogelder1[0]);
-        switch (casinogelder1[0]) {
+        int geldscheinc1gs1 = casinogelder1[0];
+        switch (geldscheinc1gs1) {
             case 10000:
                 c1gs1.loadFromFile("res/Bilder/Assets/10000.png");
+                break;
             case 20000:
                 c1gs1.loadFromFile("res/Bilder/Assets/20000.png");
+                break;
             case 30000:
                 c1gs1.loadFromFile("res/Bilder/Assets/30000.png");
+                break;
             case 50000:
                 c1gs1.loadFromFile("res/Bilder/Assets/50000.png");
+                break;
             case 70000:
                 c1gs1.loadFromFile("res/Bilder/Assets/70000.png");
+                break;
             case 90000:
                 c1gs1.loadFromFile("res/Bilder/Assets/90000.png");
+                break;
         }
         c1gs1.setSmooth(true);
         sf::Sprite c1gs1sprite(c1gs1);
@@ -1851,20 +1857,25 @@ void Spielzeichnung() {
         spiel.draw(c1gs1sprite);
 
         sf::Texture c1gs2;
-        printf("Wert: %i", casinogelder1[1]);
         switch (casinogelder1[1]) {
         case 10000:
             c1gs2.loadFromFile("res/Bilder/Assets/10000.png");
+            break;
         case 20000:
             c1gs2.loadFromFile("res/Bilder/Assets/20000.png");
+            break;
         case 30000:
             c1gs2.loadFromFile("res/Bilder/Assets/30000.png");
+            break;
         case 50000:
             c1gs2.loadFromFile("res/Bilder/Assets/50000.png");
+            break;
         case 70000:
             c1gs2.loadFromFile("res/Bilder/Assets/70000.png");
+            break;
         case 90000:
             c1gs2.loadFromFile("res/Bilder/Assets/90000.png");
+            break;
         }
         c1gs2.setSmooth(true);
         sf::Sprite c1gs2sprite(c1gs2);
@@ -1873,20 +1884,25 @@ void Spielzeichnung() {
         spiel.draw(c1gs2sprite);
 
         sf::Texture c1gs3;
-        printf("Wert: %i", casinogelder1[2]);
         switch (casinogelder1[2]) {
         case 10000:
             c1gs3.loadFromFile("res/Bilder/Assets/10000.png");
+            break;
         case 20000:
             c1gs3.loadFromFile("res/Bilder/Assets/20000.png");
+            break;
         case 30000:
             c1gs3.loadFromFile("res/Bilder/Assets/30000.png");
+            break;
         case 50000:
             c1gs3.loadFromFile("res/Bilder/Assets/50000.png");
+            break;
         case 70000:
             c1gs3.loadFromFile("res/Bilder/Assets/70000.png");
+            break;
         case 90000:
             c1gs3.loadFromFile("res/Bilder/Assets/90000.png");
+            break;
         }
         c1gs3.setSmooth(true);
         sf::Sprite c1gs3sprite(c1gs3);
@@ -1895,20 +1911,25 @@ void Spielzeichnung() {
         spiel.draw(c1gs3sprite);
 
         sf::Texture c1gs4;
-        printf("Wert: %i", casinogelder1[3]);
         switch (casinogelder1[3]) {
         case 10000:
             c1gs4.loadFromFile("res/Bilder/Assets/10000.png");
+            break;
         case 20000:
             c1gs4.loadFromFile("res/Bilder/Assets/20000.png");
+            break;
         case 30000:
             c1gs4.loadFromFile("res/Bilder/Assets/30000.png");
+            break;
         case 50000:
             c1gs4.loadFromFile("res/Bilder/Assets/50000.png");
+            break;
         case 70000:
             c1gs4.loadFromFile("res/Bilder/Assets/70000.png");
+            break;
         case 90000:
             c1gs4.loadFromFile("res/Bilder/Assets/90000.png");
+            break;
         }
         c1gs4.setSmooth(true);
         sf::Sprite c1gs4sprite(c1gs4);
@@ -1917,20 +1938,25 @@ void Spielzeichnung() {
         spiel.draw(c1gs4sprite);
 
         sf::Texture c1gs5;
-        printf("Wert: %i", casinogelder1[4]);
         switch (casinogelder1[4]) {
         case 10000:
             c1gs5.loadFromFile("res/Bilder/Assets/10000.png");
+            break;
         case 20000:
             c1gs5.loadFromFile("res/Bilder/Assets/20000.png");
+            break;
         case 30000:
             c1gs5.loadFromFile("res/Bilder/Assets/30000.png");
+            break;
         case 50000:
             c1gs5.loadFromFile("res/Bilder/Assets/50000.png");
+            break;
         case 70000:
             c1gs5.loadFromFile("res/Bilder/Assets/70000.png");
+            break;
         case 90000:
             c1gs5.loadFromFile("res/Bilder/Assets/90000.png");
+            break;
         }
         c1gs5.setSmooth(true);
         sf::Sprite c1gs5sprite(c1gs5);
@@ -1942,16 +1968,22 @@ void Spielzeichnung() {
         switch (casinogelder2[0]) {
         case 10000:
             c2gs1.loadFromFile("res/Bilder/Assets/10000.png");
+            break;
         case 20000:
             c2gs1.loadFromFile("res/Bilder/Assets/20000.png");
+            break;
         case 30000:
             c2gs1.loadFromFile("res/Bilder/Assets/30000.png");
+            break;
         case 50000:
             c2gs1.loadFromFile("res/Bilder/Assets/50000.png");
+            break;
         case 70000:
             c2gs1.loadFromFile("res/Bilder/Assets/70000.png");
+            break;
         case 90000:
             c2gs1.loadFromFile("res/Bilder/Assets/90000.png");
+            break;
         }
         c2gs1.setSmooth(true);
         sf::Sprite c2gs1sprite(c2gs1);
@@ -1963,20 +1995,26 @@ void Spielzeichnung() {
         switch (casinogelder2[1]) {
         case 10000:
             c2gs2.loadFromFile("res/Bilder/Assets/10000.png");
+            break;
         case 20000:
             c2gs2.loadFromFile("res/Bilder/Assets/20000.png");
+            break;
         case 30000:
             c2gs2.loadFromFile("res/Bilder/Assets/30000.png");
+            break;
         case 50000:
             c2gs2.loadFromFile("res/Bilder/Assets/50000.png");
+            break;
         case 70000:
             c2gs2.loadFromFile("res/Bilder/Assets/70000.png");
+            break;
         case 90000:
             c2gs2.loadFromFile("res/Bilder/Assets/90000.png");
+            break;
         }
         c2gs2.setSmooth(true);
         sf::Sprite c2gs2sprite(c2gs2);
-        c2gs1sprite.setPosition(sf::Vector2f(225.0f, 55.0f));
+        c2gs2sprite.setPosition(sf::Vector2f(225.0f, 55.0f));
         c2gs2sprite.setScale(1.5f, 1.5f);
         spiel.draw(c2gs2sprite);
 
@@ -1984,20 +2022,26 @@ void Spielzeichnung() {
         switch (casinogelder2[2]) {
         case 10000:
             c2gs3.loadFromFile("res/Bilder/Assets/10000.png");
+            break;
         case 20000:
             c2gs3.loadFromFile("res/Bilder/Assets/20000.png");
+            break;
         case 30000:
             c2gs3.loadFromFile("res/Bilder/Assets/30000.png");
+            break;
         case 50000:
             c2gs3.loadFromFile("res/Bilder/Assets/50000.png");
+            break;
         case 70000:
             c2gs3.loadFromFile("res/Bilder/Assets/70000.png");
+            break;
         case 90000:
             c2gs3.loadFromFile("res/Bilder/Assets/90000.png");
+            break;
         }
         c2gs3.setSmooth(true);
         sf::Sprite c2gs3sprite(c2gs3);
-        c2gs1sprite.setPosition(sf::Vector2f(225.0f, 85.0f));
+        c2gs3sprite.setPosition(sf::Vector2f(225.0f, 85.0f));
         c2gs3sprite.setScale(1.5f, 1.5f);
         spiel.draw(c2gs3sprite);
 
@@ -2005,16 +2049,22 @@ void Spielzeichnung() {
         switch (casinogelder2[3]) {
         case 10000:
             c2gs4.loadFromFile("res/Bilder/Assets/10000.png");
+            break;
         case 20000:
             c2gs4.loadFromFile("res/Bilder/Assets/20000.png");
+            break;
         case 30000:
             c2gs4.loadFromFile("res/Bilder/Assets/30000.png");
+            break;
         case 50000:
             c2gs4.loadFromFile("res/Bilder/Assets/50000.png");
+            break;
         case 70000:
             c2gs4.loadFromFile("res/Bilder/Assets/70000.png");
+            break;
         case 90000:
             c2gs4.loadFromFile("res/Bilder/Assets/90000.png");
+            break;
         }
         c2gs4.setSmooth(true);
         sf::Sprite c2gs4sprite(c2gs4);
@@ -2026,22 +2076,568 @@ void Spielzeichnung() {
         switch (casinogelder2[4]) {
         case 10000:
             c2gs5.loadFromFile("res/Bilder/Assets/10000.png");
+            break;
         case 20000:
             c2gs5.loadFromFile("res/Bilder/Assets/20000.png");
+            break;
         case 30000:
             c2gs5.loadFromFile("res/Bilder/Assets/30000.png");
+            break;
         case 50000:
             c2gs5.loadFromFile("res/Bilder/Assets/50000.png");
+            break;
         case 70000:
             c2gs5.loadFromFile("res/Bilder/Assets/70000.png");
+            break;
         case 90000:
             c2gs5.loadFromFile("res/Bilder/Assets/90000.png");
+            break;
         }
         c2gs5.setSmooth(true);
         sf::Sprite c2gs5sprite(c2gs5);
-        c2gs1sprite.setPosition(sf::Vector2f(225.0f, 145.0f));
+        c2gs5sprite.setPosition(sf::Vector2f(225.0f, 145.0f));
         c2gs5sprite.setScale(1.5f, 1.5f);
         spiel.draw(c2gs5sprite);
+
+        sf::Texture c3gs1;
+        switch (casinogelder3[0]) {
+        case 10000:
+            c3gs1.loadFromFile("res/Bilder/Assets/10000.png");
+            break;
+        case 20000:
+            c3gs1.loadFromFile("res/Bilder/Assets/20000.png");
+            break;
+        case 30000:
+            c3gs1.loadFromFile("res/Bilder/Assets/30000.png");
+            break;
+        case 50000:
+            c3gs1.loadFromFile("res/Bilder/Assets/50000.png");
+            break;
+        case 70000:
+            c3gs1.loadFromFile("res/Bilder/Assets/70000.png");
+            break;
+        case 90000:
+            c3gs1.loadFromFile("res/Bilder/Assets/90000.png");
+            break;
+        }
+        c3gs1.setSmooth(true);
+        sf::Sprite c3gs1sprite(c3gs1);
+        c3gs1sprite.setPosition(sf::Vector2f(425.0f, 25.0f));
+        c3gs1sprite.setScale(1.5f, 1.5f);
+        spiel.draw(c3gs1sprite);
+
+        sf::Texture c3gs2;
+        switch (casinogelder3[1]) {
+        case 10000:
+            c3gs2.loadFromFile("res/Bilder/Assets/10000.png");
+            break;
+        case 20000:
+            c3gs2.loadFromFile("res/Bilder/Assets/20000.png");
+            break;
+        case 30000:
+            c3gs2.loadFromFile("res/Bilder/Assets/30000.png");
+            break;
+        case 50000:
+            c3gs2.loadFromFile("res/Bilder/Assets/50000.png");
+            break;
+        case 70000:
+            c3gs2.loadFromFile("res/Bilder/Assets/70000.png");
+            break;
+        case 90000:
+            c3gs2.loadFromFile("res/Bilder/Assets/90000.png");
+            break;
+        }
+        c3gs2.setSmooth(true);
+        sf::Sprite c3gs2sprite(c3gs2);
+        c3gs2sprite.setPosition(sf::Vector2f(425.0f, 55.0f));
+        c3gs2sprite.setScale(1.5f, 1.5f);
+        spiel.draw(c3gs2sprite);
+
+        sf::Texture c3gs3;
+        switch (casinogelder3[2]) {
+        case 10000:
+            c3gs3.loadFromFile("res/Bilder/Assets/10000.png");
+            break;
+        case 20000:
+            c3gs3.loadFromFile("res/Bilder/Assets/20000.png");
+            break;
+        case 30000:
+            c3gs3.loadFromFile("res/Bilder/Assets/30000.png");
+            break;
+        case 50000:
+            c3gs3.loadFromFile("res/Bilder/Assets/50000.png");
+            break;
+        case 70000:
+            c3gs3.loadFromFile("res/Bilder/Assets/70000.png");
+            break;
+        case 90000:
+            c3gs3.loadFromFile("res/Bilder/Assets/90000.png");
+            break;
+        }
+        c3gs3.setSmooth(true);
+        sf::Sprite c3gs3sprite(c3gs3);
+        c3gs3sprite.setPosition(sf::Vector2f(425.0f, 85.0f));
+        c3gs3sprite.setScale(1.5f, 1.5f);
+        spiel.draw(c3gs3sprite);
+
+        sf::Texture c3gs4;
+        switch (casinogelder3[3]) {
+        case 10000:
+            c3gs4.loadFromFile("res/Bilder/Assets/10000.png");
+            break;
+        case 20000:
+            c3gs4.loadFromFile("res/Bilder/Assets/20000.png");
+            break;
+        case 30000:
+            c3gs4.loadFromFile("res/Bilder/Assets/30000.png");
+            break;
+        case 50000:
+            c3gs4.loadFromFile("res/Bilder/Assets/50000.png");
+            break;
+        case 70000:
+            c3gs4.loadFromFile("res/Bilder/Assets/70000.png");
+            break;
+        case 90000:
+            c3gs4.loadFromFile("res/Bilder/Assets/90000.png");
+            break;
+        }
+        c3gs4.setSmooth(true);
+        sf::Sprite c3gs4sprite(c3gs4);
+        c3gs4sprite.setPosition(sf::Vector2f(425.0f, 115.0f));
+        c3gs4sprite.setScale(1.5f, 1.5f);
+        spiel.draw(c3gs4sprite);
+
+        sf::Texture c3gs5;
+        switch (casinogelder3[4]) {
+        case 10000:
+            c3gs5.loadFromFile("res/Bilder/Assets/10000.png");
+            break;
+        case 20000:
+            c3gs5.loadFromFile("res/Bilder/Assets/20000.png");
+            break;
+        case 30000:
+            c3gs5.loadFromFile("res/Bilder/Assets/30000.png");
+            break;
+        case 50000:
+            c3gs5.loadFromFile("res/Bilder/Assets/50000.png");
+            break;
+        case 70000:
+            c3gs5.loadFromFile("res/Bilder/Assets/70000.png");
+            break;
+        case 90000:
+            c3gs5.loadFromFile("res/Bilder/Assets/90000.png");
+            break;
+        }
+        c3gs5.setSmooth(true);
+        sf::Sprite c3gs5sprite(c3gs5);
+        c3gs5sprite.setPosition(sf::Vector2f(425.0f, 145.0f));
+        c3gs5sprite.setScale(1.5f, 1.5f);
+        spiel.draw(c3gs5sprite);
+
+        sf::Texture c4gs1;
+        switch (casinogelder4[0]) {
+        case 10000:
+            c4gs1.loadFromFile("res/Bilder/Assets/10000.png");
+            break;
+        case 20000:
+            c4gs1.loadFromFile("res/Bilder/Assets/20000.png");
+            break;
+        case 30000:
+            c4gs1.loadFromFile("res/Bilder/Assets/30000.png");
+            break;
+        case 50000:
+            c4gs1.loadFromFile("res/Bilder/Assets/50000.png");
+            break;
+        case 70000:
+            c4gs1.loadFromFile("res/Bilder/Assets/70000.png");
+            break;
+        case 90000:
+            c4gs1.loadFromFile("res/Bilder/Assets/90000.png");
+            break;
+        }
+        c4gs1.setSmooth(true);
+        sf::Sprite c4gs1sprite(c4gs1);
+        c4gs1sprite.setPosition(sf::Vector2f(625.0f, 25.0f));
+        c4gs1sprite.setScale(1.5f, 1.5f);
+        spiel.draw(c4gs1sprite);
+
+        sf::Texture c4gs2;
+        switch (casinogelder4[1]) {
+        case 10000:
+            c4gs2.loadFromFile("res/Bilder/Assets/10000.png");
+            break;
+        case 20000:
+            c4gs2.loadFromFile("res/Bilder/Assets/20000.png");
+            break;
+        case 30000:
+            c4gs2.loadFromFile("res/Bilder/Assets/30000.png");
+            break;
+        case 50000:
+            c4gs2.loadFromFile("res/Bilder/Assets/50000.png");
+            break;
+        case 70000:
+            c4gs2.loadFromFile("res/Bilder/Assets/70000.png");
+            break;
+        case 90000:
+            c4gs2.loadFromFile("res/Bilder/Assets/90000.png");
+            break;
+        }
+        c4gs2.setSmooth(true);
+        sf::Sprite c4gs2sprite(c4gs2);
+        c4gs2sprite.setPosition(sf::Vector2f(625.0f, 55.0f));
+        c4gs2sprite.setScale(1.5f, 1.5f);
+        spiel.draw(c4gs2sprite);
+
+        sf::Texture c4gs3;
+        switch (casinogelder4[2]) {
+        case 10000:
+            c4gs3.loadFromFile("res/Bilder/Assets/10000.png");
+            break;
+        case 20000:
+            c4gs3.loadFromFile("res/Bilder/Assets/20000.png");
+            break;
+        case 30000:
+            c4gs3.loadFromFile("res/Bilder/Assets/30000.png");
+            break;
+        case 50000:
+            c4gs3.loadFromFile("res/Bilder/Assets/50000.png");
+            break;
+        case 70000:
+            c4gs3.loadFromFile("res/Bilder/Assets/70000.png");
+            break;
+        case 90000:
+            c4gs3.loadFromFile("res/Bilder/Assets/90000.png");
+            break;
+        }
+        c4gs3.setSmooth(true);
+        sf::Sprite c4gs3sprite(c4gs3);
+        c4gs3sprite.setPosition(sf::Vector2f(625.0f, 85.0f));
+        c4gs3sprite.setScale(1.5f, 1.5f);
+        spiel.draw(c4gs3sprite);
+
+        sf::Texture c4gs4;
+        switch (casinogelder4[3]) {
+        case 10000:
+            c4gs4.loadFromFile("res/Bilder/Assets/10000.png");
+            break;
+        case 20000:
+            c4gs4.loadFromFile("res/Bilder/Assets/20000.png");
+            break;
+        case 30000:
+            c4gs4.loadFromFile("res/Bilder/Assets/30000.png");
+            break;
+        case 50000:
+            c4gs4.loadFromFile("res/Bilder/Assets/50000.png");
+            break;
+        case 70000:
+            c4gs4.loadFromFile("res/Bilder/Assets/70000.png");
+            break;
+        case 90000:
+            c4gs4.loadFromFile("res/Bilder/Assets/90000.png");
+            break;
+        }
+        c4gs4.setSmooth(true);
+        sf::Sprite c4gs4sprite(c4gs4);
+        c4gs4sprite.setPosition(sf::Vector2f(625.0f, 115.0f));
+        c4gs4sprite.setScale(1.5f, 1.5f);
+        spiel.draw(c4gs4sprite);
+
+        sf::Texture c4gs5;
+        switch (casinogelder4[4]) {
+        case 10000:
+            c4gs5.loadFromFile("res/Bilder/Assets/10000.png");
+            break;
+        case 20000:
+            c4gs5.loadFromFile("res/Bilder/Assets/20000.png");
+            break;
+        case 30000:
+            c4gs5.loadFromFile("res/Bilder/Assets/30000.png");
+            break;
+        case 50000:
+            c4gs5.loadFromFile("res/Bilder/Assets/50000.png");
+            break;
+        case 70000:
+            c4gs5.loadFromFile("res/Bilder/Assets/70000.png");
+            break;
+        case 90000:
+            c4gs5.loadFromFile("res/Bilder/Assets/90000.png");
+            break;
+        }
+        c4gs5.setSmooth(true);
+        sf::Sprite c4gs5sprite(c4gs5);
+        c4gs5sprite.setPosition(sf::Vector2f(625.0f, 145.0f));
+        c4gs5sprite.setScale(1.5f, 1.5f);
+        spiel.draw(c4gs5sprite);
+
+        sf::Texture c5gs1;
+        switch (casinogelder5[0]) {
+        case 10000:
+            c5gs1.loadFromFile("res/Bilder/Assets/10000.png");
+            break;
+        case 20000:
+            c5gs1.loadFromFile("res/Bilder/Assets/20000.png");
+            break;
+        case 30000:
+            c5gs1.loadFromFile("res/Bilder/Assets/30000.png");
+            break;
+        case 50000:
+            c5gs1.loadFromFile("res/Bilder/Assets/50000.png");
+            break;
+        case 70000:
+            c5gs1.loadFromFile("res/Bilder/Assets/70000.png");
+            break;
+        case 90000:
+            c5gs1.loadFromFile("res/Bilder/Assets/90000.png");
+            break;
+        }
+        c5gs1.setSmooth(true);
+        sf::Sprite c5gs1sprite(c5gs1);
+        c5gs1sprite.setPosition(sf::Vector2f(825.0f, 25.0f));
+        c5gs1sprite.setScale(1.5f, 1.5f);
+        spiel.draw(c5gs1sprite);
+
+        sf::Texture c5gs2;
+        switch (casinogelder5[1]) {
+        case 10000:
+            c5gs2.loadFromFile("res/Bilder/Assets/10000.png");
+            break;
+        case 20000:
+            c5gs2.loadFromFile("res/Bilder/Assets/20000.png");
+            break;
+        case 30000:
+            c5gs2.loadFromFile("res/Bilder/Assets/30000.png");
+            break;
+        case 50000:
+            c5gs2.loadFromFile("res/Bilder/Assets/50000.png");
+            break;
+        case 70000:
+            c5gs2.loadFromFile("res/Bilder/Assets/70000.png");
+            break;
+        case 90000:
+            c5gs2.loadFromFile("res/Bilder/Assets/90000.png");
+            break;
+        }
+        c5gs2.setSmooth(true);
+        sf::Sprite c5gs2sprite(c5gs2);
+        c5gs2sprite.setPosition(sf::Vector2f(825.0f, 55.0f));
+        c5gs2sprite.setScale(1.5f, 1.5f);
+        spiel.draw(c5gs2sprite);
+
+        sf::Texture c5gs3;
+        switch (casinogelder5[2]) {
+        case 10000:
+            c5gs3.loadFromFile("res/Bilder/Assets/10000.png");
+            break;
+        case 20000:
+            c5gs3.loadFromFile("res/Bilder/Assets/20000.png");
+            break;
+        case 30000:
+            c5gs3.loadFromFile("res/Bilder/Assets/30000.png");
+            break;
+        case 50000:
+            c5gs3.loadFromFile("res/Bilder/Assets/50000.png");
+            break;
+        case 70000:
+            c5gs3.loadFromFile("res/Bilder/Assets/70000.png");
+            break;
+        case 90000:
+            c5gs3.loadFromFile("res/Bilder/Assets/90000.png");
+            break;
+        }
+        c5gs3.setSmooth(true);
+        sf::Sprite c5gs3sprite(c5gs3);
+        c5gs3sprite.setPosition(sf::Vector2f(825.0f, 85.0f));
+        c5gs3sprite.setScale(1.5f, 1.5f);
+        spiel.draw(c5gs3sprite);
+
+        sf::Texture c5gs4;
+        switch (casinogelder5[3]) {
+        case 10000:
+            c5gs4.loadFromFile("res/Bilder/Assets/10000.png");
+            break;
+        case 20000:
+            c5gs4.loadFromFile("res/Bilder/Assets/20000.png");
+            break;
+        case 30000:
+            c5gs4.loadFromFile("res/Bilder/Assets/30000.png");
+            break;
+        case 50000:
+            c5gs4.loadFromFile("res/Bilder/Assets/50000.png");
+            break;
+        case 70000:
+            c5gs4.loadFromFile("res/Bilder/Assets/70000.png");
+            break;
+        case 90000:
+            c5gs4.loadFromFile("res/Bilder/Assets/90000.png");
+            break;
+        }
+        c5gs4.setSmooth(true);
+        sf::Sprite c5gs4sprite(c5gs4);
+        c5gs4sprite.setPosition(sf::Vector2f(825.0f, 115.0f));
+        c5gs4sprite.setScale(1.5f, 1.5f);
+        spiel.draw(c5gs4sprite);
+
+        sf::Texture c5gs5;
+        switch (casinogelder5[4]) {
+        case 10000:
+            c5gs5.loadFromFile("res/Bilder/Assets/10000.png");
+            break;
+        case 20000:
+            c5gs5.loadFromFile("res/Bilder/Assets/20000.png");
+            break;
+        case 30000:
+            c5gs5.loadFromFile("res/Bilder/Assets/30000.png");
+            break;
+        case 50000:
+            c5gs5.loadFromFile("res/Bilder/Assets/50000.png");
+            break;
+        case 70000:
+            c5gs5.loadFromFile("res/Bilder/Assets/70000.png");
+            break;
+        case 90000:
+            c5gs5.loadFromFile("res/Bilder/Assets/90000.png");
+            break;
+        }
+        c5gs5.setSmooth(true);
+        sf::Sprite c5gs5sprite(c5gs5);
+        c5gs5sprite.setPosition(sf::Vector2f(825.0f, 145.0f));
+        c5gs5sprite.setScale(1.5f, 1.5f);
+        spiel.draw(c5gs5sprite);
+
+        sf::Texture c6gs1;
+        switch (casinogelder6[0]) {
+        case 10000:
+            c6gs1.loadFromFile("res/Bilder/Assets/10000.png");
+            break;
+        case 20000:
+            c6gs1.loadFromFile("res/Bilder/Assets/20000.png");
+            break;
+        case 30000:
+            c6gs1.loadFromFile("res/Bilder/Assets/30000.png");
+            break;
+        case 50000:
+            c6gs1.loadFromFile("res/Bilder/Assets/50000.png");
+            break;
+        case 70000:
+            c6gs1.loadFromFile("res/Bilder/Assets/70000.png");
+            break;
+        case 90000:
+            c6gs1.loadFromFile("res/Bilder/Assets/90000.png");
+            break;
+        }
+        c6gs1.setSmooth(true);
+        sf::Sprite c6gs1sprite(c6gs1);
+        c6gs1sprite.setPosition(sf::Vector2f(1025.0f, 25.0f));
+        c6gs1sprite.setScale(1.5f, 1.5f);
+        spiel.draw(c6gs1sprite);
+
+        sf::Texture c6gs2;
+        switch (casinogelder6[1]) {
+        case 10000:
+            c6gs2.loadFromFile("res/Bilder/Assets/10000.png");
+            break;
+        case 20000:
+            c6gs2.loadFromFile("res/Bilder/Assets/20000.png");
+            break;
+        case 30000:
+            c6gs2.loadFromFile("res/Bilder/Assets/30000.png");
+            break;
+        case 50000:
+            c6gs2.loadFromFile("res/Bilder/Assets/50000.png");
+            break;
+        case 70000:
+            c6gs2.loadFromFile("res/Bilder/Assets/70000.png");
+            break;
+        case 90000:
+            c6gs2.loadFromFile("res/Bilder/Assets/90000.png");
+            break;
+        }
+        c6gs2.setSmooth(true);
+        sf::Sprite c6gs2sprite(c6gs2);
+        c6gs2sprite.setPosition(sf::Vector2f(1025.0f, 55.0f));
+        c6gs2sprite.setScale(1.5f, 1.5f);
+        spiel.draw(c6gs2sprite);
+
+        sf::Texture c6gs3;
+        switch (casinogelder6[2]) {
+        case 10000:
+            c6gs3.loadFromFile("res/Bilder/Assets/10000.png");
+            break;
+        case 20000:
+            c6gs3.loadFromFile("res/Bilder/Assets/20000.png");
+            break;
+        case 30000:
+            c6gs3.loadFromFile("res/Bilder/Assets/30000.png");
+            break;
+        case 50000:
+            c6gs3.loadFromFile("res/Bilder/Assets/50000.png");
+            break;
+        case 70000:
+            c6gs3.loadFromFile("res/Bilder/Assets/70000.png");
+            break;
+        case 90000:
+            c6gs3.loadFromFile("res/Bilder/Assets/90000.png");
+            break;
+        }
+        c6gs3.setSmooth(true);
+        sf::Sprite c6gs3sprite(c6gs3);
+        c6gs3sprite.setPosition(sf::Vector2f(1025.0f, 85.0f));
+        c6gs3sprite.setScale(1.5f, 1.5f);
+        spiel.draw(c6gs3sprite);
+
+        sf::Texture c6gs4;
+        switch (casinogelder6[3]) {
+        case 10000:
+            c6gs4.loadFromFile("res/Bilder/Assets/10000.png");
+            break;
+        case 20000:
+            c6gs4.loadFromFile("res/Bilder/Assets/20000.png");
+            break;
+        case 30000:
+            c6gs4.loadFromFile("res/Bilder/Assets/30000.png");
+            break;
+        case 50000:
+            c6gs4.loadFromFile("res/Bilder/Assets/50000.png");
+            break;
+        case 70000:
+            c6gs4.loadFromFile("res/Bilder/Assets/70000.png");
+            break;
+        case 90000:
+            c6gs4.loadFromFile("res/Bilder/Assets/90000.png");
+            break;
+        }
+        c6gs4.setSmooth(true);
+        sf::Sprite c6gs4sprite(c6gs4);
+        c6gs4sprite.setPosition(sf::Vector2f(1025.0f, 115.0f));
+        c6gs4sprite.setScale(1.5f, 1.5f);
+        spiel.draw(c6gs4sprite);
+
+        sf::Texture c6gs5;
+        switch (casinogelder6[4]) {
+        case 10000:
+            c6gs5.loadFromFile("res/Bilder/Assets/10000.png");
+            break;
+        case 20000:
+            c6gs5.loadFromFile("res/Bilder/Assets/20000.png");
+            break;
+        case 30000:
+            c6gs5.loadFromFile("res/Bilder/Assets/30000.png");
+            break;
+        case 50000:
+            c6gs5.loadFromFile("res/Bilder/Assets/50000.png");
+            break;
+        case 70000:
+            c6gs5.loadFromFile("res/Bilder/Assets/70000.png");
+            break;
+        case 90000:
+            c6gs5.loadFromFile("res/Bilder/Assets/90000.png");
+            break;
+        }
+        c6gs5.setSmooth(true);
+        sf::Sprite c6gs5sprite(c6gs5);
+        c6gs5sprite.setPosition(sf::Vector2f(1025.0f, 145.0f));
+        c6gs5sprite.setScale(1.5f, 1.5f);
+        spiel.draw(c6gs5sprite);
 
         //Würfelsprites zeichnen
         wuerfelsprite.setColor(farben[spielernummer]);
@@ -2284,7 +2880,6 @@ void neuesSpiel() {
     //Zeichenthread erstellen
     sf::Thread zeichenthread(&Spielzeichnung);
     zeichenthread.launch();
-
     //Ganz normale Spiellogik
     bool spielBeendet = false;
     while(spielBeendet == false) {
@@ -2297,7 +2892,7 @@ void neuesSpiel() {
                     //int k = 0;
                     int j = rand() % 6;
                     casinogelder1[k] = geldwerte[j];
-                    printf("Gerade für Casino %i gezogen: %i\n",k , casinogelder1[k]);
+                    printf("Gerade gezogen: %i\n", casinogelder1[k]);
                     summe1 += casinogelder1[k];
                     if (summe1 >= 50000) {
                         printf("Summe Casino 1: %i\n", summe1);
@@ -2372,6 +2967,97 @@ void neuesSpiel() {
                     }
                 }
                 break;
+            }
+        }
+
+        //Geldscheine sortieren
+        //Casino 1
+        for (int i = 0; i <= 4; i++)
+        {
+            for (int j = i + 1; j <= 5; j++)
+            {
+                if (casinogelder1[i] < casinogelder1[j])
+                {
+                    //-----Tausch-----
+                    int h = casinogelder1[i];
+                    casinogelder1[i] = casinogelder1[j];
+                    casinogelder1[j] = h;
+                }
+            }
+        }
+
+        //Casino 2
+        for (int i = 0; i <= 4; i++)
+        {
+            for (int j = i + 1; j <= 5; j++)
+            {
+                if (casinogelder2[i] < casinogelder2[j])
+                {
+                    //-----Tausch-----
+                    int h = casinogelder2[i];
+                    casinogelder2[i] = casinogelder2[j];
+                    casinogelder2[j] = h;
+                }
+            }
+        }
+
+        //Casino 3
+        for (int i = 0; i <= 4; i++)
+        {
+            for (int j = i + 1; j <= 5; j++)
+            {
+                if (casinogelder3[i] < casinogelder3[j])
+                {
+                    //-----Tausch-----
+                    int h = casinogelder3[i];
+                    casinogelder3[i] = casinogelder3[j];
+                    casinogelder3[j] = h;
+                }
+            }
+        }
+
+        //Casino 4
+        for (int i = 0; i <= 4; i++)
+        {
+            for (int j = i + 1; j <= 5; j++)
+            {
+                if (casinogelder4[i] < casinogelder4[j])
+                {
+                    //-----Tausch-----
+                    int h = casinogelder4[i];
+                    casinogelder4[i] = casinogelder4[j];
+                    casinogelder4[j] = h;
+                }
+            }
+        }
+
+        //Casino 5
+        for (int i = 0; i <= 4; i++)
+        {
+            for (int j = i + 1; j <= 5; j++)
+            {
+                if (casinogelder5[i] < casinogelder5[j])
+                {
+                    //-----Tausch-----
+                    int h = casinogelder5[i];
+                    casinogelder5[i] = casinogelder5[j];
+                    casinogelder5[j] = h;
+                }
+            }
+        }
+
+        //Casino 6
+        for (int i = 0; i <= 4; i++)
+        {
+            for (int j = i + 1; j <= 5; j++)
+            {
+                if (casinogelder6[i] < casinogelder6[j])
+                {
+                    //-----Tausch-----
+                    int h = casinogelder6[i];
+                    casinogelder6[i] = casinogelder6[j];
+                    casinogelder6[j] = h;
+                }
             }
         }
 
