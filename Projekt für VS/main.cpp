@@ -1540,6 +1540,8 @@ void setzeSchrittZurück() {
                 }
             }
         }
+        //Würfelanzahl zurücksetzen
+        wuerfelanzahl[spielernummer] += anzahl;
 
         //Array zurücksetzen
         ausgewählteAuge[0] = 0;
