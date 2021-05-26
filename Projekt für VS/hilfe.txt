@@ -57,3 +57,54 @@ funktion b{
 funktion b(variable x){
 
 ....}
+
+<algorithm>
+
+int v[] = {1, 2 ,3 };
+
+int i1 = max_element(v, v+5);
+cout <<...
+return i1
+
+int spieler1 = anzahlwuerfel[0];
+int spieler2 = anzahlwuerfel[1];
+int spieler3 = anzahlwuerfel[2];
+
+int sortiert = sort(v, v + 2);
+for(int i = 0; i <=2; i++){
+	if(spieler1 == sortiert[i]){
+		kontostand[0] = casinogelder[i];
+	}else if(spieler2 == v[i]){
+		kontostand[1] = sortiert[i];
+	}else{
+		kontostand[2] = sortiert[i];
+	}	
+}
+
+
+//Neu denken
+
+casinowuerfelanzahl1
+kontostand[3]
+casinogelder(sortiert)
+
+Der Spieler, mit der höchsten Würfelzahl bekommt das meiste Geld
+
+Erst Spieler-Würfelzahl temporär abspeichern
+int spielerwürfelzahl1 = casinowuerfelanzahl[0];
+int spielerwürfelzahl2 = casinowuerfelanzahl[1];
+int spielerwürfelzahl3 = casinowuerfelanzahl[2];
+
+Casinowuerfelanzahl sortieren
+sort(casinowuerfelanzahl1, casinowuerfelanzahl + 2);
+
+//Das dreimal schreiben
+if(spielerwürfelzahl1 == casinowuerfelanzahl1){
+Das ist der Spieler mit der höchsten Würfelzahl
+kontostand[0] += casinogelder1[0]
+}else if(spielerwürfelzahl2 == casinowuerfelanzahl[0]){
+Spieler 2 ist am Gewinnen
+}else{
+Dritter Spieler hat viele Würfel
+}
+

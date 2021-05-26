@@ -1,0 +1,78 @@
+float wuerfelpos[8] = { 20.0f, 120.0f, 220.0f, 320.0f, 420.0f, 520.0f, 620.0f, 720.0f };
+Diese Variable dient zur Positionspeicherung der Würfeln (Wird nicht benutzt)
+
+string wuerfelaugen[6] = { "./res/Bilder/würfel/dice-png-1.png", "./res/Bilder/würfel/dice-png-2.png", "./res/Bilder/würfel/dice-png-3.png", "./res/Bilder/würfel/dice-png-4.png", "./res/Bilder/würfel/dice-png-5.png", "./res/Bilder/würfel/dice-png-6.png" };
+Dieses Array dient zur Speicherung der Würfelaugenbilder (wird nicht benutzt)
+
+int geldwerte[6] = { 10000, 20000, 30000, 50000, 70000, 90000 };
+Dieses Array dient als Liste von gültigen Geldscheinen
+
+int kontostand[3];
+Dieses Array dient zur Speicherung des Kontostandes jedes Spielers Sprich kontostand[0] ist für Spieler 1
+
+int casinogelder1[5];
+int casinogelder2[5];
+int casinogelder3[5];
+int casinogelder4[5];
+int casinogelder5[5];
+int casinogelder6[5];
+Diese Arraygruppe dient zur Lagerung von Geldscheinen auf jeweiligen Casinos. 
+Jedes Casino hat eine Kapazität von 5 Geldscheine, da man 50000 mit 5 10000-Geldscheinen erreichen kann und
+nicht niedriger.
+
+int casinowuerfelanzahl1[3];
+int casinowuerfelanzahl2[3];
+int casinowuerfelanzahl3[3];
+int casinowuerfelanzahl4[3];
+int casinowuerfelanzahl5[3];
+int casinowuerfelanzahl6[3];
+Diese Arraygruppe dient dazu, dass man den Anzahl der Würfeln von jeden Spieler speichert und
+somit sichert, dass ein Spieler gewinnt.
+
+int summe1 = 0;
+int summe2 = 0;
+int summe3 = 0;
+int summe4 = 0;
+int summe5 = 0;
+int summe6 = 0;
+Diese Variablengruppe diendazu, um das Zusammenrechnen von Geldscheinen zu vereinfachen und
+somit gleich diese Summe aller Casinos parat zu haben
+
+int wuerfelanzahl[3] = { 8, 8, 8 };
+Dieses Array ist dafür da, um den verfügbaren Würfelanzahl jedes Spielers zu speichern
+
+int wuerfelwert[8];
+Dieses Array ist ein Kritisches Array und dient zur Speicherung von randomgewürfelten Würfeln
+und Nutzung dieser Würfeln.
+
+int spielernummer;
+Diese Variable ist dazu da, um den aktuell spielenden Spieler zu speichern
+
+int rundenzahl = 0;
+Diese Variable dient dazu, um zu speichern, welche Runde gerade von den 4 Runden gespielt wird.
+
+int ausgewählteAuge[2] = { 0,0 }; //Ein leeres Array erstellen für den ersten Index, welcher Würfel und der zweite Index, wie viele.
+Dieses Array dient zur temporären Speicherung von ausgewählten Würfeln in der Runde von einem Spieler
+Dafür steht der erste Index, für welchen Augenwert und der zweite um wie viele Würfeln es geht
+
+Color farben[3] = { Color::Cyan, Color::Green, Color::Yellow };
+Dieses Array ist für die Speicherung der Spielerfarben da.
+
+string subtextstring;
+Diese Variable ist dazu da, um den Spieler darauf hinzuweisen, was er machen muss.
+
+bool aufWuerfelGedrueckt = false;
+Diese Variable ist dafür da, um zu prüfen, ob auf ein Würfel geklickt wurde, wie der Name schon erzählt.
+
+bool spielBeendet = false;
+Dieses Bool ist dafür da, um zu speichern, ob ein Spieler das ganze Spiel gewonnen hat und damit das Spiel zu Ende ist.
+
+bool speichertbool = false;
+Dieses Bool ist dafür da, um Speicherereignisse zu speichern und eventuell den Spieler zu warnen,
+dass das Spiel gespeichert bzw. Nicht gespeichert wurde. (Wird nicht benutzt)
+
+bool zugbeendet = false;
+Diese Variable soll dazu dienen, um zu prüfen, ob ein Spieler mit der Runde fertig ist.
+
+string vergangenezeitstring;
+Diese Variable dient dazu, die vergangene Zeit des gesamten Spiels zu speichern.

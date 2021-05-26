@@ -17,7 +17,8 @@
 #include<random>
 #include<numeric>
 #include<filesystem>
- 
+#include<algorithm>
+
 using namespace std;
 using namespace sf;
 
@@ -29,18 +30,19 @@ using namespace sf;
 float wuerfelpos[8] = { 20.0f, 120.0f, 220.0f, 320.0f, 420.0f, 520.0f, 620.0f, 720.0f };
 string wuerfelaugen[6] = { "./res/Bilder/würfel/dice-png-1.png", "./res/Bilder/würfel/dice-png-2.png", "./res/Bilder/würfel/dice-png-3.png", "./res/Bilder/würfel/dice-png-4.png", "./res/Bilder/würfel/dice-png-5.png", "./res/Bilder/würfel/dice-png-6.png" };
 int geldwerte[6] = { 10000, 20000, 30000, 50000, 70000, 90000 };
+int kontostand[3];
 int casinogelder1[5];
 int casinogelder2[5];
 int casinogelder3[5];
 int casinogelder4[5];
 int casinogelder5[5];
 int casinogelder6[5];
-int casinowuerfelanzahl1[3];
-int casinowuerfelanzahl2[3];
-int casinowuerfelanzahl3[3];
-int casinowuerfelanzahl4[3];
-int casinowuerfelanzahl5[3];
-int casinowuerfelanzahl6[3];
+int casinowuerfelanzahl1[3] = { 0, 0, 0 };
+int casinowuerfelanzahl2[3] = { 0, 0, 0 };
+int casinowuerfelanzahl3[3] = { 0, 0, 0 };
+int casinowuerfelanzahl4[3] = { 0, 0, 0 };
+int casinowuerfelanzahl5[3] = { 0, 0, 0 };
+int casinowuerfelanzahl6[3] = { 0, 0, 0 };
 int summe1 = 0;
 int summe2 = 0;
 int summe3 = 0;
@@ -50,7 +52,8 @@ int summe6 = 0;
 int wuerfelanzahl[3] = { 8, 8, 8 };
 int wuerfelwert[8];
 int spielernummer;
-int ausgewählteAuge[2] = { 0,0 }; //Ein leeres Array erstellen für den ersten Index, welcher Würfel und der zweite Index, wie viele.
+int rundenzahl = 0;
+int ausgewählteAuge[2]; //Ein leeres Array erstellen für den ersten Index, welcher Würfel und der zweite Index, wie viele.
 Color farben[3] = { Color::Cyan, Color::Green, Color::Yellow };
 string subtextstring;
 bool aufWuerfelGedrueckt = false;
@@ -58,6 +61,42 @@ bool spielBeendet = false;
 bool speichertbool = false;
 bool zugbeendet = false;
 string vergangenezeitstring;
+
+//Für Casinos
+/* Variablen für Casino 1
+int c1spieler1 = casinowuerfelanzahl1[0];
+int c1spieler2 = casinowuerfelanzahl1[1];
+int c1spieler3 = casinowuerfelanzahl1[2];
+
+int c1spieler1 = 3;
+int c1spieler2 = 4;
+int c1spieler3 = 6;
+
+//Variablen für Casino 2
+int c2spieler1 = casinowuerfelanzahl2[0];
+int c2spieler2 = casinowuerfelanzahl2[1];
+int c2spieler3 = casinowuerfelanzahl2[2];
+
+//Variablen für Casino 3
+int c3spieler1 = casinowuerfelanzahl3[0];
+int c3spieler2 = casinowuerfelanzahl3[1];
+int c3spieler3 = casinowuerfelanzahl3[2];
+
+//Variablen für Casino 4
+int c4spieler1 = casinowuerfelanzahl4[0];
+int c4spieler2 = casinowuerfelanzahl4[1];
+int c4spieler3 = casinowuerfelanzahl4[2];
+
+//Variablen für Casino 5
+int c5spieler1 = casinowuerfelanzahl5[0];
+int c5spieler2 = casinowuerfelanzahl5[1];
+int c5spieler3 = casinowuerfelanzahl5[2];
+
+//Variablen für Casino 6
+int c6spieler1 = casinowuerfelanzahl6[0];
+int c6spieler2 = casinowuerfelanzahl6[1];
+int c6spieler3 = casinowuerfelanzahl6[2];
+*/
 
 //Dateiformat Speicher
 
@@ -1407,6 +1446,10 @@ void setzeWürfel(int spieler, int wert) {
             }
             ausgewählteAuge[0] = wert;
             ausgewählteAuge[1] = anzahl;
+
+            //Würfel in Casinoarray setzen
+            casinowuerfelanzahl1[spielernummer] += anzahl;
+
             break;
         case 2:
             //Schaue nach weiteren Würfeln gleiche Wertes
@@ -1420,6 +1463,9 @@ void setzeWürfel(int spieler, int wert) {
             }
             ausgewählteAuge[0] = wert;
             ausgewählteAuge[1] = anzahl;
+
+            casinowuerfelanzahl2[spielernummer] += anzahl;
+
             break;
         case 3:
             //Schaue nach weiteren Würfeln gleiche Wertes
@@ -1433,6 +1479,9 @@ void setzeWürfel(int spieler, int wert) {
             }
             ausgewählteAuge[0] = wert;
             ausgewählteAuge[1] = anzahl;
+
+            casinowuerfelanzahl3[spielernummer] += anzahl;
+
             break;
         case 4:
             //Schaue nach weiteren Würfeln gleiche Wertes
@@ -1446,6 +1495,9 @@ void setzeWürfel(int spieler, int wert) {
             }
             ausgewählteAuge[0] = wert;
             ausgewählteAuge[1] = anzahl;
+
+            casinowuerfelanzahl4[spielernummer] += anzahl;
+
             break;
         case 5:
             //Schaue nach weiteren Würfeln gleiche Wertes
@@ -1459,6 +1511,9 @@ void setzeWürfel(int spieler, int wert) {
             }
             ausgewählteAuge[0] = wert;
             ausgewählteAuge[1] = anzahl;
+
+            casinowuerfelanzahl5[spielernummer] += anzahl;
+
             break;
         case 6:
             //Schaue nach weiteren Würfeln gleiche Wertes
@@ -1472,6 +1527,9 @@ void setzeWürfel(int spieler, int wert) {
             }
             ausgewählteAuge[0] = wert;
             ausgewählteAuge[1] = anzahl;
+
+            casinowuerfelanzahl6[spielernummer] += anzahl;
+
             break;
         }
         //Abschließende Sortierung der Würfel starten und anzeigen
@@ -1490,6 +1548,8 @@ void setzeWürfel(int spieler, int wert) {
         }
         //Gesamtwürfelzahl des Spielers ändern
         wuerfelanzahl[spielernummer] -= anzahl;
+
+        printf("Anzahl Wuerfel auf Casino 1: %i\n", casinowuerfelanzahl1[0]);
     }
 }
 
@@ -1500,11 +1560,36 @@ void setzeSchrittZurück() {
         int wert = ausgewählteAuge[0];
         int anzahl = ausgewählteAuge[1];
 
+        //Switch für den Casinoarrays
+        switch (wert) {
+        case 1:
+            casinowuerfelanzahl1[spielernummer] -= anzahl;
+            break;
+        case 2:
+            casinowuerfelanzahl2[spielernummer] -= anzahl;
+            break;
+        case 3:
+            casinowuerfelanzahl3[spielernummer] -= anzahl;
+            break;
+        case 4:
+            casinowuerfelanzahl4[spielernummer] -= anzahl;
+            break;
+        case 5:
+            casinowuerfelanzahl5[spielernummer] -= anzahl;
+            break;
+        case 6:
+            casinowuerfelanzahl6[spielernummer] -= anzahl;
+            break;
+        }
+
+        printf("Anzahl Wuerfel auf Casino 1 zurueckgezogen: %i\n", casinowuerfelanzahl1[0]);
+
+
         //Einsetzungsverfahren
         for (int i = 0; i <= 7; i++) {
             if (wuerfelwert[i] == 8) {
                 if (anzahl != 0) {
-                    printf("Wuerfel wird zur%cckgesetzt!", (char)129);
+                    printf("Wuerfel wird zur%cckgesetzt!\n", (char)129);
                     wuerfelwert[i] = wert;
                     anzahl--;
                 }
@@ -1549,6 +1634,23 @@ void setzeSchrittZurück() {
     }
 }
 
+void para() {
+    //Resetten der Würfel
+    for (int i = 0; i <= 2; i++) {
+        wuerfelanzahl[i] = 8;
+    }
+
+    //Prüfe den größten Wert für jeden Spieler
+    for (int i = 0; i <= 5; i++) {
+        switch (i) {
+        case 0:
+            int gewinnerspieler = 0;
+            
+            break;
+        }
+    }
+}
+
 void Spielzeichnung() {
     sf::RenderWindow spiel(sf::VideoMode(1600, 1000), "Las Vegas", sf::Style::Close);
 
@@ -1571,6 +1673,39 @@ void Spielzeichnung() {
     //while-schleife zeichnen
     while (spiel.isOpen()) {
         spiel.clear(sf::Color(53, 104, 45, 255));
+
+        //Variablen!!
+        //Für Casinos
+        //Variablen für Casino 1
+        int c1spieler1 = casinowuerfelanzahl1[0];
+        int c1spieler2 = casinowuerfelanzahl1[1];
+        int c1spieler3 = casinowuerfelanzahl1[2];
+
+        //Variablen für Casino 2
+        int c2spieler1 = casinowuerfelanzahl2[0];
+        int c2spieler2 = casinowuerfelanzahl2[1];
+        int c2spieler3 = casinowuerfelanzahl2[2];
+
+        //Variablen für Casino 3
+        int c3spieler1 = casinowuerfelanzahl3[0];
+        int c3spieler2 = casinowuerfelanzahl3[1];
+        int c3spieler3 = casinowuerfelanzahl3[2];
+
+        //Variablen für Casino 4
+        int c4spieler1 = casinowuerfelanzahl4[0];
+        int c4spieler2 = casinowuerfelanzahl4[1];
+        int c4spieler3 = casinowuerfelanzahl4[2];
+
+        //Variablen für Casino 5
+        int c5spieler1 = casinowuerfelanzahl5[0];
+        int c5spieler2 = casinowuerfelanzahl5[1];
+        int c5spieler3 = casinowuerfelanzahl5[2];
+
+        //Variablen für Casino 6
+        int c6spieler1 = casinowuerfelanzahl6[0];
+        int c6spieler2 = casinowuerfelanzahl6[1];
+        int c6spieler3 = casinowuerfelanzahl6[2];
+
         //
         //Würfel zeichnen
         //
@@ -1601,7 +1736,7 @@ void Spielzeichnung() {
         //wuerfelsprite.setColor(sf::Color::Blue);
         wuerfelsprite.setTexture(wuerfel, true);
         wuerfelsprite.setPosition({ 20.0f, 800.0f });
-        wuerfelsprite.setScale(0.15, 0.15);
+        //wuerfelsprite.setScale(0.15, 0.15);
 
         sf::Texture wuerfel2;
         switch (wuerfelwert[1]) {
@@ -1629,7 +1764,7 @@ void Spielzeichnung() {
         //wuerfelsprite.setColor(sf::Color::Blue);
         wuerfelsprite2.setTexture(wuerfel2, true);
         wuerfelsprite2.setPosition({ 120.0f, 800.0f });
-        wuerfelsprite2.setScale(0.15, 0.15);
+        //wuerfelsprite2.setScale(0.15, 0.15);
 
         sf::Texture wuerfel3;
         switch (wuerfelwert[2]) {
@@ -1657,7 +1792,7 @@ void Spielzeichnung() {
         //wuerfelsprite.setColor(sf::Color::Blue);
         wuerfelsprite3.setTexture(wuerfel3, true);
         wuerfelsprite3.setPosition({ 220.0f, 800.0f });
-        wuerfelsprite3.setScale(0.15, 0.15);
+        //wuerfelsprite3.setScale(0.15, 0.15);
 
         sf::Texture wuerfel4;
         switch (wuerfelwert[3]) {
@@ -1685,7 +1820,7 @@ void Spielzeichnung() {
         //wuerfelsprite.setColor(sf::Color::Blue);
         wuerfelsprite4.setTexture(wuerfel4, true);
         wuerfelsprite4.setPosition({ 320.0f, 800.0f });
-        wuerfelsprite4.setScale(0.15, 0.15);
+        //wuerfelsprite4.setScale(0.15, 0.15);
 
         sf::Texture wuerfel5;
         switch (wuerfelwert[4]) {
@@ -1713,7 +1848,7 @@ void Spielzeichnung() {
         //wuerfelsprite.setColor(sf::Color::Blue);
         wuerfelsprite5.setTexture(wuerfel5, true);
         wuerfelsprite5.setPosition({ 420.0f, 800.0f });
-        wuerfelsprite5.setScale(0.15, 0.15);
+        //wuerfelsprite5.setScale(0.15, 0.15);
 
         sf::Texture wuerfel6;
         switch (wuerfelwert[5]) {
@@ -1741,7 +1876,7 @@ void Spielzeichnung() {
         //wuerfelsprite.setColor(sf::Color::Blue);
         wuerfelsprite6.setTexture(wuerfel6, true);
         wuerfelsprite6.setPosition({ 520.0f, 800.0f });
-        wuerfelsprite6.setScale(0.15, 0.15);
+        //wuerfelsprite6.setScale(0.15, 0.15);
 
         sf::Texture wuerfel7;
         switch (wuerfelwert[6]) {
@@ -1769,7 +1904,7 @@ void Spielzeichnung() {
         //wuerfelsprite.setColor(sf::Color::Blue);
         wuerfelsprite7.setTexture(wuerfel7, true);
         wuerfelsprite7.setPosition({ 620.0f, 800.0f });
-        wuerfelsprite7.setScale(0.15, 0.15);
+        //wuerfelsprite7.setScale(0.15, 0.15);
 
         sf::Texture wuerfel8;
         switch (wuerfelwert[7]) {
@@ -1797,7 +1932,7 @@ void Spielzeichnung() {
         //wuerfelsprite.setColor(sf::Color::Blue);
         wuerfelsprite8.setTexture(wuerfel8, true);
         wuerfelsprite8.setPosition({ 720.0f, 800.0f });
-        wuerfelsprite8.setScale(0.15, 0.15);
+        //wuerfelsprite8.setScale(0.15, 0.15);
 
         //
         //Main-Ansicht/Hintergrund zeichnen
@@ -1820,6 +1955,14 @@ void Spielzeichnung() {
         trennlinie.setPoint(2, sf::Vector2f(1251.0f, 900.0f));
         trennlinie.setPoint(3, sf::Vector2f(1251.0f, 0.0f));
         spiel.draw(trennlinie);
+
+        //
+        //Rechts das Leaderboard
+        sf::Text rundentext("Ich kann keine Zahl anzeigen lassen :(", font);
+        rundentext.setCharacterSize(20);
+        rundentext.setFillColor(sf::Color::Black);
+        rundentext.setPosition(1300.0f, 200.0f);
+        spiel.draw(rundentext);
 
         //
         //Kasten für Casinos
@@ -1895,7 +2038,7 @@ void Spielzeichnung() {
         golden_nugget.loadFromFile("res/Bilder/Assets/golden_nugget.png");
         golden_nugget.setSmooth(true);
         sf::Sprite golden_nuggetsprite(golden_nugget);
-        golden_nuggetsprite.setPosition({ 20.0f, 350.0f });
+        golden_nuggetsprite.setPosition({ 20.0f, 400.0f });
         //golden_nuggetsprite.setScale(0.75, 0.75);
         spiel.draw(golden_nuggetsprite);
 
@@ -1903,7 +2046,7 @@ void Spielzeichnung() {
         caesars.loadFromFile("res/Bilder/Assets/caesars.png");
         caesars.setSmooth(true);
         sf::Sprite caesarssprite(caesars);
-        caesarssprite.setPosition({ 220.0f, 350.0f });
+        caesarssprite.setPosition({ 220.0f, 400.0f });
         //caesarssprite.setScale(0.75, 0.75);
         spiel.draw(caesarssprite);
 
@@ -1911,28 +2054,28 @@ void Spielzeichnung() {
         mirage.loadFromFile("res/Bilder/Assets/mirage.png");
         mirage.setSmooth(true);
         sf::Sprite miragesprite(mirage);
-        miragesprite.setPosition({ 420.0f, 350.0f });
+        miragesprite.setPosition({ 420.0f, 400.0f });
         spiel.draw(miragesprite);
 
         sf::Texture sahara;
         sahara.loadFromFile("res/Bilder/Assets/sahara.png");
         sahara.setSmooth(true);
         sf::Sprite saharasprite(sahara);
-        saharasprite.setPosition({ 620.0f, 350.0f });
+        saharasprite.setPosition({ 620.0f, 400.0f });
         spiel.draw(saharasprite);
 
         sf::Texture luxor;
         luxor.loadFromFile("res/Bilder/Assets/luxor.png");
         luxor.setSmooth(true);
         sf::Sprite luxorsprite(luxor);
-        luxorsprite.setPosition({ 820.0f, 350.0f });
+        luxorsprite.setPosition({ 820.0f, 400.0f });
         spiel.draw(luxorsprite);
 
         sf::Texture circus;
         circus.loadFromFile("res/Bilder/Assets/circus.png");
         circus.setSmooth(true);
         sf::Sprite circussprite(circus);
-        circussprite.setPosition({ 1020.0f, 350.0f });
+        circussprite.setPosition({ 1020.0f, 400.0f });
         spiel.draw(circussprite);
 
         //Menü unten
@@ -1963,10 +2106,14 @@ void Spielzeichnung() {
         schrifttab.setFillColor(sf::Color(53, 53, 53, 150));
         spiel.draw(schrifttab);
 
-        //Eigentliche Einstellungen
+        //Eigentlicher Text
         sf::Text subtext(subtextstring, font);
         subtext.setCharacterSize(25);
-        subtext.setPosition(sf::Vector2f(600.0f, 900.0f));
+        //Setze den Text in die Mitte
+        float xPos = (0.0f + 1600.0f / 2) - (subtext.getLocalBounds().width / 2);
+        float yPos = (900.0f + 35.0f / 2.6) - (subtext.getLocalBounds().height / 2);
+        subtext.setPosition(xPos, yPos);
+        //subtext.setPosition(sf::Vector2f(600.0f, 900.0f));
         subtext.setFillColor(sf::Color::Black);
         spiel.draw(subtext);
 
@@ -2814,6 +2961,2907 @@ void Spielzeichnung() {
         c6gs5sprite.setScale(1.5f, 1.5f);
         spiel.draw(c6gs5sprite);
 
+        //Würfel auf Casinos zeichnen
+        //Aufbau der Namen: c = Casino, z = Zeile, s = Spalte
+        //Es wird von oben nach unten gezählt sprich von links nach rechts: c1z6s4 ist rechtsunten
+
+        sf::Texture c1z1s1;
+        c1z1s1.loadFromFile("res/Bilder/würfel/dice-png-1.png");
+        c1z1s1.setSmooth(true);
+        sf::Sprite c1z1s1sprite(c1z1s1);
+        c1z1s1sprite.setPosition(20.0f, 520.0f);
+        c1z1s1sprite.setScale(0.5f, 0.5f);
+
+        sf::Texture c1z1s2;
+        c1z1s2.loadFromFile("res/Bilder/würfel/dice-png-1.png");
+        c1z1s2.setSmooth(true);
+        sf::Sprite c1z1s2sprite(c1z1s2);
+        c1z1s2sprite.setPosition(65.0f, 520.0f);
+        c1z1s2sprite.setScale(0.5f, 0.5f);
+
+        sf::Texture c1z1s3;
+        c1z1s3.loadFromFile("res/Bilder/würfel/dice-png-1.png");
+        c1z1s3.setSmooth(true);
+        sf::Sprite c1z1s3sprite(c1z1s3);
+        c1z1s3sprite.setPosition(110.0f, 520.0f);
+        c1z1s3sprite.setScale(0.5f, 0.5f);
+
+        sf::Texture c1z1s4;
+        c1z1s4.loadFromFile("res/Bilder/würfel/dice-png-1.png");
+        c1z1s4.setSmooth(true);
+        sf::Sprite c1z1s4sprite(c1z1s4);
+        c1z1s4sprite.setPosition(155.0f, 520.0f);
+        c1z1s4sprite.setScale(0.5f, 0.5f);
+
+        sf::Texture c1z2s1;
+        c1z2s1.loadFromFile("res/Bilder/würfel/dice-png-1.png");
+        c1z2s1.setSmooth(true);
+        sf::Sprite c1z2s1sprite(c1z2s1);
+        c1z2s1sprite.setPosition(20.0f, 565.0f);
+        c1z2s1sprite.setScale(0.5f, 0.5f);
+
+        sf::Texture c1z2s2;
+        c1z2s2.loadFromFile("res/Bilder/würfel/dice-png-1.png");
+        c1z2s2.setSmooth(true);
+        sf::Sprite c1z2s2sprite(c1z2s2);
+        c1z2s2sprite.setPosition(65.0f, 565.0f);
+        c1z2s2sprite.setScale(0.5f, 0.5f);
+
+        sf::Texture c1z2s3;
+        c1z2s3.loadFromFile("res/Bilder/würfel/dice-png-1.png");
+        c1z2s3.setSmooth(true);
+        sf::Sprite c1z2s3sprite(c1z2s3);
+        c1z2s3sprite.setPosition(110.0f, 565.0f);
+        c1z2s3sprite.setScale(0.5f, 0.5f);
+
+        sf::Texture c1z2s4;
+        c1z2s4.loadFromFile("res/Bilder/würfel/dice-png-1.png");
+        c1z2s4.setSmooth(true);
+        sf::Sprite c1z2s4sprite(c1z2s4);
+        c1z2s4sprite.setPosition(155.0f, 565.0f);
+        c1z2s4sprite.setScale(0.5f, 0.5f);
+
+        sf::Texture c1z3s1;
+        c1z3s1.loadFromFile("res/Bilder/würfel/dice-png-1.png");
+        c1z3s1.setSmooth(true);
+        sf::Sprite c1z3s1sprite(c1z3s1);
+        c1z3s1sprite.setPosition(20.0f, 610.0f);
+        c1z3s1sprite.setScale(0.5f, 0.5f);
+
+        sf::Texture c1z3s2;
+        c1z3s2.loadFromFile("res/Bilder/würfel/dice-png-1.png");
+        c1z3s2.setSmooth(true);
+        sf::Sprite c1z3s2sprite(c1z3s2);
+        c1z3s2sprite.setPosition(65.0f, 610.0f);
+        c1z3s2sprite.setScale(0.5f, 0.5f);
+
+        sf::Texture c1z3s3;
+        c1z3s3.loadFromFile("res/Bilder/würfel/dice-png-1.png");
+        c1z3s3.setSmooth(true);
+        sf::Sprite c1z3s3sprite(c1z3s3);
+        c1z3s3sprite.setPosition(110.0f, 610.0f);
+        c1z3s3sprite.setScale(0.5f, 0.5f);
+
+        sf::Texture c1z3s4;
+        c1z3s4.loadFromFile("res/Bilder/würfel/dice-png-1.png");
+        c1z3s4.setSmooth(true);
+        sf::Sprite c1z3s4sprite(c1z3s4);
+        c1z3s4sprite.setPosition(155.0f, 610.0f);
+        c1z3s4sprite.setScale(0.5f, 0.5f);
+
+        sf::Texture c1z4s1;
+        c1z4s1.loadFromFile("res/Bilder/würfel/dice-png-1.png");
+        c1z4s1.setSmooth(true);
+        sf::Sprite c1z4s1sprite(c1z4s1);
+        c1z4s1sprite.setPosition(20.0f, 655.0f);
+        c1z4s1sprite.setScale(0.5f, 0.5f);
+
+        sf::Texture c1z4s2;
+        c1z4s2.loadFromFile("res/Bilder/würfel/dice-png-1.png");
+        c1z4s2.setSmooth(true);
+        sf::Sprite c1z4s2sprite(c1z4s2);
+        c1z4s2sprite.setPosition(65.0f, 655.0f);
+        c1z4s2sprite.setScale(0.5f, 0.5f);
+
+        sf::Texture c1z4s3;
+        c1z4s3.loadFromFile("res/Bilder/würfel/dice-png-1.png");
+        c1z4s3.setSmooth(true);
+        sf::Sprite c1z4s3sprite(c1z4s3);
+        c1z4s3sprite.setPosition(110.0f, 655.0f);
+        c1z4s3sprite.setScale(0.5f, 0.5f);
+
+        sf::Texture c1z4s4;
+        c1z4s4.loadFromFile("res/Bilder/würfel/dice-png-1.png");
+        c1z4s4.setSmooth(true);
+        sf::Sprite c1z4s4sprite(c1z4s4);
+        c1z4s4sprite.setPosition(155.0f, 655.0f);
+        c1z4s4sprite.setScale(0.5f, 0.5f);
+
+        sf::Texture c1z5s1;
+        c1z5s1.loadFromFile("res/Bilder/würfel/dice-png-1.png");
+        c1z5s1.setSmooth(true);
+        sf::Sprite c1z5s1sprite(c1z5s1);
+        c1z5s1sprite.setPosition(20.0f, 700.0f);
+        c1z5s1sprite.setScale(0.5f, 0.5f);
+
+        sf::Texture c1z5s2;
+        c1z5s2.loadFromFile("res/Bilder/würfel/dice-png-1.png");
+        c1z5s2.setSmooth(true);
+        sf::Sprite c1z5s2sprite(c1z5s2);
+        c1z5s2sprite.setPosition(65.0f, 700.0f);
+        c1z5s2sprite.setScale(0.5f, 0.5f);
+
+        sf::Texture c1z5s3;
+        c1z5s3.loadFromFile("res/Bilder/würfel/dice-png-1.png");
+        c1z5s3.setSmooth(true);
+        sf::Sprite c1z5s3sprite(c1z5s3);
+        c1z5s3sprite.setPosition(110.0f, 700.0f);
+        c1z5s3sprite.setScale(0.5f, 0.5f);
+
+        sf::Texture c1z5s4;
+        c1z5s4.loadFromFile("res/Bilder/würfel/dice-png-1.png");
+        c1z5s4.setSmooth(true);
+        sf::Sprite c1z5s4sprite(c1z5s4);
+        c1z5s4sprite.setPosition(155.0f, 700.0f);
+        c1z5s4sprite.setScale(0.5f, 0.5f);
+
+        //Casino 2
+        sf::Texture c2z1s1;
+        c2z1s1.loadFromFile("res/Bilder/würfel/dice-png-2.png");
+        c2z1s1.setSmooth(true);
+        sf::Sprite c2z1s1sprite(c2z1s1);
+        c2z1s1sprite.setPosition(220.0f, 520.0f);
+        c2z1s1sprite.setScale(0.5f, 0.5f);
+
+        sf::Texture c2z1s2;
+        c2z1s2.loadFromFile("res/Bilder/würfel/dice-png-2.png");
+        c2z1s2.setSmooth(true);
+        sf::Sprite c2z1s2sprite(c2z1s2);
+        c2z1s2sprite.setPosition(265.0f, 520.0f);
+        c2z1s2sprite.setScale(0.5f, 0.5f);
+
+        sf::Texture c2z1s3;
+        c2z1s3.loadFromFile("res/Bilder/würfel/dice-png-2.png");
+        c2z1s3.setSmooth(true);
+        sf::Sprite c2z1s3sprite(c2z1s3);
+        c2z1s3sprite.setPosition(310.0f, 520.0f);
+        c2z1s3sprite.setScale(0.5f, 0.5f);
+
+        sf::Texture c2z1s4;
+        c2z1s4.loadFromFile("res/Bilder/würfel/dice-png-2.png");
+        c2z1s4.setSmooth(true);
+        sf::Sprite c2z1s4sprite(c2z1s4);
+        c2z1s4sprite.setPosition(355.0f, 520.0f);
+        c2z1s4sprite.setScale(0.5f, 0.5f);
+
+        sf::Texture c2z2s1;
+        c2z2s1.loadFromFile("res/Bilder/würfel/dice-png-2.png");
+        c2z2s1.setSmooth(true);
+        sf::Sprite c2z2s1sprite(c2z2s1);
+        c2z2s1sprite.setPosition(220.0f, 565.0f);
+        c2z2s1sprite.setScale(0.5f, 0.5f);
+
+        sf::Texture c2z2s2;
+        c2z2s2.loadFromFile("res/Bilder/würfel/dice-png-2.png");
+        c2z2s2.setSmooth(true);
+        sf::Sprite c2z2s2sprite(c2z2s2);
+        c2z2s2sprite.setPosition(265.0f, 565.0f);
+        c2z2s2sprite.setScale(0.5f, 0.5f);
+
+        sf::Texture c2z2s3;
+        c2z2s3.loadFromFile("res/Bilder/würfel/dice-png-2.png");
+        c2z2s3.setSmooth(true);
+        sf::Sprite c2z2s3sprite(c2z2s3);
+        c2z2s3sprite.setPosition(310.0f, 565.0f);
+        c2z2s3sprite.setScale(0.5f, 0.5f);
+
+        sf::Texture c2z2s4;
+        c2z2s4.loadFromFile("res/Bilder/würfel/dice-png-2.png");
+        c2z2s4.setSmooth(true);
+        sf::Sprite c2z2s4sprite(c2z2s4);
+        c2z2s4sprite.setPosition(355.0f, 565.0f);
+        c2z2s4sprite.setScale(0.5f, 0.5f);
+
+        sf::Texture c2z3s1;
+        c2z3s1.loadFromFile("res/Bilder/würfel/dice-png-2.png");
+        c2z3s1.setSmooth(true);
+        sf::Sprite c2z3s1sprite(c2z3s1);
+        c2z3s1sprite.setPosition(220.0f, 610.0f);
+        c2z3s1sprite.setScale(0.5f, 0.5f);
+
+        sf::Texture c2z3s2;
+        c2z3s2.loadFromFile("res/Bilder/würfel/dice-png-2.png");
+        c2z3s2.setSmooth(true);
+        sf::Sprite c2z3s2sprite(c2z3s2);
+        c2z3s2sprite.setPosition(265.0f, 610.0f);
+        c2z3s2sprite.setScale(0.5f, 0.5f);
+
+        sf::Texture c2z3s3;
+        c2z3s3.loadFromFile("res/Bilder/würfel/dice-png-2.png");
+        c2z3s3.setSmooth(true);
+        sf::Sprite c2z3s3sprite(c2z3s3);
+        c2z3s3sprite.setPosition(310.0f, 610.0f);
+        c2z3s3sprite.setScale(0.5f, 0.5f);
+
+        sf::Texture c2z3s4;
+        c2z3s4.loadFromFile("res/Bilder/würfel/dice-png-2.png");
+        c2z3s4.setSmooth(true);
+        sf::Sprite c2z3s4sprite(c2z3s4);
+        c2z3s4sprite.setPosition(355.0f, 610.0f);
+        c2z3s4sprite.setScale(0.5f, 0.5f);
+
+        sf::Texture c2z4s1;
+        c2z4s1.loadFromFile("res/Bilder/würfel/dice-png-2.png");
+        c2z4s1.setSmooth(true);
+        sf::Sprite c2z4s1sprite(c2z4s1);
+        c2z4s1sprite.setPosition(220.0f, 655.0f);
+        c2z4s1sprite.setScale(0.5f, 0.5f);
+
+        sf::Texture c2z4s2;
+        c2z4s2.loadFromFile("res/Bilder/würfel/dice-png-2.png");
+        c2z4s2.setSmooth(true);
+        sf::Sprite c2z4s2sprite(c2z4s2);
+        c2z4s2sprite.setPosition(265.0f, 655.0f);
+        c2z4s2sprite.setScale(0.5f, 0.5f);
+
+        sf::Texture c2z4s3;
+        c2z4s3.loadFromFile("res/Bilder/würfel/dice-png-2.png");
+        c2z4s3.setSmooth(true);
+        sf::Sprite c2z4s3sprite(c2z4s3);
+        c2z4s3sprite.setPosition(310.0f, 655.0f);
+        c2z4s3sprite.setScale(0.5f, 0.5f);
+
+        sf::Texture c2z4s4;
+        c2z4s4.loadFromFile("res/Bilder/würfel/dice-png-2.png");
+        c2z4s4.setSmooth(true);
+        sf::Sprite c2z4s4sprite(c2z4s4);
+        c2z4s4sprite.setPosition(355.0f, 655.0f);
+        c2z4s4sprite.setScale(0.5f, 0.5f);
+
+        sf::Texture c2z5s1;
+        c2z5s1.loadFromFile("res/Bilder/würfel/dice-png-2.png");
+        c2z5s1.setSmooth(true);
+        sf::Sprite c2z5s1sprite(c2z5s1);
+        c2z5s1sprite.setPosition(220.0f, 700.0f);
+        c2z5s1sprite.setScale(0.5f, 0.5f);
+
+        sf::Texture c2z5s2;
+        c2z5s2.loadFromFile("res/Bilder/würfel/dice-png-2.png");
+        c2z5s2.setSmooth(true);
+        sf::Sprite c2z5s2sprite(c2z5s2);
+        c2z5s2sprite.setPosition(265.0f, 700.0f);
+        c2z5s2sprite.setScale(0.5f, 0.5f);
+
+        sf::Texture c2z5s3;
+        c2z5s3.loadFromFile("res/Bilder/würfel/dice-png-2.png");
+        c2z5s3.setSmooth(true);
+        sf::Sprite c2z5s3sprite(c2z5s3);
+        c2z5s3sprite.setPosition(310.0f, 700.0f);
+        c2z5s3sprite.setScale(0.5f, 0.5f);
+
+        sf::Texture c2z5s4;
+        c2z5s4.loadFromFile("res/Bilder/würfel/dice-png-2.png");
+        c2z5s4.setSmooth(true);
+        sf::Sprite c2z5s4sprite(c2z5s4);
+        c2z5s4sprite.setPosition(355.0f, 700.0f);
+        c2z5s4sprite.setScale(0.5f, 0.5f);
+
+        //Casino 3
+        sf::Texture c3z1s1;
+        c3z1s1.loadFromFile("res/Bilder/würfel/dice-png-3.png");
+        c3z1s1.setSmooth(true);
+        sf::Sprite c3z1s1sprite(c3z1s1);
+        c3z1s1sprite.setPosition(420.0f, 520.0f);
+        c3z1s1sprite.setScale(0.5f, 0.5f);
+
+        sf::Texture c3z1s2;
+        c3z1s2.loadFromFile("res/Bilder/würfel/dice-png-3.png");
+        c3z1s2.setSmooth(true);
+        sf::Sprite c3z1s2sprite(c3z1s2);
+        c3z1s2sprite.setPosition(465.0f, 520.0f);
+        c3z1s2sprite.setScale(0.5f, 0.5f);
+
+        sf::Texture c3z1s3;
+        c3z1s3.loadFromFile("res/Bilder/würfel/dice-png-3.png");
+        c3z1s3.setSmooth(true);
+        sf::Sprite c3z1s3sprite(c3z1s3);
+        c3z1s3sprite.setPosition(510.0f, 520.0f);
+        c3z1s3sprite.setScale(0.5f, 0.5f);
+
+        sf::Texture c3z1s4;
+        c3z1s4.loadFromFile("res/Bilder/würfel/dice-png-3.png");
+        c3z1s4.setSmooth(true);
+        sf::Sprite c3z1s4sprite(c3z1s4);
+        c3z1s4sprite.setPosition(555.0f, 520.0f);
+        c3z1s4sprite.setScale(0.5f, 0.5f);
+
+        sf::Texture c3z2s1;
+        c3z2s1.loadFromFile("res/Bilder/würfel/dice-png-3.png");
+        c3z2s1.setSmooth(true);
+        sf::Sprite c3z2s1sprite(c3z2s1);
+        c3z2s1sprite.setPosition(420.0f, 565.0f);
+        c3z2s1sprite.setScale(0.5f, 0.5f);
+
+        sf::Texture c3z2s2;
+        c3z2s2.loadFromFile("res/Bilder/würfel/dice-png-3.png");
+        c3z2s2.setSmooth(true);
+        sf::Sprite c3z2s2sprite(c3z2s2);
+        c3z2s2sprite.setPosition(465.0f, 565.0f);
+        c3z2s2sprite.setScale(0.5f, 0.5f);
+
+        sf::Texture c3z2s3;
+        c3z2s3.loadFromFile("res/Bilder/würfel/dice-png-3.png");
+        c3z2s3.setSmooth(true);
+        sf::Sprite c3z2s3sprite(c3z2s3);
+        c3z2s3sprite.setPosition(510.0f, 565.0f);
+        c3z2s3sprite.setScale(0.5f, 0.5f);
+
+        sf::Texture c3z2s4;
+        c3z2s4.loadFromFile("res/Bilder/würfel/dice-png-3.png");
+        c3z2s4.setSmooth(true);
+        sf::Sprite c3z2s4sprite(c3z2s4);
+        c3z2s4sprite.setPosition(555.0f, 565.0f);
+        c3z2s4sprite.setScale(0.5f, 0.5f);
+
+        sf::Texture c3z3s1;
+        c3z3s1.loadFromFile("res/Bilder/würfel/dice-png-3.png");
+        c3z3s1.setSmooth(true);
+        sf::Sprite c3z3s1sprite(c3z3s1);
+        c3z3s1sprite.setPosition(420.0f, 610.0f);
+        c3z3s1sprite.setScale(0.5f, 0.5f);
+
+        sf::Texture c3z3s2;
+        c3z3s2.loadFromFile("res/Bilder/würfel/dice-png-3.png");
+        c3z3s2.setSmooth(true);
+        sf::Sprite c3z3s2sprite(c3z3s2);
+        c3z3s2sprite.setPosition(465.0f, 610.0f);
+        c3z3s2sprite.setScale(0.5f, 0.5f);
+
+        sf::Texture c3z3s3;
+        c3z3s3.loadFromFile("res/Bilder/würfel/dice-png-3.png");
+        c3z3s3.setSmooth(true);
+        sf::Sprite c3z3s3sprite(c3z3s3);
+        c3z3s3sprite.setPosition(510.0f, 610.0f);
+        c3z3s3sprite.setScale(0.5f, 0.5f);
+
+        sf::Texture c3z3s4;
+        c3z3s4.loadFromFile("res/Bilder/würfel/dice-png-3.png");
+        c3z3s4.setSmooth(true);
+        sf::Sprite c3z3s4sprite(c3z3s4);
+        c3z3s4sprite.setPosition(555.0f, 610.0f);
+        c3z3s4sprite.setScale(0.5f, 0.5f);
+
+        sf::Texture c3z4s1;
+        c3z4s1.loadFromFile("res/Bilder/würfel/dice-png-3.png");
+        c3z4s1.setSmooth(true);
+        sf::Sprite c3z4s1sprite(c3z4s1);
+        c3z4s1sprite.setPosition(420.0f, 655.0f);
+        c3z4s1sprite.setScale(0.5f, 0.5f);
+
+        sf::Texture c3z4s2;
+        c3z4s2.loadFromFile("res/Bilder/würfel/dice-png-3.png");
+        c3z4s2.setSmooth(true);
+        sf::Sprite c3z4s2sprite(c3z4s2);
+        c3z4s2sprite.setPosition(465.0f, 655.0f);
+        c3z4s2sprite.setScale(0.5f, 0.5f);
+
+        sf::Texture c3z4s3;
+        c3z4s3.loadFromFile("res/Bilder/würfel/dice-png-3.png");
+        c3z4s3.setSmooth(true);
+        sf::Sprite c3z4s3sprite(c3z4s3);
+        c3z4s3sprite.setPosition(510.0f, 655.0f);
+        c3z4s3sprite.setScale(0.5f, 0.5f);
+
+        sf::Texture c3z4s4;
+        c3z4s4.loadFromFile("res/Bilder/würfel/dice-png-3.png");
+        c3z4s4.setSmooth(true);
+        sf::Sprite c3z4s4sprite(c3z4s4);
+        c3z4s4sprite.setPosition(555.0f, 655.0f);
+        c3z4s4sprite.setScale(0.5f, 0.5f);
+
+        sf::Texture c3z5s1;
+        c3z5s1.loadFromFile("res/Bilder/würfel/dice-png-3.png");
+        c3z5s1.setSmooth(true);
+        sf::Sprite c3z5s1sprite(c3z5s1);
+        c3z5s1sprite.setPosition(420.0f, 700.0f);
+        c3z5s1sprite.setScale(0.5f, 0.5f);
+
+        sf::Texture c3z5s2;
+        c3z5s2.loadFromFile("res/Bilder/würfel/dice-png-3.png");
+        c3z5s2.setSmooth(true);
+        sf::Sprite c3z5s2sprite(c3z5s2);
+        c3z5s2sprite.setPosition(465.0f, 700.0f);
+        c3z5s2sprite.setScale(0.5f, 0.5f);
+
+        sf::Texture c3z5s3;
+        c3z5s3.loadFromFile("res/Bilder/würfel/dice-png-3.png");
+        c3z5s3.setSmooth(true);
+        sf::Sprite c3z5s3sprite(c3z5s3);
+        c3z5s3sprite.setPosition(510.0f, 700.0f);
+        c3z5s3sprite.setScale(0.5f, 0.5f);
+
+        sf::Texture c3z5s4;
+        c3z5s4.loadFromFile("res/Bilder/würfel/dice-png-3.png");
+        c3z5s4.setSmooth(true);
+        sf::Sprite c3z5s4sprite(c3z5s4);
+        c3z5s4sprite.setPosition(555.0f, 700.0f);
+        c3z5s4sprite.setScale(0.5f, 0.5f);
+
+        //Casino 4
+        sf::Texture c4z1s1;
+        c4z1s1.loadFromFile("res/Bilder/würfel/dice-png-4.png");
+        c4z1s1.setSmooth(true);
+        sf::Sprite c4z1s1sprite(c4z1s1);
+        c4z1s1sprite.setPosition(620.0f, 520.0f);
+        c4z1s1sprite.setScale(0.5f, 0.5f);
+
+        sf::Texture c4z1s2;
+        c4z1s2.loadFromFile("res/Bilder/würfel/dice-png-4.png");
+        c4z1s2.setSmooth(true);
+        sf::Sprite c4z1s2sprite(c4z1s2);
+        c4z1s2sprite.setPosition(665.0f, 520.0f);
+        c4z1s2sprite.setScale(0.5f, 0.5f);
+
+        sf::Texture c4z1s3;
+        c4z1s3.loadFromFile("res/Bilder/würfel/dice-png-4.png");
+        c4z1s3.setSmooth(true);
+        sf::Sprite c4z1s3sprite(c4z1s3);
+        c4z1s3sprite.setPosition(710.0f, 520.0f);
+        c4z1s3sprite.setScale(0.5f, 0.5f);
+
+        sf::Texture c4z1s4;
+        c4z1s4.loadFromFile("res/Bilder/würfel/dice-png-4.png");
+        c4z1s4.setSmooth(true);
+        sf::Sprite c4z1s4sprite(c4z1s4);
+        c4z1s4sprite.setPosition(755.0f, 520.0f);
+        c4z1s4sprite.setScale(0.5f, 0.5f);
+
+        sf::Texture c4z2s1;
+        c4z2s1.loadFromFile("res/Bilder/würfel/dice-png-4.png");
+        c4z2s1.setSmooth(true);
+        sf::Sprite c4z2s1sprite(c4z2s1);
+        c4z2s1sprite.setPosition(620.0f, 565.0f);
+        c4z2s1sprite.setScale(0.5f, 0.5f);
+
+        sf::Texture c4z2s2;
+        c4z2s2.loadFromFile("res/Bilder/würfel/dice-png-4.png");
+        c4z2s2.setSmooth(true);
+        sf::Sprite c4z2s2sprite(c4z2s2);
+        c4z2s2sprite.setPosition(665.0f, 565.0f);
+        c4z2s2sprite.setScale(0.5f, 0.5f);
+
+        sf::Texture c4z2s3;
+        c4z2s3.loadFromFile("res/Bilder/würfel/dice-png-4.png");
+        c4z2s3.setSmooth(true);
+        sf::Sprite c4z2s3sprite(c4z2s3);
+        c4z2s3sprite.setPosition(710.0f, 565.0f);
+        c4z2s3sprite.setScale(0.5f, 0.5f);
+
+        sf::Texture c4z2s4;
+        c4z2s4.loadFromFile("res/Bilder/würfel/dice-png-4.png");
+        c4z2s4.setSmooth(true);
+        sf::Sprite c4z2s4sprite(c4z2s4);
+        c4z2s4sprite.setPosition(755.0f, 565.0f);
+        c4z2s4sprite.setScale(0.5f, 0.5f);
+
+        sf::Texture c4z3s1;
+        c4z3s1.loadFromFile("res/Bilder/würfel/dice-png-4.png");
+        c4z3s1.setSmooth(true);
+        sf::Sprite c4z3s1sprite(c4z3s1);
+        c4z3s1sprite.setPosition(620.0f, 610.0f);
+        c4z3s1sprite.setScale(0.5f, 0.5f);
+
+        sf::Texture c4z3s2;
+        c4z3s2.loadFromFile("res/Bilder/würfel/dice-png-4.png");
+        c4z3s2.setSmooth(true);
+        sf::Sprite c4z3s2sprite(c4z3s2);
+        c4z3s2sprite.setPosition(665.0f, 610.0f);
+        c4z3s2sprite.setScale(0.5f, 0.5f);
+
+        sf::Texture c4z3s3;
+        c4z3s3.loadFromFile("res/Bilder/würfel/dice-png-4.png");
+        c4z3s3.setSmooth(true);
+        sf::Sprite c4z3s3sprite(c4z3s3);
+        c4z3s3sprite.setPosition(710.0f, 610.0f);
+        c4z3s3sprite.setScale(0.5f, 0.5f);
+
+        sf::Texture c4z3s4;
+        c4z3s4.loadFromFile("res/Bilder/würfel/dice-png-4.png");
+        c4z3s4.setSmooth(true);
+        sf::Sprite c4z3s4sprite(c4z3s4);
+        c4z3s4sprite.setPosition(755.0f, 610.0f);
+        c4z3s4sprite.setScale(0.5f, 0.5f);
+
+        sf::Texture c4z4s1;
+        c4z4s1.loadFromFile("res/Bilder/würfel/dice-png-4.png");
+        c4z4s1.setSmooth(true);
+        sf::Sprite c4z4s1sprite(c4z4s1);
+        c4z4s1sprite.setPosition(620.0f, 655.0f);
+        c4z4s1sprite.setScale(0.5f, 0.5f);
+
+        sf::Texture c4z4s2;
+        c4z4s2.loadFromFile("res/Bilder/würfel/dice-png-4.png");
+        c4z4s2.setSmooth(true);
+        sf::Sprite c4z4s2sprite(c4z4s2);
+        c4z4s2sprite.setPosition(665.0f, 655.0f);
+        c4z4s2sprite.setScale(0.5f, 0.5f);
+
+        sf::Texture c4z4s3;
+        c4z4s3.loadFromFile("res/Bilder/würfel/dice-png-4.png");
+        c4z4s3.setSmooth(true);
+        sf::Sprite c4z4s3sprite(c4z4s3);
+        c4z4s3sprite.setPosition(710.0f, 655.0f);
+        c4z4s3sprite.setScale(0.5f, 0.5f);
+
+        sf::Texture c4z4s4;
+        c4z4s4.loadFromFile("res/Bilder/würfel/dice-png-4.png");
+        c4z4s4.setSmooth(true);
+        sf::Sprite c4z4s4sprite(c4z4s4);
+        c4z4s4sprite.setPosition(755.0f, 655.0f);
+        c4z4s4sprite.setScale(0.5f, 0.5f);
+
+        sf::Texture c4z5s1;
+        c4z5s1.loadFromFile("res/Bilder/würfel/dice-png-4.png");
+        c4z5s1.setSmooth(true);
+        sf::Sprite c4z5s1sprite(c4z5s1);
+        c4z5s1sprite.setPosition(620.0f, 700.0f);
+        c4z5s1sprite.setScale(0.5f, 0.5f);
+
+        sf::Texture c4z5s2;
+        c4z5s2.loadFromFile("res/Bilder/würfel/dice-png-4.png");
+        c4z5s2.setSmooth(true);
+        sf::Sprite c4z5s2sprite(c4z5s2);
+        c4z5s2sprite.setPosition(665.0f, 700.0f);
+        c4z5s2sprite.setScale(0.5f, 0.5f);
+
+        sf::Texture c4z5s3;
+        c4z5s3.loadFromFile("res/Bilder/würfel/dice-png-4.png");
+        c4z5s3.setSmooth(true);
+        sf::Sprite c4z5s3sprite(c4z5s3);
+        c4z5s3sprite.setPosition(710.0f, 700.0f);
+        c4z5s3sprite.setScale(0.5f, 0.5f);
+
+        sf::Texture c4z5s4;
+        c4z5s4.loadFromFile("res/Bilder/würfel/dice-png-4.png");
+        c4z5s4.setSmooth(true);
+        sf::Sprite c4z5s4sprite(c4z5s4);
+        c4z5s4sprite.setPosition(755.0f, 700.0f);
+        c4z5s4sprite.setScale(0.5f, 0.5f);
+
+        //Casino 5
+        sf::Texture c5z1s1;
+        c5z1s1.loadFromFile("res/Bilder/würfel/dice-png-5.png");
+        c5z1s1.setSmooth(true);
+        sf::Sprite c5z1s1sprite(c5z1s1);
+        c5z1s1sprite.setPosition(820.0f, 520.0f);
+        c5z1s1sprite.setScale(0.5f, 0.5f);
+
+        sf::Texture c5z1s2;
+        c5z1s2.loadFromFile("res/Bilder/würfel/dice-png-5.png");
+        c5z1s2.setSmooth(true);
+        sf::Sprite c5z1s2sprite(c5z1s2);
+        c5z1s2sprite.setPosition(865.0f, 520.0f);
+        c5z1s2sprite.setScale(0.5f, 0.5f);
+
+        sf::Texture c5z1s3;
+        c5z1s3.loadFromFile("res/Bilder/würfel/dice-png-5.png");
+        c5z1s3.setSmooth(true);
+        sf::Sprite c5z1s3sprite(c5z1s3);
+        c5z1s3sprite.setPosition(910.0f, 520.0f);
+        c5z1s3sprite.setScale(0.5f, 0.5f);
+
+        sf::Texture c5z1s4;
+        c5z1s4.loadFromFile("res/Bilder/würfel/dice-png-5.png");
+        c5z1s4.setSmooth(true);
+        sf::Sprite c5z1s4sprite(c5z1s4);
+        c5z1s4sprite.setPosition(955.0f, 520.0f);
+        c5z1s4sprite.setScale(0.5f, 0.5f);
+
+        sf::Texture c5z2s1;
+        c5z2s1.loadFromFile("res/Bilder/würfel/dice-png-5.png");
+        c5z2s1.setSmooth(true);
+        sf::Sprite c5z2s1sprite(c5z2s1);
+        c5z2s1sprite.setPosition(820.0f, 565.0f);
+        c5z2s1sprite.setScale(0.5f, 0.5f);
+
+        sf::Texture c5z2s2;
+        c5z2s2.loadFromFile("res/Bilder/würfel/dice-png-5.png");
+        c5z2s2.setSmooth(true);
+        sf::Sprite c5z2s2sprite(c5z2s2);
+        c5z2s2sprite.setPosition(865.0f, 565.0f);
+        c5z2s2sprite.setScale(0.5f, 0.5f);
+
+        sf::Texture c5z2s3;
+        c5z2s3.loadFromFile("res/Bilder/würfel/dice-png-5.png");
+        c5z2s3.setSmooth(true);
+        sf::Sprite c5z2s3sprite(c5z2s3);
+        c5z2s3sprite.setPosition(910.0f, 565.0f);
+        c5z2s3sprite.setScale(0.5f, 0.5f);
+
+        sf::Texture c5z2s4;
+        c5z2s4.loadFromFile("res/Bilder/würfel/dice-png-5.png");
+        c5z2s4.setSmooth(true);
+        sf::Sprite c5z2s4sprite(c5z2s4);
+        c5z2s4sprite.setPosition(955.0f, 565.0f);
+        c5z2s4sprite.setScale(0.5f, 0.5f);
+
+        sf::Texture c5z3s1;
+        c5z3s1.loadFromFile("res/Bilder/würfel/dice-png-5.png");
+        c5z3s1.setSmooth(true);
+        sf::Sprite c5z3s1sprite(c5z3s1);
+        c5z3s1sprite.setPosition(820.0f, 610.0f);
+        c5z3s1sprite.setScale(0.5f, 0.5f);
+
+        sf::Texture c5z3s2;
+        c5z3s2.loadFromFile("res/Bilder/würfel/dice-png-5.png");
+        c5z3s2.setSmooth(true);
+        sf::Sprite c5z3s2sprite(c5z3s2);
+        c5z3s2sprite.setPosition(865.0f, 610.0f);
+        c5z3s2sprite.setScale(0.5f, 0.5f);
+
+        sf::Texture c5z3s3;
+        c5z3s3.loadFromFile("res/Bilder/würfel/dice-png-5.png");
+        c5z3s3.setSmooth(true);
+        sf::Sprite c5z3s3sprite(c5z3s3);
+        c5z3s3sprite.setPosition(910.0f, 610.0f);
+        c5z3s3sprite.setScale(0.5f, 0.5f);
+
+        sf::Texture c5z3s4;
+        c5z3s4.loadFromFile("res/Bilder/würfel/dice-png-5.png");
+        c5z3s4.setSmooth(true);
+        sf::Sprite c5z3s4sprite(c5z3s4);
+        c5z3s4sprite.setPosition(955.0f, 610.0f);
+        c5z3s4sprite.setScale(0.5f, 0.5f);
+
+        sf::Texture c5z4s1;
+        c5z4s1.loadFromFile("res/Bilder/würfel/dice-png-5.png");
+        c5z4s1.setSmooth(true);
+        sf::Sprite c5z4s1sprite(c5z4s1);
+        c5z4s1sprite.setPosition(820.0f, 655.0f);
+        c5z4s1sprite.setScale(0.5f, 0.5f);
+
+        sf::Texture c5z4s2;
+        c5z4s2.loadFromFile("res/Bilder/würfel/dice-png-5.png");
+        c5z4s2.setSmooth(true);
+        sf::Sprite c5z4s2sprite(c5z4s2);
+        c5z4s2sprite.setPosition(865.0f, 655.0f);
+        c5z4s2sprite.setScale(0.5f, 0.5f);
+
+        sf::Texture c5z4s3;
+        c5z4s3.loadFromFile("res/Bilder/würfel/dice-png-5.png");
+        c5z4s3.setSmooth(true);
+        sf::Sprite c5z4s3sprite(c5z4s3);
+        c5z4s3sprite.setPosition(910.0f, 655.0f);
+        c5z4s3sprite.setScale(0.5f, 0.5f);
+
+        sf::Texture c5z4s4;
+        c5z4s4.loadFromFile("res/Bilder/würfel/dice-png-5.png");
+        c5z4s4.setSmooth(true);
+        sf::Sprite c5z4s4sprite(c5z4s4);
+        c5z4s4sprite.setPosition(955.0f, 655.0f);
+        c5z4s4sprite.setScale(0.5f, 0.5f);
+
+        sf::Texture c5z5s1;
+        c5z5s1.loadFromFile("res/Bilder/würfel/dice-png-5.png");
+        c5z5s1.setSmooth(true);
+        sf::Sprite c5z5s1sprite(c5z5s1);
+        c5z5s1sprite.setPosition(820.0f, 700.0f);
+        c5z5s1sprite.setScale(0.5f, 0.5f);
+
+        sf::Texture c5z5s2;
+        c5z5s2.loadFromFile("res/Bilder/würfel/dice-png-5.png");
+        c5z5s2.setSmooth(true);
+        sf::Sprite c5z5s2sprite(c5z5s2);
+        c5z5s2sprite.setPosition(865.0f, 700.0f);
+        c5z5s2sprite.setScale(0.5f, 0.5f);
+
+        sf::Texture c5z5s3;
+        c5z5s3.loadFromFile("res/Bilder/würfel/dice-png-5.png");
+        c5z5s3.setSmooth(true);
+        sf::Sprite c5z5s3sprite(c5z5s3);
+        c5z5s3sprite.setPosition(910.0f, 700.0f);
+        c5z5s3sprite.setScale(0.5f, 0.5f);
+
+        sf::Texture c5z5s4;
+        c5z5s4.loadFromFile("res/Bilder/würfel/dice-png-5.png");
+        c5z5s4.setSmooth(true);
+        sf::Sprite c5z5s4sprite(c5z5s4);
+        c5z5s4sprite.setPosition(955.0f, 700.0f);
+        c5z5s4sprite.setScale(0.5f, 0.5f);
+
+        //Casino 6
+        sf::Texture c6z1s1;
+        c6z1s1.loadFromFile("res/Bilder/würfel/dice-png-6.png");
+        c6z1s1.setSmooth(true);
+        sf::Sprite c6z1s1sprite(c6z1s1);
+        c6z1s1sprite.setPosition(1020.0f, 520.0f);
+        c6z1s1sprite.setScale(0.5f, 0.5f);
+
+        sf::Texture c6z1s2;
+        c6z1s2.loadFromFile("res/Bilder/würfel/dice-png-6.png");
+        c6z1s2.setSmooth(true);
+        sf::Sprite c6z1s2sprite(c6z1s2);
+        c6z1s2sprite.setPosition(1065.0f, 520.0f);
+        c6z1s2sprite.setScale(0.5f, 0.5f);
+
+        sf::Texture c6z1s3;
+        c6z1s3.loadFromFile("res/Bilder/würfel/dice-png-6.png");
+        c6z1s3.setSmooth(true);
+        sf::Sprite c6z1s3sprite(c6z1s3);
+        c6z1s3sprite.setPosition(1110.0f, 520.0f);
+        c6z1s3sprite.setScale(0.5f, 0.5f);
+
+        sf::Texture c6z1s4;
+        c6z1s4.loadFromFile("res/Bilder/würfel/dice-png-6.png");
+        c6z1s4.setSmooth(true);
+        sf::Sprite c6z1s4sprite(c6z1s4);
+        c6z1s4sprite.setPosition(1155.0f, 520.0f);
+        c6z1s4sprite.setScale(0.5f, 0.5f);
+
+        sf::Texture c6z2s1;
+        c6z2s1.loadFromFile("res/Bilder/würfel/dice-png-6.png");
+        c6z2s1.setSmooth(true);
+        sf::Sprite c6z2s1sprite(c6z2s1);
+        c6z2s1sprite.setPosition(1020.0f, 565.0f);
+        c6z2s1sprite.setScale(0.5f, 0.5f);
+
+        sf::Texture c6z2s2;
+        c6z2s2.loadFromFile("res/Bilder/würfel/dice-png-6.png");
+        c6z2s2.setSmooth(true);
+        sf::Sprite c6z2s2sprite(c6z2s2);
+        c6z2s2sprite.setPosition(1065.0f, 565.0f);
+        c6z2s2sprite.setScale(0.5f, 0.5f);
+
+        sf::Texture c6z2s3;
+        c6z2s3.loadFromFile("res/Bilder/würfel/dice-png-6.png");
+        c6z2s3.setSmooth(true);
+        sf::Sprite c6z2s3sprite(c6z2s3);
+        c6z2s3sprite.setPosition(1110.0f, 565.0f);
+        c6z2s3sprite.setScale(0.5f, 0.5f);
+
+        sf::Texture c6z2s4;
+        c6z2s4.loadFromFile("res/Bilder/würfel/dice-png-6.png");
+        c6z2s4.setSmooth(true);
+        sf::Sprite c6z2s4sprite(c6z2s4);
+        c6z2s4sprite.setPosition(1155.0f, 565.0f);
+        c6z2s4sprite.setScale(0.5f, 0.5f);
+
+        sf::Texture c6z3s1;
+        c6z3s1.loadFromFile("res/Bilder/würfel/dice-png-6.png");
+        c6z3s1.setSmooth(true);
+        sf::Sprite c6z3s1sprite(c6z3s1);
+        c6z3s1sprite.setPosition(1020.0f, 610.0f);
+        c6z3s1sprite.setScale(0.5f, 0.5f);
+
+        sf::Texture c6z3s2;
+        c6z3s2.loadFromFile("res/Bilder/würfel/dice-png-6.png");
+        c6z3s2.setSmooth(true);
+        sf::Sprite c6z3s2sprite(c6z3s2);
+        c6z3s2sprite.setPosition(1065.0f, 610.0f);
+        c6z3s2sprite.setScale(0.5f, 0.5f);
+
+        sf::Texture c6z3s3;
+        c6z3s3.loadFromFile("res/Bilder/würfel/dice-png-6.png");
+        c6z3s3.setSmooth(true);
+        sf::Sprite c6z3s3sprite(c6z3s3);
+        c6z3s3sprite.setPosition(1110.0f, 610.0f);
+        c6z3s3sprite.setScale(0.5f, 0.5f);
+
+        sf::Texture c6z3s4;
+        c6z3s4.loadFromFile("res/Bilder/würfel/dice-png-6.png");
+        c6z3s4.setSmooth(true);
+        sf::Sprite c6z3s4sprite(c6z3s4);
+        c6z3s4sprite.setPosition(1155.0f, 610.0f);
+        c6z3s4sprite.setScale(0.5f, 0.5f);
+
+        sf::Texture c6z4s1;
+        c6z4s1.loadFromFile("res/Bilder/würfel/dice-png-6.png");
+        c6z4s1.setSmooth(true);
+        sf::Sprite c6z4s1sprite(c6z4s1);
+        c6z4s1sprite.setPosition(1020.0f, 655.0f);
+        c6z4s1sprite.setScale(0.5f, 0.5f);
+
+        sf::Texture c6z4s2;
+        c6z4s2.loadFromFile("res/Bilder/würfel/dice-png-6.png");
+        c6z4s2.setSmooth(true);
+        sf::Sprite c6z4s2sprite(c6z4s2);
+        c6z4s2sprite.setPosition(1065.0f, 655.0f);
+        c6z4s2sprite.setScale(0.5f, 0.5f);
+
+        sf::Texture c6z4s3;
+        c6z4s3.loadFromFile("res/Bilder/würfel/dice-png-6.png");
+        c6z4s3.setSmooth(true);
+        sf::Sprite c6z4s3sprite(c6z4s3);
+        c6z4s3sprite.setPosition(1110.0f, 655.0f);
+        c6z4s3sprite.setScale(0.5f, 0.5f);
+
+        sf::Texture c6z4s4;
+        c6z4s4.loadFromFile("res/Bilder/würfel/dice-png-6.png");
+        c6z4s4.setSmooth(true);
+        sf::Sprite c6z4s4sprite(c6z4s4);
+        c6z4s4sprite.setPosition(1155.0f, 655.0f);
+        c6z4s4sprite.setScale(0.5f, 0.5f);
+
+        sf::Texture c6z5s1;
+        c6z5s1.loadFromFile("res/Bilder/würfel/dice-png-6.png");
+        c6z5s1.setSmooth(true);
+        sf::Sprite c6z5s1sprite(c6z5s1);
+        c6z5s1sprite.setPosition(1020.0f, 700.0f);
+        c6z5s1sprite.setScale(0.5f, 0.5f);
+
+        sf::Texture c6z5s2;
+        c6z5s2.loadFromFile("res/Bilder/würfel/dice-png-6.png");
+        c6z5s2.setSmooth(true);
+        sf::Sprite c6z5s2sprite(c6z5s2);
+        c6z5s2sprite.setPosition(1065.0f, 700.0f);
+        c6z5s2sprite.setScale(0.5f, 0.5f);
+
+        sf::Texture c6z5s3;
+        c6z5s3.loadFromFile("res/Bilder/würfel/dice-png-6.png");
+        c6z5s3.setSmooth(true);
+        sf::Sprite c6z5s3sprite(c6z5s3);
+        c6z5s3sprite.setPosition(1110.0f, 700.0f);
+        c6z5s3sprite.setScale(0.5f, 0.5f);
+
+        sf::Texture c6z5s4;
+        c6z5s4.loadFromFile("res/Bilder/würfel/dice-png-6.png");
+        c6z5s4.setSmooth(true);
+        sf::Sprite c6z5s4sprite(c6z5s4);
+        c6z5s4sprite.setPosition(1155.0f, 700.0f);
+        c6z5s4sprite.setScale(0.5f, 0.5f);
+
+        //Algorithmus für kleine Würfel bei den Casinos
+        //Casino 1
+        //c1z1s1
+        printf("c1spieler1 = %i\n", c1spieler1);
+        if (c1spieler1 != 0) {
+            c1z1s1sprite.setColor(farben[0]);
+            spiel.draw(c1z1s1sprite);
+            c1spieler1--;
+        }
+        else if (c1spieler2 != 0) {
+            c1z1s1sprite.setColor(farben[1]);
+            spiel.draw(c1z1s1sprite);
+            c1spieler2--;
+        }
+        else if (c1spieler3 != 0) {
+            c1z1s1sprite.setColor(farben[2]);
+            spiel.draw(c1z1s1sprite);
+            c1spieler3--;   
+        }
+        else {
+            //Mach nichts
+        }
+        
+        //c1z1s2
+        if (c1spieler1 != 0) {
+            c1z1s2sprite.setColor(farben[0]);
+            spiel.draw(c1z1s2sprite);
+            c1spieler1--;
+        }
+        else if (c1spieler2 != 0) {
+            c1z1s2sprite.setColor(farben[1]);
+            spiel.draw(c1z1s2sprite);
+            c1spieler2--;
+        }
+        else if (c1spieler3 != 0) {
+            c1z1s2sprite.setColor(farben[2]);
+            spiel.draw(c1z1s2sprite);
+            c1spieler3--;
+        }
+        
+        //c1z1s3
+        if (c1spieler1 != 0) {
+            c1z1s3sprite.setColor(farben[0]);
+            spiel.draw(c1z1s3sprite);
+            c1spieler1--;
+        }
+        else if (c1spieler2 != 0) {
+            c1z1s3sprite.setColor(farben[1]);
+            spiel.draw(c1z1s3sprite);
+            c1spieler2--;
+        }
+        else if (c1spieler3 != 0) {
+            c1z1s3sprite.setColor(farben[2]);
+            spiel.draw(c1z1s3sprite);
+            c1spieler3--;
+        }
+
+        //c1z1s4
+        if (c1spieler1 != 0) {
+            c1z1s4sprite.setColor(farben[0]);
+            spiel.draw(c1z1s4sprite);
+            c1spieler1--;
+        }
+        else if (c1spieler2 != 0) {
+            c1z1s4sprite.setColor(farben[1]);
+            spiel.draw(c1z1s4sprite);
+            c1spieler2--;
+        }
+        else if (c1spieler3 != 0) {
+            c1z1s4sprite.setColor(farben[2]);
+            spiel.draw(c1z1s4sprite);
+            c1spieler3--;
+        }
+
+        //c1z2s1
+        if (c1spieler1 != 0) {
+            c1z2s1sprite.setColor(farben[0]);
+            spiel.draw(c1z2s1sprite);
+            c1spieler1--;
+        }
+        else if (c1spieler2 != 0) {
+            c1z2s1sprite.setColor(farben[1]);
+            spiel.draw(c1z2s1sprite);
+            c1spieler2--;
+        }
+        else if (c1spieler3 != 0) {
+            c1z2s1sprite.setColor(farben[2]);
+            spiel.draw(c1z2s1sprite);
+            c1spieler3--;
+        }
+
+        //c1z2s2
+        if (c1spieler1 != 0) {
+            c1z2s2sprite.setColor(farben[0]);
+            spiel.draw(c1z2s2sprite);
+            c1spieler1--;
+        }
+        else if (c1spieler2 != 0) {
+            c1z2s2sprite.setColor(farben[1]);
+            spiel.draw(c1z2s2sprite);
+            c1spieler2--;
+        }
+        else if (c1spieler3 != 0) {
+            c1z2s2sprite.setColor(farben[2]);
+            spiel.draw(c1z2s2sprite);
+            c1spieler3--;
+        }
+
+        //c1z2s3
+        if (c1spieler1 != 0) {
+            c1z2s3sprite.setColor(farben[0]);
+            spiel.draw(c1z2s3sprite);
+            c1spieler1--;
+        }
+        else if (c1spieler2 != 0) {
+            c1z2s3sprite.setColor(farben[1]);
+            spiel.draw(c1z2s3sprite);
+            c1spieler2--;
+        }
+        else if (c1spieler3 != 0) {
+            c1z2s3sprite.setColor(farben[2]);
+            spiel.draw(c1z2s3sprite);
+            c1spieler3--;
+        }
+
+        //c1z2s4
+        if (c1spieler1 != 0) {
+            c1z2s4sprite.setColor(farben[0]);
+            spiel.draw(c1z2s4sprite);
+            c1spieler1--;
+        }
+        else if (c1spieler2 != 0) {
+            c1z2s4sprite.setColor(farben[1]);
+            spiel.draw(c1z2s4sprite);
+            c1spieler2--;
+        }
+        else if (c1spieler3 != 0) {
+            c1z2s4sprite.setColor(farben[2]);
+            spiel.draw(c1z2s4sprite);
+            c1spieler3--;
+        }
+
+        //c1z3s1
+        if (c1spieler1 != 0) {
+            c1z3s1sprite.setColor(farben[0]);
+            spiel.draw(c1z3s1sprite);
+            c1spieler1--;
+        }
+        else if (c1spieler2 != 0) {
+            c1z3s1sprite.setColor(farben[1]);
+            spiel.draw(c1z3s1sprite);
+            c1spieler2--;
+        }
+        else if (c1spieler3 != 0) {
+            c1z3s1sprite.setColor(farben[2]);
+            spiel.draw(c1z3s1sprite);
+            c1spieler3--;
+        }
+
+        //c1z3s2
+        if (c1spieler1 != 0) {
+            c1z3s2sprite.setColor(farben[0]);
+            spiel.draw(c1z3s2sprite);
+            c1spieler1--;
+        }
+        else if (c1spieler2 != 0) {
+            c1z3s2sprite.setColor(farben[1]);
+            spiel.draw(c1z3s2sprite);
+            c1spieler2--;
+        }
+        else if (c1spieler3 != 0) {
+            c1z3s2sprite.setColor(farben[2]);
+            spiel.draw(c1z3s2sprite);
+            c1spieler3--;
+        }
+
+        //c1z3s3
+        if (c1spieler1 != 0) {
+            c1z3s3sprite.setColor(farben[0]);
+            spiel.draw(c1z3s3sprite);
+            c1spieler1--;
+        }
+        else if (c1spieler2 != 0) {
+            c1z3s3sprite.setColor(farben[1]);
+            spiel.draw(c1z3s3sprite);
+            c1spieler2--;
+        }
+        else if (c1spieler3 != 0) {
+            c1z3s3sprite.setColor(farben[2]);
+            spiel.draw(c1z3s3sprite);
+            c1spieler3--;
+        }
+
+        //c1z3s4
+        if (c1spieler1 != 0) {
+            c1z3s4sprite.setColor(farben[0]);
+            spiel.draw(c1z3s4sprite);
+            c1spieler1--;
+        }
+        else if (c1spieler2 != 0) {
+            c1z3s4sprite.setColor(farben[1]);
+            spiel.draw(c1z3s4sprite);
+            c1spieler2--;
+        }
+        else if (c1spieler3 != 0) {
+            c1z3s4sprite.setColor(farben[2]);
+            spiel.draw(c1z3s4sprite);
+            c1spieler3--;
+        }
+
+        //c1z4s1
+        if (c1spieler1 != 0) {
+            c1z4s1sprite.setColor(farben[0]);
+            spiel.draw(c1z4s1sprite);
+            c1spieler1--;
+        }
+        else if (c1spieler2 != 0) {
+            c1z4s1sprite.setColor(farben[1]);
+            spiel.draw(c1z4s1sprite);
+            c1spieler2--;
+        }
+        else if (c1spieler3 != 0) {
+            c1z4s1sprite.setColor(farben[2]);
+            spiel.draw(c1z4s1sprite);
+            c1spieler3--;
+        }
+
+        //c1z4s2
+        if (c1spieler1 != 0) {
+            c1z4s2sprite.setColor(farben[0]);
+            spiel.draw(c1z4s2sprite);
+            c1spieler1--;
+        }
+        else if (c1spieler2 != 0) {
+            c1z4s2sprite.setColor(farben[1]);
+            spiel.draw(c1z4s2sprite);
+            c1spieler2--;
+        }
+        else if (c1spieler3 != 0) {
+            c1z4s2sprite.setColor(farben[2]);
+            spiel.draw(c1z4s2sprite);
+            c1spieler3--;
+        }
+
+        //c1z4s3
+        if (c1spieler1 != 0) {
+            c1z4s3sprite.setColor(farben[0]);
+            spiel.draw(c1z4s3sprite);
+            c1spieler1--;
+        }
+        else if (c1spieler2 != 0) {
+            c1z4s3sprite.setColor(farben[1]);
+            spiel.draw(c1z4s3sprite);
+            c1spieler2--;
+        }
+        else if (c1spieler3 != 0) {
+            c1z4s3sprite.setColor(farben[2]);
+            spiel.draw(c1z4s3sprite);
+            c1spieler3--;
+        }
+
+        //c1z4s4
+        if (c1spieler1 != 0) {
+            c1z4s4sprite.setColor(farben[0]);
+            spiel.draw(c1z4s4sprite);
+            c1spieler1--;
+        }
+        else if (c1spieler2 != 0) {
+            c1z4s4sprite.setColor(farben[1]);
+            spiel.draw(c1z4s4sprite);
+            c1spieler2--;
+        }
+        else if (c1spieler3 != 0) {
+            c1z4s4sprite.setColor(farben[2]);
+            spiel.draw(c1z4s4sprite);
+            c1spieler3--;
+        }
+
+        //c1z5s1
+        if (c1spieler1 != 0) {
+            c1z5s1sprite.setColor(farben[0]);
+            spiel.draw(c1z5s1sprite);
+            c1spieler1--;
+        }
+        else if (c1spieler2 != 0) {
+            c1z5s1sprite.setColor(farben[1]);
+            spiel.draw(c1z5s1sprite);
+            c1spieler2--;
+        }
+        else if (c1spieler3 != 0) {
+            c1z5s1sprite.setColor(farben[2]);
+            spiel.draw(c1z5s1sprite);
+            c1spieler3--;
+        }
+
+        //c1z5s2
+        if (c1spieler1 != 0) {
+            c1z5s2sprite.setColor(farben[0]);
+            spiel.draw(c1z5s2sprite);
+            c1spieler1--;
+        }
+        else if (c1spieler2 != 0) {
+            c1z5s2sprite.setColor(farben[1]);
+            spiel.draw(c1z5s2sprite);
+            c1spieler2--;
+        }
+        else if (c1spieler3 != 0) {
+            c1z5s2sprite.setColor(farben[2]);
+            spiel.draw(c1z5s2sprite);
+            c1spieler3--;
+        }
+
+        //c1z5s3
+        if (c1spieler1 != 0) {
+            c1z5s3sprite.setColor(farben[0]);
+            spiel.draw(c1z5s3sprite);
+            c1spieler1--;
+        }
+        else if (c1spieler2 != 0) {
+            c1z5s3sprite.setColor(farben[1]);
+            spiel.draw(c1z5s3sprite);
+            c1spieler2--;
+        }
+        else if (c1spieler3 != 0) {
+            c1z5s3sprite.setColor(farben[2]);
+            spiel.draw(c1z5s3sprite);
+            c1spieler3--;
+        }
+
+        //c1z5s4
+        if (c1spieler1 != 0) {
+            c1z5s4sprite.setColor(farben[0]);
+            spiel.draw(c1z5s4sprite);
+            c1spieler1--;
+        }
+        else if (c1spieler2 != 0) {
+            c1z5s4sprite.setColor(farben[1]);
+            spiel.draw(c1z5s4sprite);
+            c1spieler2--;
+        }
+        else if (c1spieler3 != 0) {
+            c1z5s4sprite.setColor(farben[2]);
+            spiel.draw(c1z5s4sprite);
+            c1spieler3--;
+        }
+
+        //Casino 2
+        //c2z1s1
+        printf("c2spieler1 = %i\n", c2spieler1);
+        if (c2spieler1 != 0) {
+            c2z1s1sprite.setColor(farben[0]);
+            spiel.draw(c2z1s1sprite);
+            c2spieler1--;
+        }
+        else if (c2spieler2 != 0) {
+            c2z1s1sprite.setColor(farben[1]);
+            spiel.draw(c2z1s1sprite);
+            c2spieler2--;
+        }
+        else if (c2spieler3 != 0) {
+            c2z1s1sprite.setColor(farben[2]);
+            spiel.draw(c2z1s1sprite);
+            c2spieler3--;
+        }
+
+        //c2z1s2
+        if (c2spieler1 != 0) {
+            c2z1s2sprite.setColor(farben[0]);
+            spiel.draw(c2z1s2sprite);
+            c2spieler1--;
+        }
+        else if (c2spieler2 != 0) {
+            c2z1s2sprite.setColor(farben[1]);
+            spiel.draw(c2z1s2sprite);
+            c2spieler2--;
+        }
+        else if (c2spieler3 != 0) {
+            c2z1s2sprite.setColor(farben[2]);
+            spiel.draw(c2z1s2sprite);
+            c2spieler3--;
+        }
+
+        //c2z1s3
+        if (c2spieler1 != 0) {
+            c2z1s3sprite.setColor(farben[0]);
+            spiel.draw(c2z1s3sprite);
+            c2spieler1--;
+        }
+        else if (c2spieler2 != 0) {
+            c2z1s3sprite.setColor(farben[1]);
+            spiel.draw(c2z1s3sprite);
+            c2spieler2--;
+        }
+        else if (c2spieler3 != 0) {
+            c2z1s3sprite.setColor(farben[2]);
+            spiel.draw(c2z1s3sprite);
+            c2spieler3--;
+        }
+
+        //c2z1s4
+        if (c2spieler1 != 0) {
+            c2z1s4sprite.setColor(farben[0]);
+            spiel.draw(c2z1s4sprite);
+            c2spieler1--;
+        }
+        else if (c2spieler2 != 0) {
+            c2z1s4sprite.setColor(farben[1]);
+            spiel.draw(c2z1s4sprite);
+            c2spieler2--;
+        }
+        else if (c2spieler3 != 0) {
+            c2z1s4sprite.setColor(farben[2]);
+            spiel.draw(c2z1s4sprite);
+            c2spieler3--;
+        }
+
+        //c2z2s1
+        if (c2spieler1 != 0) {
+            c2z2s1sprite.setColor(farben[0]);
+            spiel.draw(c2z2s1sprite);
+            c2spieler1--;
+        }
+        else if (c2spieler2 != 0) {
+            c2z2s1sprite.setColor(farben[1]);
+            spiel.draw(c2z2s1sprite);
+            c2spieler2--;
+        }
+        else if (c2spieler3 != 0) {
+            c2z2s1sprite.setColor(farben[2]);
+            spiel.draw(c2z2s1sprite);
+            c2spieler3--;
+        }
+
+        //c2z2s2
+        if (c2spieler1 != 0) {
+            c2z2s2sprite.setColor(farben[0]);
+            spiel.draw(c2z2s2sprite);
+            c2spieler1--;
+        }
+        else if (c2spieler2 != 0) {
+            c2z2s2sprite.setColor(farben[1]);
+            spiel.draw(c2z2s2sprite);
+            c2spieler2--;
+        }
+        else if (c2spieler3 != 0) {
+            c2z2s2sprite.setColor(farben[2]);
+            spiel.draw(c2z2s2sprite);
+            c2spieler3--;
+        }
+
+        //c2z2s3
+        if (c2spieler1 != 0) {
+            c2z2s3sprite.setColor(farben[0]);
+            spiel.draw(c2z2s3sprite);
+            c2spieler1--;
+        }
+        else if (c2spieler2 != 0) {
+            c2z2s3sprite.setColor(farben[1]);
+            spiel.draw(c2z2s3sprite);
+            c2spieler2--;
+        }
+        else if (c2spieler3 != 0) {
+            c2z2s3sprite.setColor(farben[2]);
+            spiel.draw(c2z2s3sprite);
+            c2spieler3--;
+        }
+
+        //c2z2s4
+        if (c2spieler1 != 0) {
+            c2z2s4sprite.setColor(farben[0]);
+            spiel.draw(c2z2s4sprite);
+            c2spieler1--;
+        }
+        else if (c2spieler2 != 0) {
+            c2z2s4sprite.setColor(farben[1]);
+            spiel.draw(c2z2s4sprite);
+            c2spieler2--;
+        }
+        else if (c2spieler3 != 0) {
+            c2z2s4sprite.setColor(farben[2]);
+            spiel.draw(c2z2s4sprite);
+            c2spieler3--;
+        }
+
+        //c2z3s1
+        if (c2spieler1 != 0) {
+            c2z3s1sprite.setColor(farben[0]);
+            spiel.draw(c2z3s1sprite);
+            c2spieler1--;
+        }
+        else if (c2spieler2 != 0) {
+            c2z3s1sprite.setColor(farben[1]);
+            spiel.draw(c2z3s1sprite);
+            c2spieler2--;
+        }
+        else if (c2spieler3 != 0) {
+            c2z3s1sprite.setColor(farben[2]);
+            spiel.draw(c2z3s1sprite);
+            c2spieler3--;
+        }
+
+        //c2z3s2
+        if (c2spieler1 != 0) {
+            c2z3s2sprite.setColor(farben[0]);
+            spiel.draw(c2z3s2sprite);
+            c2spieler1--;
+        }
+        else if (c2spieler2 != 0) {
+            c2z3s2sprite.setColor(farben[1]);
+            spiel.draw(c2z3s2sprite);
+            c2spieler2--;
+        }
+        else if (c2spieler3 != 0) {
+            c2z3s2sprite.setColor(farben[2]);
+            spiel.draw(c2z3s2sprite);
+            c2spieler3--;
+        }
+
+        //c2z3s3
+        if (c2spieler1 != 0) {
+            c2z3s3sprite.setColor(farben[0]);
+            spiel.draw(c2z3s3sprite);
+            c2spieler1--;
+        }
+        else if (c2spieler2 != 0) {
+            c2z3s3sprite.setColor(farben[1]);
+            spiel.draw(c2z3s3sprite);
+            c2spieler2--;
+        }
+        else if (c2spieler3 != 0) {
+            c2z3s3sprite.setColor(farben[2]);
+            spiel.draw(c2z3s3sprite);
+            c2spieler3--;
+        }
+
+        //c2z3s4
+        if (c2spieler1 != 0) {
+            c2z3s4sprite.setColor(farben[0]);
+            spiel.draw(c2z3s4sprite);
+            c2spieler1--;
+        }
+        else if (c2spieler2 != 0) {
+            c2z3s4sprite.setColor(farben[1]);
+            spiel.draw(c2z3s4sprite);
+            c2spieler2--;
+        }
+        else if (c2spieler3 != 0) {
+            c2z3s4sprite.setColor(farben[2]);
+            spiel.draw(c2z3s4sprite);
+            c2spieler3--;
+        }
+
+        //c2z4s1
+        if (c2spieler1 != 0) {
+            c2z4s1sprite.setColor(farben[0]);
+            spiel.draw(c2z4s1sprite);
+            c2spieler1--;
+        }
+        else if (c2spieler2 != 0) {
+            c2z4s1sprite.setColor(farben[1]);
+            spiel.draw(c2z4s1sprite);
+            c2spieler2--;
+        }
+        else if (c2spieler3 != 0) {
+            c2z4s1sprite.setColor(farben[2]);
+            spiel.draw(c2z4s1sprite);
+            c2spieler3--;
+        }
+
+        //c2z4s2
+        if (c2spieler1 != 0) {
+            c2z4s2sprite.setColor(farben[0]);
+            spiel.draw(c2z4s2sprite);
+            c2spieler1--;
+        }
+        else if (c2spieler2 != 0) {
+            c2z4s2sprite.setColor(farben[1]);
+            spiel.draw(c2z4s2sprite);
+            c2spieler2--;
+        }
+        else if (c2spieler3 != 0) {
+            c2z4s2sprite.setColor(farben[2]);
+            spiel.draw(c2z4s2sprite);
+            c2spieler3--;
+        }
+
+        //c2z4s3
+        if (c2spieler1 != 0) {
+            c2z4s3sprite.setColor(farben[0]);
+            spiel.draw(c2z4s3sprite);
+            c2spieler1--;
+        }
+        else if (c2spieler2 != 0) {
+            c2z4s3sprite.setColor(farben[1]);
+            spiel.draw(c2z4s3sprite);
+            c2spieler2--;
+        }
+        else if (c2spieler3 != 0) {
+            c2z4s3sprite.setColor(farben[2]);
+            spiel.draw(c2z4s3sprite);
+            c2spieler3--;
+        }
+
+        //c2z4s4
+        if (c2spieler1 != 0) {
+            c2z4s4sprite.setColor(farben[0]);
+            spiel.draw(c2z4s4sprite);
+            c2spieler1--;
+        }
+        else if (c2spieler2 != 0) {
+            c2z4s4sprite.setColor(farben[1]);
+            spiel.draw(c2z4s4sprite);
+            c2spieler2--;
+        }
+        else if (c2spieler3 != 0) {
+            c2z4s4sprite.setColor(farben[2]);
+            spiel.draw(c2z4s4sprite);
+            c2spieler3--;
+        }
+
+        //c2z5s1
+        if (c2spieler1 != 0) {
+            c2z5s1sprite.setColor(farben[0]);
+            spiel.draw(c2z5s1sprite);
+            c2spieler1--;
+        }
+        else if (c2spieler2 != 0) {
+            c2z5s1sprite.setColor(farben[1]);
+            spiel.draw(c2z5s1sprite);
+            c2spieler2--;
+        }
+        else if (c2spieler3 != 0) {
+            c2z5s1sprite.setColor(farben[2]);
+            spiel.draw(c2z5s1sprite);
+            c2spieler3--;
+        }
+
+        //c2z5s2
+        if (c2spieler1 != 0) {
+            c2z5s2sprite.setColor(farben[0]);
+            spiel.draw(c2z5s2sprite);
+            c2spieler1--;
+        }
+        else if (c2spieler2 != 0) {
+            c2z5s2sprite.setColor(farben[1]);
+            spiel.draw(c2z5s2sprite);
+            c2spieler2--;
+        }
+        else if (c2spieler3 != 0) {
+            c2z5s2sprite.setColor(farben[2]);
+            spiel.draw(c2z5s2sprite);
+            c2spieler3--;
+        }
+
+        //c2z5s3
+        if (c2spieler1 != 0) {
+            c2z5s3sprite.setColor(farben[0]);
+            spiel.draw(c2z5s3sprite);
+            c2spieler1--;
+        }
+        else if (c2spieler2 != 0) {
+            c2z5s3sprite.setColor(farben[1]);
+            spiel.draw(c2z5s3sprite);
+            c2spieler2--;
+        }
+        else if (c2spieler3 != 0) {
+            c2z5s3sprite.setColor(farben[2]);
+            spiel.draw(c2z5s3sprite);
+            c2spieler3--;
+        }
+
+        //c2z5s4
+        if (c2spieler1 != 0) {
+            c2z5s4sprite.setColor(farben[0]);
+            spiel.draw(c2z5s4sprite);
+            c2spieler1--;
+        }
+        else if (c2spieler2 != 0) {
+            c2z5s4sprite.setColor(farben[1]);
+            spiel.draw(c2z5s4sprite);
+            c2spieler2--;
+        }
+        else if (c2spieler3 != 0) {
+            c2z5s4sprite.setColor(farben[2]);
+            spiel.draw(c2z5s4sprite);
+            c2spieler3--;
+        }
+
+        //Casino 3
+        //c3z1s1
+        if (c3spieler1 != 0) {
+            c3z1s1sprite.setColor(farben[0]);
+            spiel.draw(c3z1s1sprite);
+            c3spieler1--;
+        }
+        else if (c3spieler2 != 0) {
+            c3z1s1sprite.setColor(farben[1]);
+            spiel.draw(c3z1s1sprite);
+            c3spieler2--;
+        }
+        else if (c3spieler3 != 0) {
+            c3z1s1sprite.setColor(farben[2]);
+            spiel.draw(c3z1s1sprite);
+            c3spieler3--;
+        }
+
+        //c3z1s2
+        if (c3spieler1 != 0) {
+            c3z1s2sprite.setColor(farben[0]);
+            spiel.draw(c3z1s2sprite);
+            c3spieler1--;
+        }
+        else if (c3spieler2 != 0) {
+            c3z1s2sprite.setColor(farben[1]);
+            spiel.draw(c3z1s2sprite);
+            c3spieler2--;
+        }
+        else if (c3spieler3 != 0) {
+            c3z1s2sprite.setColor(farben[2]);
+            spiel.draw(c3z1s2sprite);
+            c3spieler3--;
+        }
+
+        //c3z1s3
+        if (c3spieler1 != 0) {
+            c3z1s3sprite.setColor(farben[0]);
+            spiel.draw(c3z1s3sprite);
+            c3spieler1--;
+        }
+        else if (c3spieler2 != 0) {
+            c3z1s3sprite.setColor(farben[1]);
+            spiel.draw(c3z1s3sprite);
+            c3spieler2--;
+        }
+        else if (c3spieler3 != 0) {
+            c3z1s3sprite.setColor(farben[2]);
+            spiel.draw(c3z1s3sprite);
+            c3spieler3--;
+        }
+
+        //c3z1s4
+        if (c3spieler1 != 0) {
+            c3z1s4sprite.setColor(farben[0]);
+            spiel.draw(c3z1s4sprite);
+            c3spieler1--;
+        }
+        else if (c3spieler2 != 0) {
+            c3z1s4sprite.setColor(farben[1]);
+            spiel.draw(c3z1s4sprite);
+            c3spieler2--;
+        }
+        else if (c3spieler3 != 0) {
+            c3z1s4sprite.setColor(farben[2]);
+            spiel.draw(c3z1s4sprite);
+            c3spieler3--;
+        }
+
+        //c3z2s1
+        if (c3spieler1 != 0) {
+            c3z2s1sprite.setColor(farben[0]);
+            spiel.draw(c3z2s1sprite);
+            c3spieler1--;
+        }
+        else if (c3spieler2 != 0) {
+            c3z2s1sprite.setColor(farben[1]);
+            spiel.draw(c3z2s1sprite);
+            c3spieler2--;
+        }
+        else if (c3spieler3 != 0) {
+            c3z2s1sprite.setColor(farben[2]);
+            spiel.draw(c3z2s1sprite);
+            c3spieler3--;
+        }
+
+        //c3z2s2
+        if (c3spieler1 != 0) {
+            c3z2s2sprite.setColor(farben[0]);
+            spiel.draw(c3z2s2sprite);
+            c3spieler1--;
+        }
+        else if (c3spieler2 != 0) {
+            c3z2s2sprite.setColor(farben[1]);
+            spiel.draw(c3z2s2sprite);
+            c3spieler2--;
+        }
+        else if (c3spieler3 != 0) {
+            c3z2s2sprite.setColor(farben[2]);
+            spiel.draw(c3z2s2sprite);
+            c3spieler3--;
+        }
+
+        //c3z2s3
+        if (c3spieler1 != 0) {
+            c3z2s3sprite.setColor(farben[0]);
+            spiel.draw(c3z2s3sprite);
+            c3spieler1--;
+        }
+        else if (c3spieler2 != 0) {
+            c3z2s3sprite.setColor(farben[1]);
+            spiel.draw(c3z2s3sprite);
+            c3spieler2--;
+        }
+        else if (c3spieler3 != 0) {
+            c3z2s3sprite.setColor(farben[2]);
+            spiel.draw(c3z2s3sprite);
+            c3spieler3--;
+        }
+
+        //c3z2s4
+        if (c3spieler1 != 0) {
+            c3z2s4sprite.setColor(farben[0]);
+            spiel.draw(c3z2s4sprite);
+            c3spieler1--;
+        }
+        else if (c3spieler2 != 0) {
+            c3z2s4sprite.setColor(farben[1]);
+            spiel.draw(c3z2s4sprite);
+            c3spieler2--;
+        }
+        else if (c3spieler3 != 0) {
+            c3z2s4sprite.setColor(farben[2]);
+            spiel.draw(c3z2s4sprite);
+            c3spieler3--;
+        }
+
+        //c3z3s1
+        if (c3spieler1 != 0) {
+            c3z3s1sprite.setColor(farben[0]);
+            spiel.draw(c3z3s1sprite);
+            c3spieler1--;
+        }
+        else if (c3spieler2 != 0) {
+            c3z3s1sprite.setColor(farben[1]);
+            spiel.draw(c3z3s1sprite);
+            c3spieler2--;
+        }
+        else if (c3spieler3 != 0) {
+            c3z3s1sprite.setColor(farben[2]);
+            spiel.draw(c3z3s1sprite);
+            c3spieler3--;
+        }
+
+        //c3z3s2
+        if (c3spieler1 != 0) {
+            c3z3s2sprite.setColor(farben[0]);
+            spiel.draw(c3z3s2sprite);
+            c3spieler1--;
+        }
+        else if (c3spieler2 != 0) {
+            c3z3s2sprite.setColor(farben[1]);
+            spiel.draw(c3z3s2sprite);
+            c3spieler2--;
+        }
+        else if (c3spieler3 != 0) {
+            c3z3s2sprite.setColor(farben[2]);
+            spiel.draw(c3z3s2sprite);
+            c3spieler3--;
+        }
+
+        //c3z3s3
+        if (c3spieler1 != 0) {
+            c3z3s3sprite.setColor(farben[0]);
+            spiel.draw(c3z3s3sprite);
+            c3spieler1--;
+        }
+        else if (c3spieler2 != 0) {
+            c3z3s3sprite.setColor(farben[1]);
+            spiel.draw(c3z3s3sprite);
+            c3spieler2--;
+        }
+        else if (c3spieler3 != 0) {
+            c3z3s3sprite.setColor(farben[2]);
+            spiel.draw(c3z3s3sprite);
+            c3spieler3--;
+        }
+
+        //c3z3s4
+        if (c3spieler1 != 0) {
+            c3z3s4sprite.setColor(farben[0]);
+            spiel.draw(c3z3s4sprite);
+            c3spieler1--;
+        }
+        else if (c3spieler2 != 0) {
+            c3z3s4sprite.setColor(farben[1]);
+            spiel.draw(c3z3s4sprite);
+            c3spieler2--;
+        }
+        else if (c3spieler3 != 0) {
+            c3z3s4sprite.setColor(farben[2]);
+            spiel.draw(c3z3s4sprite);
+            c3spieler3--;
+        }
+
+        //c3z4s1
+        if (c3spieler1 != 0) {
+            c3z4s1sprite.setColor(farben[0]);
+            spiel.draw(c3z4s1sprite);
+            c3spieler1--;
+        }
+        else if (c3spieler2 != 0) {
+            c3z4s1sprite.setColor(farben[1]);
+            spiel.draw(c3z4s1sprite);
+            c3spieler2--;
+        }
+        else if (c3spieler3 != 0) {
+            c3z4s1sprite.setColor(farben[2]);
+            spiel.draw(c3z4s1sprite);
+            c3spieler3--;
+        }
+
+        //c3z4s2
+        if (c3spieler1 != 0) {
+            c3z4s2sprite.setColor(farben[0]);
+            spiel.draw(c3z4s2sprite);
+            c3spieler1--;
+        }
+        else if (c3spieler2 != 0) {
+            c3z4s2sprite.setColor(farben[1]);
+            spiel.draw(c3z4s2sprite);
+            c3spieler2--;
+        }
+        else if (c3spieler3 != 0) {
+            c3z4s2sprite.setColor(farben[2]);
+            spiel.draw(c3z4s2sprite);
+            c3spieler3--;
+        }
+
+        //c3z4s3
+        if (c3spieler1 != 0) {
+            c3z4s3sprite.setColor(farben[0]);
+            spiel.draw(c3z4s3sprite);
+            c3spieler1--;
+        }
+        else if (c3spieler2 != 0) {
+            c3z4s3sprite.setColor(farben[1]);
+            spiel.draw(c3z4s3sprite);
+            c3spieler2--;
+        }
+        else if (c3spieler3 != 0) {
+            c3z4s3sprite.setColor(farben[2]);
+            spiel.draw(c3z4s3sprite);
+            c3spieler3--;
+        }
+
+        //c3z4s4
+        if (c3spieler1 != 0) {
+            c3z4s4sprite.setColor(farben[0]);
+            spiel.draw(c3z4s4sprite);
+            c3spieler1--;
+        }
+        else if (c3spieler2 != 0) {
+            c3z4s4sprite.setColor(farben[1]);
+            spiel.draw(c3z4s4sprite);
+            c3spieler2--;
+        }
+        else if (c3spieler3 != 0) {
+            c3z4s4sprite.setColor(farben[2]);
+            spiel.draw(c3z4s4sprite);
+            c3spieler3--;
+        }
+
+        //c3z5s1
+        if (c3spieler1 != 0) {
+            c3z5s1sprite.setColor(farben[0]);
+            spiel.draw(c3z5s1sprite);
+            c3spieler1--;
+        }
+        else if (c3spieler2 != 0) {
+            c3z5s1sprite.setColor(farben[1]);
+            spiel.draw(c3z5s1sprite);
+            c3spieler2--;
+        }
+        else if (c3spieler3 != 0) {
+            c3z5s1sprite.setColor(farben[2]);
+            spiel.draw(c3z5s1sprite);
+            c3spieler3--;
+        }
+
+        //c3z5s2
+        if (c3spieler1 != 0) {
+            c3z5s2sprite.setColor(farben[0]);
+            spiel.draw(c3z5s2sprite);
+            c3spieler1--;
+        }
+        else if (c3spieler2 != 0) {
+            c3z5s2sprite.setColor(farben[1]);
+            spiel.draw(c3z5s2sprite);
+            c3spieler2--;
+        }
+        else if (c3spieler3 != 0) {
+            c3z5s2sprite.setColor(farben[2]);
+            spiel.draw(c3z5s2sprite);
+            c3spieler3--;
+        }
+
+        //c3z5s3
+        if (c3spieler1 != 0) {
+            c3z5s3sprite.setColor(farben[0]);
+            spiel.draw(c3z5s3sprite);
+            c3spieler1--;
+        }
+        else if (c3spieler2 != 0) {
+            c3z5s3sprite.setColor(farben[1]);
+            spiel.draw(c3z5s3sprite);
+            c3spieler2--;
+        }
+        else if (c3spieler3 != 0) {
+            c3z5s3sprite.setColor(farben[2]);
+            spiel.draw(c3z5s3sprite);
+            c3spieler3--;
+        }
+
+        //c3z5s4
+        if (c3spieler1 != 0) {
+            c3z5s4sprite.setColor(farben[0]);
+            spiel.draw(c3z5s4sprite);
+            c3spieler1--;
+        }
+        else if (c3spieler2 != 0) {
+            c3z5s4sprite.setColor(farben[1]);
+            spiel.draw(c3z5s4sprite);
+            c3spieler2--;
+        }
+        else if (c3spieler3 != 0) {
+            c3z5s4sprite.setColor(farben[2]);
+            spiel.draw(c3z5s4sprite);
+            c3spieler3--;
+        }
+
+        //Casino 4
+        //c4z1s1
+        if (c4spieler1 != 0) {
+            c4z1s1sprite.setColor(farben[0]);
+            spiel.draw(c4z1s1sprite);
+            c4spieler1--;
+        }
+        else if (c4spieler2 != 0) {
+            c4z1s1sprite.setColor(farben[1]);
+            spiel.draw(c4z1s1sprite);
+            c4spieler2--;
+        }
+        else if (c4spieler3 != 0) {
+            c4z1s1sprite.setColor(farben[2]);
+            spiel.draw(c4z1s1sprite);
+            c4spieler3--;
+        }
+
+        //c4z1s2
+        if (c4spieler1 != 0) {
+            c4z1s2sprite.setColor(farben[0]);
+            spiel.draw(c4z1s2sprite);
+            c4spieler1--;
+        }
+        else if (c4spieler2 != 0) {
+            c4z1s2sprite.setColor(farben[1]);
+            spiel.draw(c4z1s2sprite);
+            c4spieler2--;
+        }
+        else if (c4spieler3 != 0) {
+            c4z1s2sprite.setColor(farben[2]);
+            spiel.draw(c4z1s2sprite);
+            c4spieler3--;
+        }
+
+        //c4z1s3
+        if (c4spieler1 != 0) {
+            c4z1s3sprite.setColor(farben[0]);
+            spiel.draw(c4z1s3sprite);
+            c4spieler1--;
+        }
+        else if (c4spieler2 != 0) {
+            c4z1s3sprite.setColor(farben[1]);
+            spiel.draw(c4z1s3sprite);
+            c4spieler2--;
+        }
+        else if (c4spieler3 != 0) {
+            c4z1s3sprite.setColor(farben[2]);
+            spiel.draw(c4z1s3sprite);
+            c4spieler3--;
+        }
+
+        //c4z1s4
+        if (c4spieler1 != 0) {
+            c4z1s4sprite.setColor(farben[0]);
+            spiel.draw(c4z1s4sprite);
+            c4spieler1--;
+        }
+        else if (c4spieler2 != 0) {
+            c4z1s4sprite.setColor(farben[1]);
+            spiel.draw(c4z1s4sprite);
+            c4spieler2--;
+        }
+        else if (c4spieler3 != 0) {
+            c4z1s4sprite.setColor(farben[2]);
+            spiel.draw(c4z1s4sprite);
+            c4spieler3--;
+        }
+
+        //c4z2s1
+        if (c4spieler1 != 0) {
+            c4z2s1sprite.setColor(farben[0]);
+            spiel.draw(c4z2s1sprite);
+            c4spieler1--;
+        }
+        else if (c4spieler2 != 0) {
+            c4z2s1sprite.setColor(farben[1]);
+            spiel.draw(c4z2s1sprite);
+            c4spieler2--;
+        }
+        else if (c4spieler3 != 0) {
+            c4z2s1sprite.setColor(farben[2]);
+            spiel.draw(c4z2s1sprite);
+            c4spieler3--;
+        }
+
+        //c4z2s2
+        if (c4spieler1 != 0) {
+            c4z2s2sprite.setColor(farben[0]);
+            spiel.draw(c4z2s2sprite);
+            c4spieler1--;
+        }
+        else if (c4spieler2 != 0) {
+            c4z2s2sprite.setColor(farben[1]);
+            spiel.draw(c4z2s2sprite);
+            c4spieler2--;
+        }
+        else if (c4spieler3 != 0) {
+            c4z2s2sprite.setColor(farben[2]);
+            spiel.draw(c4z2s2sprite);
+            c4spieler3--;
+        }
+
+        //c4z2s3
+        if (c4spieler1 != 0) {
+            c4z2s3sprite.setColor(farben[0]);
+            spiel.draw(c4z2s3sprite);
+            c4spieler1--;
+        }
+        else if (c4spieler2 != 0) {
+            c4z2s3sprite.setColor(farben[1]);
+            spiel.draw(c4z2s3sprite);
+            c4spieler2--;
+        }
+        else if (c4spieler3 != 0) {
+            c4z2s3sprite.setColor(farben[2]);
+            spiel.draw(c4z2s3sprite);
+            c4spieler3--;
+        }
+
+        //c4z2s4
+        if (c4spieler1 != 0) {
+            c4z2s4sprite.setColor(farben[0]);
+            spiel.draw(c4z2s4sprite);
+            c4spieler1--;
+        }
+        else if (c4spieler2 != 0) {
+            c4z2s4sprite.setColor(farben[1]);
+            spiel.draw(c4z2s4sprite);
+            c4spieler2--;
+        }
+        else if (c4spieler3 != 0) {
+            c4z2s4sprite.setColor(farben[2]);
+            spiel.draw(c4z2s4sprite);
+            c4spieler3--;
+        }
+
+        //c4z3s1
+        if (c4spieler1 != 0) {
+            c4z3s1sprite.setColor(farben[0]);
+            spiel.draw(c4z3s1sprite);
+            c4spieler1--;
+        }
+        else if (c4spieler2 != 0) {
+            c4z3s1sprite.setColor(farben[1]);
+            spiel.draw(c4z3s1sprite);
+            c4spieler2--;
+        }
+        else if (c4spieler3 != 0) {
+            c4z3s1sprite.setColor(farben[2]);
+            spiel.draw(c4z3s1sprite);
+            c4spieler3--;
+        }
+
+        //c4z3s2
+        if (c4spieler1 != 0) {
+            c4z3s2sprite.setColor(farben[0]);
+            spiel.draw(c4z3s2sprite);
+            c4spieler1--;
+        }
+        else if (c4spieler2 != 0) {
+            c4z3s2sprite.setColor(farben[1]);
+            spiel.draw(c4z3s2sprite);
+            c4spieler2--;
+        }
+        else if (c4spieler3 != 0) {
+            c4z3s2sprite.setColor(farben[2]);
+            spiel.draw(c4z3s2sprite);
+            c4spieler3--;
+        }
+
+        //c4z3s3
+        if (c4spieler1 != 0) {
+            c4z3s3sprite.setColor(farben[0]);
+            spiel.draw(c4z3s3sprite);
+            c4spieler1--;
+        }
+        else if (c4spieler2 != 0) {
+            c4z3s3sprite.setColor(farben[1]);
+            spiel.draw(c4z3s3sprite);
+            c4spieler2--;
+        }
+        else if (c4spieler3 != 0) {
+            c4z3s3sprite.setColor(farben[2]);
+            spiel.draw(c4z3s3sprite);
+            c4spieler3--;
+        }
+
+        //c4z3s4
+        if (c4spieler1 != 0) {
+            c4z3s4sprite.setColor(farben[0]);
+            spiel.draw(c4z3s4sprite);
+            c4spieler1--;
+        }
+        else if (c4spieler2 != 0) {
+            c4z3s4sprite.setColor(farben[1]);
+            spiel.draw(c4z3s4sprite);
+            c4spieler2--;
+        }
+        else if (c4spieler3 != 0) {
+            c4z3s4sprite.setColor(farben[2]);
+            spiel.draw(c4z3s4sprite);
+            c4spieler3--;
+        }
+
+        //c4z4s1
+        if (c4spieler1 != 0) {
+            c4z4s1sprite.setColor(farben[0]);
+            spiel.draw(c4z4s1sprite);
+            c4spieler1--;
+        }
+        else if (c4spieler2 != 0) {
+            c4z4s1sprite.setColor(farben[1]);
+            spiel.draw(c4z4s1sprite);
+            c4spieler2--;
+        }
+        else if (c4spieler3 != 0) {
+            c4z4s1sprite.setColor(farben[2]);
+            spiel.draw(c4z4s1sprite);
+            c4spieler3--;
+        }
+
+        //c4z4s2
+        if (c4spieler1 != 0) {
+            c4z4s2sprite.setColor(farben[0]);
+            spiel.draw(c4z4s2sprite);
+            c4spieler1--;
+        }
+        else if (c4spieler2 != 0) {
+            c4z4s2sprite.setColor(farben[1]);
+            spiel.draw(c4z4s2sprite);
+            c4spieler2--;
+        }
+        else if (c4spieler3 != 0) {
+            c4z4s2sprite.setColor(farben[2]);
+            spiel.draw(c4z4s2sprite);
+            c4spieler3--;
+        }
+
+        //c4z4s3
+        if (c4spieler1 != 0) {
+            c4z4s3sprite.setColor(farben[0]);
+            spiel.draw(c4z4s3sprite);
+            c4spieler1--;
+        }
+        else if (c4spieler2 != 0) {
+            c4z4s3sprite.setColor(farben[1]);
+            spiel.draw(c4z4s3sprite);
+            c4spieler2--;
+        }
+        else if (c4spieler3 != 0) {
+            c4z4s3sprite.setColor(farben[2]);
+            spiel.draw(c4z4s3sprite);
+            c4spieler3--;
+        }
+
+        //c4z4s4
+        if (c4spieler1 != 0) {
+            c4z4s4sprite.setColor(farben[0]);
+            spiel.draw(c4z4s4sprite);
+            c4spieler1--;
+        }
+        else if (c4spieler2 != 0) {
+            c4z4s4sprite.setColor(farben[1]);
+            spiel.draw(c4z4s4sprite);
+            c4spieler2--;
+        }
+        else if (c4spieler3 != 0) {
+            c4z4s4sprite.setColor(farben[2]);
+            spiel.draw(c4z4s4sprite);
+            c4spieler3--;
+        }
+
+        //c4z5s1
+        if (c4spieler1 != 0) {
+            c4z5s1sprite.setColor(farben[0]);
+            spiel.draw(c4z5s1sprite);
+            c4spieler1--;
+        }
+        else if (c4spieler2 != 0) {
+            c4z5s1sprite.setColor(farben[1]);
+            spiel.draw(c4z5s1sprite);
+            c4spieler2--;
+        }
+        else if (c4spieler3 != 0) {
+            c4z5s1sprite.setColor(farben[2]);
+            spiel.draw(c4z5s1sprite);
+            c4spieler3--;
+        }
+
+        //c4z5s2
+        if (c4spieler1 != 0) {
+            c4z5s2sprite.setColor(farben[0]);
+            spiel.draw(c4z5s2sprite);
+            c4spieler1--;
+        }
+        else if (c4spieler2 != 0) {
+            c4z5s2sprite.setColor(farben[1]);
+            spiel.draw(c4z5s2sprite);
+            c4spieler2--;
+        }
+        else if (c4spieler3 != 0) {
+            c4z5s2sprite.setColor(farben[2]);
+            spiel.draw(c4z5s2sprite);
+            c4spieler3--;
+        }
+
+        //c4z5s3
+        if (c4spieler1 != 0) {
+            c4z5s3sprite.setColor(farben[0]);
+            spiel.draw(c4z5s3sprite);
+            c4spieler1--;
+        }
+        else if (c4spieler2 != 0) {
+            c4z5s3sprite.setColor(farben[1]);
+            spiel.draw(c4z5s3sprite);
+            c4spieler2--;
+        }
+        else if (c4spieler3 != 0) {
+            c4z5s3sprite.setColor(farben[2]);
+            spiel.draw(c4z5s3sprite);
+            c4spieler3--;
+        }
+
+        //c4z5s4
+        if (c4spieler1 != 0) {
+            c4z5s4sprite.setColor(farben[0]);
+            spiel.draw(c4z5s4sprite);
+            c4spieler1--;
+        }
+        else if (c4spieler2 != 0) {
+            c4z5s4sprite.setColor(farben[1]);
+            spiel.draw(c4z5s4sprite);
+            c4spieler2--;
+        }
+        else if (c4spieler3 != 0) {
+            c4z5s4sprite.setColor(farben[2]);
+            spiel.draw(c4z5s4sprite);
+            c4spieler3--;
+        }
+
+        //Casino 5
+        //c5z1s1
+        if (c5spieler1 != 0) {
+            c5z1s1sprite.setColor(farben[0]);
+            spiel.draw(c5z1s1sprite);
+            c5spieler1--;
+        }
+        else if (c5spieler2 != 0) {
+            c5z1s1sprite.setColor(farben[1]);
+            spiel.draw(c5z1s1sprite);
+            c5spieler2--;
+        }
+        else if (c5spieler3 != 0) {
+            c5z1s1sprite.setColor(farben[2]);
+            spiel.draw(c5z1s1sprite);
+            c5spieler3--;
+        }
+
+        //c5z1s2
+        if (c5spieler1 != 0) {
+            c5z1s2sprite.setColor(farben[0]);
+            spiel.draw(c5z1s2sprite);
+            c5spieler1--;
+        }
+        else if (c5spieler2 != 0) {
+            c5z1s2sprite.setColor(farben[1]);
+            spiel.draw(c5z1s2sprite);
+            c5spieler2--;
+        }
+        else if (c5spieler3 != 0) {
+            c5z1s2sprite.setColor(farben[2]);
+            spiel.draw(c5z1s2sprite);
+            c5spieler3--;
+        }
+
+        //c5z1s3
+        if (c5spieler1 != 0) {
+            c5z1s3sprite.setColor(farben[0]);
+            spiel.draw(c5z1s3sprite);
+            c5spieler1--;
+        }
+        else if (c5spieler2 != 0) {
+            c5z1s3sprite.setColor(farben[1]);
+            spiel.draw(c5z1s3sprite);
+            c5spieler2--;
+        }
+        else if (c5spieler3 != 0) {
+            c5z1s3sprite.setColor(farben[2]);
+            spiel.draw(c5z1s3sprite);
+            c5spieler3--;
+        }
+
+        //c5z1s4
+        if (c5spieler1 != 0) {
+            c5z1s4sprite.setColor(farben[0]);
+            spiel.draw(c5z1s4sprite);
+            c5spieler1--;
+        }
+        else if (c5spieler2 != 0) {
+            c5z1s4sprite.setColor(farben[1]);
+            spiel.draw(c5z1s4sprite);
+            c5spieler2--;
+        }
+        else if (c5spieler3 != 0) {
+            c5z1s4sprite.setColor(farben[2]);
+            spiel.draw(c5z1s4sprite);
+            c5spieler3--;
+        }
+
+        //c5z2s1
+        if (c5spieler1 != 0) {
+            c5z2s1sprite.setColor(farben[0]);
+            spiel.draw(c5z2s1sprite);
+            c5spieler1--;
+        }
+        else if (c5spieler2 != 0) {
+            c5z2s1sprite.setColor(farben[1]);
+            spiel.draw(c5z2s1sprite);
+            c5spieler2--;
+        }
+        else if (c5spieler3 != 0) {
+            c5z2s1sprite.setColor(farben[2]);
+            spiel.draw(c5z2s1sprite);
+            c5spieler3--;
+        }
+
+        //c5z2s2
+        if (c5spieler1 != 0) {
+            c5z2s2sprite.setColor(farben[0]);
+            spiel.draw(c5z2s2sprite);
+            c5spieler1--;
+        }
+        else if (c5spieler2 != 0) {
+            c5z2s2sprite.setColor(farben[1]);
+            spiel.draw(c5z2s2sprite);
+            c5spieler2--;
+        }
+        else if (c5spieler3 != 0) {
+            c5z2s2sprite.setColor(farben[2]);
+            spiel.draw(c5z2s2sprite);
+            c5spieler3--;
+        }
+
+        //c5z2s3
+        if (c5spieler1 != 0) {
+            c5z2s3sprite.setColor(farben[0]);
+            spiel.draw(c5z2s3sprite);
+            c5spieler1--;
+        }
+        else if (c5spieler2 != 0) {
+            c5z2s3sprite.setColor(farben[1]);
+            spiel.draw(c5z2s3sprite);
+            c5spieler2--;
+        }
+        else if (c5spieler3 != 0) {
+            c5z2s3sprite.setColor(farben[2]);
+            spiel.draw(c5z2s3sprite);
+            c5spieler3--;
+        }
+
+        //c5z2s4
+        if (c5spieler1 != 0) {
+            c5z2s4sprite.setColor(farben[0]);
+            spiel.draw(c5z2s4sprite);
+            c5spieler1--;
+        }
+        else if (c5spieler2 != 0) {
+            c5z2s4sprite.setColor(farben[1]);
+            spiel.draw(c5z2s4sprite);
+            c5spieler2--;
+        }
+        else if (c5spieler3 != 0) {
+            c5z2s4sprite.setColor(farben[2]);
+            spiel.draw(c5z2s4sprite);
+            c5spieler3--;
+        }
+
+        //c5z3s1
+        if (c5spieler1 != 0) {
+            c5z3s1sprite.setColor(farben[0]);
+            spiel.draw(c5z3s1sprite);
+            c5spieler1--;
+        }
+        else if (c5spieler2 != 0) {
+            c5z3s1sprite.setColor(farben[1]);
+            spiel.draw(c5z3s1sprite);
+            c5spieler2--;
+        }
+        else if (c5spieler3 != 0) {
+            c5z3s1sprite.setColor(farben[2]);
+            spiel.draw(c5z3s1sprite);
+            c5spieler3--;
+        }
+
+        //c5z3s2
+        if (c5spieler1 != 0) {
+            c5z3s2sprite.setColor(farben[0]);
+            spiel.draw(c5z3s2sprite);
+            c5spieler1--;
+        }
+        else if (c5spieler2 != 0) {
+            c5z3s2sprite.setColor(farben[1]);
+            spiel.draw(c5z3s2sprite);
+            c5spieler2--;
+        }
+        else if (c5spieler3 != 0) {
+            c5z3s2sprite.setColor(farben[2]);
+            spiel.draw(c5z3s2sprite);
+            c5spieler3--;
+        }
+
+        //c5z3s3
+        if (c5spieler1 != 0) {
+            c5z3s3sprite.setColor(farben[0]);
+            spiel.draw(c5z3s3sprite);
+            c5spieler1--;
+        }
+        else if (c5spieler2 != 0) {
+            c5z3s3sprite.setColor(farben[1]);
+            spiel.draw(c5z3s3sprite);
+            c5spieler2--;
+        }
+        else if (c5spieler3 != 0) {
+            c5z3s3sprite.setColor(farben[2]);
+            spiel.draw(c5z3s3sprite);
+            c5spieler3--;
+        }
+
+        //c5z3s4
+        if (c5spieler1 != 0) {
+            c5z3s4sprite.setColor(farben[0]);
+            spiel.draw(c5z3s4sprite);
+            c5spieler1--;
+        }
+        else if (c5spieler2 != 0) {
+            c5z3s4sprite.setColor(farben[1]);
+            spiel.draw(c5z3s4sprite);
+            c5spieler2--;
+        }
+        else if (c5spieler3 != 0) {
+            c5z3s4sprite.setColor(farben[2]);
+            spiel.draw(c5z3s4sprite);
+            c5spieler3--;
+        }
+
+        //c5z4s1
+        if (c5spieler1 != 0) {
+            c5z4s1sprite.setColor(farben[0]);
+            spiel.draw(c5z4s1sprite);
+            c5spieler1--;
+        }
+        else if (c5spieler2 != 0) {
+            c5z4s1sprite.setColor(farben[1]);
+            spiel.draw(c5z4s1sprite);
+            c5spieler2--;
+        }
+        else if (c5spieler3 != 0) {
+            c5z4s1sprite.setColor(farben[2]);
+            spiel.draw(c5z4s1sprite);
+            c5spieler3--;
+        }
+
+        //c5z4s2
+        if (c5spieler1 != 0) {
+            c5z4s2sprite.setColor(farben[0]);
+            spiel.draw(c5z4s2sprite);
+            c5spieler1--;
+        }
+        else if (c5spieler2 != 0) {
+            c5z4s2sprite.setColor(farben[1]);
+            spiel.draw(c5z4s2sprite);
+            c5spieler2--;
+        }
+        else if (c5spieler3 != 0) {
+            c5z4s2sprite.setColor(farben[2]);
+            spiel.draw(c5z4s2sprite);
+            c5spieler3--;
+        }
+
+        //c5z4s3
+        if (c5spieler1 != 0) {
+            c5z4s3sprite.setColor(farben[0]);
+            spiel.draw(c5z4s3sprite);
+            c5spieler1--;
+        }
+        else if (c5spieler2 != 0) {
+            c5z4s3sprite.setColor(farben[1]);
+            spiel.draw(c5z4s3sprite);
+            c5spieler2--;
+        }
+        else if (c5spieler3 != 0) {
+            c5z4s3sprite.setColor(farben[2]);
+            spiel.draw(c5z4s3sprite);
+            c5spieler3--;
+        }
+
+        //c5z4s4
+        if (c5spieler1 != 0) {
+            c5z4s4sprite.setColor(farben[0]);
+            spiel.draw(c5z4s4sprite);
+            c5spieler1--;
+        }
+        else if (c5spieler2 != 0) {
+            c5z4s4sprite.setColor(farben[1]);
+            spiel.draw(c5z4s4sprite);
+            c5spieler2--;
+        }
+        else if (c5spieler3 != 0) {
+            c5z4s4sprite.setColor(farben[2]);
+            spiel.draw(c5z4s4sprite);
+            c5spieler3--;
+        }
+
+        //c5z5s1
+        if (c5spieler1 != 0) {
+            c5z5s1sprite.setColor(farben[0]);
+            spiel.draw(c5z5s1sprite);
+            c5spieler1--;
+        }
+        else if (c5spieler2 != 0) {
+            c5z5s1sprite.setColor(farben[1]);
+            spiel.draw(c5z5s1sprite);
+            c5spieler2--;
+        }
+        else if (c5spieler3 != 0) {
+            c5z5s1sprite.setColor(farben[2]);
+            spiel.draw(c5z5s1sprite);
+            c5spieler3--;
+        }
+
+        //c5z5s2
+        if (c5spieler1 != 0) {
+            c5z5s2sprite.setColor(farben[0]);
+            spiel.draw(c5z5s2sprite);
+            c5spieler1--;
+        }
+        else if (c5spieler2 != 0) {
+            c5z5s2sprite.setColor(farben[1]);
+            spiel.draw(c5z5s2sprite);
+            c5spieler2--;
+        }
+        else if (c5spieler3 != 0) {
+            c5z5s2sprite.setColor(farben[2]);
+            spiel.draw(c5z5s2sprite);
+            c5spieler3--;
+        }
+
+        //c5z5s3
+        if (c5spieler1 != 0) {
+            c5z5s3sprite.setColor(farben[0]);
+            spiel.draw(c5z5s3sprite);
+            c5spieler1--;
+        }
+        else if (c5spieler2 != 0) {
+            c5z5s3sprite.setColor(farben[1]);
+            spiel.draw(c5z5s3sprite);
+            c5spieler2--;
+        }
+        else if (c5spieler3 != 0) {
+            c5z5s3sprite.setColor(farben[2]);
+            spiel.draw(c5z5s3sprite);
+            c5spieler3--;
+        }
+
+        //c5z5s4
+        if (c5spieler1 != 0) {
+            c5z5s4sprite.setColor(farben[0]);
+            spiel.draw(c5z5s4sprite);
+            c5spieler1--;
+        }
+        else if (c5spieler2 != 0) {
+            c5z5s4sprite.setColor(farben[1]);
+            spiel.draw(c5z5s4sprite);
+            c5spieler2--;
+        }
+        else if (c5spieler3 != 0) {
+            c5z5s4sprite.setColor(farben[2]);
+            spiel.draw(c5z5s4sprite);
+            c5spieler3--;
+        }
+
+        //Casino 6
+        //c6z1s1
+        if (c6spieler1 != 0) {
+            c6z1s1sprite.setColor(farben[0]);
+            spiel.draw(c6z1s1sprite);
+            c6spieler1--;
+        }
+        else if (c6spieler2 != 0) {
+            c6z1s1sprite.setColor(farben[1]);
+            spiel.draw(c6z1s1sprite);
+            c6spieler2--;
+        }
+        else if (c6spieler3 != 0) {
+            c6z1s1sprite.setColor(farben[2]);
+            spiel.draw(c6z1s1sprite);
+            c6spieler3--;
+        }
+
+        //c6z1s2
+        if (c6spieler1 != 0) {
+            c6z1s2sprite.setColor(farben[0]);
+            spiel.draw(c6z1s2sprite);
+            c6spieler1--;
+        }
+        else if (c6spieler2 != 0) {
+            c6z1s2sprite.setColor(farben[1]);
+            spiel.draw(c6z1s2sprite);
+            c6spieler2--;
+        }
+        else if (c6spieler3 != 0) {
+            c6z1s2sprite.setColor(farben[2]);
+            spiel.draw(c6z1s2sprite);
+            c6spieler3--;
+        }
+
+        //c6z1s3
+        if (c6spieler1 != 0) {
+            c6z1s3sprite.setColor(farben[0]);
+            spiel.draw(c6z1s3sprite);
+            c6spieler1--;
+        }
+        else if (c6spieler2 != 0) {
+            c6z1s3sprite.setColor(farben[1]);
+            spiel.draw(c6z1s3sprite);
+            c6spieler2--;
+        }
+        else if (c6spieler3 != 0) {
+            c6z1s3sprite.setColor(farben[2]);
+            spiel.draw(c6z1s3sprite);
+            c6spieler3--;
+        }
+
+        //c6z1s4
+        if (c6spieler1 != 0) {
+            c6z1s4sprite.setColor(farben[0]);
+            spiel.draw(c6z1s4sprite);
+            c6spieler1--;
+        }
+        else if (c6spieler2 != 0) {
+            c6z1s4sprite.setColor(farben[1]);
+            spiel.draw(c6z1s4sprite);
+            c6spieler2--;
+        }
+        else if (c6spieler3 != 0) {
+            c6z1s4sprite.setColor(farben[2]);
+            spiel.draw(c6z1s4sprite);
+            c6spieler3--;
+        }
+
+        //c6z2s1
+        if (c6spieler1 != 0) {
+            c6z2s1sprite.setColor(farben[0]);
+            spiel.draw(c6z2s1sprite);
+            c6spieler1--;
+        }
+        else if (c6spieler2 != 0) {
+            c6z2s1sprite.setColor(farben[1]);
+            spiel.draw(c6z2s1sprite);
+            c6spieler2--;
+        }
+        else if (c6spieler3 != 0) {
+            c6z2s1sprite.setColor(farben[2]);
+            spiel.draw(c6z2s1sprite);
+            c6spieler3--;
+        }
+
+        //c6z2s2
+        if (c6spieler1 != 0) {
+            c6z2s2sprite.setColor(farben[0]);
+            spiel.draw(c6z2s2sprite);
+            c6spieler1--;
+        }
+        else if (c6spieler2 != 0) {
+            c6z2s2sprite.setColor(farben[1]);
+            spiel.draw(c6z2s2sprite);
+            c6spieler2--;
+        }
+        else if (c6spieler3 != 0) {
+            c6z2s2sprite.setColor(farben[2]);
+            spiel.draw(c6z2s2sprite);
+            c6spieler3--;
+        }
+
+        //c6z2s3
+        if (c6spieler1 != 0) {
+            c6z2s3sprite.setColor(farben[0]);
+            spiel.draw(c6z2s3sprite);
+            c6spieler1--;
+        }
+        else if (c6spieler2 != 0) {
+            c6z2s3sprite.setColor(farben[1]);
+            spiel.draw(c6z2s3sprite);
+            c6spieler2--;
+        }
+        else if (c6spieler3 != 0) {
+            c6z2s3sprite.setColor(farben[2]);
+            spiel.draw(c6z2s3sprite);
+            c6spieler3--;
+        }
+
+        //c6z2s4
+        if (c6spieler1 != 0) {
+            c6z2s4sprite.setColor(farben[0]);
+            spiel.draw(c6z2s4sprite);
+            c6spieler1--;
+        }
+        else if (c6spieler2 != 0) {
+            c6z2s4sprite.setColor(farben[1]);
+            spiel.draw(c6z2s4sprite);
+            c6spieler2--;
+        }
+        else if (c6spieler3 != 0) {
+            c6z2s4sprite.setColor(farben[2]);
+            spiel.draw(c6z2s4sprite);
+            c6spieler3--;
+        }
+
+        //c6z3s1
+        if (c6spieler1 != 0) {
+            c6z3s1sprite.setColor(farben[0]);
+            spiel.draw(c6z3s1sprite);
+            c6spieler1--;
+        }
+        else if (c6spieler2 != 0) {
+            c6z3s1sprite.setColor(farben[1]);
+            spiel.draw(c6z3s1sprite);
+            c6spieler2--;
+        }
+        else if (c6spieler3 != 0) {
+            c6z3s1sprite.setColor(farben[2]);
+            spiel.draw(c6z3s1sprite);
+            c6spieler3--;
+        }
+
+        //c6z3s2
+        if (c6spieler1 != 0) {
+            c6z3s2sprite.setColor(farben[0]);
+            spiel.draw(c6z3s2sprite);
+            c6spieler1--;
+        }
+        else if (c6spieler2 != 0) {
+            c6z3s2sprite.setColor(farben[1]);
+            spiel.draw(c6z3s2sprite);
+            c6spieler2--;
+        }
+        else if (c6spieler3 != 0) {
+            c6z3s2sprite.setColor(farben[2]);
+            spiel.draw(c6z3s2sprite);
+            c6spieler3--;
+        }
+
+        //c6z3s3
+        if (c6spieler1 != 0) {
+            c6z3s3sprite.setColor(farben[0]);
+            spiel.draw(c6z3s3sprite);
+            c6spieler1--;
+        }
+        else if (c6spieler2 != 0) {
+            c6z3s3sprite.setColor(farben[1]);
+            spiel.draw(c6z3s3sprite);
+            c6spieler2--;
+        }
+        else if (c6spieler3 != 0) {
+            c6z3s3sprite.setColor(farben[2]);
+            spiel.draw(c6z3s3sprite);
+            c6spieler3--;
+        }
+
+        //c6z3s4
+        if (c6spieler1 != 0) {
+            c6z3s4sprite.setColor(farben[0]);
+            spiel.draw(c6z3s4sprite);
+            c6spieler1--;
+        }
+        else if (c6spieler2 != 0) {
+            c6z3s4sprite.setColor(farben[1]);
+            spiel.draw(c6z3s4sprite);
+            c6spieler2--;
+        }
+        else if (c6spieler3 != 0) {
+            c6z3s4sprite.setColor(farben[2]);
+            spiel.draw(c6z3s4sprite);
+            c6spieler3--;
+        }
+
+        //c6z4s1
+        if (c6spieler1 != 0) {
+            c6z4s1sprite.setColor(farben[0]);
+            spiel.draw(c6z4s1sprite);
+            c6spieler1--;
+        }
+        else if (c6spieler2 != 0) {
+            c6z4s1sprite.setColor(farben[1]);
+            spiel.draw(c6z4s1sprite);
+            c6spieler2--;
+        }
+        else if (c6spieler3 != 0) {
+            c6z4s1sprite.setColor(farben[2]);
+            spiel.draw(c6z4s1sprite);
+            c6spieler3--;
+        }
+
+        //c6z4s2
+        if (c6spieler1 != 0) {
+            c6z4s2sprite.setColor(farben[0]);
+            spiel.draw(c6z4s2sprite);
+            c6spieler1--;
+        }
+        else if (c6spieler2 != 0) {
+            c6z4s2sprite.setColor(farben[1]);
+            spiel.draw(c6z4s2sprite);
+            c6spieler2--;
+        }
+        else if (c6spieler3 != 0) {
+            c6z4s2sprite.setColor(farben[2]);
+            spiel.draw(c6z4s2sprite);
+            c6spieler3--;
+        }
+
+        //c6z4s3
+        if (c6spieler1 != 0) {
+            c6z4s3sprite.setColor(farben[0]);
+            spiel.draw(c6z4s3sprite);
+            c6spieler1--;
+        }
+        else if (c6spieler2 != 0) {
+            c6z4s3sprite.setColor(farben[1]);
+            spiel.draw(c6z4s3sprite);
+            c6spieler2--;
+        }
+        else if (c6spieler3 != 0) {
+            c6z4s3sprite.setColor(farben[2]);
+            spiel.draw(c6z4s3sprite);
+            c6spieler3--;
+        }
+
+        //c6z4s4
+        if (c6spieler1 != 0) {
+            c6z4s4sprite.setColor(farben[0]);
+            spiel.draw(c6z4s4sprite);
+            c6spieler1--;
+        }
+        else if (c6spieler2 != 0) {
+            c6z4s4sprite.setColor(farben[1]);
+            spiel.draw(c6z4s4sprite);
+            c6spieler2--;
+        }
+        else if (c6spieler3 != 0) {
+            c6z4s4sprite.setColor(farben[2]);
+            spiel.draw(c6z4s4sprite);
+            c6spieler3--;
+        }
+
+        //c6z5s1
+        if (c6spieler1 != 0) {
+            c6z5s1sprite.setColor(farben[0]);
+            spiel.draw(c6z5s1sprite);
+            c6spieler1--;
+        }
+        else if (c6spieler2 != 0) {
+            c6z5s1sprite.setColor(farben[1]);
+            spiel.draw(c6z5s1sprite);
+            c6spieler2--;
+        }
+        else if (c6spieler3 != 0) {
+            c6z5s1sprite.setColor(farben[2]);
+            spiel.draw(c6z5s1sprite);
+            c6spieler3--;
+        }
+
+        //c6z5s2
+        if (c6spieler1 != 0) {
+            c6z5s2sprite.setColor(farben[0]);
+            spiel.draw(c6z5s2sprite);
+            c6spieler1--;
+        }
+        else if (c6spieler2 != 0) {
+            c6z5s2sprite.setColor(farben[1]);
+            spiel.draw(c6z5s2sprite);
+            c6spieler2--;
+        }
+        else if (c6spieler3 != 0) {
+            c6z5s2sprite.setColor(farben[2]);
+            spiel.draw(c6z5s2sprite);
+            c6spieler3--;
+        }
+
+        //c6z5s3
+        if (c6spieler1 != 0) {
+            c6z5s3sprite.setColor(farben[0]);
+            spiel.draw(c6z5s3sprite);
+            c6spieler1--;
+        }
+        else if (c6spieler2 != 0) {
+            c6z5s3sprite.setColor(farben[1]);
+            spiel.draw(c6z5s3sprite);
+            c6spieler2--;
+        }
+        else if (c6spieler3 != 0) {
+            c6z5s3sprite.setColor(farben[2]);
+            spiel.draw(c6z5s3sprite);
+            c6spieler3--;
+        }
+
+        //c6z5s4
+        if (c6spieler1 != 0) {
+            c6z5s4sprite.setColor(farben[0]);
+            spiel.draw(c6z5s4sprite);
+            c6spieler1--;
+        }
+        else if (c6spieler2 != 0) {
+            c6z5s4sprite.setColor(farben[1]);
+            spiel.draw(c6z5s4sprite);
+            c6spieler2--;
+        }
+        else if (c6spieler3 != 0) {
+            c6z5s4sprite.setColor(farben[2]);
+            spiel.draw(c6z5s4sprite);
+            c6spieler3--;
+        }
+
         //Würfelsprites zeichnen
         wuerfelsprite.setColor(farben[spielernummer]);
         wuerfelsprite2.setColor(farben[spielernummer]);
@@ -3269,7 +6317,7 @@ void neuesSpiel() {
             {
                 if (casinogelder6[i] < casinogelder6[j])
                 {
-                    //-----Tausch-----
+                    //-----Tausch----- 
                     int h = casinogelder6[i];
                     casinogelder6[i] = casinogelder6[j];
                     casinogelder6[j] = h;
@@ -3277,8 +6325,9 @@ void neuesSpiel() {
             }
         }
 
-
+        //Würfeln, bis keiner mehr würfeln mehr hat
         for (int spieler = 0; spieler <= 2; spieler++) {
+
             //Temporäre Variable fürs Überprüfen, ob ein Spieler kein Würfel hat
             int tempanzwuerfel = wuerfelanzahl[spieler];
             if(tempanzwuerfel == 0) {
@@ -3319,13 +6368,28 @@ void neuesSpiel() {
                 //Unten den Nutzer drauf hinweisen, auf einen Würfel zu klicken!
                 switch (spielernummer) {
                     case 0:
-                        subtextstring = "Spieler 1: Bitte wählen Sie einen Würfel!";
+                        if (aufWuerfelGedrueckt == false) {
+                            subtextstring = "Spieler 1: Bitte wählen Sie einen Würfel!";
+                        }
+                        else {
+                            subtextstring = "Spieler 1: Beenden Sie den Zug oder setzen Sie den Schritt zurück!";
+                        }
                         break;
                     case 1:
-                        subtextstring = "Spieler 2: Bitte wählen Sie einen Würfel!";
+                        if (aufWuerfelGedrueckt == false) {
+                            subtextstring = "Spieler 2: Bitte wählen Sie einen Würfel!";
+                        }
+                        else {
+                            subtextstring = "Spieler 2: Beenden Sie den Zug oder setzen Sie den Schritt zurück!";
+                        }                        
                         break;
                     case 2:
-                        subtextstring = "Spieler 3: Bitte wählen Sie einen Würfel!";
+                        if (aufWuerfelGedrueckt == false) {
+                            subtextstring = "Spieler 3: Bitte wählen Sie einen Würfel!";
+                        }
+                        else {
+                            subtextstring = "Spieler 3: Beenden Sie den Zug oder setzen Sie den Schritt zurück!";
+                        }                        
                         break;
                     default:
                         break;
@@ -3335,12 +6399,24 @@ void neuesSpiel() {
             aufWuerfelGedrueckt = false;
             zugbeendet = false;
 
-            //Würfelableger-Algorithmus
-
-
         }
+
+        if (wuerfelanzahl[0] == 0 && wuerfelanzahl[1] == 0 && wuerfelanzahl[2] == 0) {
+            if(rundenzahl <= 3){
+                //Funktion fürs Resetten und Geldzuteilen
+                para();
+                rundenzahl++;
+            }
+            else {
+                //Spiel vorbei!
+                spielBeendet = true;
+            }
+            
+        }
+
     }
     //Ende vom Spiel
+    //Gewinner anzeigen und sterben oder so und Verlierer wird ein Kopfgeld gesetzt
 
 }
 
