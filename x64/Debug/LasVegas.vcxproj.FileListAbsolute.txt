@@ -1,2 +1,0 @@
-C:\Users\KeremOkumus\source\repos\LasVegas\x64\Debug\LasVegas.exe
-C:\Users\KeremOkumus\source\repos\LasVegas\x64\Debug\LasVegas.pdb
