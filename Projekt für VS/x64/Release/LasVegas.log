@@ -1,5 +1,4 @@
 ﻿  main.cpp
-  The contents of <filesystem> are available only with C++17 or later.
 C:\Users\Kerem Okumus\source\repos\Las-Vegas\Projekt für VS\Button.h(18,24): warning C4244: "=": Konvertierung von "T" in "int", möglicher Datenverlust
           with
           [
@@ -32,28 +31,29 @@ C:\Users\Kerem Okumus\source\repos\Las-Vegas\Projekt für VS\Button.h(71,21): wa
               T=float
           ]
 C:\Users\Kerem Okumus\source\repos\Las-Vegas\Projekt für VS\Dice.h(28,1): warning C4305: "Argument": Verkürzung von "double" in "float"
-C:\Users\Kerem Okumus\source\repos\Las-Vegas\Projekt für VS\main.cpp(124,15): warning C4101: "event": Unreferenzierte lokale Variable
-C:\Users\Kerem Okumus\source\repos\Las-Vegas\Projekt für VS\main.cpp(595,42): warning C4305: "Argument": Verkürzung von "double" in "float"
-C:\Users\Kerem Okumus\source\repos\Las-Vegas\Projekt für VS\main.cpp(605,43): warning C4305: "Argument": Verkürzung von "double" in "float"
-C:\Users\Kerem Okumus\source\repos\Las-Vegas\Projekt für VS\main.cpp(615,43): warning C4305: "Argument": Verkürzung von "double" in "float"
-C:\Users\Kerem Okumus\source\repos\Las-Vegas\Projekt für VS\main.cpp(625,43): warning C4305: "Argument": Verkürzung von "double" in "float"
-C:\Users\Kerem Okumus\source\repos\Las-Vegas\Projekt für VS\main.cpp(635,43): warning C4305: "Argument": Verkürzung von "double" in "float"
-C:\Users\Kerem Okumus\source\repos\Las-Vegas\Projekt für VS\main.cpp(645,43): warning C4305: "Argument": Verkürzung von "double" in "float"
-C:\Users\Kerem Okumus\source\repos\Las-Vegas\Projekt für VS\main.cpp(655,43): warning C4305: "Argument": Verkürzung von "double" in "float"
-C:\Users\Kerem Okumus\source\repos\Las-Vegas\Projekt für VS\main.cpp(665,43): warning C4305: "Argument": Verkürzung von "double" in "float"
-C:\Users\Kerem Okumus\source\repos\Las-Vegas\Projekt für VS\main.cpp(782,38): warning C4305: "Argument": Verkürzung von "double" in "float"
-C:\Users\Kerem Okumus\source\repos\Las-Vegas\Projekt für VS\main.cpp(810,39): warning C4305: "Argument": Verkürzung von "double" in "float"
-C:\Users\Kerem Okumus\source\repos\Las-Vegas\Projekt für VS\main.cpp(838,39): warning C4305: "Argument": Verkürzung von "double" in "float"
-C:\Users\Kerem Okumus\source\repos\Las-Vegas\Projekt für VS\main.cpp(866,39): warning C4305: "Argument": Verkürzung von "double" in "float"
-C:\Users\Kerem Okumus\source\repos\Las-Vegas\Projekt für VS\main.cpp(894,39): warning C4305: "Argument": Verkürzung von "double" in "float"
-C:\Users\Kerem Okumus\source\repos\Las-Vegas\Projekt für VS\main.cpp(922,39): warning C4305: "Argument": Verkürzung von "double" in "float"
-C:\Users\Kerem Okumus\source\repos\Las-Vegas\Projekt für VS\main.cpp(950,39): warning C4305: "Argument": Verkürzung von "double" in "float"
-C:\Users\Kerem Okumus\source\repos\Las-Vegas\Projekt für VS\main.cpp(978,39): warning C4305: "Argument": Verkürzung von "double" in "float"
-C:\Users\Kerem Okumus\source\repos\Las-Vegas\Projekt für VS\main.cpp(2114,20): warning C4244: "Initialisierung": Konvertierung von "double" in "float", möglicher Datenverlust
-C:\Users\Kerem Okumus\source\repos\Las-Vegas\Projekt für VS\main.cpp(6151,19): warning C4244: "Argument": Konvertierung von "time_t" in "unsigned int", möglicher Datenverlust
+C:\Users\Kerem Okumus\source\repos\Las-Vegas\Projekt für VS\infosystem.h(13,15): warning C4101: "event": Unreferenzierte lokale Variable
+C:\Users\Kerem Okumus\source\repos\Las-Vegas\Projekt für VS\infosystem.h(68,15): warning C4101: "event": Unreferenzierte lokale Variable
+C:\Users\Kerem Okumus\source\repos\Las-Vegas\Projekt für VS\main.cpp(553,42): warning C4305: "Argument": Verkürzung von "double" in "float"
+C:\Users\Kerem Okumus\source\repos\Las-Vegas\Projekt für VS\main.cpp(563,43): warning C4305: "Argument": Verkürzung von "double" in "float"
+C:\Users\Kerem Okumus\source\repos\Las-Vegas\Projekt für VS\main.cpp(573,43): warning C4305: "Argument": Verkürzung von "double" in "float"
+C:\Users\Kerem Okumus\source\repos\Las-Vegas\Projekt für VS\main.cpp(583,43): warning C4305: "Argument": Verkürzung von "double" in "float"
+C:\Users\Kerem Okumus\source\repos\Las-Vegas\Projekt für VS\main.cpp(593,43): warning C4305: "Argument": Verkürzung von "double" in "float"
+C:\Users\Kerem Okumus\source\repos\Las-Vegas\Projekt für VS\main.cpp(603,43): warning C4305: "Argument": Verkürzung von "double" in "float"
+C:\Users\Kerem Okumus\source\repos\Las-Vegas\Projekt für VS\main.cpp(613,43): warning C4305: "Argument": Verkürzung von "double" in "float"
+C:\Users\Kerem Okumus\source\repos\Las-Vegas\Projekt für VS\main.cpp(623,43): warning C4305: "Argument": Verkürzung von "double" in "float"
+C:\Users\Kerem Okumus\source\repos\Las-Vegas\Projekt für VS\main.cpp(740,38): warning C4305: "Argument": Verkürzung von "double" in "float"
+C:\Users\Kerem Okumus\source\repos\Las-Vegas\Projekt für VS\main.cpp(768,39): warning C4305: "Argument": Verkürzung von "double" in "float"
+C:\Users\Kerem Okumus\source\repos\Las-Vegas\Projekt für VS\main.cpp(796,39): warning C4305: "Argument": Verkürzung von "double" in "float"
+C:\Users\Kerem Okumus\source\repos\Las-Vegas\Projekt für VS\main.cpp(824,39): warning C4305: "Argument": Verkürzung von "double" in "float"
+C:\Users\Kerem Okumus\source\repos\Las-Vegas\Projekt für VS\main.cpp(852,39): warning C4305: "Argument": Verkürzung von "double" in "float"
+C:\Users\Kerem Okumus\source\repos\Las-Vegas\Projekt für VS\main.cpp(880,39): warning C4305: "Argument": Verkürzung von "double" in "float"
+C:\Users\Kerem Okumus\source\repos\Las-Vegas\Projekt für VS\main.cpp(908,39): warning C4305: "Argument": Verkürzung von "double" in "float"
+C:\Users\Kerem Okumus\source\repos\Las-Vegas\Projekt für VS\main.cpp(936,39): warning C4305: "Argument": Verkürzung von "double" in "float"
+C:\Users\Kerem Okumus\source\repos\Las-Vegas\Projekt für VS\main.cpp(2355,20): warning C4244: "Initialisierung": Konvertierung von "double" in "float", möglicher Datenverlust
+C:\Users\Kerem Okumus\source\repos\Las-Vegas\Projekt für VS\main.cpp(6397,19): warning C4244: "Argument": Konvertierung von "time_t" in "unsigned int", möglicher Datenverlust
   Code wird generiert.
-  1 of 220 functions ( 0.5%) were compiled, the rest were copied from previous compilation.
+  106 of 276 functions (38.4%) were compiled, the rest were copied from previous compilation.
     0 functions were new in current compilation
-    2 functions had inline decision re-evaluated but remain unchanged
+    15 functions had inline decision re-evaluated but remain unchanged
   Codegenerierung ist abgeschlossen.
   LasVegas.vcxproj -> C:\Users\Kerem Okumus\source\repos\Las-Vegas\Projekt für VS\x64\Release\LasVegas.exe

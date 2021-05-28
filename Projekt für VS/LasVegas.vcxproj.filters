@@ -29,6 +29,9 @@
     <ClInclude Include="Dice.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
+    <ClInclude Include="infosystem.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Font Include="Fonts\font.ttf" />

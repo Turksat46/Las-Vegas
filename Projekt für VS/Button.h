@@ -48,7 +48,7 @@ public:
 		shadow.setPosition(point);
 		//Setze den Text automatisch in die Mitte
 		float xPos = (point.x + btnWidth / 2) - (text.getLocalBounds().width / 2);
-		float yPos = (point.y + btnHeight / 2.2) - (text.getLocalBounds().height / 2);
+		float yPos = (point.y + btnHeight / 2.6) - (text.getLocalBounds().height / 2);
 		text.setPosition(xPos, yPos);
 	}
 

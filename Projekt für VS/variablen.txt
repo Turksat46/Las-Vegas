@@ -75,4 +75,39 @@ bool zugbeendet = false;
 Diese Variable soll dazu dienen, um zu prüfen, ob ein Spieler mit der Runde fertig ist.
 
 string vergangenezeitstring;
-Diese Variable dient dazu, die vergangene Zeit des gesamten Spiels zu speichern.
+Diese Variable dient dazu, die vergangene Zeit des gesamten Spiels zu speichern. (Wird nicht benutzt)
+
+Variablen für Casino 1
+int c1spieler1 = casinowuerfelanzahl1[0];
+int c1spieler2 = casinowuerfelanzahl1[1];
+int c1spieler3 = casinowuerfelanzahl1[2];
+
+int c1spieler1 = 3;
+int c1spieler2 = 4;
+int c1spieler3 = 6;
+
+//Variablen für Casino 2
+int c2spieler1 = casinowuerfelanzahl2[0];
+int c2spieler2 = casinowuerfelanzahl2[1];
+int c2spieler3 = casinowuerfelanzahl2[2];
+
+//Variablen für Casino 3
+int c3spieler1 = casinowuerfelanzahl3[0];
+int c3spieler2 = casinowuerfelanzahl3[1];
+int c3spieler3 = casinowuerfelanzahl3[2];
+
+//Variablen für Casino 4
+int c4spieler1 = casinowuerfelanzahl4[0];
+int c4spieler2 = casinowuerfelanzahl4[1];
+int c4spieler3 = casinowuerfelanzahl4[2];
+
+//Variablen für Casino 5
+int c5spieler1 = casinowuerfelanzahl5[0];
+int c5spieler2 = casinowuerfelanzahl5[1];
+int c5spieler3 = casinowuerfelanzahl5[2];
+
+//Variablen für Casino 6
+int c6spieler1 = casinowuerfelanzahl6[0];
+int c6spieler2 = casinowuerfelanzahl6[1];
+int c6spieler3 = casinowuerfelanzahl6[2];
+Diese Array-zu-Variablen-Gruppe dient zur einfachen Speicherung und Aufruf von Daten, die für die Miniaturwürfeln auf den Casinos da ist.

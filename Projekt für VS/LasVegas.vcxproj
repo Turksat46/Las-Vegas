@@ -154,6 +154,7 @@
   <ItemGroup>
     <ClInclude Include="Button.h" />
     <ClInclude Include="Dice.h" />
+    <ClInclude Include="infosystem.h" />
     <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>

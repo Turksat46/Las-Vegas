@@ -16,7 +16,6 @@
 #include<conio.h>
 #include<random>
 #include<numeric>
-#include<filesystem>
 #include<algorithm>
 
 using namespace std;
@@ -25,12 +24,13 @@ using namespace sf;
 //Selbstgeschriebene Header-Dateien
 #include "Button.h"
 #include "Dice.h"
+#include "infosystem.h"
 
-//Wichtige Variablen
+//Wichtige Spiel-Variablen
 float wuerfelpos[8] = { 20.0f, 120.0f, 220.0f, 320.0f, 420.0f, 520.0f, 620.0f, 720.0f };
 string wuerfelaugen[6] = { "./res/Bilder/würfel/dice-png-1.png", "./res/Bilder/würfel/dice-png-2.png", "./res/Bilder/würfel/dice-png-3.png", "./res/Bilder/würfel/dice-png-4.png", "./res/Bilder/würfel/dice-png-5.png", "./res/Bilder/würfel/dice-png-6.png" };
 int geldwerte[6] = { 10000, 20000, 30000, 50000, 70000, 90000 };
-int kontostand[3];
+int kontostand[3] = {0, 0, 0};
 int casinogelder1[5];
 int casinogelder2[5];
 int casinogelder3[5];
@@ -54,13 +54,22 @@ int wuerfelwert[8];
 int spielernummer;
 int rundenzahl = 0;
 int ausgewählteAuge[2]; //Ein leeres Array erstellen für den ersten Index, welcher Würfel und der zweite Index, wie viele.
+bool spielerhabenwürfel = true;
 Color farben[3] = { Color::Cyan, Color::Green, Color::Yellow };
 string subtextstring;
+int rundenzahlfürtext = rundenzahl + 1; 
+string kontostandtext1 = "Kontostand: $" + to_string(kontostand[0]);
+string kontostandtext2 = "Kontostand: $" + to_string(kontostand[1]);
+string kontostandtext3 = "Kontostand: $" + to_string(kontostand[2]);
+string rundentext;
 bool aufWuerfelGedrueckt = false;
 bool spielBeendet = false;
-bool speichertbool = false;
 bool zugbeendet = false;
-string vergangenezeitstring;
+
+//Systemvariablen (BITTE NICHT VERÄNDERN!)
+bool neustartgefordert = false;
+bool speichertbool = false;
+
 
 //Für Casinos
 /* Variablen für Casino 1
@@ -104,6 +113,7 @@ struct spieldaten {
     int wuerfelwerte[8];
     int kontostand;
     int casino1, casino2, casino3, casino4, casino5, casino6;
+    int c1spieler1, c1spieler2, c1spieler3, c2spieler1, c2spieler2, c2spieler3, c3spieler1, c3spieler2, c3spieler3, c4spieler1, c4spieler2, c4spieler3, c5spieler1, c5spieler2, c5spieler3, c6spieler1, c6spieler2, c6spieler3;
     int wuerfelanzahl[3];
 };
 
@@ -111,59 +121,7 @@ struct spieldaten {
 //Eine Fehlermethode, der eine Fehlermeldung auf dem Bildschirm erscheinen lässt
 //
 //Nutzung: fehleranzeige(TITEL, NACHRICHT);
-void fehleranzeige(string titel, string nachricht) {
-    sf::Font font;
-    if (!font.loadFromFile("res/Fonts/font.ttf")) {
-        printf("FONT-FEHLER: SCHRIFTART KONNTE NICHT GELADEN WERDEN!\nBitte konsultieren Sie die Bedienungsanleitung!\nDr%ccken Sie eine Taste um das Programm zu beenden!", (char)129);
-        _getch();
-        exit(0);
-    }
 
-    sf::RenderWindow fehler(sf::VideoMode(600, 200), "Fehlermeldung", sf::Style::None);
-
-    sf::Event event;
-    while (fehler.isOpen()) {
-        //Titel
-        sf::Text titeltext(titel, font);
-        titeltext.setCharacterSize(40);
-        titeltext.setFillColor(sf::Color::Black);
-        titeltext.setStyle(sf::Text::Bold);
-        titeltext.setPosition(175.0f, 10.0f);
-
-        //Nachricht
-        sf::Text nachrichtentext(nachricht, font);
-        nachrichtentext.setCharacterSize(30);
-        nachrichtentext.setFillColor(sf::Color::Black);
-        nachrichtentext.setPosition(100.0f, 80.0f);
-
-        //Button
-        Button verlassbutton("Beenden", { 100, 50 }, 30, sf::Color(209, 209, 209, 184), sf::Color::Black);
-        verlassbutton.setFont(font);
-        verlassbutton.setPosition(sf::Vector2f(250.0f, 150.0f));
-
-        sf::Event event;
-        while (fehler.pollEvent(event)) {
-            // Schließt das Fenster, falls schließen gedrückt wird
-
-            switch (event.type) {
-                //Wenn es geklickt hat
-                case sf::Event::MouseButtonPressed:
-                    if (verlassbutton.isMouseOver(fehler)) {
-                        fehler.close();
-                    }
-            }
-        }
-
-        //Fehler zeichnen
-        fehler.clear(sf::Color(255, 255, 255, 255));
-        fehler.draw(titeltext);
-        fehler.draw(nachrichtentext);
-        verlassbutton.drawTo(fehler);
-
-        //Fehlermeldung anzeigen
-        fehler.display();
-    }
-}
 
 
 //
@@ -1412,14 +1370,39 @@ void Pausenmenu() {
         beendenbtn.drawTo(pause);
 
         pause.draw(titeltext);
-        pause.display();
+        
         while (pause.pollEvent(event)) {
             if (event.type == sf::Event::KeyPressed) {
                 if (event.key.code == sf::Keyboard::Escape) {
                     pause.close();
                 }
+
             }
         }
+
+        switch (event.type) {
+        case sf::Event::MouseButtonPressed:
+            if (fortsetzenbutton.isMouseOver(pause)) {
+                pause.close();
+            }
+
+            if (neuesspielbutton.isMouseOver(pause)) {
+                neustartgefordert = true;
+            }
+
+            if (beendenbtn.isMouseOver(pause)) {
+                //Nach Speicherung warnen/fragen vllt.
+                bool meldung = bestätigungsmeldung("Möchten Sie den Spielstand speichern?");
+                if (meldung == true) {
+                    //Jetzt Speichern
+                }
+                else {
+                    exit(0);
+                }
+            }
+        }
+
+        pause.display();
     }
 }
 
@@ -1548,8 +1531,6 @@ void setzeWürfel(int spieler, int wert) {
         }
         //Gesamtwürfelzahl des Spielers ändern
         wuerfelanzahl[spielernummer] -= anzahl;
-
-        printf("Anzahl Wuerfel auf Casino 1: %i\n", casinowuerfelanzahl1[0]);
     }
 }
 
@@ -1635,25 +1616,182 @@ void setzeSchrittZurück() {
 }
 
 void para() {
-    //Resetten der Würfel
-    for (int i = 0; i <= 2; i++) {
-        wuerfelanzahl[i] = 8;
+    //Erforderliche Funktionen aufrufen und ausführen und dann alles resetten
+    //Geld auf Konten einzahlen
+    
+    //Casino1
+    //Wiederhole solange, bis wir keine Preise oder Spieler mehr haben, welches zuerst zutrifft
+    for (size_t cashcounter = 0;
+        cashcounter < min(size(casinowuerfelanzahl1),
+            size(casinogelder1));
+        cashcounter++)
+    {
+        //Finde die Position vom Würfel nit dem höchsten Wert
+        auto location = max_element(begin(casinowuerfelanzahl1),
+            end(casinowuerfelanzahl1));
+        //Transformiere Position zu einem Index
+        auto index = distance(begin(casinowuerfelanzahl1), location);
+
+        //Steigere den Kontostand dieses Spielers
+        kontostand[index] += casinogelder1[cashcounter];
+
+        //Setze den Wert auf 0 , um den Spieler nicht erneut gewinnen zu lassen
+        casinowuerfelanzahl1[index] = 0;
     }
 
-    //Prüfe den größten Wert für jeden Spieler
-    for (int i = 0; i <= 5; i++) {
-        switch (i) {
-        case 0:
-            int gewinnerspieler = 0;
-            
-            break;
-        }
+    //Kontostände ausdrucken lassen
+    for (const auto& val : kontostand) {
+        cout << val << endl;
     }
+
+    //Casino2
+    //Wiederhole solange, bis wir keine Preise oder Spieler mehr haben, welches zuerst zutrifft
+    for (size_t cashcounter = 0;
+        cashcounter < min(size(casinowuerfelanzahl2),
+            size(casinogelder2));
+        cashcounter++)
+    {
+        //Finde die Position vom Würfel nit dem höchsten Wert
+        auto location = max_element(begin(casinowuerfelanzahl2),
+            end(casinowuerfelanzahl2));
+        //Transformiere Position zu einem Index
+        auto index = distance(begin(casinowuerfelanzahl2), location);
+
+        //Steigere den Kontostand dieses Spielers
+        kontostand[index] += casinogelder2[cashcounter];
+
+        //Setze den Wert auf 0 , um den Spieler nicht erneut gewinnen zu lassen
+        casinowuerfelanzahl2[index] = 0;
+    }
+
+    //Kontostände ausdrucken lassen
+    for (const auto& val : kontostand) {
+        cout << val << endl;
+    }
+
+    //Casino3
+    //Wiederhole solange, bis wir keine Preise oder Spieler mehr haben, welches zuerst zutrifft
+    for (size_t cashcounter = 0;
+        cashcounter < min(size(casinowuerfelanzahl3),
+            size(casinogelder3));
+        cashcounter++)
+    {
+        //Finde die Position vom Würfel nit dem höchsten Wert
+        auto location = max_element(begin(casinowuerfelanzahl3),
+            end(casinowuerfelanzahl3));
+        //Transformiere Position zu einem Index
+        auto index = distance(begin(casinowuerfelanzahl3), location);
+
+        //Steigere den Kontostand dieses Spielers
+        kontostand[index] += casinogelder3[cashcounter];
+
+        //Setze den Wert auf 0 , um den Spieler nicht erneut gewinnen zu lassen
+        casinowuerfelanzahl3[index] = 0;
+    }
+
+    //Kontostände ausdrucken lassen
+    for (const auto& val : kontostand) {
+        cout << val << endl;
+    }
+
+    //Casino4
+    //Wiederhole solange, bis wir keine Preise oder Spieler mehr haben, welches zuerst zutrifft
+    for (size_t cashcounter = 0;
+        cashcounter < min(size(casinowuerfelanzahl4),
+            size(casinogelder4));
+        cashcounter++)
+    {
+        //Finde die Position vom Würfel nit dem höchsten Wert
+        auto location = max_element(begin(casinowuerfelanzahl4),
+            end(casinowuerfelanzahl4));
+        //Transformiere Position zu einem Index
+        auto index = distance(begin(casinowuerfelanzahl4), location);
+
+        //Steigere den Kontostand dieses Spielers
+        kontostand[index] += casinogelder4[cashcounter];
+
+        //Setze den Wert auf 0 , um den Spieler nicht erneut gewinnen zu lassen
+        casinowuerfelanzahl4[index] = 0;
+    }
+
+    //Kontostände ausdrucken lassen
+    for (const auto& val : kontostand) {
+        cout << val << endl;
+    }
+
+    //Casino5
+    //Wiederhole solange, bis wir keine Preise oder Spieler mehr haben, welches zuerst zutrifft
+    for (size_t cashcounter = 0;
+        cashcounter < min(size(casinowuerfelanzahl5),
+            size(casinogelder5));
+        cashcounter++)
+    {
+        //Finde die Position vom Würfel nit dem höchsten Wert
+        auto location = max_element(begin(casinowuerfelanzahl5),
+            end(casinowuerfelanzahl5));
+        //Transformiere Position zu einem Index
+        auto index = distance(begin(casinowuerfelanzahl1), location);
+
+        //Steigere den Kontostand dieses Spielers
+        kontostand[index] += casinogelder5[cashcounter];
+
+        //Setze den Wert auf 0 , um den Spieler nicht erneut gewinnen zu lassen
+        casinowuerfelanzahl5[index] = 0;
+    }
+
+    //Kontostände ausdrucken lassen
+    for (const auto& val : kontostand) {
+        cout << val << endl;
+    }
+
+    //Casino6
+    //Wiederhole solange, bis wir keine Preise oder Spieler mehr haben, welches zuerst zutrifft
+    for (size_t cashcounter = 0;
+        cashcounter < min(size(casinowuerfelanzahl6),
+            size(casinogelder6));
+        cashcounter++)
+    {
+        //Finde die Position vom Würfel nit dem höchsten Wert
+        auto location = max_element(begin(casinowuerfelanzahl6),
+            end(casinowuerfelanzahl6));
+        //Transformiere Position zu einem Index
+        auto index = distance(begin(casinowuerfelanzahl6), location);
+
+        //Steigere den Kontostand dieses Spielers
+        kontostand[index] += casinogelder6[cashcounter];
+
+        //Setze den Wert auf 0 , um den Spieler nicht erneut gewinnen zu lassen
+        casinowuerfelanzahl6[index] = 0;
+    }
+
+    //Kontostände ausdrucken lassen
+    for (const auto& val : kontostand) {
+        cout << val << endl;
+    }
+
+    //Resetten von alles nötigen und wiederanfangen
+    for (int i = 0; i <= 2; i++) {
+        casinowuerfelanzahl1[i] = 0;
+        casinowuerfelanzahl2[i] = 0;
+        casinowuerfelanzahl3[i] = 0;
+        casinowuerfelanzahl4[i] = 0;
+        casinowuerfelanzahl5[i] = 0;
+        casinowuerfelanzahl6[i] = 0;
+        wuerfelanzahl[i] = 8;
+        
+    }
+    spielerhabenwürfel = true;
+    spielernummer -= 1;
+
+    //Strings für UI ändern
+    kontostandtext1 = "Kontostand: $" + to_string(kontostand[0]);
+    kontostandtext2 = "Kontostand: $" + to_string(kontostand[1]);
+    kontostandtext3 = "Kontostand: $" + to_string(kontostand[2]);
 }
 
 void Spielzeichnung() {
     sf::RenderWindow spiel(sf::VideoMode(1600, 1000), "Las Vegas", sf::Style::Close);
-
+    spiel.setPosition(sf::Vector2i(0, 0));
     //Schriftart laden
     sf::Font font;
     if (!font.loadFromFile("res/Fonts/font.ttf")) {
@@ -1958,11 +2096,114 @@ void Spielzeichnung() {
 
         //
         //Rechts das Leaderboard
-        sf::Text rundentext("Ich kann keine Zahl anzeigen lassen :(", font);
-        rundentext.setCharacterSize(20);
+        sf::Text rundentext(rundentext, font);
+        rundentext.setCharacterSize(30);
         rundentext.setFillColor(sf::Color::Black);
-        rundentext.setPosition(1300.0f, 200.0f);
+        rundentext.setPosition(1350.0f, 100.0f);
         spiel.draw(rundentext);
+
+
+        //Spieler 1 Kasten
+        sf::ConvexShape spieler1kasten;
+        spieler1kasten.setPointCount(4);
+        spieler1kasten.setPoint(0, sf::Vector2f(1252.0f, 200.0f));
+        spieler1kasten.setPoint(1, sf::Vector2f(1600.0f, 200.0f));
+        spieler1kasten.setPoint(2, sf::Vector2f(1600.0f, 305.0f));
+        spieler1kasten.setPoint(3, sf::Vector2f(1252.0f, 305.0f));
+        spieler1kasten.setFillColor(farben[0] - sf::Color(0, 0, 0, 200));
+        spiel.draw(spieler1kasten);
+
+        sf::Text spieler1text("Spieler 1", font);
+        spieler1text.setCharacterSize(25);
+        spieler1text.setFillColor(farben[0]);
+        spieler1text.setPosition(1385.0f, 205.0f);
+        spiel.draw(spieler1text);
+
+        sf::Text spieler1geld(kontostandtext1, font);
+        spieler1geld.setCharacterSize(20);
+        spieler1geld.setFillColor(farben[0]);
+        spieler1geld.setPosition(1260.0f, 235.0f);
+        spiel.draw(spieler1geld);
+
+        sf::Text spieler1würfelzahl("Spieler 1 hat 8 Würfel übrig", font);
+        spieler1würfelzahl.setCharacterSize(20);
+        spieler1würfelzahl.setFillColor(farben[0]);
+        spieler1würfelzahl.setPosition(1260.0f, 255.0f);
+        spiel.draw(spieler1würfelzahl);
+
+        sf::Text spieler1zuletztaktion("Zuletzt: 2 Würfel auf Casino 3", font);
+        spieler1zuletztaktion.setCharacterSize(20);
+        spieler1zuletztaktion.setFillColor(farben[0]);
+        spieler1zuletztaktion.setPosition(1260.0f, 275.0f);
+        spiel.draw(spieler1zuletztaktion);
+
+        //Spieler 2 Kasten
+        sf::ConvexShape spieler2kasten;
+        spieler2kasten.setPointCount(4);
+        spieler2kasten.setPoint(0, sf::Vector2f(1252.0f, 400.0f));
+        spieler2kasten.setPoint(1, sf::Vector2f(1600.0f, 400.0f));
+        spieler2kasten.setPoint(2, sf::Vector2f(1600.0f, 505.0f));
+        spieler2kasten.setPoint(3, sf::Vector2f(1252.0f, 505.0f));
+        spieler2kasten.setFillColor(farben[1] - sf::Color(0, 0, 0, 200));
+        spiel.draw(spieler2kasten);
+
+        sf::Text spieler2text("Spieler 2", font);
+        spieler2text.setCharacterSize(25);
+        spieler2text.setFillColor(farben[1]);
+        spieler2text.setPosition(1385.0f, 405.0f);
+        spiel.draw(spieler2text);
+
+        sf::Text spieler2geld(kontostandtext2, font);
+        spieler2geld.setCharacterSize(20);
+        spieler2geld.setFillColor(farben[1]);
+        spieler2geld.setPosition(1260.0f, 435.0f);
+        spiel.draw(spieler2geld);
+
+        sf::Text spieler2würfelzahl("Spieler 2 hat 8 Würfel übrig", font);
+        spieler2würfelzahl.setCharacterSize(20);
+        spieler2würfelzahl.setFillColor(farben[1]);
+        spieler2würfelzahl.setPosition(1260.0f, 455.0f);
+        spiel.draw(spieler2würfelzahl);
+
+        sf::Text spieler2zuletztaktion("Zuletzt: 2 Würfel auf Casino 3", font);
+        spieler2zuletztaktion.setCharacterSize(20);
+        spieler2zuletztaktion.setFillColor(farben[1]);
+        spieler2zuletztaktion.setPosition(1260.0f, 475.0f);
+        spiel.draw(spieler2zuletztaktion);
+
+        //Spieler 3 Kasten
+        sf::ConvexShape spieler3kasten;
+        spieler3kasten.setPointCount(4);
+        spieler3kasten.setPoint(0, sf::Vector2f(1252.0f, 600.0f));
+        spieler3kasten.setPoint(1, sf::Vector2f(1600.0f, 600.0f));
+        spieler3kasten.setPoint(2, sf::Vector2f(1600.0f, 705.0f));
+        spieler3kasten.setPoint(3, sf::Vector2f(1252.0f, 705.0f));
+        spieler3kasten.setFillColor(farben[2] - sf::Color(0, 0, 0, 200));
+        spiel.draw(spieler3kasten);
+
+        sf::Text spieler3text("Spieler 3", font);
+        spieler3text.setCharacterSize(25);
+        spieler3text.setFillColor(farben[2]);
+        spieler3text.setPosition(1385.0f, 605.0f);
+        spiel.draw(spieler3text);
+
+        sf::Text spieler3geld(kontostandtext3, font);
+        spieler3geld.setCharacterSize(20);
+        spieler3geld.setFillColor(farben[2]);
+        spieler3geld.setPosition(1260.0f, 635.0f);
+        spiel.draw(spieler3geld);
+
+        sf::Text spieler3würfelzahl("Spieler 3 hat 8 Würfel übrig", font);
+        spieler3würfelzahl.setCharacterSize(20);
+        spieler3würfelzahl.setFillColor(farben[2]);
+        spieler3würfelzahl.setPosition(1260.0f, 655.0f);
+        spiel.draw(spieler3würfelzahl);
+
+        sf::Text spieler3zuletztaktion("Zuletzt: 2 Würfel auf Casino 3", font);
+        spieler3zuletztaktion.setCharacterSize(20);
+        spieler3zuletztaktion.setFillColor(farben[2]);
+        spieler3zuletztaktion.setPosition(1260.0f, 675.0f);
+        spiel.draw(spieler3zuletztaktion);
 
         //
         //Kasten für Casinos
@@ -3813,7 +4054,6 @@ void Spielzeichnung() {
         //Algorithmus für kleine Würfel bei den Casinos
         //Casino 1
         //c1z1s1
-        printf("c1spieler1 = %i\n", c1spieler1);
         if (c1spieler1 != 0) {
             c1z1s1sprite.setColor(farben[0]);
             spiel.draw(c1z1s1sprite);
@@ -4158,7 +4398,6 @@ void Spielzeichnung() {
 
         //Casino 2
         //c2z1s1
-        printf("c2spieler1 = %i\n", c2spieler1);
         if (c2spieler1 != 0) {
             c2z1s1sprite.setColor(farben[0]);
             spiel.draw(c2z1s1sprite);
@@ -5886,8 +6125,14 @@ void Spielzeichnung() {
             //Wenn Fenster geschlossen wird
             if (event.type == sf::Event::Closed) {
                 //Dies mit einer Speicherwarung oder Speichern ändern
-                spiel.close();
-                exit(0);
+                bool meldung = bestätigungsmeldung("Möchten Sie den Spielstand speichern?");
+                if (meldung == true) {
+                    //Speichern
+                }
+                else {
+                    spiel.close();
+                    exit(0);
+                }
             }
 
             if (event.type == sf::Event::KeyPressed) {
@@ -6145,8 +6390,9 @@ void neuesSpiel() {
     sf::Thread zeichenthread(&Spielzeichnung);
     zeichenthread.launch();
     //Ganz normale Spiellogik
-    bool spielBeendet = false;
     while(spielBeendet == false) {
+        //Rundentext verändern
+
         //Geldscheine zufällig auswählen und anzeigen (i <=5 machen nicht vergessen)
         srand(time(NULL));
         for (int i = 0; i <= 5; i++) {
@@ -6325,48 +6571,50 @@ void neuesSpiel() {
             }
         }
 
-        //Würfeln, bis keiner mehr würfeln mehr hat
-        for (int spieler = 0; spieler <= 2; spieler++) {
-
-            //Temporäre Variable fürs Überprüfen, ob ein Spieler kein Würfel hat
-            int tempanzwuerfel = wuerfelanzahl[spieler];
-            if(tempanzwuerfel == 0) {
-                continue;
-            }
-            spielernummer = spieler;
-            int anzahlwuerfel = wuerfelanzahl[spieler];
-
-            //Würfel würfeln
-            for (int i = 0; i <= 7; i++) {
-                if (i > anzahlwuerfel - 1) {
-                    wuerfelwert[i] = 8;
+        while (spielerhabenwürfel == true) {
+            rundentext = "Runde " + to_string(rundenzahlfürtext) + " von 4";
+            //Würfeln, bis keiner mehr würfeln mehr hat
+            for (int spieler = 0; spieler <= 2; spieler++) {
+                rundentext = "Runde " + to_string(rundenzahlfürtext) + " von 4";
+                //Temporäre Variable fürs Überprüfen, ob ein Spieler kein Würfel hat
+                int tempanzwuerfel = wuerfelanzahl[spieler];
+                if (tempanzwuerfel == 0) {
+                    continue;
                 }
-                else {
-                    wuerfelwert[i] = gen();
-                    cout << wuerfelwert[i];
-                }
-            }
-            printf("\n");
+                spielernummer = spieler;
+                int anzahlwuerfel = wuerfelanzahl[spieler];
 
-            //Würfeln sortieren
-            for (int i = 0; i <= 6; i++)
-            {
-                for (int j = i + 1; j <= 7; j++)
-                {
-                    if (wuerfelwert[i] > wuerfelwert[j])
-                    {
-                        //-----Tausch-----
-                        int h = wuerfelwert[i];
-                        wuerfelwert[i] = wuerfelwert[j];
-                        wuerfelwert[j] = h;
+                //Würfel würfeln
+                for (int i = 0; i <= 7; i++) {
+                    if (i > anzahlwuerfel - 1) {
+                        wuerfelwert[i] = 8;
+                    }
+                    else {
+                        wuerfelwert[i] = gen();
+                        cout << wuerfelwert[i];
                     }
                 }
-            }
+                printf("\n");
 
-            //Warten bis auf Würfel gedrückt wird
-            while (zugbeendet == false) {
-                //Unten den Nutzer drauf hinweisen, auf einen Würfel zu klicken!
-                switch (spielernummer) {
+                //Würfeln sortieren
+                for (int i = 0; i <= 6; i++)
+                {
+                    for (int j = i + 1; j <= 7; j++)
+                    {
+                        if (wuerfelwert[i] > wuerfelwert[j])
+                        {
+                            //-----Tausch-----
+                            int h = wuerfelwert[i];
+                            wuerfelwert[i] = wuerfelwert[j];
+                            wuerfelwert[j] = h;
+                        }
+                    }
+                }
+
+                //Warten bis auf Würfel gedrückt wird
+                while (zugbeendet == false) {
+                    //Unten den Nutzer drauf hinweisen, auf einen Würfel zu klicken!
+                    switch (spielernummer) {
                     case 0:
                         if (aufWuerfelGedrueckt == false) {
                             subtextstring = "Spieler 1: Bitte wählen Sie einen Würfel!";
@@ -6381,7 +6629,7 @@ void neuesSpiel() {
                         }
                         else {
                             subtextstring = "Spieler 2: Beenden Sie den Zug oder setzen Sie den Schritt zurück!";
-                        }                        
+                        }
                         break;
                     case 2:
                         if (aufWuerfelGedrueckt == false) {
@@ -6389,29 +6637,44 @@ void neuesSpiel() {
                         }
                         else {
                             subtextstring = "Spieler 3: Beenden Sie den Zug oder setzen Sie den Schritt zurück!";
-                        }                        
+                        }
                         break;
                     default:
                         break;
+                    }
+                }
+                //Resetten
+                aufWuerfelGedrueckt = false;
+                zugbeendet = false;
+
+                if (wuerfelanzahl[0] == 0 && wuerfelanzahl[1] == 0 && wuerfelanzahl[2] == 0) {
+                    para();
+                    if (rundenzahl >= 3) {
+
+                    }
+                    else {
+                        printf("Rundenzahl ist unter 3!\n");
+                        rundenzahl++;
+                        rundenzahlfürtext = rundenzahl + 1;
+                    }
                 }
             }
-            //Resetten
-            aufWuerfelGedrueckt = false;
-            zugbeendet = false;
 
-        }
-
-        if (wuerfelanzahl[0] == 0 && wuerfelanzahl[1] == 0 && wuerfelanzahl[2] == 0) {
-            if(rundenzahl <= 3){
-                //Funktion fürs Resetten und Geldzuteilen
+            /*
+            if (wuerfelanzahl[0] == 0 && wuerfelanzahl[1] == 0 && wuerfelanzahl[2] == 0) {
+                printf("Spieler haben keine Würfel mehr!\n");
                 para();
-                rundenzahl++;
-            }
-            else {
-                //Spiel vorbei!
-                spielBeendet = true;
-            }
-            
+                if (rundenzahl <= 3) {
+                    //Funktion fürs Resetten und Geldzuteilen
+                    
+                    rundenzahl++;
+                }
+                else {
+                    //Spiel vorbei!
+                    spielBeendet = true;
+                }
+
+            }*/
         }
 
     }
@@ -6420,6 +6683,14 @@ void neuesSpiel() {
 
 }
 
+//Dieses Thread arbeitet im Hintergrund und sorgt für einen problemlosen Lauf des Spiels
+//Er überprüft auf Probleme und Fehler und korrigiert diese. In diesem Thread werden auch wichtige Funktionen aufgerufen.
+void Systemthread() {
+    while (true) {
+        //Nichts
+    }
+
+}
 //
 //Main-Funktion - Hier befinden sich alle Hauptfunktionen wie Erzeugung des Bildschirms etc.
 //
@@ -6503,6 +6774,10 @@ int main(){
     settingsbtn1.setFont(font);
     settingsbtn1.setPosition({ 650.0f, 500.0f });
 
+    //Den Systemthread initialisieren und starten
+    Thread systemthread(&Systemthread);
+    systemthread.launch();
+  
     // Eine Schleife, dass das Programm solange laufen lässt, bis es geschlossen wird
     while (window.isOpen())
     {
