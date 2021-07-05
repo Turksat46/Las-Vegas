@@ -1,33 +1,41 @@
 ﻿  main.cpp
-C:\Users\KeremOkumus\source\repos\LasVegas\Button.h(14,24): warning C4244: "=": Konvertierung von "T" in "int", möglicher Datenverlust
+C:\Users\KeremOkumus\Desktop\LasVegas\Las-Vegas\Projekt für VS\Button.h(18,24): warning C4244: "=": Konvertierung von "T" in "int", möglicher Datenverlust
           with
           [
               T=float
           ]
-C:\Users\KeremOkumus\source\repos\LasVegas\Button.h(15,25): warning C4244: "=": Konvertierung von "T" in "int", möglicher Datenverlust
+C:\Users\KeremOkumus\Desktop\LasVegas\Las-Vegas\Projekt für VS\Button.h(19,25): warning C4244: "=": Konvertierung von "T" in "int", möglicher Datenverlust
           with
           [
               T=float
           ]
-C:\Users\KeremOkumus\source\repos\LasVegas\Button.h(40,14): warning C4244: "Initialisierung": Konvertierung von "double" in "float", möglicher Datenverlust
-C:\Users\KeremOkumus\source\repos\LasVegas\Button.h(54,15): warning C4244: "Initialisierung": Konvertierung von "const T" in "int", möglicher Datenverlust
+C:\Users\KeremOkumus\Desktop\LasVegas\Las-Vegas\Projekt für VS\Button.h(51,14): warning C4244: "Initialisierung": Konvertierung von "double" in "float", möglicher Datenverlust
+C:\Users\KeremOkumus\Desktop\LasVegas\Las-Vegas\Projekt für VS\Button.h(67,15): warning C4244: "Initialisierung": Konvertierung von "const T" in "int", möglicher Datenverlust
           with
           [
               T=float
           ]
-C:\Users\KeremOkumus\source\repos\LasVegas\Button.h(55,15): warning C4244: "Initialisierung": Konvertierung von "const T" in "int", möglicher Datenverlust
+C:\Users\KeremOkumus\Desktop\LasVegas\Las-Vegas\Projekt für VS\Button.h(68,15): warning C4244: "Initialisierung": Konvertierung von "const T" in "int", möglicher Datenverlust
           with
           [
               T=float
           ]
-C:\Users\KeremOkumus\source\repos\LasVegas\Button.h(57,20): warning C4244: "Initialisierung": Konvertierung von "T" in "int", möglicher Datenverlust
+C:\Users\KeremOkumus\Desktop\LasVegas\Las-Vegas\Projekt für VS\Button.h(70,20): warning C4244: "Initialisierung": Konvertierung von "T" in "int", möglicher Datenverlust
           with
           [
               T=float
           ]
-C:\Users\KeremOkumus\source\repos\LasVegas\Button.h(58,21): warning C4244: "Initialisierung": Konvertierung von "T" in "int", möglicher Datenverlust
+C:\Users\KeremOkumus\Desktop\LasVegas\Las-Vegas\Projekt für VS\Button.h(71,21): warning C4244: "Initialisierung": Konvertierung von "T" in "int", möglicher Datenverlust
           with
           [
               T=float
           ]
-  LasVegas.vcxproj -> C:\Users\KeremOkumus\source\repos\LasVegas\x64\Debug\LasVegas.exe
+C:\Users\KeremOkumus\Desktop\LasVegas\Las-Vegas\Projekt für VS\Dice.h(28,1): warning C4305: "Argument": Verkürzung von "double" in "float"
+C:\Users\KeremOkumus\Desktop\LasVegas\Las-Vegas\Projekt für VS\infosystem.h(13,15): warning C4101: "event": Unreferenzierte lokale Variable
+C:\Users\KeremOkumus\Desktop\LasVegas\Las-Vegas\Projekt für VS\infosystem.h(68,15): warning C4101: "event": Unreferenzierte lokale Variable
+  The contents of <filesystem> are available only with C++17 or later.
+C:\Users\KeremOkumus\Desktop\LasVegas\Las-Vegas\Projekt für VS\main.cpp(1133,15): warning C4101: "event": Unreferenzierte lokale Variable
+C:\Users\KeremOkumus\Desktop\LasVegas\Las-Vegas\Projekt für VS\main.cpp(1788,20): warning C4244: "Initialisierung": Konvertierung von "double" in "float", möglicher Datenverlust
+C:\Users\KeremOkumus\Desktop\LasVegas\Las-Vegas\Projekt für VS\main.cpp(5832,19): warning C4244: "Argument": Konvertierung von "time_t" in "unsigned int", möglicher Datenverlust
+C:\Users\KeremOkumus\Desktop\LasVegas\Las-Vegas\Projekt für VS\infosystem.h(127): warning C4715: "bestätigungsmeldung": Nicht alle Codepfade geben einen Wert zurück.
+  LasVegas.vcxproj -> C:\Users\KeremOkumus\Desktop\LasVegas\Las-Vegas\Projekt für VS\x64\Debug\LasVegas.exe

@@ -32,6 +32,9 @@
     <ClInclude Include="infosystem.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
+    <ClInclude Include="dateienmanager.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Font Include="Fonts\font.ttf" />

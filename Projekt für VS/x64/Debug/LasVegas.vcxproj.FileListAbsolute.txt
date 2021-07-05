@@ -1,2 +1,3 @@
 C:\Users\KeremOkumus\source\repos\LasVegas\x64\Debug\LasVegas.exe
 C:\Users\KeremOkumus\source\repos\LasVegas\x64\Debug\LasVegas.pdb
+C:\Users\KeremOkumus\Desktop\LasVegas\Las-Vegas\Projekt für VS\x64\Debug\LasVegas.exe

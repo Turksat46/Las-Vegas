@@ -3,6 +3,7 @@
 //Dieses Programm nutzt die SFML-Bibliothek, dass zur Programmierung von grafischen Benutzeroberflächen erleichtern soll!
 //geändert am: 25.01.2021(Datei erstellt und ersten Code geschrieben); 26.01.2021 (Code verändert und Menü hinzugefügt)
 
+
 //Einbindung wichtiger Bibliotheken
 #include<SFML/Graphics.hpp>
 #include<SFML/Graphics/Text.hpp>
@@ -10,13 +11,14 @@
 #include<SFML/System.hpp>
 
 #include<iostream>
-#include<Windows.h>
+#include<windows.h>
 #include<fstream>
 #include<cstdlib>
 #include<conio.h>
 #include<random>
 #include<numeric>
 #include<algorithm>
+#include <string.h>
 
 using namespace std;
 using namespace sf;
@@ -25,6 +27,7 @@ using namespace sf;
 #include "Button.h"
 #include "Dice.h"
 #include "infosystem.h"
+#include "dateienmanager.h"
 
 //Wichtige Spiel-Variablen
 float wuerfelpos[8] = { 20.0f, 120.0f, 220.0f, 320.0f, 420.0f, 520.0f, 620.0f, 720.0f };
@@ -51,6 +54,7 @@ int summe5 = 0;
 int summe6 = 0;
 int wuerfelanzahl[3] = { 8, 8, 8 };
 int wuerfelwert[8];
+int spieler;
 int spielernummer;
 int rundenzahl = 0;
 int ausgewählteAuge[2]; //Ein leeres Array erstellen für den ersten Index, welcher Würfel und der zweite Index, wie viele.
@@ -61,120 +65,21 @@ int rundenzahlfürtext = rundenzahl + 1;
 string kontostandtext1 = "Kontostand: $" + to_string(kontostand[0]);
 string kontostandtext2 = "Kontostand: $" + to_string(kontostand[1]);
 string kontostandtext3 = "Kontostand: $" + to_string(kontostand[2]);
+string wuerfelzahl1, wuerfelzahl2, wuerfelzahl3;
+string letzteaktion[3] = { "Zuletzt: Nichts passiert!", "Zuletzt: Nichts passiert!", "Zuletzt: Nichts passiert!" };
+string speichername1, speichername2, speichername3, speichername4;
 string rundentext;
 bool aufWuerfelGedrueckt = false;
 bool spielBeendet = false;
 bool zugbeendet = false;
+bool spielgeladen;
+
+void neuesSpiel();
+int main();
 
 //Systemvariablen (BITTE NICHT VERÄNDERN!)
 bool neustartgefordert = false;
 bool speichertbool = false;
-
-
-//Für Casinos
-/* Variablen für Casino 1
-int c1spieler1 = casinowuerfelanzahl1[0];
-int c1spieler2 = casinowuerfelanzahl1[1];
-int c1spieler3 = casinowuerfelanzahl1[2];
-
-int c1spieler1 = 3;
-int c1spieler2 = 4;
-int c1spieler3 = 6;
-
-//Variablen für Casino 2
-int c2spieler1 = casinowuerfelanzahl2[0];
-int c2spieler2 = casinowuerfelanzahl2[1];
-int c2spieler3 = casinowuerfelanzahl2[2];
-
-//Variablen für Casino 3
-int c3spieler1 = casinowuerfelanzahl3[0];
-int c3spieler2 = casinowuerfelanzahl3[1];
-int c3spieler3 = casinowuerfelanzahl3[2];
-
-//Variablen für Casino 4
-int c4spieler1 = casinowuerfelanzahl4[0];
-int c4spieler2 = casinowuerfelanzahl4[1];
-int c4spieler3 = casinowuerfelanzahl4[2];
-
-//Variablen für Casino 5
-int c5spieler1 = casinowuerfelanzahl5[0];
-int c5spieler2 = casinowuerfelanzahl5[1];
-int c5spieler3 = casinowuerfelanzahl5[2];
-
-//Variablen für Casino 6
-int c6spieler1 = casinowuerfelanzahl6[0];
-int c6spieler2 = casinowuerfelanzahl6[1];
-int c6spieler3 = casinowuerfelanzahl6[2];
-*/
-
-//Dateiformat Speicher
-
-struct spieldaten {
-    int wuerfelwerte[8];
-    int kontostand;
-    int casino1, casino2, casino3, casino4, casino5, casino6;
-    int c1spieler1, c1spieler2, c1spieler3, c2spieler1, c2spieler2, c2spieler3, c3spieler1, c3spieler2, c3spieler3, c4spieler1, c4spieler2, c4spieler3, c5spieler1, c5spieler2, c5spieler3, c6spieler1, c6spieler2, c6spieler3;
-    int wuerfelanzahl[3];
-};
-
-//
-//Eine Fehlermethode, der eine Fehlermeldung auf dem Bildschirm erscheinen lässt
-//
-//Nutzung: fehleranzeige(TITEL, NACHRICHT);
-
-
-
-//
-//Eine Startklasse, die den Start des Spiels vorbereitet. (Wird nur einmal aufgerufen!)
-//
-void startup() {
-    /*INFO:
-    * IN DER ARRAY GIBT ES FOLGENDE EINSTELLUNGEN:
-    * 0 = Ob Sound laufen soll
-    * 1 = Wie laut es sein soll (Standart: 50)
-    * 
-    * BITTE DIESE LISTE BEI ÄNDERUNGEN ERGÄNZEN!!!
-    */
-
-    //Erstelle eine Struktur für Daten
-    struct einstellung {
-        int stellung;
-    };
-
-    //Schreibe eine Einstellungsdatei in Binär
-    ofstream schreiber("einstellungen.einstellungen", std::ios::out | std::ios::binary);
-
-    //Nenne alles, was geschrieben werden muss
-    //Siehe oben, um zu verstehen, für was was steht!
-    int writer[3];
-    writer[0] = 1;
-    writer[1] = 50;
-
-    //schreiber.write((char*)&writer[0].stellung, sizeof(einstellung));
-
-    //Schreibe alle Daten ein
-    printf("Schreiben wird gestartet!\n");
-    for (int i = 0; i < 2; i++) {
-        schreiber.write((char*) &writer[i], sizeof(einstellung));
-    }
-
-    //Datei schließen
-    schreiber.close();
-
-    //Prüfe, ob alles erfolgreich war!
-    if (!schreiber.good()) {
-        fehleranzeige("Datei-Fehler", "Einstellungsdatei konnte nicht geöffnet werden.");
-        return;
-    }
-
-    //Musik starten, da es keine Einstellung existiert!
-    //Erzeuge das Audio-Objekt und fange an zu spielen!
-    sf::Music music;
-    music.openFromFile("res/Audio/titelmusik.wav");
-    music.setVolume(50);
-    music.setLoop(true);
-    music.play();
-}
 
 //
 //Eine Einstellungsklasse, um es einfach aufzurufen, wann man es braucht!
@@ -284,24 +189,7 @@ void Einstellungen() {
                 case sf::Event::MouseButtonPressed:
                     //Wenn es über dem Anwenden-Button geklickt hat
                     if (applybtn1.isMouseOver(settings)) {
-                        //Übernehm die Einstellungen
-                        ofstream schreiber("einstellungen.einstellungen", std::ios::out | std::ios::trunc);
-                        //Array für Daten erstellen und beschriften
-                        int items[2];
-                        //einstellung items[1];
-                        //p = Ob Sound laufen soll
-                        //v = Lautstärke
-                        items[0]= p;
-                        items[1]= v;
-
-                        //Indizen in die Datei schreiben
-                        for (int i = 0; i < 2; i++) {
-                            schreiber.write((char*)&items[i], sizeof(einstellung));
-                        }
-
-                        //Datei schließen
-                        schreiber.close();
-                        printf("Einstellungen wurden uebernommen! \n");
+                        einstellungsdateiänderung(p, v);
                         //Einstellungen schließen
                         settings.close();
                     }
@@ -337,310 +225,6 @@ void Einstellungen() {
     }
 }
 
-
-//
-//MAIN SPIEL (TEST)
-//
-//Eine Function fürs neue Spiel erstellen (nicht vollständig)
-void neuesSpieltest() {
-    sf::RenderWindow spiel(sf::VideoMode(1600, 1000), "Las Vegas");
-
-    bool gewonnen = false;
-    //Schriftart laden
-    sf::Font font;
-    if (!font.loadFromFile("res/Fonts/font.ttf")) {
-        fehleranzeige("Font-Fehler", "Schriftart konnte nicht geladen werden!");
-    }
-
-    // Icon für das Spiel setzen
-    sf::Image icon;
-    if (!icon.loadFromFile("res/Bilder/icon.jpg")) {
-        //fehleranzeige("Icon-Fehler", "Icon konnte nicht geladen werden.");
-        spiel.close();
-        return;
-    }
-    spiel.setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
-
-    //Hauptschleife des Spiels
-    while(spiel.isOpen()){
-        spiel.clear(sf::Color(53, 104, 45, 255));
-
-        //TestKarte
-        //Dies wird mit Punkten gezeichnet sprich an jeder Ecke ein Punkt
-        /*sf::ConvexShape testkarte;
-        testkarte.setPointCount(4);
-        testkarte.setFillColor(sf::Color(192, 126, 220, 255));
-        testkarte.setOutlineThickness(3.0f);
-        //Linksoben
-        testkarte.setPoint(0, sf::Vector2f(100.0f, 100.0f));
-        //Rechtsoben
-        testkarte.setPoint(1, sf::Vector2f(300.0f, 100.0f));
-        //Rechtsunten
-        testkarte.setPoint(2, sf::Vector2f(300.0f, 600.0f));
-        //Linksunten
-        testkarte.setPoint(3, sf::Vector2f(100.0f, 600.0f));
-        //Zeichnen
-        spiel.draw(testkarte);
-        spiel.display();*/
-
-        //Las Vegas Logo
-        sf::Texture logo;
-        logo.loadFromFile("res/Bilder/Assets/vegas.gif");
-        logo.setSmooth(true);
-        sf::Sprite logosprite(logo);
-        logosprite.setPosition({1300.0f, 10.0f});
-        logosprite.setScale(0.5f, 0.5f);
-        spiel.draw(logosprite);
-        //
-        // Trennlinie
-        sf::ConvexShape trennlinie;
-        trennlinie.setPointCount(4);
-        trennlinie.setFillColor(sf::Color::Black);
-        trennlinie.setPoint(0, sf::Vector2f(1250.0f, 0.0f));
-        trennlinie.setPoint(1, sf::Vector2f(1250.0f, 900.0f));
-        trennlinie.setPoint(2, sf::Vector2f(1251.0f, 900.0f));
-        trennlinie.setPoint(3, sf::Vector2f(1251.0f, 0.0f));
-        spiel.draw(trennlinie);
-
-        //
-        //Kasten für Casinos
-        sf::ConvexShape goldennuggetkasten;
-        goldennuggetkasten.setPointCount(4);
-        goldennuggetkasten.setFillColor(sf::Color(251,209,100,165));
-        goldennuggetkasten.setOutlineThickness(3.0f);
-        goldennuggetkasten.setOutlineColor(sf::Color(251, 209, 100, 50));
-        goldennuggetkasten.setPoint(0, sf::Vector2f(18.0f, 20.0f));
-        goldennuggetkasten.setPoint(1, sf::Vector2f(202.0f, 20.0f));
-        goldennuggetkasten.setPoint(2, sf::Vector2f(202.0f, 750.0f));
-        goldennuggetkasten.setPoint(3, sf::Vector2f(18.0f, 750.0f));
-        spiel.draw(goldennuggetkasten);
-
-        sf::ConvexShape caesarskasten;
-        caesarskasten.setPointCount(4);
-        caesarskasten.setFillColor(sf::Color(248, 131, 49, 140));
-        caesarskasten.setOutlineThickness(3.0f);
-        caesarskasten.setOutlineColor(sf::Color(248, 131, 49, 50));
-        caesarskasten.setPoint(0, sf::Vector2f(218.0f, 20.0f));
-        caesarskasten.setPoint(1, sf::Vector2f(402.0f, 20.0f));
-        caesarskasten.setPoint(2, sf::Vector2f(402.0f, 750.0f));
-        caesarskasten.setPoint(3, sf::Vector2f(218.0f, 750.0f));
-        spiel.draw(caesarskasten);
-
-        sf::ConvexShape miragekasten;
-        miragekasten.setPointCount(4);
-        miragekasten.setFillColor(sf::Color(180, 110, 198, 145));
-        miragekasten.setOutlineThickness(3.0f);
-        miragekasten.setOutlineColor(sf::Color(180, 110, 198, 50));
-        miragekasten.setPoint(0, sf::Vector2f(418.0f, 20.0f));
-        miragekasten.setPoint(1, sf::Vector2f(602.0f, 20.0f));
-        miragekasten.setPoint(2, sf::Vector2f(602.0f, 750.0f));
-        miragekasten.setPoint(3, sf::Vector2f(418.0f, 750.0f));
-        spiel.draw(miragekasten);
-
-        sf::ConvexShape saharakasten;
-        saharakasten.setPointCount(4);
-        saharakasten.setFillColor(sf::Color(212, 76, 48, 122));
-        saharakasten.setOutlineThickness(3.0f);
-        saharakasten.setOutlineColor(sf::Color(212, 76, 48, 50));
-        saharakasten.setPoint(0, sf::Vector2f(618.0f, 20.0f));
-        saharakasten.setPoint(1, sf::Vector2f(802.0f, 20.0f));
-        saharakasten.setPoint(2, sf::Vector2f(802.0f, 750.0f));
-        saharakasten.setPoint(3, sf::Vector2f(618.0f, 750.0f));
-        spiel.draw(saharakasten);
-
-        sf::ConvexShape luxorkasten;
-        luxorkasten.setPointCount(4);
-        luxorkasten.setFillColor(sf::Color(83, 135, 149, 109));
-        luxorkasten.setOutlineThickness(3.0f);
-        luxorkasten.setOutlineColor(sf::Color(83, 135, 149, 50));
-        luxorkasten.setPoint(0, sf::Vector2f(818.0f, 20.0f));
-        luxorkasten.setPoint(1, sf::Vector2f(1002.0f, 20.0f));
-        luxorkasten.setPoint(2, sf::Vector2f(1002.0f, 750.0f));
-        luxorkasten.setPoint(3, sf::Vector2f(818.0f, 750.0f));
-        spiel.draw(luxorkasten);
-
-        sf::ConvexShape circuskasten;
-        circuskasten.setPointCount(4);
-        circuskasten.setFillColor(sf::Color(121, 147, 200, 151));
-        circuskasten.setOutlineThickness(3.0f);
-        circuskasten.setOutlineColor(sf::Color(121, 147, 200, 50));
-        circuskasten.setPoint(0, sf::Vector2f(1018.0f, 20.0f));
-        circuskasten.setPoint(1, sf::Vector2f(1202.0f, 20.0f));
-        circuskasten.setPoint(2, sf::Vector2f(1202.0f, 750.0f));
-        circuskasten.setPoint(3, sf::Vector2f(1018.0f, 750.0f));
-        spiel.draw(circuskasten);
-
-        //
-        //Einzelne Casinos
-        sf::Texture golden_nugget;
-        golden_nugget.loadFromFile("res/Bilder/Assets/golden_nugget.png");
-        golden_nugget.setSmooth(true);
-        sf::Sprite golden_nuggetsprite(golden_nugget);
-        golden_nuggetsprite.setPosition({ 20.0f, 350.0f });
-        //golden_nuggetsprite.setScale(0.75, 0.75);
-        spiel.draw(golden_nuggetsprite);
-        
-        sf::Texture caesars;
-        caesars.loadFromFile("res/Bilder/Assets/caesars.png");
-        caesars.setSmooth(true);
-        sf::Sprite caesarssprite(caesars);
-        caesarssprite.setPosition({ 220.0f, 350.0f });
-        //caesarssprite.setScale(0.75, 0.75);
-        spiel.draw(caesarssprite);
-
-        sf::Texture mirage;
-        mirage.loadFromFile("res/Bilder/Assets/mirage.png");
-        mirage.setSmooth(true);
-        sf::Sprite miragesprite(mirage);
-        miragesprite.setPosition({ 420.0f, 350.0f });
-        spiel.draw(miragesprite);
-
-        sf::Texture sahara;
-        sahara.loadFromFile("res/Bilder/Assets/sahara.png");
-        sahara.setSmooth(true);
-        sf::Sprite saharasprite(sahara);
-        saharasprite.setPosition({ 620.0f, 350.0f });
-        spiel.draw(saharasprite);
-
-        sf::Texture luxor;
-        luxor.loadFromFile("res/Bilder/Assets/luxor.png");
-        luxor.setSmooth(true);
-        sf::Sprite luxorsprite(luxor);
-        luxorsprite.setPosition({ 820.0f, 350.0f });
-        spiel.draw(luxorsprite);
-
-        sf::Texture circus;
-        circus.loadFromFile("res/Bilder/Assets/circus.png");
-        circus.setSmooth(true);
-        sf::Sprite circussprite(circus);
-        circussprite.setPosition({ 1020.0f, 350.0f });
-        spiel.draw(circussprite);
-
-        //Menü unten
-        sf::ConvexShape menuunten;
-        menuunten.setPointCount(4);
-        //Linksoben
-        menuunten.setPoint(0, sf::Vector2f(0.0f, 935.0f));
-        //Rechtsoben
-        menuunten.setPoint(1, sf::Vector2f(1600.0f, 935.0f));
-        //Rechtsunten
-        menuunten.setPoint(2, sf::Vector2f(1600.0f, 1000.0f));
-        //Linksunten
-        menuunten.setPoint(3, sf::Vector2f(0.0f, 1000.0f));
-        spiel.draw(menuunten);
-
-        //Schrifttab über Menü
-        sf::ConvexShape schrifttab;
-        schrifttab.setPointCount(4);
-        //Linksoben
-        schrifttab.setPoint(0, sf::Vector2f(0.0f, 900.0f));
-        //Rechtsoben
-        schrifttab.setPoint(1, sf::Vector2f(1600.0f, 900.0f));
-        //Rechtsunten
-        schrifttab.setPoint(2, sf::Vector2f(1600.0f, 935.0f));
-        //Linksunten
-        schrifttab.setPoint(3, sf::Vector2f(0.0f, 935.0f));
-        schrifttab.setFillColor(sf::Color(53, 53, 53, 150));
-        spiel.draw(schrifttab);
-        
-        sf::Texture wuerfel;
-        wuerfel.loadFromFile("res/Bilder/würfel/dice-png-1.png");
-        wuerfel.setSmooth(true);
-        sf::Sprite wuerfelsprite;
-        //wuerfelsprite.setColor(sf::Color::Blue);
-        wuerfelsprite.setTexture(wuerfel, true);
-        wuerfelsprite.setPosition({ 20.0f, 800.0f });
-        wuerfelsprite.setScale(0.15, 0.15);
-        spiel.draw(wuerfelsprite);
-
-        sf::Texture wuerfel2;
-        wuerfel2.loadFromFile("res/Bilder/würfel/dice-png-2.png");
-        wuerfel2.setSmooth(true);
-        sf::Sprite wuerfelsprite2;
-        //wuerfelsprite2.setColor(sf::Color::Blue);
-        wuerfelsprite2.setTexture(wuerfel2, true);
-        wuerfelsprite2.setPosition({ 120.0f, 800.0f });
-        wuerfelsprite2.setScale(0.15, 0.15);
-        spiel.draw(wuerfelsprite2);
-
-        sf::Texture wuerfel3;
-        wuerfel3.loadFromFile("res/Bilder/würfel/dice-png-3.png");
-        wuerfel3.setSmooth(true);
-        sf::Sprite wuerfelsprite3;
-        //wuerfelsprite3.setColor(sf::Color::Blue);
-        wuerfelsprite3.setTexture(wuerfel3, true);
-        wuerfelsprite3.setPosition({ 220.0f, 800.0f });
-        wuerfelsprite3.setScale(0.15, 0.15);
-        spiel.draw(wuerfelsprite3);
-
-        sf::Texture wuerfel4;
-        wuerfel4.loadFromFile("res/Bilder/würfel/dice-png-4.png");
-        wuerfel4.setSmooth(true);
-        sf::Sprite wuerfelsprite4;
-        //wuerfelsprite4.setColor(sf::Color::Blue);
-        wuerfelsprite4.setTexture(wuerfel4, true);
-        wuerfelsprite4.setPosition({ 320.0f, 800.0f });
-        wuerfelsprite4.setScale(0.15, 0.15);
-        spiel.draw(wuerfelsprite4);
-
-        sf::Texture wuerfel5;
-        wuerfel5.loadFromFile("res/Bilder/würfel/dice-png-5.png");
-        wuerfel5.setSmooth(true);
-        sf::Sprite wuerfelsprite5;
-        //wuerfelsprite5.setColor(sf::Color::Blue);
-        wuerfelsprite5.setTexture(wuerfel5, true);
-        wuerfelsprite5.setPosition({ 420.0f, 800.0f });
-        wuerfelsprite5.setScale(0.15, 0.15);
-        spiel.draw(wuerfelsprite5);
-
-        sf::Texture wuerfel6;
-        wuerfel6.loadFromFile("res/Bilder/würfel/dice-png-6.png");
-        wuerfel6.setSmooth(true);
-        sf::Sprite wuerfelsprite6;
-        //wuerfelsprite6.setColor(sf::Color::Blue);
-        wuerfelsprite6.setTexture(wuerfel6, true);
-        wuerfelsprite6.setPosition({ 520.0f, 800.0f });
-        wuerfelsprite6.setScale(0.15, 0.15);
-        spiel.draw(wuerfelsprite6);
-
-        sf::Texture wuerfel7;
-        wuerfel7.loadFromFile("res/Bilder/würfel/dice-png-1.png");
-        wuerfel7.setSmooth(true);
-        sf::Sprite wuerfelsprite7;
-        //wuerfelsprite7.setColor(sf::Color::Blue);
-        wuerfelsprite7.setTexture(wuerfel7, true);
-        wuerfelsprite7.setPosition({ 620.0f, 800.0f });
-        wuerfelsprite7.setScale(0.15, 0.15);
-        spiel.draw(wuerfelsprite7);
-
-        sf::Texture wuerfel8;
-        wuerfel8.loadFromFile("res/Bilder/würfel/dice-png-2.png");
-        wuerfel8.setSmooth(true);
-        sf::Sprite wuerfelsprite8;
-        //wuerfelsprite8.setColor(sf::Color::Blue);
-        wuerfelsprite8.setTexture(wuerfel8, true);
-        wuerfelsprite8.setPosition({ 720.0f, 800.0f });
-        wuerfelsprite8.setScale(0.15, 0.15);
-        spiel.draw(wuerfelsprite8);
-
-        //Eigentliche Einstellungen
-        sf::Text subtext("+++ Spieler 1 ist dran! +++", font);
-        subtext.setCharacterSize(25);
-        subtext.setPosition(sf::Vector2f(700.0f, 900.0f));
-        subtext.setFillColor(sf::Color::Black);
-        spiel.draw(subtext);
-
-        //Event-Handling
-        sf::Event event;
-        while (spiel.pollEvent(event)) {
-            if (event.type == sf::Event::Closed)
-                spiel.close();
-        }
-        //Spiel zeichnen
-        spiel.display();
-    }
-}
-
 //Randomizer
 int gen() {
     random_device rd;
@@ -649,676 +233,399 @@ int gen() {
     return dist(gen);
 }
 
-
 //--------------------------------------------------------------------------------------
 //--------------------------------------------------------------------------------------
 //--------------------------------------------------------------------------------------
-void neuesSpieltest2() {
-    sf::RenderWindow spiel(sf::VideoMode(1600, 1000), "Las Vegas");
-
-    //Schriftart laden
-    sf::Font font;
-    if (!font.loadFromFile("res/Fonts/font.ttf")) {
-        fehleranzeige("Font-Fehler", "Schriftart konnte nicht geladen werden!");
-    }
-
-    // Icon für das Spiel setzen
-    sf::Image icon;
-    if (!icon.loadFromFile("res/Bilder/icon.jpg")) {
-        //fehleranzeige("Icon-Fehler", "Icon konnte nicht geladen werden.");
-        spiel.close();
-        return;
-    }
-    spiel.setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
-
-    //Würfel würfeln für jeden Spieler
-    for (int i = 0; i <= 7; i++) {
-        wuerfelwert[i] = gen();
-        cout << wuerfelwert[i];
-    }
-    printf("\n");
-    
-    
-    for (int i = 0; i <= 6; i++)
-    {
-        for (int j = i + 1; j <= 7; j++)
-        {
-            if (wuerfelwert[i] > wuerfelwert[j])
-            {
-                //-----Tausch-----
-                int h = wuerfelwert[i];
-                wuerfelwert[i] = wuerfelwert[j];
-                wuerfelwert[j] = h;
-            }
-        }
-    }
-    
-
-    //wuerfel(120.0f, wuerfelwert[1]);
-    //wuerfel()
-    
-    /*
-    do {
-        for (int spielerzahl = 0; spielerzahl <= 3; spielerzahl++) {
-            for (int wuerfelzahl = 0; wuerfelzahl <= 9; wuerfelzahl++) {
-                wuerfelwert[wuerfelzahl] = rand() % 6 + 1;
-                switch (wuerfelwert[wuerfelzahl]) {
-                    case 1:
-                       //wuerfel.loadFromFile(wuerfelaugen[0]);
-                        break;
-                }
-            }
-        }
-    } while (spielBeendet == false);*/
-
-    sf::Texture wuerfel;
-    switch (wuerfelwert[0]) {
-        case 1:
-            wuerfel.loadFromFile("res/Bilder/würfel/dice-png-1.png");
-            break;
-        case 2:
-            wuerfel.loadFromFile("res/Bilder/würfel/dice-png-2.png");
-            break;
-        case 3:
-            wuerfel.loadFromFile("res/Bilder/würfel/dice-png-3.png");
-            break;
-        case 4:
-            wuerfel.loadFromFile("res/Bilder/würfel/dice-png-4.png");
-            break;
-        case 5:
-            wuerfel.loadFromFile("res/Bilder/würfel/dice-png-5.png");
-            break;
-        case 6:
-            wuerfel.loadFromFile("res/Bilder/würfel/dice-png-6.png");
-            break;
-    }
-    wuerfel.setSmooth(true);
-    sf::Sprite wuerfelsprite;
-    //wuerfelsprite.setColor(sf::Color::Blue);
-    wuerfelsprite.setTexture(wuerfel, true);
-    wuerfelsprite.setPosition({ 20.0f, 800.0f });
-    wuerfelsprite.setScale(0.15, 0.15);
-
-    sf::Texture wuerfel2;
-    switch (wuerfelwert[1]) {
-    case 1:
-        wuerfel2.loadFromFile("res/Bilder/würfel/dice-png-1.png");
-        break;
-    case 2:
-        wuerfel2.loadFromFile("res/Bilder/würfel/dice-png-2.png");
-        break;
-    case 3:
-        wuerfel2.loadFromFile("res/Bilder/würfel/dice-png-3.png");
-        break;
-    case 4:
-        wuerfel2.loadFromFile("res/Bilder/würfel/dice-png-4.png");
-        break;
-    case 5:
-        wuerfel2.loadFromFile("res/Bilder/würfel/dice-png-5.png");
-        break;
-    case 6:
-        wuerfel2.loadFromFile("res/Bilder/würfel/dice-png-6.png");
-        break;
-    }
-    wuerfel2.setSmooth(true);
-    sf::Sprite wuerfelsprite2;
-    //wuerfelsprite.setColor(sf::Color::Blue);
-    wuerfelsprite2.setTexture(wuerfel2, true);
-    wuerfelsprite2.setPosition({ 120.0f, 800.0f });
-    wuerfelsprite2.setScale(0.15, 0.15);
-
-    sf::Texture wuerfel3;
-    switch (wuerfelwert[2]) {
-    case 1:
-        wuerfel3.loadFromFile("res/Bilder/würfel/dice-png-1.png");
-        break;
-    case 2:
-        wuerfel3.loadFromFile("res/Bilder/würfel/dice-png-2.png");
-        break;
-    case 3:
-        wuerfel3.loadFromFile("res/Bilder/würfel/dice-png-3.png");
-        break;
-    case 4:
-        wuerfel3.loadFromFile("res/Bilder/würfel/dice-png-4.png");
-        break;
-    case 5:
-        wuerfel3.loadFromFile("res/Bilder/würfel/dice-png-5.png");
-        break;
-    case 6:
-        wuerfel3.loadFromFile("res/Bilder/würfel/dice-png-6.png");
-        break;
-    }
-    wuerfel3.setSmooth(true);
-    sf::Sprite wuerfelsprite3;
-    //wuerfelsprite.setColor(sf::Color::Blue);
-    wuerfelsprite3.setTexture(wuerfel3, true);
-    wuerfelsprite3.setPosition({ 220.0f, 800.0f });
-    wuerfelsprite3.setScale(0.15, 0.15);
-
-    sf::Texture wuerfel4;
-    switch (wuerfelwert[3]) {
-    case 1:
-        wuerfel4.loadFromFile("res/Bilder/würfel/dice-png-1.png");
-        break;
-    case 2:
-        wuerfel4.loadFromFile("res/Bilder/würfel/dice-png-2.png");
-        break;
-    case 3:
-        wuerfel4.loadFromFile("res/Bilder/würfel/dice-png-3.png");
-        break;
-    case 4:
-        wuerfel4.loadFromFile("res/Bilder/würfel/dice-png-4.png");
-        break;
-    case 5:
-        wuerfel4.loadFromFile("res/Bilder/würfel/dice-png-5.png");
-        break;
-    case 6:
-        wuerfel4.loadFromFile("res/Bilder/würfel/dice-png-6.png");
-        break;
-    }
-    wuerfel4.setSmooth(true);
-    sf::Sprite wuerfelsprite4;
-    //wuerfelsprite.setColor(sf::Color::Blue);
-    wuerfelsprite4.setTexture(wuerfel4, true);
-    wuerfelsprite4.setPosition({ 320.0f, 800.0f });
-    wuerfelsprite4.setScale(0.15, 0.15);
-    
-    sf::Texture wuerfel5;
-    switch (wuerfelwert[4]) {
-    case 1:
-        wuerfel5.loadFromFile("res/Bilder/würfel/dice-png-1.png");
-        break;
-    case 2:
-        wuerfel5.loadFromFile("res/Bilder/würfel/dice-png-2.png");
-        break;
-    case 3:
-        wuerfel5.loadFromFile("res/Bilder/würfel/dice-png-3.png");
-        break;
-    case 4:
-        wuerfel5.loadFromFile("res/Bilder/würfel/dice-png-4.png");
-        break;
-    case 5:
-        wuerfel5.loadFromFile("res/Bilder/würfel/dice-png-5.png");
-        break;
-    case 6:
-        wuerfel5.loadFromFile("res/Bilder/würfel/dice-png-6.png");
-        break;
-    }
-    wuerfel5.setSmooth(true);
-    sf::Sprite wuerfelsprite5;
-    //wuerfelsprite.setColor(sf::Color::Blue);
-    wuerfelsprite5.setTexture(wuerfel5, true);
-    wuerfelsprite5.setPosition({ 420.0f, 800.0f });
-    wuerfelsprite5.setScale(0.15, 0.15);
-
-    sf::Texture wuerfel6;
-    switch (wuerfelwert[5]) {
-    case 1:
-        wuerfel6.loadFromFile("res/Bilder/würfel/dice-png-1.png");
-        break;
-    case 2:
-        wuerfel6.loadFromFile("res/Bilder/würfel/dice-png-2.png");
-        break;
-    case 3:
-        wuerfel6.loadFromFile("res/Bilder/würfel/dice-png-3.png");
-        break;
-    case 4:
-        wuerfel6.loadFromFile("res/Bilder/würfel/dice-png-4.png");
-        break;
-    case 5:
-        wuerfel6.loadFromFile("res/Bilder/würfel/dice-png-5.png");
-        break;
-    case 6:
-        wuerfel6.loadFromFile("res/Bilder/würfel/dice-png-6.png");
-        break;
-    }
-    wuerfel6.setSmooth(true);
-    sf::Sprite wuerfelsprite6;
-    //wuerfelsprite.setColor(sf::Color::Blue);
-    wuerfelsprite6.setTexture(wuerfel6, true);
-    wuerfelsprite6.setPosition({ 520.0f, 800.0f });
-    wuerfelsprite6.setScale(0.15, 0.15);
-
-    sf::Texture wuerfel7;
-    switch (wuerfelwert[6]) {
-    case 1:
-        wuerfel7.loadFromFile("res/Bilder/würfel/dice-png-1.png");
-        break;
-    case 2:
-        wuerfel7.loadFromFile("res/Bilder/würfel/dice-png-2.png");
-        break;
-    case 3:
-        wuerfel7.loadFromFile("res/Bilder/würfel/dice-png-3.png");
-        break;
-    case 4:
-        wuerfel7.loadFromFile("res/Bilder/würfel/dice-png-4.png");
-        break;
-    case 5:
-        wuerfel7.loadFromFile("res/Bilder/würfel/dice-png-5.png");
-        break;
-    case 6:
-        wuerfel7.loadFromFile("res/Bilder/würfel/dice-png-6.png");
-        break;
-    }
-    wuerfel7.setSmooth(true);
-    sf::Sprite wuerfelsprite7;
-    //wuerfelsprite.setColor(sf::Color::Blue);
-    wuerfelsprite7.setTexture(wuerfel7, true);
-    wuerfelsprite7.setPosition({ 620.0f, 800.0f });
-    wuerfelsprite7.setScale(0.15, 0.15);
-
-    sf::Texture wuerfel8;
-    switch (wuerfelwert[7]) {
-    case 1:
-        wuerfel8.loadFromFile("res/Bilder/würfel/dice-png-1.png");
-        break;
-    case 2:
-        wuerfel8.loadFromFile("res/Bilder/würfel/dice-png-2.png");
-        break;
-    case 3:
-        wuerfel8.loadFromFile("res/Bilder/würfel/dice-png-3.png");
-        break;
-    case 4:
-        wuerfel8.loadFromFile("res/Bilder/würfel/dice-png-4.png");
-        break;
-    case 5:
-        wuerfel8.loadFromFile("res/Bilder/würfel/dice-png-5.png");
-        break;
-    case 6:
-        wuerfel8.loadFromFile("res/Bilder/würfel/dice-png-6.png");
-        break;
-    }
-    wuerfel8.setSmooth(true);
-    sf::Sprite wuerfelsprite8;
-    //wuerfelsprite.setColor(sf::Color::Blue);
-    wuerfelsprite8.setTexture(wuerfel8, true);
-    wuerfelsprite8.setPosition({ 720.0f, 800.0f });
-    wuerfelsprite8.setScale(0.15, 0.15);
-
-    //Hauptschleife
-    while (spiel.isOpen()) {
-        spiel.clear(sf::Color(53, 104, 45, 255));
-
-        //Main-Ansicht zeichnen
-         //Las Vegas Logo
-        sf::Texture logo;
-        logo.loadFromFile("res/Bilder/Assets/vegas.gif");
-        logo.setSmooth(true);
-        sf::Sprite logosprite(logo);
-        logosprite.setPosition({ 1300.0f, 10.0f });
-        logosprite.setScale(0.5f, 0.5f);
-        spiel.draw(logosprite);
-        //
-        // Trennlinie
-        sf::ConvexShape trennlinie;
-        trennlinie.setPointCount(4);
-        trennlinie.setFillColor(sf::Color::Black);
-        trennlinie.setPoint(0, sf::Vector2f(1250.0f, 0.0f));
-        trennlinie.setPoint(1, sf::Vector2f(1250.0f, 900.0f));
-        trennlinie.setPoint(2, sf::Vector2f(1251.0f, 900.0f));
-        trennlinie.setPoint(3, sf::Vector2f(1251.0f, 0.0f));
-        spiel.draw(trennlinie);
-
-        //
-        //Kasten für Casinos
-        sf::ConvexShape goldennuggetkasten;
-        goldennuggetkasten.setPointCount(4);
-        goldennuggetkasten.setFillColor(sf::Color(251, 209, 100, 165));
-        goldennuggetkasten.setOutlineThickness(3.0f);
-        goldennuggetkasten.setOutlineColor(sf::Color(251, 209, 100, 50));
-        goldennuggetkasten.setPoint(0, sf::Vector2f(18.0f, 20.0f));
-        goldennuggetkasten.setPoint(1, sf::Vector2f(202.0f, 20.0f));
-        goldennuggetkasten.setPoint(2, sf::Vector2f(202.0f, 750.0f));
-        goldennuggetkasten.setPoint(3, sf::Vector2f(18.0f, 750.0f));
-        spiel.draw(goldennuggetkasten);
-
-        sf::ConvexShape caesarskasten;
-        caesarskasten.setPointCount(4);
-        caesarskasten.setFillColor(sf::Color(248, 131, 49, 140));
-        caesarskasten.setOutlineThickness(3.0f);
-        caesarskasten.setOutlineColor(sf::Color(248, 131, 49, 50));
-        caesarskasten.setPoint(0, sf::Vector2f(218.0f, 20.0f));
-        caesarskasten.setPoint(1, sf::Vector2f(402.0f, 20.0f));
-        caesarskasten.setPoint(2, sf::Vector2f(402.0f, 750.0f));
-        caesarskasten.setPoint(3, sf::Vector2f(218.0f, 750.0f));
-        spiel.draw(caesarskasten);
-
-        sf::ConvexShape miragekasten;
-        miragekasten.setPointCount(4);
-        miragekasten.setFillColor(sf::Color(180, 110, 198, 145));
-        miragekasten.setOutlineThickness(3.0f);
-        miragekasten.setOutlineColor(sf::Color(180, 110, 198, 50));
-        miragekasten.setPoint(0, sf::Vector2f(418.0f, 20.0f));
-        miragekasten.setPoint(1, sf::Vector2f(602.0f, 20.0f));
-        miragekasten.setPoint(2, sf::Vector2f(602.0f, 750.0f));
-        miragekasten.setPoint(3, sf::Vector2f(418.0f, 750.0f));
-        spiel.draw(miragekasten);
-
-        sf::ConvexShape saharakasten;
-        saharakasten.setPointCount(4);
-        saharakasten.setFillColor(sf::Color(212, 76, 48, 122));
-        saharakasten.setOutlineThickness(3.0f);
-        saharakasten.setOutlineColor(sf::Color(212, 76, 48, 50));
-        saharakasten.setPoint(0, sf::Vector2f(618.0f, 20.0f));
-        saharakasten.setPoint(1, sf::Vector2f(802.0f, 20.0f));
-        saharakasten.setPoint(2, sf::Vector2f(802.0f, 750.0f));
-        saharakasten.setPoint(3, sf::Vector2f(618.0f, 750.0f));
-        spiel.draw(saharakasten);
-
-        sf::ConvexShape luxorkasten;
-        luxorkasten.setPointCount(4);
-        luxorkasten.setFillColor(sf::Color(83, 135, 149, 109));
-        luxorkasten.setOutlineThickness(3.0f);
-        luxorkasten.setOutlineColor(sf::Color(83, 135, 149, 50));
-        luxorkasten.setPoint(0, sf::Vector2f(818.0f, 20.0f));
-        luxorkasten.setPoint(1, sf::Vector2f(1002.0f, 20.0f));
-        luxorkasten.setPoint(2, sf::Vector2f(1002.0f, 750.0f));
-        luxorkasten.setPoint(3, sf::Vector2f(818.0f, 750.0f));
-        spiel.draw(luxorkasten);
-
-        sf::ConvexShape circuskasten;
-        circuskasten.setPointCount(4);
-        circuskasten.setFillColor(sf::Color(121, 147, 200, 151));
-        circuskasten.setOutlineThickness(3.0f);
-        circuskasten.setOutlineColor(sf::Color(121, 147, 200, 50));
-        circuskasten.setPoint(0, sf::Vector2f(1018.0f, 20.0f));
-        circuskasten.setPoint(1, sf::Vector2f(1202.0f, 20.0f));
-        circuskasten.setPoint(2, sf::Vector2f(1202.0f, 750.0f));
-        circuskasten.setPoint(3, sf::Vector2f(1018.0f, 750.0f));
-        spiel.draw(circuskasten);
-
-        //
-        //Einzelne Casinos
-        sf::Texture golden_nugget;
-        golden_nugget.loadFromFile("res/Bilder/Assets/golden_nugget.png");
-        golden_nugget.setSmooth(true);
-        sf::Sprite golden_nuggetsprite(golden_nugget);
-        golden_nuggetsprite.setPosition({ 20.0f, 350.0f });
-        //golden_nuggetsprite.setScale(0.75, 0.75);
-        spiel.draw(golden_nuggetsprite);
-
-        sf::Texture caesars;
-        caesars.loadFromFile("res/Bilder/Assets/caesars.png");
-        caesars.setSmooth(true);
-        sf::Sprite caesarssprite(caesars);
-        caesarssprite.setPosition({ 220.0f, 350.0f });
-        //caesarssprite.setScale(0.75, 0.75);
-        spiel.draw(caesarssprite);
-
-        sf::Texture mirage;
-        mirage.loadFromFile("res/Bilder/Assets/mirage.png");
-        mirage.setSmooth(true);
-        sf::Sprite miragesprite(mirage);
-        miragesprite.setPosition({ 420.0f, 350.0f });
-        spiel.draw(miragesprite);
-
-        sf::Texture sahara;
-        sahara.loadFromFile("res/Bilder/Assets/sahara.png");
-        sahara.setSmooth(true);
-        sf::Sprite saharasprite(sahara);
-        saharasprite.setPosition({ 620.0f, 350.0f });
-        spiel.draw(saharasprite);
-
-        sf::Texture luxor;
-        luxor.loadFromFile("res/Bilder/Assets/luxor.png");
-        luxor.setSmooth(true);
-        sf::Sprite luxorsprite(luxor);
-        luxorsprite.setPosition({ 820.0f, 350.0f });
-        spiel.draw(luxorsprite);
-
-        sf::Texture circus;
-        circus.loadFromFile("res/Bilder/Assets/circus.png");
-        circus.setSmooth(true);
-        sf::Sprite circussprite(circus);
-        circussprite.setPosition({ 1020.0f, 350.0f });
-        spiel.draw(circussprite);
-
-        //Menü unten
-        sf::ConvexShape menuunten;
-        menuunten.setPointCount(4);
-        //Linksoben
-        menuunten.setPoint(0, sf::Vector2f(0.0f, 935.0f));
-        //Rechtsoben
-        menuunten.setPoint(1, sf::Vector2f(1600.0f, 935.0f));
-        //Rechtsunten
-        menuunten.setPoint(2, sf::Vector2f(1600.0f, 1000.0f));
-        //Linksunten
-        menuunten.setPoint(3, sf::Vector2f(0.0f, 1000.0f));
-        spiel.draw(menuunten);
-
-        //Schrifttab über Menü
-        sf::ConvexShape schrifttab;
-        schrifttab.setPointCount(4);
-        //Linksoben
-        schrifttab.setPoint(0, sf::Vector2f(0.0f, 900.0f));
-        //Rechtsoben
-        schrifttab.setPoint(1, sf::Vector2f(1600.0f, 900.0f));
-        //Rechtsunten
-        schrifttab.setPoint(2, sf::Vector2f(1600.0f, 935.0f));
-        //Linksunten
-        schrifttab.setPoint(3, sf::Vector2f(0.0f, 935.0f));
-        schrifttab.setFillColor(sf::Color(53, 53, 53, 150));
-        spiel.draw(schrifttab);
-
-        //Eigentliches Spiel
-        //Speicherdatei schreiben
-        ofstream schreiber("daten.save", ios::out || ios::binary);
-        int i = 0;
-        wuerfelsprite.setColor(farben[i]);
-        wuerfelsprite2.setColor(farben[i]);
-        wuerfelsprite3.setColor(farben[i]);
-        wuerfelsprite4.setColor(farben[i]);
-        wuerfelsprite5.setColor(farben[i]);
-        wuerfelsprite6.setColor(farben[i]);
-        wuerfelsprite7.setColor(farben[i]);
-        wuerfelsprite8.setColor(farben[i]);
-        spiel.draw(wuerfelsprite);
-        spiel.draw(wuerfelsprite2);
-        spiel.draw(wuerfelsprite3);
-        spiel.draw(wuerfelsprite4);
-        spiel.draw(wuerfelsprite5);
-        spiel.draw(wuerfelsprite6);
-        spiel.draw(wuerfelsprite7);
-        spiel.draw(wuerfelsprite8);
-
-        printf("Test Hauptschleife \n");
-        while (spielBeendet == false) {
-            printf("Test diese Schleife\n");
-        }
-
-        //Event-Handling
-        sf::Event event;
-        while (spiel.pollEvent(event)) {
-            
-            if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
-            {
-                // transform the mouse position from window coordinates to world coordinates
-                sf::Vector2f mouse = spiel.mapPixelToCoords(sf::Mouse::getPosition(spiel));
-
-                // retrieve the bounding box of the sprite
-                sf::FloatRect wuerfelcoords1 = wuerfelsprite.getGlobalBounds();
-                sf::FloatRect wuerfelcoords2 = wuerfelsprite2.getGlobalBounds();
-                sf::FloatRect wuerfelcoords3 = wuerfelsprite3.getGlobalBounds();
-                sf::FloatRect wuerfelcoords4 = wuerfelsprite4.getGlobalBounds();
-                sf::FloatRect wuerfelcoords5 = wuerfelsprite5.getGlobalBounds();
-                sf::FloatRect wuerfelcoords6 = wuerfelsprite6.getGlobalBounds();
-                sf::FloatRect wuerfelcoords7 = wuerfelsprite7.getGlobalBounds();
-                sf::FloatRect wuerfelcoords8 = wuerfelsprite8.getGlobalBounds();
-
-                // hit test
-                if (wuerfelcoords1.contains(mouse))
-                {
-                    // mouse is on sprite!
-                    int wuerfelplatzwert = wuerfelwert[0];
-                    switch (wuerfelplatzwert) {
-                    case 1:
-                        break;
-                    case 2:
-                        break;
-                    case 3:
-                        break;
-                    case 4:
-                        break;
-                    case 5: 
-                        break;
-                    case 6:
-                        break;
-                    }
-                }
-                if (wuerfelcoords2.contains(mouse))
-                {
-                    // mouse is on sprite!
-                    int wuerfelplatzwert = wuerfelwert[1];
-                    switch (wuerfelplatzwert) {
-                    case 1:
-                        break;
-                    case 2:
-                        break;
-                    case 3:
-                        break;
-                    case 4:
-                        break;
-                    case 5:
-                        break;
-                    case 6:
-                        break;
-                    }
-
-                }
-                if (wuerfelcoords3.contains(mouse))
-                {
-                    // mouse is on sprite!
-                    int wuerfelplatzwert = wuerfelwert[2];
-                    switch (wuerfelplatzwert) {
-                    case 1:
-                        break;
-                    case 2:
-                        break;
-                    case 3:
-                        break;
-                    case 4:
-                        break;
-                    case 5:
-                        break;
-                    case 6:
-                        break;
-                    }
-
-                }
-                if (wuerfelcoords4.contains(mouse))
-                {
-                    // mouse is on sprite!
-                    int wuerfelplatzwert = wuerfelwert[3];
-                    switch (wuerfelplatzwert) {
-                    case 1:
-                        break;
-                    case 2:
-                        break;
-                    case 3:
-                        break;
-                    case 4:
-                        break;
-                    case 5:
-                        break;
-                    case 6:
-                        break;
-                    }
-
-                }
-                if (wuerfelcoords5.contains(mouse))
-                {
-                    // mouse is on sprite!
-                    int wuerfelplatzwert = wuerfelwert[4];
-                    switch (wuerfelplatzwert) {
-                    case 1:
-                        break;
-                    case 2:
-                        break;
-                    case 3:
-                        break;
-                    case 4:
-                        break;
-                    case 5:
-                        break;
-                    case 6:
-                        break;
-                    }
-
-                }
-                if (wuerfelcoords6.contains(mouse))
-                {
-                    // mouse is on sprite!
-                    int wuerfelplatzwert = wuerfelwert[5];
-                    switch (wuerfelplatzwert) {
-                    case 1:
-                        break;
-                    case 2:
-                        break;
-                    case 3:
-                        break;
-                    case 4:
-                        break;
-                    case 5:
-                        break;
-                    case 6:
-                        break;
-                    }
-
-                }
-                if (wuerfelcoords7.contains(mouse))
-                {
-                    // mouse is on sprite!
-                    int wuerfelplatzwert = wuerfelwert[6];
-                    switch (wuerfelplatzwert) {
-                    case 1:
-                        break;
-                    case 2:
-                        break;
-                    case 3:
-                        break;
-                    case 4:
-                        break;
-                    case 5:
-                        break;
-                    case 6:
-                        break;
-                    }
-
-                }
-                if (wuerfelcoords8.contains(mouse))
-                {
-                    // mouse is on sprite!
-                    int wuerfelplatzwert = wuerfelwert[7];
-                    switch (wuerfelplatzwert) {
-                    case 1:
-                        break;
-                    case 2:
-                        break;
-                    case 3:
-                        break;
-                    case 4:
-                        break;
-                    case 5:
-                        break;
-                    case 6:
-                        break;
-                    }
-
-                }
-            }
-            //Wenn Fenster geschlossen wird
-            if (event.type == sf::Event::Closed) {
-                spiel.close();
-            }
-            //Spiel zeichnen
-            spiel.display();
-        }
-    }
-}
 
 //
 // AKTUELLER CODE
 //
+
+void speicherdateilesen(int speichernummer) {
+    string name;
+    switch (speichernummer) {
+    case 1:
+        name = "data1.txt";
+        break;
+    case 2:
+        name = "data2.txt";
+        break;
+    case 3:
+        name = "data3.txt";
+        break;
+    case 4:
+        name = "data4.txt";
+        break;
+    default:
+        fehleranzeige("Programmier-Fehler", "Es gibt nur 4 Speicherdateien!");
+    }
+    ifstream leser(name, std::ios::in);
+    string x[128];
+    
+    getline(leser, x[0]);
+    kontostand[0] = stoi(x[0]);
+    getline(leser, x[1]);
+    kontostand[1] = stoi(x[1]);
+    getline(leser, x[2]);
+    kontostand[2] = stoi(x[2]);
+
+    getline(leser, x[3]);
+    casinogelder1[0] = stoi(x[3]);
+    getline(leser, x[4]);
+    casinogelder2[0] = stoi(x[4]);
+    getline(leser, x[5]);
+    casinogelder3[0] = stoi(x[5]);
+    getline(leser, x[6]);
+    casinogelder4[0] = stoi(x[6]);
+    getline(leser, x[7]);
+    casinogelder5[0] = stoi(x[7]);
+    getline(leser, x[8]);
+    casinogelder6[0] = stoi(x[8]);
+
+    getline(leser, x[9]);
+    casinogelder1[1] = stoi(x[9]);
+    getline(leser, x[10]);
+    casinogelder2[1] = stoi(x[10]);
+    getline(leser, x[11]);
+    casinogelder3[1] = stoi(x[11]);
+    getline(leser, x[12]);
+    casinogelder4[1] = stoi(x[12]);
+    getline(leser, x[13]);
+    casinogelder5[1] = stoi(x[13]);
+    getline(leser, x[14]);
+    casinogelder6[1] = stoi(x[14]);
+
+    getline(leser, x[15]);
+    casinogelder1[2] = stoi(x[15]);
+    getline(leser, x[16]);
+    casinogelder2[2] = stoi(x[16]);
+    getline(leser, x[17]);
+    casinogelder3[2] = stoi(x[17]);
+    getline(leser, x[18]);
+    casinogelder4[2] = stoi(x[18]);
+    getline(leser, x[19]);
+    casinogelder5[2] = stoi(x[19]);
+    getline(leser, x[20]);
+    casinogelder6[2] = stoi(x[20]);
+
+    getline(leser, x[21]);
+    casinogelder1[3] = stoi(x[21]);
+    getline(leser, x[22]);
+    casinogelder2[3] = stoi(x[22]);
+    getline(leser, x[23]);
+    casinogelder3[3] = stoi(x[23]);
+    getline(leser, x[24]);
+    casinogelder4[3] = stoi(x[24]);
+    getline(leser, x[25]);
+    casinogelder5[3] = stoi(x[25]);
+    getline(leser, x[26]);
+    casinogelder6[3] = stoi(x[26]);
+
+    getline(leser, x[27]);
+    casinogelder1[4] = stoi(x[27]);
+    getline(leser, x[28]);
+    casinogelder2[4] = stoi(x[28]);
+    getline(leser, x[29]);
+    casinogelder3[4] = stoi(x[29]);
+    getline(leser, x[30]);
+    casinogelder4[4] = stoi(x[30]);
+    getline(leser, x[31]);
+    casinogelder5[4] = stoi(x[31]);
+    getline(leser, x[32]);
+    casinogelder6[4] = stoi(x[32]);
+
+    getline(leser, x[33]);
+    casinowuerfelanzahl1[0] = stoi(x[33]);
+    getline(leser, x[34]);
+    casinowuerfelanzahl2[0] = stoi(x[34]);
+    getline(leser, x[35]);
+    casinowuerfelanzahl3[0] = stoi(x[35]);
+    getline(leser, x[36]);
+    casinowuerfelanzahl4[0] = stoi(x[36]);
+    getline(leser, x[37]);
+    casinowuerfelanzahl5[0] = stoi(x[37]);
+    getline(leser, x[38]);
+    casinowuerfelanzahl6[0] = stoi(x[38]);
+
+    getline(leser, x[39]);
+    casinowuerfelanzahl1[1] = stoi(x[39]);
+    getline(leser, x[40]);
+    casinowuerfelanzahl2[1] = stoi(x[40]);
+    getline(leser, x[41]);
+    casinowuerfelanzahl3[1] = stoi(x[41]);
+    getline(leser, x[42]);
+    casinowuerfelanzahl4[1] = stoi(x[42]);
+    getline(leser, x[43]);
+    casinowuerfelanzahl5[1] = stoi(x[43]);
+    getline(leser, x[44]);
+    casinowuerfelanzahl6[1] = stoi(x[44]);
+
+    getline(leser, x[45]);
+    casinowuerfelanzahl1[2] = stoi(x[45]);
+    getline(leser, x[46]);
+    casinowuerfelanzahl2[2] = stoi(x[46]);
+    getline(leser, x[47]);
+    casinowuerfelanzahl3[2] = stoi(x[47]);
+    getline(leser, x[48]);
+    casinowuerfelanzahl4[2] = stoi(x[48]);
+    getline(leser, x[49]);
+    casinowuerfelanzahl5[2] = stoi(x[49]);
+    getline(leser, x[50]);
+    casinowuerfelanzahl6[2] = stoi(x[50]);
+
+    getline(leser, x[51]);
+    wuerfelanzahl[0] = stoi(x[51]);
+    getline(leser, x[52]);
+    wuerfelanzahl[1] = stoi(x[52]);
+    getline(leser, x[53]);
+    wuerfelanzahl[2] = stoi(x[53]);
+
+    getline(leser, x[54]);
+    wuerfelwert[0] = stoi(x[54]);
+    getline(leser, x[55]);
+    wuerfelwert[1] = stoi(x[55]);
+    getline(leser, x[56]);
+    wuerfelwert[2] = stoi(x[56]);
+    getline(leser, x[57]);
+    wuerfelwert[3] = stoi(x[57]);
+    getline(leser, x[58]);
+    wuerfelwert[4] = stoi(x[58]);
+    getline(leser, x[59]);
+    wuerfelwert[5] = stoi(x[59]);
+    getline(leser, x[60]);
+    wuerfelwert[6] = stoi(x[60]);
+    getline(leser, x[61]);
+    wuerfelwert[7] = stoi(x[61]);
+
+    getline(leser, x[62]);
+    spieler = stoi(x[62]);
+    spielernummer = stoi(x[62]);
+
+    getline(leser, x[63]);
+    rundenzahl = stoi(x[63]);
+
+    getline(leser, x[64]);
+    letzteaktion[0] = x[64];
+
+    getline(leser, x[65]);
+    letzteaktion[1] = x[65];
+
+    getline(leser, x[66]);
+    letzteaktion[2] = x[66];
+
+    kontostandtext1 = "Kontostand: $" + to_string(kontostand[0]);
+    kontostandtext2 = "Kontostand: $" + to_string(kontostand[1]);
+    kontostandtext3 = "Kontostand: $" + to_string(kontostand[2]);
+
+    rundentext = "Runde " + to_string(rundenzahlfürtext) + " von 4";
+
+    spielgeladen = true;
+    printf("Spiel wurde geladen!\n");
+}
+
+void dateienmanager(bool speichern) {
+    sf::RenderWindow dateifenster(sf::VideoMode(800, 800), "Spielspeicher-Dateienmanager", sf::Style::Close);
+
+    sf::Font font;
+    if (!font.loadFromFile("res/Fonts/font.ttf")) {
+        fehleranzeige("Font-Fehler", "Font konnte nicht geladen werden!");
+    }
+
+    while (dateifenster.isOpen()) {
+        dateifenster.clear(Color::Yellow);
+
+        //Prüfen, ob die Dateien leer sind!
+        ifstream prüfer("data1.txt", std::ios::in);
+        string stemp1;
+        getline(prüfer, stemp1);
+        if (stemp1 == "leer") {
+            speichername1 = "Spielspeicher 1 - LEER";
+        }
+        else {
+            speichername1 = "Spielspeicher 1 - VOLL";
+        }
+
+        ifstream prüfer2("data2.txt", std::ios::in);
+        string stemp2;
+        getline(prüfer2, stemp2);
+        if (stemp2 == "leer") {
+            speichername2 = "Spielspeicher 2 - LEER";
+        }
+        else {
+            speichername2 = "Spielspeicher 2 - VOLL";
+        }
+
+        ifstream prüfer3("data3.txt", std::ios::in);
+        string stemp3;
+        getline(prüfer3, stemp3);
+        if (stemp3 == "leer") {
+            speichername3 = "Spielspeicher 3 - LEER";
+        }
+        else {
+            speichername3 = "Spielspeicher 3 - VOLL";
+        }
+
+        ifstream prüfer4("data4.txt", std::ios::in);
+        string stemp4;
+        getline(prüfer4, stemp4);
+        if (stemp4 == "leer") {
+            speichername4 = "Spielspeicher 4 - LEER";
+        }
+        else {
+            speichername4 = "Spielspeicher 4 - VOLL";
+        }
+
+        Button Spielspeicher1(speichername1, { 650, 100 }, 30, sf::Color(195, 195, 195, 255), sf::Color::Black);
+        Spielspeicher1.setFont(font);
+        Spielspeicher1.setPosition({ 25.0f, 50.0f });
+
+        Button Spielspeicher2(speichername2, { 650, 100 }, 30, sf::Color(195, 195, 195, 255), sf::Color::Black);
+        Spielspeicher2.setFont(font);
+        Spielspeicher2.setPosition({ 25.0f, 200.0f });
+
+        Button Spielspeicher3(speichername3, { 650, 100 }, 30, sf::Color(195, 195, 195, 255), sf::Color::Black);
+        Spielspeicher3.setFont(font);
+        Spielspeicher3.setPosition({ 25.0f, 350.0f });
+
+        Button Spielspeicher4(speichername4, { 650, 100 }, 30, sf::Color(195, 195, 195, 255), sf::Color::Black);
+        Spielspeicher4.setFont(font);
+        Spielspeicher4.setPosition({ 25.0f, 500.0f });
+
+        Button Speicher1löschen("Löschen", { 75, 100 }, 20, sf::Color::Red, sf::Color::Black);
+        Speicher1löschen.setFont(font);
+        Speicher1löschen.setPosition({ 700.0f, 50.0f });
+
+        Button Speicher2löschen("Löschen", { 75, 100 }, 20, sf::Color::Red, sf::Color::Black);
+        Speicher2löschen.setFont(font);
+        Speicher2löschen.setPosition({ 700.0f, 200.0f });
+
+        Button Speicher3löschen("Löschen", { 75, 100 }, 20, sf::Color::Red, sf::Color::Black);
+        Speicher3löschen.setFont(font);
+        Speicher3löschen.setPosition({ 700.0f, 350.0f });
+
+        Button Speicher4löschen("Löschen", { 75, 100 }, 20, sf::Color::Red, sf::Color::Black);
+        Speicher4löschen.setFont(font);
+        Speicher4löschen.setPosition({ 700.0f, 500.0f });
+
+        Button Abbrechenbutton("Abbrechen", { 800.0f, 100.0f },30,  sf::Color::Magenta, sf::Color::Black);
+        
+
+        Spielspeicher1.drawTo(dateifenster);
+        Spielspeicher2.drawTo(dateifenster);
+        Spielspeicher3.drawTo(dateifenster);
+        Spielspeicher4.drawTo(dateifenster);
+        Speicher1löschen.drawTo(dateifenster);
+        Speicher2löschen.drawTo(dateifenster);
+        Speicher3löschen.drawTo(dateifenster);
+        Speicher4löschen.drawTo(dateifenster);
+        dateifenster.display();
+        sf::Event event;
+        while (dateifenster.pollEvent(event))
+        {
+            // Schließt das Fenster, falls schließen gedrückt wird
+            if (event.type == sf::Event::Closed) {
+                dateifenster.close();
+
+            }
+
+            switch (event.type) {
+            case sf::Event::MouseButtonPressed:
+                if (Spielspeicher1.isMouseOver(dateifenster)) {
+                    if (speichern == true) {
+                        speicherdateienänderung(1, kontostand, casinogelder1, casinogelder2, casinogelder3, casinogelder4, casinogelder5, casinogelder6, casinowuerfelanzahl1, casinowuerfelanzahl2, casinowuerfelanzahl3, casinowuerfelanzahl4, casinowuerfelanzahl5, casinowuerfelanzahl6, wuerfelanzahl, wuerfelwert, spielernummer, rundenzahl, letzteaktion);
+                        dateifenster.close();
+                    }
+                    else if (speichern == false) {
+                        //Prüfen, ob Datei leer ist
+                        ifstream prüfer("data1.txt", std::ios::in);
+                        string stemp;
+                        getline(prüfer, stemp);
+                        if (stemp == "leer") {
+                            break;
+                        }
+                        printf("Spiel 1 wird geladen!\n");
+                        //Spiel laden
+                        speicherdateilesen(1);
+                        dateifenster.close();
+                        neuesSpiel();
+                    }
+                }
+                if (Spielspeicher2.isMouseOver(dateifenster)) {
+                    if (speichern == true) {
+                        speicherdateienänderung(2, kontostand, casinogelder1, casinogelder2, casinogelder3, casinogelder4, casinogelder5, casinogelder6, casinowuerfelanzahl1, casinowuerfelanzahl2, casinowuerfelanzahl3, casinowuerfelanzahl4, casinowuerfelanzahl5, casinowuerfelanzahl6, wuerfelanzahl, wuerfelwert, spielernummer, rundenzahl, letzteaktion);
+                        dateifenster.close();
+                    }
+                    else if (speichern == false) {
+                        //Prüfen, ob Datei leer ist
+                        ifstream prüfer("data2.txt", std::ios::in);
+                        string stemp;
+                        getline(prüfer, stemp);
+                        if (stemp == "leer") {
+                            break;
+                        }
+                        printf("Spiel 2 wird geladen!\n");
+                        //Spiel laden
+                        speicherdateilesen(2);
+                        dateifenster.close();
+                        neuesSpiel();
+                    }
+                }
+                if (Spielspeicher3.isMouseOver(dateifenster)) {
+                    if (speichern == true) {
+                        speicherdateienänderung(3, kontostand, casinogelder1, casinogelder2, casinogelder3, casinogelder4, casinogelder5, casinogelder6, casinowuerfelanzahl1, casinowuerfelanzahl2, casinowuerfelanzahl3, casinowuerfelanzahl4, casinowuerfelanzahl5, casinowuerfelanzahl6, wuerfelanzahl, wuerfelwert, spielernummer, rundenzahl, letzteaktion);
+                        dateifenster.close();
+                    }
+                    else if (speichern == false) {
+                        //Prüfen, ob Datei leer ist
+                        ifstream prüfer("data3.txt", std::ios::in);
+                        string stemp;
+                        getline(prüfer, stemp);
+                        if (stemp == "leer") {
+                            break;
+                        }
+                        printf("Spiel 3 wird geladen!\n");
+                        //Spiel laden
+                        speicherdateilesen(3);
+                        dateifenster.close();
+                        neuesSpiel();
+                    }
+                }
+                if (Spielspeicher4.isMouseOver(dateifenster)) {
+                    if (speichern == true) {
+                        speicherdateienänderung(4, kontostand, casinogelder1, casinogelder2, casinogelder3, casinogelder4, casinogelder5, casinogelder6, casinowuerfelanzahl1, casinowuerfelanzahl2, casinowuerfelanzahl3, casinowuerfelanzahl4, casinowuerfelanzahl5, casinowuerfelanzahl6, wuerfelanzahl, wuerfelwert, spielernummer, rundenzahl, letzteaktion);
+                        dateifenster.close();
+                    }
+                    else if (speichern == false) {
+                        //Prüfen, ob Datei leer ist
+                        ifstream prüfer("data4.txt", std::ios::in);
+                        string stemp;
+                        getline(prüfer, stemp);
+                        if (stemp == "leer") {
+                            break;
+                        }
+                        printf("Spiel 4 wird geladen!\n");
+                        //Spiel laden
+                        speicherdateilesen(4);
+                        dateifenster.close();
+                        neuesSpiel();
+                    }
+                }
+                if (Speicher1löschen.isMouseOver(dateifenster)) {
+                    speicherdateienlöschung(1);
+                }
+                if (Speicher2löschen.isMouseOver(dateifenster)) {
+                    speicherdateienlöschung(2);
+                }
+                if (Speicher3löschen.isMouseOver(dateifenster)) {
+                    speicherdateienlöschung(3);
+                }
+                if (Speicher4löschen.isMouseOver(dateifenster)) {
+                    speicherdateienlöschung(4);
+                }
+            }
+        }
+    }
+}
 
 //Eine Funktion für das Pausenmenü
 void Pausenmenu() {
@@ -1344,7 +651,7 @@ void Pausenmenu() {
         fortsetzenbutton.setPosition(sf::Vector2f(20.0f, 100.0f));
         fortsetzenbutton.drawTo(pause);
 
-        Button neuesspielbutton("Neues Spiel", { 200, 100 }, 30, sf::Color(0, 255, 0, 255), sf::Color::Black);
+        Button neuesspielbutton("Hauptmenü", { 200, 100 }, 30, sf::Color(0, 255, 0, 255), sf::Color::Black);
         neuesspielbutton.setFont(font);
         neuesspielbutton.setPosition({ 270.0f, 100.0f });
         neuesspielbutton.drawTo(pause);
@@ -1359,10 +666,10 @@ void Pausenmenu() {
         einstellungsbutton.setPosition({ 270.0f, 225.0f });
         einstellungsbutton.drawTo(pause);
 
-        Button spielladenbutton("Spiel laden", { 200, 100 }, 30, sf::Color(0, 162, 232, 255), sf::Color::Black);
-        spielladenbutton.setFont(font);
-        spielladenbutton.setPosition({ 20.0f, 350.0f });
-        spielladenbutton.drawTo(pause);
+        Button hilfebutton("Hilfe", { 200, 100 }, 30, sf::Color(0, 162, 232, 255), sf::Color::Black);
+        hilfebutton.setFont(font);
+        hilfebutton.setPosition({ 20.0f, 350.0f });
+        hilfebutton.drawTo(pause);
 
         Button beendenbtn("Beenden", { 200, 100 }, 30, sf::Color(255, 0, 0, 255), sf::Color::Black);
         beendenbtn.setFont(font);
@@ -1376,7 +683,6 @@ void Pausenmenu() {
                 if (event.key.code == sf::Keyboard::Escape) {
                     pause.close();
                 }
-
             }
         }
 
@@ -1390,18 +696,27 @@ void Pausenmenu() {
                 neustartgefordert = true;
             }
 
+            if (speichernbutton.isMouseOver(pause)) {
+                dateienmanager(true);
+            }
+
+            if (hilfebutton.isMouseOver(pause)) {
+                //Bedienungsanleitung öffnen
+                system("start winword \"./Bedienungsanleitung Las Vegas.docx\"");
+            }
+
             if (beendenbtn.isMouseOver(pause)) {
                 //Nach Speicherung warnen/fragen vllt.
                 bool meldung = bestätigungsmeldung("Möchten Sie den Spielstand speichern?");
                 if (meldung == true) {
                     //Jetzt Speichern
+                    dateienmanager(true);   
                 }
                 else {
                     exit(0);
                 }
             }
         }
-
         pause.display();
     }
 }
@@ -1531,6 +846,9 @@ void setzeWürfel(int spieler, int wert) {
         }
         //Gesamtwürfelzahl des Spielers ändern
         wuerfelanzahl[spielernummer] -= anzahl;
+
+        //String des Spielers ändern
+        letzteaktion[spielernummer] = "Zuletzt: " + to_string(anzahl) + " Würfeln auf Casino " + to_string(wert);
     }
 }
 
@@ -1787,6 +1105,114 @@ void para() {
     kontostandtext1 = "Kontostand: $" + to_string(kontostand[0]);
     kontostandtext2 = "Kontostand: $" + to_string(kontostand[1]);
     kontostandtext3 = "Kontostand: $" + to_string(kontostand[2]);
+}
+
+void gewinner(int spieler) {
+    sf::Font font;
+    if (!font.loadFromFile("res/Fonts/font.ttf")) {
+        printf("FONT-FEHLER: SCHRIFTART KONNTE NICHT GELADEN WERDEN!\nBitte konsultieren Sie die Bedienungsanleitung!\nDr%ccken Sie eine Taste um das Programm zu beenden!", (char)129);
+        _getch();
+        exit(0);
+    }
+
+    sf::RenderWindow gewinnerfenster(sf::VideoMode(1000, 600), "Gewinner", sf::Style::Titlebar);
+
+    string gewinnertext;
+    switch (spieler) {
+    case 1:
+        gewinnertext = "Spieler 1 hat gewonnen!";
+        break;
+    case 2:
+        gewinnertext = "Spieler 2 hat gewonnen!";
+        break;
+    case 3:
+        gewinnertext = "Spieler 3 hat gewonnen!";
+        break;
+    }
+
+    sf::Event event;
+    while (gewinnerfenster.isOpen()) {
+
+        //Nachricht
+        sf::Text nachrichtentext(gewinnertext, font);
+        nachrichtentext.setCharacterSize(70);
+        nachrichtentext.setFillColor(sf::Color::Black);
+        //Setze den Text in die Mitte
+        float xPos = (1000.0f / 2) - (nachrichtentext.getLocalBounds().width / 2);
+        float yPos = (600.0f / 3) - (nachrichtentext.getLocalBounds().height / 2);
+        nachrichtentext.setPosition(xPos, yPos);
+
+        //Zeichne Umrandung um Buttons
+        sf::ConvexShape menueleiste;
+        menueleiste.setPointCount(4);
+        menueleiste.setFillColor(sf::Color(245, 245, 220, 255));
+        menueleiste.setOutlineThickness(3.0f);
+        menueleiste.setPoint(0, sf::Vector2f(0.0f, 450.0f));
+        menueleiste.setPoint(1, sf::Vector2f(1000.0f, 450.0f));
+        menueleiste.setPoint(2, sf::Vector2f(1000.0f, 600.0f));
+        menueleiste.setPoint(3, sf::Vector2f(0.0f, 600.0f));
+
+        //Ja-Button
+        Button neuesspielbutton("Neues Spiel", { 200, 100 }, 30, sf::Color::Green, sf::Color::Black);
+        neuesspielbutton.setFont(font);
+        neuesspielbutton.setPosition(sf::Vector2f(25.0f, 475.0f));
+
+        //Nein-Button
+        Button spielladenbutton("Spiel laden", { 200, 100 }, 30, sf::Color::Blue, sf::Color::Black);
+        spielladenbutton.setFont(font);
+        spielladenbutton.setPosition(sf::Vector2f(275.0f, 475.0f));
+
+        Button menuebutton("Hauptmenü", { 200, 100 }, 30, sf::Color::Yellow, sf::Color::Black);
+        menuebutton.setFont(font);
+        menuebutton.setPosition(sf::Vector2f(525.0f, 475.0f));
+
+        Button verlassenbutton("Beenden", { 200, 100 }, 30, sf::Color::Red, sf::Color::Black);
+        verlassenbutton.setFont(font);
+        verlassenbutton.setPosition(sf::Vector2f(775.0f, 475.0f));
+
+        sf::Event event;
+        while (gewinnerfenster.pollEvent(event)) {
+            // Schließt das Fenster, falls schließen gedrückt wird
+
+            switch (event.type) {
+                //Wenn es geklickt hat
+            case sf::Event::MouseButtonPressed:
+                if (spielladenbutton.isMouseOver(gewinnerfenster)) {
+                    gewinnerfenster.close();
+                    dateienmanager(false);
+                }
+
+                if (neuesspielbutton.isMouseOver(gewinnerfenster)) {
+                    gewinnerfenster.close();
+                    neuesSpiel();
+                }
+
+                if (menuebutton.isMouseOver(gewinnerfenster)) {
+                    gewinnerfenster.close();
+                    main();
+                }
+
+                if (verlassenbutton.isMouseOver(gewinnerfenster)) {
+                    exit(0);
+                }
+
+                break;
+
+            }
+        }
+
+        //Meldung zeichnen
+        gewinnerfenster.clear(sf::Color::Yellow);
+        gewinnerfenster.draw(menueleiste);
+        gewinnerfenster.draw(nachrichtentext);
+        neuesspielbutton.drawTo(gewinnerfenster);
+        spielladenbutton.drawTo(gewinnerfenster);
+        verlassenbutton.drawTo(gewinnerfenster);
+        menuebutton.drawTo(gewinnerfenster);
+
+        //Meldung anzeigen
+        gewinnerfenster.display();
+    }
 }
 
 void Spielzeichnung() {
@@ -2096,6 +1522,13 @@ void Spielzeichnung() {
 
         //
         //Rechts das Leaderboard
+
+        sf::ConvexShape rundenkasten;
+        rundenkasten.setPointCount(4);
+        rundenkasten.setPoint(0, sf::Vector2f(1251.0f, 50.0f));
+        rundenkasten.setPoint(1, sf::Vector2f(1251.0f, 150.0f));
+        //rundenkasten.setPoint(2, )
+
         sf::Text rundentext(rundentext, font);
         rundentext.setCharacterSize(30);
         rundentext.setFillColor(sf::Color::Black);
@@ -2125,13 +1558,13 @@ void Spielzeichnung() {
         spieler1geld.setPosition(1260.0f, 235.0f);
         spiel.draw(spieler1geld);
 
-        sf::Text spieler1würfelzahl("Spieler 1 hat 8 Würfel übrig", font);
+        sf::Text spieler1würfelzahl(wuerfelzahl1, font);
         spieler1würfelzahl.setCharacterSize(20);
         spieler1würfelzahl.setFillColor(farben[0]);
         spieler1würfelzahl.setPosition(1260.0f, 255.0f);
         spiel.draw(spieler1würfelzahl);
 
-        sf::Text spieler1zuletztaktion("Zuletzt: 2 Würfel auf Casino 3", font);
+        sf::Text spieler1zuletztaktion(letzteaktion[0], font);
         spieler1zuletztaktion.setCharacterSize(20);
         spieler1zuletztaktion.setFillColor(farben[0]);
         spieler1zuletztaktion.setPosition(1260.0f, 275.0f);
@@ -2159,13 +1592,13 @@ void Spielzeichnung() {
         spieler2geld.setPosition(1260.0f, 435.0f);
         spiel.draw(spieler2geld);
 
-        sf::Text spieler2würfelzahl("Spieler 2 hat 8 Würfel übrig", font);
+        sf::Text spieler2würfelzahl(wuerfelzahl2, font);
         spieler2würfelzahl.setCharacterSize(20);
         spieler2würfelzahl.setFillColor(farben[1]);
         spieler2würfelzahl.setPosition(1260.0f, 455.0f);
         spiel.draw(spieler2würfelzahl);
 
-        sf::Text spieler2zuletztaktion("Zuletzt: 2 Würfel auf Casino 3", font);
+        sf::Text spieler2zuletztaktion(letzteaktion[1], font);
         spieler2zuletztaktion.setCharacterSize(20);
         spieler2zuletztaktion.setFillColor(farben[1]);
         spieler2zuletztaktion.setPosition(1260.0f, 475.0f);
@@ -2193,13 +1626,13 @@ void Spielzeichnung() {
         spieler3geld.setPosition(1260.0f, 635.0f);
         spiel.draw(spieler3geld);
 
-        sf::Text spieler3würfelzahl("Spieler 3 hat 8 Würfel übrig", font);
+        sf::Text spieler3würfelzahl(wuerfelzahl3, font);
         spieler3würfelzahl.setCharacterSize(20);
         spieler3würfelzahl.setFillColor(farben[2]);
         spieler3würfelzahl.setPosition(1260.0f, 655.0f);
         spiel.draw(spieler3würfelzahl);
 
-        sf::Text spieler3zuletztaktion("Zuletzt: 2 Würfel auf Casino 3", font);
+        sf::Text spieler3zuletztaktion(letzteaktion[2], font);
         spieler3zuletztaktion.setCharacterSize(20);
         spieler3zuletztaktion.setFillColor(farben[2]);
         spieler3zuletztaktion.setPosition(1260.0f, 675.0f);
@@ -6128,6 +5561,7 @@ void Spielzeichnung() {
                 bool meldung = bestätigungsmeldung("Möchten Sie den Spielstand speichern?");
                 if (meldung == true) {
                     //Speichern
+                    dateienmanager(true);
                 }
                 else {
                     spiel.close();
@@ -6386,6 +5820,7 @@ void Spielzeichnung() {
 }
 
 void neuesSpiel() { 
+    printf("Neues Spiel wird gestartet! \n");
     //Zeichenthread erstellen
     sf::Thread zeichenthread(&Spielzeichnung);
     zeichenthread.launch();
@@ -6395,91 +5830,92 @@ void neuesSpiel() {
 
         //Geldscheine zufällig auswählen und anzeigen (i <=5 machen nicht vergessen)
         srand(time(NULL));
-        for (int i = 0; i <= 5; i++) {
-            switch (i) {
-            case 0:
-                for(int k = 0; ; k++){
-                    //int k = 0;
-                    int j = rand() % 6;
-                    casinogelder1[k] = geldwerte[j];
-                    printf("Gerade gezogen: %i\n", casinogelder1[k]);
-                    summe1 += casinogelder1[k];
-                    if (summe1 >= 50000) {
-                        printf("Summe Casino 1: %i\n", summe1);
-                        break;
-                    }
-                    
-                }
-                break;
-            case 1:
-                for (int k = 0; ; k++) {
-                    //int k = 0;
-                    int j = rand() % 6;
-                    casinogelder2[k] = geldwerte[j];
-                    printf("Gerade gezogen: %i\n", casinogelder2[k]);
-                    summe2 += casinogelder2[k];
-                    if (summe2 >= 50000) {
-                        printf("Summe Casino 2: %i\n", summe2);
-                        break;
-                    }
+        if (spielgeladen == false) {
+            for (int i = 0; i <= 5; i++) {
+                switch (i) {
+                case 0:
+                    for (int k = 0; ; k++) {
+                        //int k = 0;
+                        int j = rand() % 6;
+                        casinogelder1[k] = geldwerte[j];
+                        printf("Gerade gezogen: %i\n", casinogelder1[k]);
+                        summe1 += casinogelder1[k];
+                        if (summe1 >= 50000) {
+                            printf("Summe Casino 1: %i\n", summe1);
+                            break;
+                        }
 
-                }
-                break;
-            case 2:
-                for (int k = 0; ; k++) {
-                    //int k = 0;
-                    int j = rand() % 6;
-                    casinogelder3[k] = geldwerte[j];
-                    printf("Gerade gezogen: %i\n", casinogelder3[k]);
-                    summe3 += casinogelder3[k];
-                    if (summe3 >= 50000) {
-                        printf("Summe Casino 3: %i\n", summe3);
-                        break;
                     }
-                }
-                break;
-            case 3:
-                for (int k = 0; ; k++) {
-                    //int k = 0;
-                    int j = rand() % 6;
-                    casinogelder4[k] = geldwerte[j];
-                    printf("Gerade gezogen: %i\n", casinogelder4[k]);
-                    summe4 += casinogelder4[k];
-                    if (summe4 >= 50000) {
-                        printf("Summe Casino 4: %i\n", summe4);
-                        break;
+                    break;
+                case 1:
+                    for (int k = 0; ; k++) {
+                        //int k = 0;
+                        int j = rand() % 6;
+                        casinogelder2[k] = geldwerte[j];
+                        printf("Gerade gezogen: %i\n", casinogelder2[k]);
+                        summe2 += casinogelder2[k];
+                        if (summe2 >= 50000) {
+                            printf("Summe Casino 2: %i\n", summe2);
+                            break;
+                        }
+
                     }
-                }
-                break;
-            case 4:
-                for (int k = 0; ; k++) {
-                    //int k = 0;
-                    int j = rand() % 6;
-                    casinogelder5[k] = geldwerte[j];
-                    printf("Gerade gezogen: %i\n", casinogelder5[k]);
-                    summe5 += casinogelder5[k];
-                    if (summe5 >= 50000) {
-                        printf("Summe Casino 5: %i\n", summe5);
-                        break;
+                    break;
+                case 2:
+                    for (int k = 0; ; k++) {
+                        //int k = 0;
+                        int j = rand() % 6;
+                        casinogelder3[k] = geldwerte[j];
+                        printf("Gerade gezogen: %i\n", casinogelder3[k]);
+                        summe3 += casinogelder3[k];
+                        if (summe3 >= 50000) {
+                            printf("Summe Casino 3: %i\n", summe3);
+                            break;
+                        }
                     }
-                }
-                break;
-            case 5:
-                for (int k = 0; ; k++) {
-                    //int k = 0;
-                    int j = rand() % 6;
-                    casinogelder6[k] = geldwerte[j];
-                    printf("Gerade gezogen: %i\n", casinogelder6[k]);
-                    summe6 += casinogelder6[k];
-                    if (summe6 >= 50000) {
-                        printf("Summe Casino 6: %i\n", summe6);
-                        break;
+                    break;
+                case 3:
+                    for (int k = 0; ; k++) {
+                        //int k = 0;
+                        int j = rand() % 6;
+                        casinogelder4[k] = geldwerte[j];
+                        printf("Gerade gezogen: %i\n", casinogelder4[k]);
+                        summe4 += casinogelder4[k];
+                        if (summe4 >= 50000) {
+                            printf("Summe Casino 4: %i\n", summe4);
+                            break;
+                        }
                     }
+                    break;
+                case 4:
+                    for (int k = 0; ; k++) {
+                        //int k = 0;
+                        int j = rand() % 6;
+                        casinogelder5[k] = geldwerte[j];
+                        printf("Gerade gezogen: %i\n", casinogelder5[k]);
+                        summe5 += casinogelder5[k];
+                        if (summe5 >= 50000) {
+                            printf("Summe Casino 5: %i\n", summe5);
+                            break;
+                        }
+                    }
+                    break;
+                case 5:
+                    for (int k = 0; ; k++) {
+                        //int k = 0;
+                        int j = rand() % 6;
+                        casinogelder6[k] = geldwerte[j];
+                        printf("Gerade gezogen: %i\n", casinogelder6[k]);
+                        summe6 += casinogelder6[k];
+                        if (summe6 >= 50000) {
+                            printf("Summe Casino 6: %i\n", summe6);
+                            break;
+                        }
+                    }
+                    break;
                 }
-                break;
             }
         }
-
         //Geldscheine sortieren
         //Casino 1
         for (int i = 0; i <= 3; i++)
@@ -6574,7 +6010,15 @@ void neuesSpiel() {
         while (spielerhabenwürfel == true) {
             rundentext = "Runde " + to_string(rundenzahlfürtext) + " von 4";
             //Würfeln, bis keiner mehr würfeln mehr hat
-            for (int spieler = 0; spieler <= 2; spieler++) {
+            if (spielgeladen == false) {
+                spieler = 0;
+            }
+            for (spieler; spieler <= 2; spieler++) {
+                //Schreiben von Arrays
+                wuerfelzahl1 = "Spieler 1 hat " + to_string(wuerfelanzahl[0]) + " Würfeln übrig";
+                wuerfelzahl2 = "Spieler 2 hat " + to_string(wuerfelanzahl[1]) + " Würfeln übrig";
+                wuerfelzahl3 = "Spieler 3 hat " + to_string(wuerfelanzahl[2]) + " Würfeln übrig";
+                rundenzahlfürtext = rundenzahl + 1;
                 rundentext = "Runde " + to_string(rundenzahlfürtext) + " von 4";
                 //Temporäre Variable fürs Überprüfen, ob ein Spieler kein Würfel hat
                 int tempanzwuerfel = wuerfelanzahl[spieler];
@@ -6584,18 +6028,20 @@ void neuesSpiel() {
                 spielernummer = spieler;
                 int anzahlwuerfel = wuerfelanzahl[spieler];
 
-                //Würfel würfeln
-                for (int i = 0; i <= 7; i++) {
-                    if (i > anzahlwuerfel - 1) {
-                        wuerfelwert[i] = 8;
+                if(spielgeladen == false){
+                    //Würfel würfeln
+                    for (int i = 0; i <= 7; i++) {
+                        if (i > anzahlwuerfel - 1) {
+                            wuerfelwert[i] = 8;
+                        }
+                        else {
+                            wuerfelwert[i] = gen();
+                            cout << wuerfelwert[i];
+                        }
                     }
-                    else {
-                        wuerfelwert[i] = gen();
-                        cout << wuerfelwert[i];
-                    }
+                    printf("\n");
                 }
-                printf("\n");
-
+                spielgeladen = false;
                 //Würfeln sortieren
                 for (int i = 0; i <= 6; i++)
                 {
@@ -6649,8 +6095,22 @@ void neuesSpiel() {
 
                 if (wuerfelanzahl[0] == 0 && wuerfelanzahl[1] == 0 && wuerfelanzahl[2] == 0) {
                     para();
-                    if (rundenzahl >= 3) {
-
+                    if (rundenzahl == 3) {
+                        //Gewinner zeigen, dass er gewonnen hat!
+                        printf("Spiel zu Ende!\n");
+                        spielBeendet = true;
+                        if (kontostand[0] > kontostand[1] && kontostand[0] > kontostand[2]) {
+                            zeichenthread.terminate();
+                            gewinner(1);
+                        }
+                        else if (kontostand[0]< kontostand[1] && kontostand[1] > kontostand[2]) {
+                            zeichenthread.terminate();
+                            gewinner(2);
+                        }
+                        else if (kontostand[0] < kontostand[2] && kontostand[1] < kontostand[2]) {
+                            zeichenthread.terminate();
+                            gewinner(3);
+                        }
                     }
                     else {
                         printf("Rundenzahl ist unter 3!\n");
@@ -6681,16 +6141,38 @@ void neuesSpiel() {
     //Ende vom Spiel
     //Gewinner anzeigen und sterben oder so und Verlierer wird ein Kopfgeld gesetzt
 
+
 }
 
 //Dieses Thread arbeitet im Hintergrund und sorgt für einen problemlosen Lauf des Spiels
 //Er überprüft auf Probleme und Fehler und korrigiert diese. In diesem Thread werden auch wichtige Funktionen aufgerufen.
 void Systemthread() {
+    
+    //Check als erstes, ob wichtige Dateien vorhanden sind!
+    if (einstellungsdateiprüfer() == false) {
+        printf("[WARNUNG] Einstellungsdatei nicht gefunden! Wird erstellt!\n");
+        einstellungsdateierstellung();
+    }
+    else {
+        //Gähnix
+        printf("[INFO] Einstellungsdatei vorhanden!\n");
+    }
+
+    if (speicherdatenprüfung() == false) {
+        printf("[WARNUNG]Speicherdateien nicht gefunden! Dateien werden erstellt!");
+        speicherdateienerstellung();
+    }
+    else {
+        printf("[INFO] Speicherdateien vorhanden!\n");
+    }
+    
+    //Variablenprüfung
     while (true) {
-        //Nichts
+        
     }
 
 }
+
 //
 //Main-Funktion - Hier befinden sich alle Hauptfunktionen wie Erzeugung des Bildschirms etc.
 //
@@ -6719,7 +6201,7 @@ int main(){
     if (!leser) {
         fehleranzeige("Fehler", "Einstellungsdatei nicht gefunden! Es wird neuerstellt!");
         printf("Einstellungsdatei wird erstellt! \n");
-        startup();
+        einstellungsdateierstellung();
     }
     
     //Prüfe, ob Einstellung auf An ist
@@ -6786,8 +6268,12 @@ int main(){
         while (window.pollEvent(event))
         {
             // Schließt das Fenster, falls schließen gedrückt wird
-            if (event.type == sf::Event::Closed)
-                window.close();
+            if (event.type == sf::Event::Closed) {
+                  window.close();
+                  exit(0);
+            }
+              
+
         }
         
         // Switch, um zu prüfen, welches Event passiert ist und was getan werden soll
@@ -6817,7 +6303,8 @@ int main(){
 
                 if (loadbtn1.isMouseOver(window)) {
                     //Öffne Ladebildschirm für Spielstand
-                    
+                    dateienmanager(false);
+                    //gewinner(3);
                 }
 
                 //Wenn sich die Maus bewegt hat
@@ -6877,7 +6364,7 @@ int main(){
         text.setPosition(230.0f, 430.0f);
 
         //Versiontext
-        sf::Text vertext("Version: 0.6.9 Alpha", font);
+        sf::Text vertext("Version: 0.9.6 Alpha", font);
         vertext.setCharacterSize(25);
         vertext.setStyle(sf::Text::Regular);
         vertext.setFillColor(sf::Color::Black);

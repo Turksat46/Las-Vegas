@@ -108,3 +108,17 @@ Spieler 2 ist am Gewinnen
 Dritter Spieler hat viele Würfel
 }
 
+kontostand[]
+casinogelderalle
+casinowuerfelanzahl
+wuerfelanzahl
+wuerfelwert
+spielernummer
+rundenzahl
+
+speicherdatei:
+
+wuerfelanzahl1[0] = 0
+wuerfelanzahl2[0] = 3
+wuerfelanzahl1[1] = 2
+wuerfelanzahl2[1] = 5
