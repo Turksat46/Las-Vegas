@@ -6,11 +6,13 @@
 #include <iostream>
 #include <SFML/Graphics.hpp>
 
-class Button {
+class Button
+{
 
 	//Eine öffentliche Klasse, um das Button zu erzeugen! 
 public:
-	Button(std::string btnText, sf::Vector2f buttonSize, int charSize, sf::Color bgColor, sf::Color textColor) {
+	Button(std::string btnText, sf::Vector2f buttonSize, int charSize, sf::Color bgColor, sf::Color textColor)
+	{
 		button.setSize(buttonSize);
 		button.setFillColor(bgColor);
 
@@ -28,39 +30,46 @@ public:
 	}
 
 	// Setze die Schriftart als Eingabe
-	void setFont(sf::Font& fonts) {
+	void setFont(sf::Font& fonts)
+	{
 		text.setFont(fonts);
 	}
 
 	// Setzt die Hintergrundfarbe
-	void setBackColor(sf::Color color) {
+	void setBackColor(sf::Color color)
+	{
 		button.setFillColor(color);
 	}
 
 	//Setzt die Textfarbe
-	void setTextColor(sf::Color color) {
+	void setTextColor(sf::Color color)
+	{
 		text.setFillColor(color);
 	}
 
 	//Setzt die Position
-	void setPosition(sf::Vector2f point) {
+	void setPosition(sf::Vector2f point)
+	{
 		button.setPosition(point);
 		shadow.setPosition(point);
 		//Setze den Text automatisch in die Mitte
+		float xPos = (point.x + btnWidth / 2) - (text.getLocalBounds().width / 2);
 		float xPos = (point.x + btnWidth / 2) - (text.getLocalBounds().width / 2);
 		float yPos = (point.y + btnHeight / 2.6) - (text.getLocalBounds().height / 2);
 		text.setPosition(xPos, yPos);
 	}
 
 	//Befehl fürs Rendering auf das Fenster
-	void drawTo(sf::RenderWindow& window) {
+	void drawTo(sf::RenderWindow& window)
+	{
 		window.draw(button);
 		window.draw(shadow);
 		window.draw(text);
 	}
 
 	// Prüfung, ob die Maus über einem der Objekte ist.
-	bool isMouseOver(sf::RenderWindow& window) {
+	bool isMouseOver(sf::RenderWindow& window)
+	{
 		int imouseX = sf::Mouse::getPosition(window).x;
 		int imouseY = sf::Mouse::getPosition(window).y;
 
@@ -70,7 +79,8 @@ public:
 		int btnxPosWidth = button.getPosition().x + btnWidth;
 		int btnyPosHeight = button.getPosition().y + btnHeight;
 
-		if (imouseX < btnxPosWidth && imouseX > btnPosX && imouseY < btnyPosHeight && imouseY > btnPosY) {
+		if (imouseX < btnxPosWidth && imouseX > btnPosX && imouseY < btnyPosHeight && imouseY > btnPosY)
+		{
 			return true;
 		}
 		return false;
