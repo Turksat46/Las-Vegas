@@ -10,7 +10,7 @@ array würfelaugen
 struct spieldaten{
 }
 
-array farben mit spielernummer verknüpfen
+array farben mit ispielernummer verknüpfen
 für undo: Alles in eine Datei schreiben, bis der Spieler auf würfel drückt, und wenn auf undo gedrückt wird, die datei laden
 
 while for
@@ -84,25 +84,25 @@ for(int i = 0; i <=2; i++){
 
 //Neu denken
 
-casinowuerfelanzahl1
+icasinoiwuerfelanzahl1
 kontostand[3]
 casinogelder(sortiert)
 
 Der Spieler, mit der höchsten Würfelzahl bekommt das meiste Geld
 
 Erst Spieler-Würfelzahl temporär abspeichern
-int spielerwürfelzahl1 = casinowuerfelanzahl[0];
-int spielerwürfelzahl2 = casinowuerfelanzahl[1];
-int spielerwürfelzahl3 = casinowuerfelanzahl[2];
+int spielerwürfelzahl1 = casinoiwuerfelanzahl[0];
+int spielerwürfelzahl2 = casinoiwuerfelanzahl[1];
+int spielerwürfelzahl3 = casinoiwuerfelanzahl[2];
 
-Casinowuerfelanzahl sortieren
-sort(casinowuerfelanzahl1, casinowuerfelanzahl + 2);
+Casinoiwuerfelanzahl sortieren
+sort(icasinoiwuerfelanzahl1, casinoiwuerfelanzahl + 2);
 
 //Das dreimal schreiben
-if(spielerwürfelzahl1 == casinowuerfelanzahl1){
+if(spielerwürfelzahl1 == icasinoiwuerfelanzahl1){
 Das ist der Spieler mit der höchsten Würfelzahl
-kontostand[0] += casinogelder1[0]
-}else if(spielerwürfelzahl2 == casinowuerfelanzahl[0]){
+kontostand[0] += icasinogelder1[0]
+}else if(spielerwürfelzahl2 == casinoiwuerfelanzahl[0]){
 Spieler 2 ist am Gewinnen
 }else{
 Dritter Spieler hat viele Würfel
@@ -110,15 +110,15 @@ Dritter Spieler hat viele Würfel
 
 kontostand[]
 casinogelderalle
-casinowuerfelanzahl
-wuerfelanzahl
-wuerfelwert
-spielernummer
-rundenzahl
+casinoiwuerfelanzahl
+iwuerfelanzahl
+iwuerfelwert
+ispielernummer
+irundenzahl
 
 speicherdatei:
 
-wuerfelanzahl1[0] = 0
-wuerfelanzahl2[0] = 3
-wuerfelanzahl1[1] = 2
-wuerfelanzahl2[1] = 5
+iwuerfelanzahl1[0] = 0
+iwuerfelanzahl2[0] = 3
+iwuerfelanzahl1[1] = 2
+iwuerfelanzahl2[1] = 5

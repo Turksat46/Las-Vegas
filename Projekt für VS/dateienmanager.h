@@ -13,12 +13,12 @@ using namespace std;
 
 struct spieldaten {
     int kontostand[3];
-    int casinogelder1[5], casinogelder2[5], casinogelder3[5], casinogelder4[5], casinogelder5[5], casinogelder6[5];
-    int casinowuerfelanzahl1[3], casinowuerfelanzahl2[3], casinowuerfelanzahl3[3], casinowuerfelanzahl4[3], casinowuerfelanzahl5[3], casinowuerfelanzahl6[3];
-    int wuerfelanzahl[3];
-    int wuerfelwert[8];
-    int spielernummer;
-    int rundenzahl;
+    int icasinogelder1[5], icasinogelder2[5], icasinogelder3[5], icasinogelder4[5], icasinogelder5[5], icasinogelder6[5];
+    int icasinoiwuerfelanzahl1[3], icasinoiwuerfelanzahl2[3], icasinoiwuerfelanzahl3[3], icasinoiwuerfelanzahl4[3], icasinoiwuerfelanzahl5[3], icasinoiwuerfelanzahl6[3];
+    int iwuerfelanzahl[3];
+    int iwuerfelwert[8];
+    int ispielernummer;
+    int irundenzahl;
 };
 spieldaten Speicher;
 void speicherdateienerstellung() {
@@ -41,168 +41,168 @@ void speicherdateienerstellung() {
 
 }
 
-void speicherdateienänderung(int speicherplatznummer, int* kontostandarray, int* casinogelder1, int* casinogelder2, int* casinogelder3, int* casinogelder4, int* casinogelder5, int* casinogelder6, int* casinowuerfelanzahl1, int* casinowuerfelanzahl2, int* casinowuerfelanzahl3, int* casinowuerfelanzahl4, int* casinowuerfelanzahl5, int* casinowuerfelanzahl6, int* wuerfelanzahl, int* wuerfelwert, int spielernummer, int rundenzahl, string* letzteaktion) {
+void speicherdateienänderung(int ispeicherplatznummer, int* ikontostandarray, int* icasinogelder1, int* icasinogelder2, int* icasinogelder3, int* icasinogelder4, int* icasinogelder5, int* icasinogelder6, int* icasinoiwuerfelanzahl1, int* icasinoiwuerfelanzahl2, int* icasinoiwuerfelanzahl3, int* icasinoiwuerfelanzahl4, int* icasinoiwuerfelanzahl5, int* icasinoiwuerfelanzahl6, int* iwuerfelanzahl, int* iwuerfelwert, int ispielernummer, int irundenzahl, string* sletzteaktion) {
 
-    if (speicherplatznummer == 1) {
+    if (ispeicherplatznummer == 1) {
         ofstream schreiber("data1.txt", std::ios::out);
         for (int i = 0; i <= 2; i++) {
-            schreiber << kontostandarray[i] << endl;
+            schreiber << ikontostandarray[i] << endl;
         }
         for(int i = 0; i <= 4; i++){
-            schreiber << casinogelder1[i] <<endl;
-            schreiber << casinogelder2[i] << endl;
-            schreiber << casinogelder3[i] << endl;
-            schreiber << casinogelder4[i] << endl;
-            schreiber << casinogelder5[i] << endl;
-            schreiber << casinogelder6[i] << endl;
+            schreiber << icasinogelder1[i] <<endl;
+            schreiber << icasinogelder2[i] << endl;
+            schreiber << icasinogelder3[i] << endl;
+            schreiber << icasinogelder4[i] << endl;
+            schreiber << icasinogelder5[i] << endl;
+            schreiber << icasinogelder6[i] << endl;
         }
 
         for(int i = 0; i <= 2; i++){
-            schreiber << casinowuerfelanzahl1[i] << endl;
-            schreiber << casinowuerfelanzahl2[i] << endl;
-            schreiber << casinowuerfelanzahl3[i] << endl;
-            schreiber << casinowuerfelanzahl4[i] << endl;
-            schreiber << casinowuerfelanzahl5[i] << endl;
-            schreiber << casinowuerfelanzahl6[i] << endl;
+            schreiber << icasinoiwuerfelanzahl1[i] << endl;
+            schreiber << icasinoiwuerfelanzahl2[i] << endl;
+            schreiber << icasinoiwuerfelanzahl3[i] << endl;
+            schreiber << icasinoiwuerfelanzahl4[i] << endl;
+            schreiber << icasinoiwuerfelanzahl5[i] << endl;
+            schreiber << icasinoiwuerfelanzahl6[i] << endl;
         }
 
         for (int i = 0; i <= 2; i++) {
-            schreiber << wuerfelanzahl[i] << endl;
+            schreiber << iwuerfelanzahl[i] << endl;
         }
 
         for (int i = 0; i <= 7; i++) {
-            schreiber << wuerfelwert[i] << endl;
+            schreiber << iwuerfelwert[i] << endl;
         }
         
-        schreiber << spielernummer << endl;
-        schreiber << rundenzahl << endl;
+        schreiber << ispielernummer << endl;
+        schreiber << irundenzahl << endl;
 
         for (int i = 0; i <= 2; i++) {
-            schreiber << letzteaktion[i] << endl;
+            schreiber << sletzteaktion[i] << endl;
         }
 
         schreiber.close();
     }
-    if (speicherplatznummer == 2) {
+    if (ispeicherplatznummer == 2) {
         ofstream schreiber("data2.txt", std::ios::out);
         for (int i = 0; i < 2; i++) {
-            schreiber << kontostandarray[i] << endl;
+            schreiber << ikontostandarray[i] << endl;
         }
 
         for (int i = 0; i < 4; i++) {
-            schreiber << casinogelder1[i] << endl;
-            schreiber << casinogelder2[i] << endl;
-            schreiber << casinogelder3[i] << endl;
-            schreiber << casinogelder4[i] << endl;
-            schreiber << casinogelder5[i] << endl;
-            schreiber << casinogelder6[i] << endl;
+            schreiber << icasinogelder1[i] << endl;
+            schreiber << icasinogelder2[i] << endl;
+            schreiber << icasinogelder3[i] << endl;
+            schreiber << icasinogelder4[i] << endl;
+            schreiber << icasinogelder5[i] << endl;
+            schreiber << icasinogelder6[i] << endl;
 
         }
 
         for (int i = 0; i < 2; i++) {
-            schreiber << casinowuerfelanzahl1[i] << endl;
-            schreiber << casinowuerfelanzahl2[i] << endl;
-            schreiber << casinowuerfelanzahl3[i] << endl;
-            schreiber << casinowuerfelanzahl4[i] << endl;
-            schreiber << casinowuerfelanzahl5[i] << endl;
-            schreiber << casinowuerfelanzahl6[i] << endl;
+            schreiber << icasinoiwuerfelanzahl1[i] << endl;
+            schreiber << icasinoiwuerfelanzahl2[i] << endl;
+            schreiber << icasinoiwuerfelanzahl3[i] << endl;
+            schreiber << icasinoiwuerfelanzahl4[i] << endl;
+            schreiber << icasinoiwuerfelanzahl5[i] << endl;
+            schreiber << icasinoiwuerfelanzahl6[i] << endl;
         }
 
         for (int i = 0; i < 2; i++) {
-            schreiber << wuerfelanzahl[i] << endl;
+            schreiber << iwuerfelanzahl[i] << endl;
         }
 
         for (int i = 0; i < 7; i++) {
-            schreiber << wuerfelwert[i] << endl;
+            schreiber << iwuerfelwert[i] << endl;
         }
 
-        schreiber << spielernummer << endl;
-        schreiber << rundenzahl << endl;
+        schreiber << ispielernummer << endl;
+        schreiber << irundenzahl << endl;
 
         for (int i = 0; i <= 2; i++) {
-            schreiber << letzteaktion[i] << endl;
+            schreiber << sletzteaktion[i] << endl;
         }
         
         schreiber.close();
     }
-    if (speicherplatznummer == 3) {
+    if (ispeicherplatznummer == 3) {
         ofstream schreiber("data3.txt", std::ios::out);
         for (int i = 0; i < 2; i++) {
-            schreiber << kontostandarray[i] << endl;
+            schreiber << ikontostandarray[i] << endl;
         }
         for (int i = 0; i < 4; i++) {
-            schreiber << casinogelder1[i] << endl;
-            schreiber << casinogelder2[i] << endl;
-            schreiber << casinogelder3[i] << endl;
-            schreiber << casinogelder4[i] << endl;
-            schreiber << casinogelder5[i] << endl;
-            schreiber << casinogelder6[i] << endl;
+            schreiber << icasinogelder1[i] << endl;
+            schreiber << icasinogelder2[i] << endl;
+            schreiber << icasinogelder3[i] << endl;
+            schreiber << icasinogelder4[i] << endl;
+            schreiber << icasinogelder5[i] << endl;
+            schreiber << icasinogelder6[i] << endl;
 
         }
 
         for (int i = 0; i < 2; i++) {
-            schreiber << casinowuerfelanzahl1[i] << endl;
-            schreiber << casinowuerfelanzahl2[i] << endl;
-            schreiber << casinowuerfelanzahl3[i] << endl;
-            schreiber << casinowuerfelanzahl4[i] << endl;
-            schreiber << casinowuerfelanzahl5[i] << endl;
-            schreiber << casinowuerfelanzahl6[i] << endl;
+            schreiber << icasinoiwuerfelanzahl1[i] << endl;
+            schreiber << icasinoiwuerfelanzahl2[i] << endl;
+            schreiber << icasinoiwuerfelanzahl3[i] << endl;
+            schreiber << icasinoiwuerfelanzahl4[i] << endl;
+            schreiber << icasinoiwuerfelanzahl5[i] << endl;
+            schreiber << icasinoiwuerfelanzahl6[i] << endl;
         }
 
         for (int i = 0; i < 2; i++) {
-            schreiber << wuerfelanzahl[i] << endl;
+            schreiber << iwuerfelanzahl[i] << endl;
         }
 
         for (int i = 0; i < 7; i++) {
-            schreiber << wuerfelwert[i] << endl;
+            schreiber << iwuerfelwert[i] << endl;
         }
 
         for (int i = 0; i <= 2; i++) {
-            schreiber << letzteaktion[i] << endl;
+            schreiber << sletzteaktion[i] << endl;
         }
 
-        schreiber << spielernummer << endl;
-        schreiber << rundenzahl << endl;
+        schreiber << ispielernummer << endl;
+        schreiber << irundenzahl << endl;
         schreiber.close();
     }
-    if (speicherplatznummer == 4) {
+    if (ispeicherplatznummer == 4) {
         ofstream schreiber("data4.txt", std::ios::out);
         for (int i = 0; i < 2; i++) {
-            schreiber << kontostandarray[i] << endl;
+            schreiber << ikontostandarray[i] << endl;
         }
         for (int i = 0; i < 4; i++) {
-            schreiber << casinogelder1[i] << endl;
-            schreiber << casinogelder2[i] << endl;
-            schreiber << casinogelder3[i] << endl;
-            schreiber << casinogelder4[i] << endl;
-            schreiber << casinogelder5[i] << endl;
-            schreiber << casinogelder6[i] << endl;
+            schreiber << icasinogelder1[i] << endl;
+            schreiber << icasinogelder2[i] << endl;
+            schreiber << icasinogelder3[i] << endl;
+            schreiber << icasinogelder4[i] << endl;
+            schreiber << icasinogelder5[i] << endl;
+            schreiber << icasinogelder6[i] << endl;
 
         }
 
         for (int i = 0; i < 2; i++) {
-            schreiber << casinowuerfelanzahl1[i] << endl;
-            schreiber << casinowuerfelanzahl2[i] << endl;
-            schreiber << casinowuerfelanzahl3[i] << endl;
-            schreiber << casinowuerfelanzahl4[i] << endl;
-            schreiber << casinowuerfelanzahl5[i] << endl;
-            schreiber << casinowuerfelanzahl6[i] << endl;
+            schreiber << icasinoiwuerfelanzahl1[i] << endl;
+            schreiber << icasinoiwuerfelanzahl2[i] << endl;
+            schreiber << icasinoiwuerfelanzahl3[i] << endl;
+            schreiber << icasinoiwuerfelanzahl4[i] << endl;
+            schreiber << icasinoiwuerfelanzahl5[i] << endl;
+            schreiber << icasinoiwuerfelanzahl6[i] << endl;
         }
 
         for (int i = 0; i < 2; i++) {
-            schreiber << wuerfelanzahl[i] << endl;
+            schreiber << iwuerfelanzahl[i] << endl;
         }
 
         for (int i = 0; i < 7; i++) {
-            schreiber << wuerfelwert[i] << endl;
+            schreiber << iwuerfelwert[i] << endl;
         }
 
         for (int i = 0; i <= 2; i++) {
-            schreiber << letzteaktion[i] << endl;
+            schreiber << sletzteaktion[i] << endl;
         }
 
-        schreiber << spielernummer << endl;
-        schreiber << rundenzahl << endl;
+        schreiber << ispielernummer << endl;
+        schreiber << irundenzahl << endl;
         schreiber.close();
     }
 }

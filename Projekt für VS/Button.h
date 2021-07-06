@@ -61,8 +61,8 @@ public:
 
 	// Prüfung, ob die Maus über einem der Objekte ist.
 	bool isMouseOver(sf::RenderWindow& window) {
-		int mouseX = sf::Mouse::getPosition(window).x;
-		int mouseY = sf::Mouse::getPosition(window).y;
+		int imouseX = sf::Mouse::getPosition(window).x;
+		int imouseY = sf::Mouse::getPosition(window).y;
 
 		int btnPosX = button.getPosition().x;
 		int btnPosY = button.getPosition().y;
@@ -70,7 +70,7 @@ public:
 		int btnxPosWidth = button.getPosition().x + btnWidth;
 		int btnyPosHeight = button.getPosition().y + btnHeight;
 
-		if (mouseX < btnxPosWidth && mouseX > btnPosX && mouseY < btnyPosHeight && mouseY > btnPosY) {
+		if (imouseX < btnxPosWidth && imouseX > btnPosX && imouseY < btnyPosHeight && imouseY > btnPosY) {
 			return true;
 		}
 		return false;

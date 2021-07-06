@@ -30,56 +30,54 @@ using namespace sf;
 #include "dateienmanager.h"
 
 //Wichtige Spiel-Variablen
-float wuerfelpos[8] = { 20.0f, 120.0f, 220.0f, 320.0f, 420.0f, 520.0f, 620.0f, 720.0f };
-string wuerfelaugen[6] = { "./res/Bilder/würfel/dice-png-1.png", "./res/Bilder/würfel/dice-png-2.png", "./res/Bilder/würfel/dice-png-3.png", "./res/Bilder/würfel/dice-png-4.png", "./res/Bilder/würfel/dice-png-5.png", "./res/Bilder/würfel/dice-png-6.png" };
-int geldwerte[6] = { 10000, 20000, 30000, 50000, 70000, 90000 };
-int kontostand[3] = {0, 0, 0};
-int casinogelder1[5];
-int casinogelder2[5];
-int casinogelder3[5];
-int casinogelder4[5];
-int casinogelder5[5];
-int casinogelder6[5];
-int casinowuerfelanzahl1[3] = { 0, 0, 0 };
-int casinowuerfelanzahl2[3] = { 0, 0, 0 };
-int casinowuerfelanzahl3[3] = { 0, 0, 0 };
-int casinowuerfelanzahl4[3] = { 0, 0, 0 };
-int casinowuerfelanzahl5[3] = { 0, 0, 0 };
-int casinowuerfelanzahl6[3] = { 0, 0, 0 };
-int summe1 = 0;
-int summe2 = 0;
-int summe3 = 0;
-int summe4 = 0;
-int summe5 = 0;
-int summe6 = 0;
-int wuerfelanzahl[3] = { 8, 8, 8 };
-int wuerfelwert[8];
-int spieler;
-int spielernummer;
-int rundenzahl = 0;
-int ausgewählteAuge[2]; //Ein leeres Array erstellen für den ersten Index, welcher Würfel und der zweite Index, wie viele.
-bool spielerhabenwürfel = true;
+int igeldwerte[6] = { 10000, 20000, 30000, 50000, 70000, 90000 };
+int ikontostand[3] = {0, 0, 0};
+int iicasinogelder1[5];
+int iicasinogelder2[5];
+int iicasinogelder3[5];
+int iicasinogelder4[5];
+int iicasinogelder5[5];
+int iicasinogelder6[5];
+int icasinoiiwuerfelanzahl1[3] = { 0, 0, 0 };
+int icasinoiiwuerfelanzahl2[3] = { 0, 0, 0 };
+int icasinoiiwuerfelanzahl3[3] = { 0, 0, 0 };
+int icasinoiiwuerfelanzahl4[3] = { 0, 0, 0 };
+int icasinoiiwuerfelanzahl5[3] = { 0, 0, 0 };
+int icasinoiiwuerfelanzahl6[3] = { 0, 0, 0 };
+int isumme1 = 0;
+int isumme2 = 0;
+int isumme3 = 0;
+int isumme4 = 0;
+int isumme5 = 0;
+int isumme6 = 0;
+int iiwuerfelanzahl[3] = { 8, 8, 8 };
+int iiwuerfelwert[8];
+int ispieler;
+int iispielernummer;
+int iirundenzahl = 0;
+int iausgewählteAuge[2]; //Ein leeres Array erstellen für den ersten Index, welcher Würfel und der zweite Index, wie viele.
+bool ispielerhabenwürfel = true;
 Color farben[3] = { Color::Cyan, Color::Green, Color::Yellow };
-string subtextstring;
-int rundenzahlfürtext = rundenzahl + 1; 
-string kontostandtext1 = "Kontostand: $" + to_string(kontostand[0]);
-string kontostandtext2 = "Kontostand: $" + to_string(kontostand[1]);
-string kontostandtext3 = "Kontostand: $" + to_string(kontostand[2]);
-string wuerfelzahl1, wuerfelzahl2, wuerfelzahl3;
-string letzteaktion[3] = { "Zuletzt: Nichts passiert!", "Zuletzt: Nichts passiert!", "Zuletzt: Nichts passiert!" };
-string speichername1, speichername2, speichername3, speichername4;
-string rundentext;
-bool aufWuerfelGedrueckt = false;
-bool spielBeendet = false;
-bool zugbeendet = false;
-bool spielgeladen;
+string ssubtextstring;
+int iirundenzahlfürtext = iirundenzahl + 1; 
+string ikontostandtext1 = "ikontostand: $" + to_string(ikontostand[0]);
+string ikontostandtext2 = "ikontostand: $" + to_string(ikontostand[1]);
+string ikontostandtext3 = "ikontostand: $" + to_string(ikontostand[2]);
+string swuerfelzahl1, swuerfelzahl2, swuerfelzahl3;
+string ssletzteaktion[3] = { "Zuletzt: Nichts passiert!", "Zuletzt: Nichts passiert!", "Zuletzt: Nichts passiert!" };
+string sspeichersname1, sspeichersname2, sspeichersname3, sspeichersname4;
+string srundentext;
+bool baufwuerfelgedrueckt = false;
+bool bspielbeendet = false;
+bool bzugbeendet = false;
+bool bspielgeladen;
 
 void neuesSpiel();
 int main();
 
 //Systemvariablen (BITTE NICHT VERÄNDERN!)
-bool neustartgefordert = false;
-bool speichertbool = false;
+bool bneustartgefordert = false;
+bool bspeichertbool = false;
 
 //
 //Eine Einstellungsklasse, um es einfach aufzurufen, wann man es braucht!
@@ -175,6 +173,8 @@ void Einstellungen() {
         soundbutton.setPosition({520.0f, 80.0f});
         soundbutton.setFont(font);
 
+
+
         //Eventhandler
         //Hier alles, was man mit dem Programm interagieren kann (Maus über Dinge, Klick und co.)) schreiben.
         sf::Event event;
@@ -242,184 +242,184 @@ int gen() {
 //
 
 void speicherdateilesen(int speichernummer) {
-    string name;
+    string sname;
     switch (speichernummer) {
     case 1:
-        name = "data1.txt";
+        sname = "data1.txt";
         break;
     case 2:
-        name = "data2.txt";
+        sname = "data2.txt";
         break;
     case 3:
-        name = "data3.txt";
+        sname = "data3.txt";
         break;
     case 4:
-        name = "data4.txt";
+        sname = "data4.txt";
         break;
     default:
         fehleranzeige("Programmier-Fehler", "Es gibt nur 4 Speicherdateien!");
     }
-    ifstream leser(name, std::ios::in);
+    ifstream leser(sname, std::ios::in);
     string x[128];
     
     getline(leser, x[0]);
-    kontostand[0] = stoi(x[0]);
+    ikontostand[0] = stoi(x[0]);
     getline(leser, x[1]);
-    kontostand[1] = stoi(x[1]);
+    ikontostand[1] = stoi(x[1]);
     getline(leser, x[2]);
-    kontostand[2] = stoi(x[2]);
+    ikontostand[2] = stoi(x[2]);
 
     getline(leser, x[3]);
-    casinogelder1[0] = stoi(x[3]);
+    iicasinogelder1[0] = stoi(x[3]);
     getline(leser, x[4]);
-    casinogelder2[0] = stoi(x[4]);
+    iicasinogelder2[0] = stoi(x[4]);
     getline(leser, x[5]);
-    casinogelder3[0] = stoi(x[5]);
+    iicasinogelder3[0] = stoi(x[5]);
     getline(leser, x[6]);
-    casinogelder4[0] = stoi(x[6]);
+    iicasinogelder4[0] = stoi(x[6]);
     getline(leser, x[7]);
-    casinogelder5[0] = stoi(x[7]);
+    iicasinogelder5[0] = stoi(x[7]);
     getline(leser, x[8]);
-    casinogelder6[0] = stoi(x[8]);
+    iicasinogelder6[0] = stoi(x[8]);
 
     getline(leser, x[9]);
-    casinogelder1[1] = stoi(x[9]);
+    iicasinogelder1[1] = stoi(x[9]);
     getline(leser, x[10]);
-    casinogelder2[1] = stoi(x[10]);
+    iicasinogelder2[1] = stoi(x[10]);
     getline(leser, x[11]);
-    casinogelder3[1] = stoi(x[11]);
+    iicasinogelder3[1] = stoi(x[11]);
     getline(leser, x[12]);
-    casinogelder4[1] = stoi(x[12]);
+    iicasinogelder4[1] = stoi(x[12]);
     getline(leser, x[13]);
-    casinogelder5[1] = stoi(x[13]);
+    iicasinogelder5[1] = stoi(x[13]);
     getline(leser, x[14]);
-    casinogelder6[1] = stoi(x[14]);
+    iicasinogelder6[1] = stoi(x[14]);
 
     getline(leser, x[15]);
-    casinogelder1[2] = stoi(x[15]);
+    iicasinogelder1[2] = stoi(x[15]);
     getline(leser, x[16]);
-    casinogelder2[2] = stoi(x[16]);
+    iicasinogelder2[2] = stoi(x[16]);
     getline(leser, x[17]);
-    casinogelder3[2] = stoi(x[17]);
+    iicasinogelder3[2] = stoi(x[17]);
     getline(leser, x[18]);
-    casinogelder4[2] = stoi(x[18]);
+    iicasinogelder4[2] = stoi(x[18]);
     getline(leser, x[19]);
-    casinogelder5[2] = stoi(x[19]);
+    iicasinogelder5[2] = stoi(x[19]);
     getline(leser, x[20]);
-    casinogelder6[2] = stoi(x[20]);
+    iicasinogelder6[2] = stoi(x[20]);
 
     getline(leser, x[21]);
-    casinogelder1[3] = stoi(x[21]);
+    iicasinogelder1[3] = stoi(x[21]);
     getline(leser, x[22]);
-    casinogelder2[3] = stoi(x[22]);
+    iicasinogelder2[3] = stoi(x[22]);
     getline(leser, x[23]);
-    casinogelder3[3] = stoi(x[23]);
+    iicasinogelder3[3] = stoi(x[23]);
     getline(leser, x[24]);
-    casinogelder4[3] = stoi(x[24]);
+    iicasinogelder4[3] = stoi(x[24]);
     getline(leser, x[25]);
-    casinogelder5[3] = stoi(x[25]);
+    iicasinogelder5[3] = stoi(x[25]);
     getline(leser, x[26]);
-    casinogelder6[3] = stoi(x[26]);
+    iicasinogelder6[3] = stoi(x[26]);
 
     getline(leser, x[27]);
-    casinogelder1[4] = stoi(x[27]);
+    iicasinogelder1[4] = stoi(x[27]);
     getline(leser, x[28]);
-    casinogelder2[4] = stoi(x[28]);
+    iicasinogelder2[4] = stoi(x[28]);
     getline(leser, x[29]);
-    casinogelder3[4] = stoi(x[29]);
+    iicasinogelder3[4] = stoi(x[29]);
     getline(leser, x[30]);
-    casinogelder4[4] = stoi(x[30]);
+    iicasinogelder4[4] = stoi(x[30]);
     getline(leser, x[31]);
-    casinogelder5[4] = stoi(x[31]);
+    iicasinogelder5[4] = stoi(x[31]);
     getline(leser, x[32]);
-    casinogelder6[4] = stoi(x[32]);
+    iicasinogelder6[4] = stoi(x[32]);
 
     getline(leser, x[33]);
-    casinowuerfelanzahl1[0] = stoi(x[33]);
+    icasinoiiwuerfelanzahl1[0] = stoi(x[33]);
     getline(leser, x[34]);
-    casinowuerfelanzahl2[0] = stoi(x[34]);
+    icasinoiiwuerfelanzahl2[0] = stoi(x[34]);
     getline(leser, x[35]);
-    casinowuerfelanzahl3[0] = stoi(x[35]);
+    icasinoiiwuerfelanzahl3[0] = stoi(x[35]);
     getline(leser, x[36]);
-    casinowuerfelanzahl4[0] = stoi(x[36]);
+    icasinoiiwuerfelanzahl4[0] = stoi(x[36]);
     getline(leser, x[37]);
-    casinowuerfelanzahl5[0] = stoi(x[37]);
+    icasinoiiwuerfelanzahl5[0] = stoi(x[37]);
     getline(leser, x[38]);
-    casinowuerfelanzahl6[0] = stoi(x[38]);
+    icasinoiiwuerfelanzahl6[0] = stoi(x[38]);
 
     getline(leser, x[39]);
-    casinowuerfelanzahl1[1] = stoi(x[39]);
+    icasinoiiwuerfelanzahl1[1] = stoi(x[39]);
     getline(leser, x[40]);
-    casinowuerfelanzahl2[1] = stoi(x[40]);
+    icasinoiiwuerfelanzahl2[1] = stoi(x[40]);
     getline(leser, x[41]);
-    casinowuerfelanzahl3[1] = stoi(x[41]);
+    icasinoiiwuerfelanzahl3[1] = stoi(x[41]);
     getline(leser, x[42]);
-    casinowuerfelanzahl4[1] = stoi(x[42]);
+    icasinoiiwuerfelanzahl4[1] = stoi(x[42]);
     getline(leser, x[43]);
-    casinowuerfelanzahl5[1] = stoi(x[43]);
+    icasinoiiwuerfelanzahl5[1] = stoi(x[43]);
     getline(leser, x[44]);
-    casinowuerfelanzahl6[1] = stoi(x[44]);
+    icasinoiiwuerfelanzahl6[1] = stoi(x[44]);
 
     getline(leser, x[45]);
-    casinowuerfelanzahl1[2] = stoi(x[45]);
+    icasinoiiwuerfelanzahl1[2] = stoi(x[45]);
     getline(leser, x[46]);
-    casinowuerfelanzahl2[2] = stoi(x[46]);
+    icasinoiiwuerfelanzahl2[2] = stoi(x[46]);
     getline(leser, x[47]);
-    casinowuerfelanzahl3[2] = stoi(x[47]);
+    icasinoiiwuerfelanzahl3[2] = stoi(x[47]);
     getline(leser, x[48]);
-    casinowuerfelanzahl4[2] = stoi(x[48]);
+    icasinoiiwuerfelanzahl4[2] = stoi(x[48]);
     getline(leser, x[49]);
-    casinowuerfelanzahl5[2] = stoi(x[49]);
+    icasinoiiwuerfelanzahl5[2] = stoi(x[49]);
     getline(leser, x[50]);
-    casinowuerfelanzahl6[2] = stoi(x[50]);
+    icasinoiiwuerfelanzahl6[2] = stoi(x[50]);
 
     getline(leser, x[51]);
-    wuerfelanzahl[0] = stoi(x[51]);
+    iiwuerfelanzahl[0] = stoi(x[51]);
     getline(leser, x[52]);
-    wuerfelanzahl[1] = stoi(x[52]);
+    iiwuerfelanzahl[1] = stoi(x[52]);
     getline(leser, x[53]);
-    wuerfelanzahl[2] = stoi(x[53]);
+    iiwuerfelanzahl[2] = stoi(x[53]);
 
     getline(leser, x[54]);
-    wuerfelwert[0] = stoi(x[54]);
+    iiwuerfelwert[0] = stoi(x[54]);
     getline(leser, x[55]);
-    wuerfelwert[1] = stoi(x[55]);
+    iiwuerfelwert[1] = stoi(x[55]);
     getline(leser, x[56]);
-    wuerfelwert[2] = stoi(x[56]);
+    iiwuerfelwert[2] = stoi(x[56]);
     getline(leser, x[57]);
-    wuerfelwert[3] = stoi(x[57]);
+    iiwuerfelwert[3] = stoi(x[57]);
     getline(leser, x[58]);
-    wuerfelwert[4] = stoi(x[58]);
+    iiwuerfelwert[4] = stoi(x[58]);
     getline(leser, x[59]);
-    wuerfelwert[5] = stoi(x[59]);
+    iiwuerfelwert[5] = stoi(x[59]);
     getline(leser, x[60]);
-    wuerfelwert[6] = stoi(x[60]);
+    iiwuerfelwert[6] = stoi(x[60]);
     getline(leser, x[61]);
-    wuerfelwert[7] = stoi(x[61]);
+    iiwuerfelwert[7] = stoi(x[61]);
 
     getline(leser, x[62]);
-    spieler = stoi(x[62]);
-    spielernummer = stoi(x[62]);
+    ispieler = stoi(x[62]);
+    iispielernummer = stoi(x[62]);
 
     getline(leser, x[63]);
-    rundenzahl = stoi(x[63]);
+    iirundenzahl = stoi(x[63]);
 
     getline(leser, x[64]);
-    letzteaktion[0] = x[64];
+    ssletzteaktion[0] = x[64];
 
     getline(leser, x[65]);
-    letzteaktion[1] = x[65];
+    ssletzteaktion[1] = x[65];
 
     getline(leser, x[66]);
-    letzteaktion[2] = x[66];
+    ssletzteaktion[2] = x[66];
 
-    kontostandtext1 = "Kontostand: $" + to_string(kontostand[0]);
-    kontostandtext2 = "Kontostand: $" + to_string(kontostand[1]);
-    kontostandtext3 = "Kontostand: $" + to_string(kontostand[2]);
+    ikontostandtext1 = "ikontostand: $" + to_string(ikontostand[0]);
+    ikontostandtext2 = "ikontostand: $" + to_string(ikontostand[1]);
+    ikontostandtext3 = "ikontostand: $" + to_string(ikontostand[2]);
 
-    rundentext = "Runde " + to_string(rundenzahlfürtext) + " von 4";
+    srundentext = "Runde " + to_string(iirundenzahlfürtext) + " von 4";
 
-    spielgeladen = true;
+    bspielgeladen = true;
     printf("Spiel wurde geladen!\n");
 }
 
@@ -439,55 +439,55 @@ void dateienmanager(bool speichern) {
         string stemp1;
         getline(prüfer, stemp1);
         if (stemp1 == "leer") {
-            speichername1 = "Spielspeicher 1 - LEER";
+            sspeichersname1 = "Spielspeicher 1 - LEER";
         }
         else {
-            speichername1 = "Spielspeicher 1 - VOLL";
+            sspeichersname1 = "Spielspeicher 1 - VOLL";
         }
 
         ifstream prüfer2("data2.txt", std::ios::in);
         string stemp2;
         getline(prüfer2, stemp2);
         if (stemp2 == "leer") {
-            speichername2 = "Spielspeicher 2 - LEER";
+            sspeichersname2 = "Spielspeicher 2 - LEER";
         }
         else {
-            speichername2 = "Spielspeicher 2 - VOLL";
+            sspeichersname2 = "Spielspeicher 2 - VOLL";
         }
 
         ifstream prüfer3("data3.txt", std::ios::in);
         string stemp3;
         getline(prüfer3, stemp3);
         if (stemp3 == "leer") {
-            speichername3 = "Spielspeicher 3 - LEER";
+            sspeichersname3 = "Spielspeicher 3 - LEER";
         }
         else {
-            speichername3 = "Spielspeicher 3 - VOLL";
+            sspeichersname3 = "Spielspeicher 3 - VOLL";
         }
 
         ifstream prüfer4("data4.txt", std::ios::in);
         string stemp4;
         getline(prüfer4, stemp4);
         if (stemp4 == "leer") {
-            speichername4 = "Spielspeicher 4 - LEER";
+            sspeichersname4 = "Spielspeicher 4 - LEER";
         }
         else {
-            speichername4 = "Spielspeicher 4 - VOLL";
+            sspeichersname4 = "Spielspeicher 4 - VOLL";
         }
 
-        Button Spielspeicher1(speichername1, { 650, 100 }, 30, sf::Color(195, 195, 195, 255), sf::Color::Black);
+        Button Spielspeicher1(sspeichersname1, { 650, 100 }, 30, sf::Color(195, 195, 195, 255), sf::Color::Black);
         Spielspeicher1.setFont(font);
         Spielspeicher1.setPosition({ 25.0f, 50.0f });
 
-        Button Spielspeicher2(speichername2, { 650, 100 }, 30, sf::Color(195, 195, 195, 255), sf::Color::Black);
+        Button Spielspeicher2(sspeichersname2, { 650, 100 }, 30, sf::Color(195, 195, 195, 255), sf::Color::Black);
         Spielspeicher2.setFont(font);
         Spielspeicher2.setPosition({ 25.0f, 200.0f });
 
-        Button Spielspeicher3(speichername3, { 650, 100 }, 30, sf::Color(195, 195, 195, 255), sf::Color::Black);
+        Button Spielspeicher3(sspeichersname3, { 650, 100 }, 30, sf::Color(195, 195, 195, 255), sf::Color::Black);
         Spielspeicher3.setFont(font);
         Spielspeicher3.setPosition({ 25.0f, 350.0f });
 
-        Button Spielspeicher4(speichername4, { 650, 100 }, 30, sf::Color(195, 195, 195, 255), sf::Color::Black);
+        Button Spielspeicher4(sspeichersname4, { 650, 100 }, 30, sf::Color(195, 195, 195, 255), sf::Color::Black);
         Spielspeicher4.setFont(font);
         Spielspeicher4.setPosition({ 25.0f, 500.0f });
 
@@ -532,7 +532,7 @@ void dateienmanager(bool speichern) {
             case sf::Event::MouseButtonPressed:
                 if (Spielspeicher1.isMouseOver(dateifenster)) {
                     if (speichern == true) {
-                        speicherdateienänderung(1, kontostand, casinogelder1, casinogelder2, casinogelder3, casinogelder4, casinogelder5, casinogelder6, casinowuerfelanzahl1, casinowuerfelanzahl2, casinowuerfelanzahl3, casinowuerfelanzahl4, casinowuerfelanzahl5, casinowuerfelanzahl6, wuerfelanzahl, wuerfelwert, spielernummer, rundenzahl, letzteaktion);
+                        speicherdateienänderung(1, ikontostand, iicasinogelder1, iicasinogelder2, iicasinogelder3, iicasinogelder4, iicasinogelder5, iicasinogelder6, icasinoiiwuerfelanzahl1, icasinoiiwuerfelanzahl2, icasinoiiwuerfelanzahl3, icasinoiiwuerfelanzahl4, icasinoiiwuerfelanzahl5, icasinoiiwuerfelanzahl6, iiwuerfelanzahl, iiwuerfelwert, iispielernummer, iirundenzahl, ssletzteaktion);
                         dateifenster.close();
                     }
                     else if (speichern == false) {
@@ -552,7 +552,7 @@ void dateienmanager(bool speichern) {
                 }
                 if (Spielspeicher2.isMouseOver(dateifenster)) {
                     if (speichern == true) {
-                        speicherdateienänderung(2, kontostand, casinogelder1, casinogelder2, casinogelder3, casinogelder4, casinogelder5, casinogelder6, casinowuerfelanzahl1, casinowuerfelanzahl2, casinowuerfelanzahl3, casinowuerfelanzahl4, casinowuerfelanzahl5, casinowuerfelanzahl6, wuerfelanzahl, wuerfelwert, spielernummer, rundenzahl, letzteaktion);
+                        speicherdateienänderung(2, ikontostand, iicasinogelder1, iicasinogelder2, iicasinogelder3, iicasinogelder4, iicasinogelder5, iicasinogelder6, icasinoiiwuerfelanzahl1, icasinoiiwuerfelanzahl2, icasinoiiwuerfelanzahl3, icasinoiiwuerfelanzahl4, icasinoiiwuerfelanzahl5, icasinoiiwuerfelanzahl6, iiwuerfelanzahl, iiwuerfelwert, iispielernummer, iirundenzahl, ssletzteaktion);
                         dateifenster.close();
                     }
                     else if (speichern == false) {
@@ -572,7 +572,7 @@ void dateienmanager(bool speichern) {
                 }
                 if (Spielspeicher3.isMouseOver(dateifenster)) {
                     if (speichern == true) {
-                        speicherdateienänderung(3, kontostand, casinogelder1, casinogelder2, casinogelder3, casinogelder4, casinogelder5, casinogelder6, casinowuerfelanzahl1, casinowuerfelanzahl2, casinowuerfelanzahl3, casinowuerfelanzahl4, casinowuerfelanzahl5, casinowuerfelanzahl6, wuerfelanzahl, wuerfelwert, spielernummer, rundenzahl, letzteaktion);
+                        speicherdateienänderung(3, ikontostand, iicasinogelder1, iicasinogelder2, iicasinogelder3, iicasinogelder4, iicasinogelder5, iicasinogelder6, icasinoiiwuerfelanzahl1, icasinoiiwuerfelanzahl2, icasinoiiwuerfelanzahl3, icasinoiiwuerfelanzahl4, icasinoiiwuerfelanzahl5, icasinoiiwuerfelanzahl6, iiwuerfelanzahl, iiwuerfelwert, iispielernummer, iirundenzahl, ssletzteaktion);
                         dateifenster.close();
                     }
                     else if (speichern == false) {
@@ -592,7 +592,7 @@ void dateienmanager(bool speichern) {
                 }
                 if (Spielspeicher4.isMouseOver(dateifenster)) {
                     if (speichern == true) {
-                        speicherdateienänderung(4, kontostand, casinogelder1, casinogelder2, casinogelder3, casinogelder4, casinogelder5, casinogelder6, casinowuerfelanzahl1, casinowuerfelanzahl2, casinowuerfelanzahl3, casinowuerfelanzahl4, casinowuerfelanzahl5, casinowuerfelanzahl6, wuerfelanzahl, wuerfelwert, spielernummer, rundenzahl, letzteaktion);
+                        speicherdateienänderung(4, ikontostand, iicasinogelder1, iicasinogelder2, iicasinogelder3, iicasinogelder4, iicasinogelder5, iicasinogelder6, icasinoiiwuerfelanzahl1, icasinoiiwuerfelanzahl2, icasinoiiwuerfelanzahl3, icasinoiiwuerfelanzahl4, icasinoiiwuerfelanzahl5, icasinoiiwuerfelanzahl6, iiwuerfelanzahl, iiwuerfelwert, iispielernummer, iirundenzahl, ssletzteaktion);
                         dateifenster.close();
                     }
                     else if (speichern == false) {
@@ -641,7 +641,7 @@ void Pausenmenu() {
     {
         pause.clear(sf::Color::White);
 
-        sf::Text titeltext("Pausemenü", font);
+        sf::Text titeltext("Pausenmenü", font);
         titeltext.setCharacterSize(40);
         titeltext.setFillColor(sf::Color::Black);
         titeltext.setPosition(20.0f, 20.0f);
@@ -650,11 +650,6 @@ void Pausenmenu() {
         fortsetzenbutton.setFont(font);
         fortsetzenbutton.setPosition(sf::Vector2f(20.0f, 100.0f));
         fortsetzenbutton.drawTo(pause);
-
-        Button neuesspielbutton("Hauptmenü", { 200, 100 }, 30, sf::Color(0, 255, 0, 255), sf::Color::Black);
-        neuesspielbutton.setFont(font);
-        neuesspielbutton.setPosition({ 270.0f, 100.0f });
-        neuesspielbutton.drawTo(pause);
 
         Button speichernbutton("Speichern", { 200, 100 }, 30, sf::Color::Cyan, sf::Color::Black);
         speichernbutton.setFont(font);
@@ -668,12 +663,12 @@ void Pausenmenu() {
 
         Button hilfebutton("Hilfe", { 200, 100 }, 30, sf::Color(0, 162, 232, 255), sf::Color::Black);
         hilfebutton.setFont(font);
-        hilfebutton.setPosition({ 20.0f, 350.0f });
+        hilfebutton.setPosition({ 270.0f, 100.0f });
         hilfebutton.drawTo(pause);
 
         Button beendenbtn("Beenden", { 200, 100 }, 30, sf::Color(255, 0, 0, 255), sf::Color::Black);
         beendenbtn.setFont(font);
-        beendenbtn.setPosition({ 270.0f, 350.0f });
+        beendenbtn.setPosition({ 155.0f, 350.0f });
         beendenbtn.drawTo(pause);
 
         pause.draw(titeltext);
@@ -692,12 +687,12 @@ void Pausenmenu() {
                 pause.close();
             }
 
-            if (neuesspielbutton.isMouseOver(pause)) {
-                neustartgefordert = true;
-            }
-
             if (speichernbutton.isMouseOver(pause)) {
                 dateienmanager(true);
+            } 
+
+            if (einstellungsbutton.isMouseOver(pause)) {
+                Einstellungen();
             }
 
             if (hilfebutton.isMouseOver(pause)) {
@@ -723,11 +718,11 @@ void Pausenmenu() {
 
 //Wichtige Spielfunktionen
 //Dient zur Aussortierung von Würfel, auf den geklickt wurde
-void setzeWürfel(int spieler, int wert) {
+void setzeWürfel(int ispieler, int wert) {
     //Prüfen, ob schon ein Würfel angeklickt wurde!
-    if (aufWuerfelGedrueckt == false) {
+    if (baufwuerfelgedrueckt == false) {
         //Da auf ein Würfel gedrückt wurde, würde ich auch lieber den Bool dafür auf true setzen XD
-        aufWuerfelGedrueckt = true;
+        baufwuerfelgedrueckt = true;
 
         //Variable für das Zählen der Würfel, mit den gleichen Wert
         int anzahl = 0;
@@ -736,97 +731,97 @@ void setzeWürfel(int spieler, int wert) {
             //Schaue nach weiteren Würfeln gleiche Wertes
             //Schleife durch jede Zahl durch
             for (int i = 0; i <= 7; i++) {
-                if (wuerfelwert[i] == wert) {
+                if (iiwuerfelwert[i] == wert) {
                     anzahl++;
                     //Setze den Wert auf Acht, damit der Würfel verschwindet
-                    wuerfelwert[i] = 8;
+                    iiwuerfelwert[i] = 8;
                 }
             }
-            ausgewählteAuge[0] = wert;
-            ausgewählteAuge[1] = anzahl;
+            iausgewählteAuge[0] = wert;
+            iausgewählteAuge[1] = anzahl;
 
             //Würfel in Casinoarray setzen
-            casinowuerfelanzahl1[spielernummer] += anzahl;
+            icasinoiiwuerfelanzahl1[iispielernummer] += anzahl;
 
             break;
         case 2:
             //Schaue nach weiteren Würfeln gleiche Wertes
             //Schleife durch jede Zahl durch
             for (int i = 0; i <= 7; i++) {
-                if (wuerfelwert[i] == wert) {
+                if (iiwuerfelwert[i] == wert) {
                     anzahl++;
                     //Setze den Wert auf Acht, damit der Würfel verschwindet
-                    wuerfelwert[i] = 8;
+                    iiwuerfelwert[i] = 8;
                 }
             }
-            ausgewählteAuge[0] = wert;
-            ausgewählteAuge[1] = anzahl;
+            iausgewählteAuge[0] = wert;
+            iausgewählteAuge[1] = anzahl;
 
-            casinowuerfelanzahl2[spielernummer] += anzahl;
+            icasinoiiwuerfelanzahl2[iispielernummer] += anzahl;
 
             break;
         case 3:
             //Schaue nach weiteren Würfeln gleiche Wertes
             //Schleife durch jede Zahl durch
             for (int i = 0; i <= 7; i++) {
-                if (wuerfelwert[i] == wert) {
+                if (iiwuerfelwert[i] == wert) {
                     anzahl++;
                     //Setze den Wert auf Acht, damit der Würfel verschwindet
-                    wuerfelwert[i] = 8;
+                    iiwuerfelwert[i] = 8;
                 }
             }
-            ausgewählteAuge[0] = wert;
-            ausgewählteAuge[1] = anzahl;
+            iausgewählteAuge[0] = wert;
+            iausgewählteAuge[1] = anzahl;
 
-            casinowuerfelanzahl3[spielernummer] += anzahl;
+            icasinoiiwuerfelanzahl3[iispielernummer] += anzahl;
 
             break;
         case 4:
             //Schaue nach weiteren Würfeln gleiche Wertes
             //Schleife durch jede Zahl durch
             for (int i = 0; i <= 7; i++) {
-                if (wuerfelwert[i] == wert) {
+                if (iiwuerfelwert[i] == wert) {
                     anzahl++;
                     //Setze den Wert auf Acht, damit der Würfel verschwindet
-                    wuerfelwert[i] = 8;
+                    iiwuerfelwert[i] = 8;
                 }
             }
-            ausgewählteAuge[0] = wert;
-            ausgewählteAuge[1] = anzahl;
+            iausgewählteAuge[0] = wert;
+            iausgewählteAuge[1] = anzahl;
 
-            casinowuerfelanzahl4[spielernummer] += anzahl;
+            icasinoiiwuerfelanzahl4[iispielernummer] += anzahl;
 
             break;
         case 5:
             //Schaue nach weiteren Würfeln gleiche Wertes
             //Schleife durch jede Zahl durch
             for (int i = 0; i <= 7; i++) {
-                if (wuerfelwert[i] == wert) {
+                if (iiwuerfelwert[i] == wert) {
                     anzahl++;
                     //Setze den Wert auf Acht, damit der Würfel verschwindet
-                    wuerfelwert[i] = 8;
+                    iiwuerfelwert[i] = 8;
                 }
             }
-            ausgewählteAuge[0] = wert;
-            ausgewählteAuge[1] = anzahl;
+            iausgewählteAuge[0] = wert;
+            iausgewählteAuge[1] = anzahl;
 
-            casinowuerfelanzahl5[spielernummer] += anzahl;
+            icasinoiiwuerfelanzahl5[iispielernummer] += anzahl;
 
             break;
         case 6:
             //Schaue nach weiteren Würfeln gleiche Wertes
             //Schleife durch jede Zahl durch
             for (int i = 0; i <= 7; i++) {
-                if (wuerfelwert[i] == wert) {
+                if (iiwuerfelwert[i] == wert) {
                     anzahl++;
                     //Setze den Wert auf Acht, damit der Würfel verschwindet
-                    wuerfelwert[i] = 8;
+                    iiwuerfelwert[i] = 8;
                 }
             }
-            ausgewählteAuge[0] = wert;
-            ausgewählteAuge[1] = anzahl;
+            iausgewählteAuge[0] = wert;
+            iausgewählteAuge[1] = anzahl;
 
-            casinowuerfelanzahl6[spielernummer] += anzahl;
+            icasinoiiwuerfelanzahl6[iispielernummer] += anzahl;
 
             break;
         }
@@ -835,61 +830,64 @@ void setzeWürfel(int spieler, int wert) {
         {
             for (int j = i + 1; j <= 7; j++)
             {
-                if (wuerfelwert[i] > wuerfelwert[j])
+                if (iiwuerfelwert[i] > iiwuerfelwert[j])
                 {
                     //-----Tausch-----
-                    int h = wuerfelwert[i];
-                    wuerfelwert[i] = wuerfelwert[j];
-                    wuerfelwert[j] = h;
+                    int h = iiwuerfelwert[i];
+                    iiwuerfelwert[i] = iiwuerfelwert[j];
+                    iiwuerfelwert[j] = h;
                 }
             }
         }
-        //Gesamtwürfelzahl des Spielers ändern
-        wuerfelanzahl[spielernummer] -= anzahl;
+        //Gesamtwürfelzahl des ispielers ändern
+        iiwuerfelanzahl[iispielernummer] -= anzahl;
 
-        //String des Spielers ändern
-        letzteaktion[spielernummer] = "Zuletzt: " + to_string(anzahl) + " Würfeln auf Casino " + to_string(wert);
+        //String des ispielers ändern
+        ssletzteaktion[iispielernummer] = "Zuletzt: " + to_string(anzahl) + " Würfeln auf Casino " + to_string(wert);
     }
 }
 
 void setzeSchrittZurück() {
     //Prüfen, ob die Funktion überhaupt was bringen würde
-    if(aufWuerfelGedrueckt == true){
-        aufWuerfelGedrueckt = false;
-        int wert = ausgewählteAuge[0];
-        int anzahl = ausgewählteAuge[1];
+    if(baufwuerfelgedrueckt == true){
+        baufwuerfelgedrueckt = false;
+        int wert = iausgewählteAuge[0];
+        int anzahl = iausgewählteAuge[1];
+        int tempanzahl = iausgewählteAuge[1];
+
+        printf("Anzahl: %i", iausgewählteAuge[1]);
 
         //Switch für den Casinoarrays
         switch (wert) {
         case 1:
-            casinowuerfelanzahl1[spielernummer] -= anzahl;
+            icasinoiiwuerfelanzahl1[iispielernummer] -= anzahl;
             break;
         case 2:
-            casinowuerfelanzahl2[spielernummer] -= anzahl;
+            icasinoiiwuerfelanzahl2[iispielernummer] -= anzahl;
             break;
         case 3:
-            casinowuerfelanzahl3[spielernummer] -= anzahl;
+            icasinoiiwuerfelanzahl3[iispielernummer] -= anzahl;
             break;
         case 4:
-            casinowuerfelanzahl4[spielernummer] -= anzahl;
+            icasinoiiwuerfelanzahl4[iispielernummer] -= anzahl;
             break;
         case 5:
-            casinowuerfelanzahl5[spielernummer] -= anzahl;
+            icasinoiiwuerfelanzahl5[iispielernummer] -= anzahl;
             break;
         case 6:
-            casinowuerfelanzahl6[spielernummer] -= anzahl;
+            icasinoiiwuerfelanzahl6[iispielernummer] -= anzahl;
             break;
         }
 
-        printf("Anzahl Wuerfel auf Casino 1 zurueckgezogen: %i\n", casinowuerfelanzahl1[0]);
+        printf("Anzahl Wuerfel auf Casino 1 zurueckgezogen: %i\n", icasinoiiwuerfelanzahl1[0]);
 
 
         //Einsetzungsverfahren
         for (int i = 0; i <= 7; i++) {
-            if (wuerfelwert[i] == 8) {
+            if (iiwuerfelwert[i] == 8) {
                 if (anzahl != 0) {
                     printf("Wuerfel wird zur%cckgesetzt!\n", (char)129);
-                    wuerfelwert[i] = wert;
+                    iiwuerfelwert[i] = wert;
                     anzahl--;
                 }
             }
@@ -900,12 +898,12 @@ void setzeSchrittZurück() {
         {
             for (int j = i + 1; j <= 7; j++)
             {
-                if (wuerfelwert[i] > wuerfelwert[j])
+                if (iiwuerfelwert[i] > iiwuerfelwert[j])
                 {
                     //-----Tausch-----
-                    int h = wuerfelwert[i];
-                    wuerfelwert[i] = wuerfelwert[j];
-                    wuerfelwert[j] = h;
+                    int h = iiwuerfelwert[i];
+                    iiwuerfelwert[i] = iiwuerfelwert[j];
+                    iiwuerfelwert[j] = h;
                 }
             }
         }
@@ -915,21 +913,21 @@ void setzeSchrittZurück() {
         {
             for (int j = i + 1; j <= 7; j++)
             {
-                if (wuerfelwert[i] > wuerfelwert[j])
+                if (iiwuerfelwert[i] > iiwuerfelwert[j])
                 {
                     //-----Tausch-----
-                    int h = wuerfelwert[i];
-                    wuerfelwert[i] = wuerfelwert[j];
-                    wuerfelwert[j] = h;
+                    int h = iiwuerfelwert[i];
+                    iiwuerfelwert[i] = iiwuerfelwert[j];
+                    iiwuerfelwert[j] = h;
                 }
             }
         }
         //Würfelanzahl zurücksetzen
-        wuerfelanzahl[spielernummer] += anzahl;
+        iiwuerfelanzahl[iispielernummer] += tempanzahl;
 
         //Array zurücksetzen
-        ausgewählteAuge[0] = 0;
-        ausgewählteAuge[1] = 0;
+        iausgewählteAuge[0] = 0;
+        iausgewählteAuge[1] = 0;
     }
 }
 
@@ -938,176 +936,176 @@ void para() {
     //Geld auf Konten einzahlen
     
     //Casino1
-    //Wiederhole solange, bis wir keine Preise oder Spieler mehr haben, welches zuerst zutrifft
+    //Wiederhole solange, bis wir keine Preise oder ispieler mehr haben, welches zuerst zutrifft
     for (size_t cashcounter = 0;
-        cashcounter < min(size(casinowuerfelanzahl1),
-            size(casinogelder1));
+        cashcounter < min(size(icasinoiiwuerfelanzahl1),
+            size(iicasinogelder1));
         cashcounter++)
     {
         //Finde die Position vom Würfel nit dem höchsten Wert
-        auto location = max_element(begin(casinowuerfelanzahl1),
-            end(casinowuerfelanzahl1));
+        int* location = max_element(begin(icasinoiiwuerfelanzahl1),
+            end(icasinoiiwuerfelanzahl1));
         //Transformiere Position zu einem Index
-        auto index = distance(begin(casinowuerfelanzahl1), location);
+        ptrdiff_t index = distance(begin(icasinoiiwuerfelanzahl1), location);
 
-        //Steigere den Kontostand dieses Spielers
-        kontostand[index] += casinogelder1[cashcounter];
+        //Steigere den ikontostand dieses ispielers
+        ikontostand[index] += iicasinogelder1[cashcounter];
 
-        //Setze den Wert auf 0 , um den Spieler nicht erneut gewinnen zu lassen
-        casinowuerfelanzahl1[index] = 0;
+        //Setze den Wert auf 0 , um den ispieler nicht erneut gewinnen zu lassen
+        icasinoiiwuerfelanzahl1[index] = 0;
     }
 
     //Kontostände ausdrucken lassen
-    for (const auto& val : kontostand) {
+    for (const int& val : ikontostand) {
         cout << val << endl;
     }
 
     //Casino2
-    //Wiederhole solange, bis wir keine Preise oder Spieler mehr haben, welches zuerst zutrifft
+    //Wiederhole solange, bis wir keine Preise oder ispieler mehr haben, welches zuerst zutrifft
     for (size_t cashcounter = 0;
-        cashcounter < min(size(casinowuerfelanzahl2),
-            size(casinogelder2));
+        cashcounter < min(size(icasinoiiwuerfelanzahl2),
+            size(iicasinogelder2));
         cashcounter++)
     {
         //Finde die Position vom Würfel nit dem höchsten Wert
-        auto location = max_element(begin(casinowuerfelanzahl2),
-            end(casinowuerfelanzahl2));
+        int* location = max_element(begin(icasinoiiwuerfelanzahl2),
+            end(icasinoiiwuerfelanzahl2));
         //Transformiere Position zu einem Index
-        auto index = distance(begin(casinowuerfelanzahl2), location);
+        ptrdiff_t index = distance(begin(icasinoiiwuerfelanzahl2), location);
 
-        //Steigere den Kontostand dieses Spielers
-        kontostand[index] += casinogelder2[cashcounter];
+        //Steigere den ikontostand dieses ispielers
+        ikontostand[index] += iicasinogelder2[cashcounter];
 
-        //Setze den Wert auf 0 , um den Spieler nicht erneut gewinnen zu lassen
-        casinowuerfelanzahl2[index] = 0;
+        //Setze den Wert auf 0 , um den ispieler nicht erneut gewinnen zu lassen
+        icasinoiiwuerfelanzahl2[index] = 0;
     }
 
     //Kontostände ausdrucken lassen
-    for (const auto& val : kontostand) {
+    for (const int& val : ikontostand) {
         cout << val << endl;
     }
 
     //Casino3
-    //Wiederhole solange, bis wir keine Preise oder Spieler mehr haben, welches zuerst zutrifft
+    //Wiederhole solange, bis wir keine Preise oder ispieler mehr haben, welches zuerst zutrifft
     for (size_t cashcounter = 0;
-        cashcounter < min(size(casinowuerfelanzahl3),
-            size(casinogelder3));
+        cashcounter < min(size(icasinoiiwuerfelanzahl3),
+            size(iicasinogelder3));
         cashcounter++)
     {
         //Finde die Position vom Würfel nit dem höchsten Wert
-        auto location = max_element(begin(casinowuerfelanzahl3),
-            end(casinowuerfelanzahl3));
+        int* location = max_element(begin(icasinoiiwuerfelanzahl3),
+            end(icasinoiiwuerfelanzahl3));
         //Transformiere Position zu einem Index
-        auto index = distance(begin(casinowuerfelanzahl3), location);
+        ptrdiff_t index = distance(begin(icasinoiiwuerfelanzahl3), location);
 
-        //Steigere den Kontostand dieses Spielers
-        kontostand[index] += casinogelder3[cashcounter];
+        //Steigere den ikontostand dieses ispielers
+        ikontostand[index] += iicasinogelder3[cashcounter];
 
-        //Setze den Wert auf 0 , um den Spieler nicht erneut gewinnen zu lassen
-        casinowuerfelanzahl3[index] = 0;
+        //Setze den Wert auf 0 , um den ispieler nicht erneut gewinnen zu lassen
+        icasinoiiwuerfelanzahl3[index] = 0;
     }
 
     //Kontostände ausdrucken lassen
-    for (const auto& val : kontostand) {
+    for (const int& val : ikontostand) {
         cout << val << endl;
     }
 
     //Casino4
-    //Wiederhole solange, bis wir keine Preise oder Spieler mehr haben, welches zuerst zutrifft
+    //Wiederhole solange, bis wir keine Preise oder ispieler mehr haben, welches zuerst zutrifft
     for (size_t cashcounter = 0;
-        cashcounter < min(size(casinowuerfelanzahl4),
-            size(casinogelder4));
+        cashcounter < min(size(icasinoiiwuerfelanzahl4),
+            size(iicasinogelder4));
         cashcounter++)
     {
         //Finde die Position vom Würfel nit dem höchsten Wert
-        auto location = max_element(begin(casinowuerfelanzahl4),
-            end(casinowuerfelanzahl4));
+        int* location = max_element(begin(icasinoiiwuerfelanzahl4),
+            end(icasinoiiwuerfelanzahl4));
         //Transformiere Position zu einem Index
-        auto index = distance(begin(casinowuerfelanzahl4), location);
+        ptrdiff_t index = distance(begin(icasinoiiwuerfelanzahl4), location);
 
-        //Steigere den Kontostand dieses Spielers
-        kontostand[index] += casinogelder4[cashcounter];
+        //Steigere den ikontostand dieses ispielers
+        ikontostand[index] += iicasinogelder4[cashcounter];
 
-        //Setze den Wert auf 0 , um den Spieler nicht erneut gewinnen zu lassen
-        casinowuerfelanzahl4[index] = 0;
+        //Setze den Wert auf 0 , um den ispieler nicht erneut gewinnen zu lassen
+        icasinoiiwuerfelanzahl4[index] = 0;
     }
 
     //Kontostände ausdrucken lassen
-    for (const auto& val : kontostand) {
+    for (const int& val : ikontostand) {
         cout << val << endl;
     }
 
     //Casino5
-    //Wiederhole solange, bis wir keine Preise oder Spieler mehr haben, welches zuerst zutrifft
+    //Wiederhole solange, bis wir keine Preise oder ispieler mehr haben, welches zuerst zutrifft
     for (size_t cashcounter = 0;
-        cashcounter < min(size(casinowuerfelanzahl5),
-            size(casinogelder5));
+        cashcounter < min(size(icasinoiiwuerfelanzahl5),
+            size(iicasinogelder5));
         cashcounter++)
     {
         //Finde die Position vom Würfel nit dem höchsten Wert
-        auto location = max_element(begin(casinowuerfelanzahl5),
-            end(casinowuerfelanzahl5));
+        int* location = max_element(begin(icasinoiiwuerfelanzahl5),
+            end(icasinoiiwuerfelanzahl5));
         //Transformiere Position zu einem Index
-        auto index = distance(begin(casinowuerfelanzahl1), location);
+        ptrdiff_t index = distance(begin(icasinoiiwuerfelanzahl1), location);
 
-        //Steigere den Kontostand dieses Spielers
-        kontostand[index] += casinogelder5[cashcounter];
+        //Steigere den ikontostand dieses ispielers
+        ikontostand[index] += iicasinogelder5[cashcounter];
 
-        //Setze den Wert auf 0 , um den Spieler nicht erneut gewinnen zu lassen
-        casinowuerfelanzahl5[index] = 0;
+        //Setze den Wert auf 0 , um den ispieler nicht erneut gewinnen zu lassen
+        icasinoiiwuerfelanzahl5[index] = 0;
     }
 
     //Kontostände ausdrucken lassen
-    for (const auto& val : kontostand) {
+    for (const int& val : ikontostand) {
         cout << val << endl;
     }
 
     //Casino6
-    //Wiederhole solange, bis wir keine Preise oder Spieler mehr haben, welches zuerst zutrifft
+    //Wiederhole solange, bis wir keine Preise oder ispieler mehr haben, welches zuerst zutrifft
     for (size_t cashcounter = 0;
-        cashcounter < min(size(casinowuerfelanzahl6),
-            size(casinogelder6));
+        cashcounter < min(size(icasinoiiwuerfelanzahl6),
+            size(iicasinogelder6));
         cashcounter++)
     {
         //Finde die Position vom Würfel nit dem höchsten Wert
-        auto location = max_element(begin(casinowuerfelanzahl6),
-            end(casinowuerfelanzahl6));
+        int* location = max_element(begin(icasinoiiwuerfelanzahl6),
+            end(icasinoiiwuerfelanzahl6));
         //Transformiere Position zu einem Index
-        auto index = distance(begin(casinowuerfelanzahl6), location);
+        ptrdiff_t index = distance(begin(icasinoiiwuerfelanzahl6), location);
 
-        //Steigere den Kontostand dieses Spielers
-        kontostand[index] += casinogelder6[cashcounter];
+        //Steigere den ikontostand dieses ispielers
+        ikontostand[index] += iicasinogelder6[cashcounter];
 
-        //Setze den Wert auf 0 , um den Spieler nicht erneut gewinnen zu lassen
-        casinowuerfelanzahl6[index] = 0;
+        //Setze den Wert auf 0 , um den ispieler nicht erneut gewinnen zu lassen
+        icasinoiiwuerfelanzahl6[index] = 0;
     }
 
     //Kontostände ausdrucken lassen
-    for (const auto& val : kontostand) {
+    for (const int& val : ikontostand) {
         cout << val << endl;
     }
 
     //Resetten von alles nötigen und wiederanfangen
     for (int i = 0; i <= 2; i++) {
-        casinowuerfelanzahl1[i] = 0;
-        casinowuerfelanzahl2[i] = 0;
-        casinowuerfelanzahl3[i] = 0;
-        casinowuerfelanzahl4[i] = 0;
-        casinowuerfelanzahl5[i] = 0;
-        casinowuerfelanzahl6[i] = 0;
-        wuerfelanzahl[i] = 8;
+        icasinoiiwuerfelanzahl1[i] = 0;
+        icasinoiiwuerfelanzahl2[i] = 0;
+        icasinoiiwuerfelanzahl3[i] = 0;
+        icasinoiiwuerfelanzahl4[i] = 0;
+        icasinoiiwuerfelanzahl5[i] = 0;
+        icasinoiiwuerfelanzahl6[i] = 0;
+        iiwuerfelanzahl[i] = 8;
         
     }
-    spielerhabenwürfel = true;
-    spielernummer -= 1;
+    ispielerhabenwürfel = true;
+    iispielernummer -= 1;
 
     //Strings für UI ändern
-    kontostandtext1 = "Kontostand: $" + to_string(kontostand[0]);
-    kontostandtext2 = "Kontostand: $" + to_string(kontostand[1]);
-    kontostandtext3 = "Kontostand: $" + to_string(kontostand[2]);
+    ikontostandtext1 = "ikontostand: $" + to_string(ikontostand[0]);
+    ikontostandtext2 = "ikontostand: $" + to_string(ikontostand[1]);
+    ikontostandtext3 = "ikontostand: $" + to_string(ikontostand[2]);
 }
 
-void gewinner(int spieler) {
+void gewinner(int ispieler) {
     sf::Font font;
     if (!font.loadFromFile("res/Fonts/font.ttf")) {
         printf("FONT-FEHLER: SCHRIFTART KONNTE NICHT GELADEN WERDEN!\nBitte konsultieren Sie die Bedienungsanleitung!\nDr%ccken Sie eine Taste um das Programm zu beenden!", (char)129);
@@ -1118,15 +1116,15 @@ void gewinner(int spieler) {
     sf::RenderWindow gewinnerfenster(sf::VideoMode(1000, 600), "Gewinner", sf::Style::Titlebar);
 
     string gewinnertext;
-    switch (spieler) {
+    switch (ispieler) {
     case 1:
-        gewinnertext = "Spieler 1 hat gewonnen!";
+        gewinnertext = "ispieler 1 hat gewonnen!";
         break;
     case 2:
-        gewinnertext = "Spieler 2 hat gewonnen!";
+        gewinnertext = "ispieler 2 hat gewonnen!";
         break;
     case 3:
-        gewinnertext = "Spieler 3 hat gewonnen!";
+        gewinnertext = "ispieler 3 hat gewonnen!";
         break;
     }
 
@@ -1138,9 +1136,9 @@ void gewinner(int spieler) {
         nachrichtentext.setCharacterSize(70);
         nachrichtentext.setFillColor(sf::Color::Black);
         //Setze den Text in die Mitte
-        float xPos = (1000.0f / 2) - (nachrichtentext.getLocalBounds().width / 2);
-        float yPos = (600.0f / 3) - (nachrichtentext.getLocalBounds().height / 2);
-        nachrichtentext.setPosition(xPos, yPos);
+        float fxPos = (1000.0f / 2) - (nachrichtentext.getLocalBounds().width / 2);
+        float fyPos = (600.0f / 3) - (nachrichtentext.getLocalBounds().height / 2);
+        nachrichtentext.setPosition(fxPos, fyPos);
 
         //Zeichne Umrandung um Buttons
         sf::ConvexShape menueleiste;
@@ -1184,6 +1182,37 @@ void gewinner(int spieler) {
 
                 if (neuesspielbutton.isMouseOver(gewinnerfenster)) {
                     gewinnerfenster.close();
+                    //Variablen setzen
+                    for (int i = 0; i <= 4; i++) {
+                        iicasinogelder1[i] = 0;
+                        iicasinogelder2[i] = 0;
+                        iicasinogelder3[i] = 0;
+                        iicasinogelder4[i] = 0;
+                        iicasinogelder5[i] = 0;
+                        iicasinogelder6[i] = 0;
+                    }
+
+                    for (int i = 0; i <= 2; i++) {
+                        icasinoiiwuerfelanzahl1[i] = 0;
+                        icasinoiiwuerfelanzahl2[i] = 0;
+                        icasinoiiwuerfelanzahl3[i] = 0;
+                        icasinoiiwuerfelanzahl4[i] = 0;
+                        icasinoiiwuerfelanzahl5[i] = 0;
+                        icasinoiiwuerfelanzahl6[i] = 0;
+                        ikontostand[i] = 0;
+                        iiwuerfelanzahl[i] = 8;
+                    }
+                    iirundenzahl = 0;
+                    isumme1 = 0;
+                    isumme2 = 0;
+                    isumme3 = 0;
+                    isumme4 = 0;
+                    isumme5 = 0;
+                    isumme6 = 0;
+                    ispielerhabenwürfel = true;
+                    baufwuerfelgedrueckt = false;
+                    bspielbeendet = false;
+                    bzugbeendet = false;
                     neuesSpiel();
                 }
 
@@ -1227,7 +1256,7 @@ void Spielzeichnung() {
     // Icon für das Spiel setzen
     sf::Image icon;
     if (!icon.loadFromFile("res/Bilder/icon.jpg")) {
-        //fehleranzeige("Icon-Fehler", "Icon konnte nicht geladen werden.");
+        //fehleranzeige("Icon-Fehler", "Icon konnte nicht geladen werden."); 
         spiel.close();
         return;
     }
@@ -1241,40 +1270,40 @@ void Spielzeichnung() {
         //Variablen!!
         //Für Casinos
         //Variablen für Casino 1
-        int c1spieler1 = casinowuerfelanzahl1[0];
-        int c1spieler2 = casinowuerfelanzahl1[1];
-        int c1spieler3 = casinowuerfelanzahl1[2];
+        int ic1ispieler1 = icasinoiiwuerfelanzahl1[0];
+        int ic1ispieler2 = icasinoiiwuerfelanzahl1[1];
+        int ic1ispieler3 = icasinoiiwuerfelanzahl1[2];
 
         //Variablen für Casino 2
-        int c2spieler1 = casinowuerfelanzahl2[0];
-        int c2spieler2 = casinowuerfelanzahl2[1];
-        int c2spieler3 = casinowuerfelanzahl2[2];
+        int ic2ispieler1 = icasinoiiwuerfelanzahl2[0];
+        int ic2ispieler2 = icasinoiiwuerfelanzahl2[1];
+        int ic2ispieler3 = icasinoiiwuerfelanzahl2[2];
 
         //Variablen für Casino 3
-        int c3spieler1 = casinowuerfelanzahl3[0];
-        int c3spieler2 = casinowuerfelanzahl3[1];
-        int c3spieler3 = casinowuerfelanzahl3[2];
+        int ic3ispieler1 = icasinoiiwuerfelanzahl3[0];
+        int ic3ispieler2 = icasinoiiwuerfelanzahl3[1];
+        int ic3ispieler3 = icasinoiiwuerfelanzahl3[2];
 
         //Variablen für Casino 4
-        int c4spieler1 = casinowuerfelanzahl4[0];
-        int c4spieler2 = casinowuerfelanzahl4[1];
-        int c4spieler3 = casinowuerfelanzahl4[2];
+        int ic4ispieler1 = icasinoiiwuerfelanzahl4[0];
+        int ic4ispieler2 = icasinoiiwuerfelanzahl4[1];
+        int ic4ispieler3 = icasinoiiwuerfelanzahl4[2];
 
         //Variablen für Casino 5
-        int c5spieler1 = casinowuerfelanzahl5[0];
-        int c5spieler2 = casinowuerfelanzahl5[1];
-        int c5spieler3 = casinowuerfelanzahl5[2];
+        int ic5ispieler1 = icasinoiiwuerfelanzahl5[0];
+        int ic5ispieler2 = icasinoiiwuerfelanzahl5[1];
+        int ic5ispieler3 = icasinoiiwuerfelanzahl5[2];
 
         //Variablen für Casino 6
-        int c6spieler1 = casinowuerfelanzahl6[0];
-        int c6spieler2 = casinowuerfelanzahl6[1];
-        int c6spieler3 = casinowuerfelanzahl6[2];
+        int ic6ispieler1 = icasinoiiwuerfelanzahl6[0];
+        int ic6ispieler2 = icasinoiiwuerfelanzahl6[1];
+        int ic6ispieler3 = icasinoiiwuerfelanzahl6[2];
 
         //
         //Würfel zeichnen
         //
         sf::Texture wuerfel;
-        switch (wuerfelwert[0]) {
+        switch (iiwuerfelwert[0]) {
         case 1:
             wuerfel.loadFromFile("res/Bilder/würfel/dice-png-1.png");
             break;
@@ -1303,7 +1332,7 @@ void Spielzeichnung() {
         //wuerfelsprite.setScale(0.15, 0.15);
 
         sf::Texture wuerfel2;
-        switch (wuerfelwert[1]) {
+        switch (iiwuerfelwert[1]) {
         case 1:
             wuerfel2.loadFromFile("res/Bilder/würfel/dice-png-1.png");
             break;
@@ -1331,7 +1360,7 @@ void Spielzeichnung() {
         //wuerfelsprite2.setScale(0.15, 0.15);
 
         sf::Texture wuerfel3;
-        switch (wuerfelwert[2]) {
+        switch (iiwuerfelwert[2]) {
         case 1:
             wuerfel3.loadFromFile("res/Bilder/würfel/dice-png-1.png");
             break;
@@ -1359,7 +1388,7 @@ void Spielzeichnung() {
         //wuerfelsprite3.setScale(0.15, 0.15);
 
         sf::Texture wuerfel4;
-        switch (wuerfelwert[3]) {
+        switch (iiwuerfelwert[3]) {
         case 1:
             wuerfel4.loadFromFile("res/Bilder/würfel/dice-png-1.png");
             break;
@@ -1387,7 +1416,7 @@ void Spielzeichnung() {
         //wuerfelsprite4.setScale(0.15, 0.15);
 
         sf::Texture wuerfel5;
-        switch (wuerfelwert[4]) {
+        switch (iiwuerfelwert[4]) {
         case 1:
             wuerfel5.loadFromFile("res/Bilder/würfel/dice-png-1.png");
             break;
@@ -1415,7 +1444,7 @@ void Spielzeichnung() {
         //wuerfelsprite5.setScale(0.15, 0.15);
 
         sf::Texture wuerfel6;
-        switch (wuerfelwert[5]) {
+        switch (iiwuerfelwert[5]) {
         case 1:
             wuerfel6.loadFromFile("res/Bilder/würfel/dice-png-1.png");
             break;
@@ -1443,7 +1472,7 @@ void Spielzeichnung() {
         //wuerfelsprite6.setScale(0.15, 0.15);
 
         sf::Texture wuerfel7;
-        switch (wuerfelwert[6]) {
+        switch (iiwuerfelwert[6]) {
         case 1:
             wuerfel7.loadFromFile("res/Bilder/würfel/dice-png-1.png");
             break;
@@ -1471,7 +1500,7 @@ void Spielzeichnung() {
         //wuerfelsprite7.setScale(0.15, 0.15);
 
         sf::Texture wuerfel8;
-        switch (wuerfelwert[7]) {
+        switch (iiwuerfelwert[7]) {
         case 1:
             wuerfel8.loadFromFile("res/Bilder/würfel/dice-png-1.png");
             break;
@@ -1525,118 +1554,121 @@ void Spielzeichnung() {
 
         sf::ConvexShape rundenkasten;
         rundenkasten.setPointCount(4);
-        rundenkasten.setPoint(0, sf::Vector2f(1251.0f, 50.0f));
+        rundenkasten.setPoint(0, sf::Vector2f(1251.0f, 90.0f));
         rundenkasten.setPoint(1, sf::Vector2f(1251.0f, 150.0f));
-        //rundenkasten.setPoint(2, )
+        rundenkasten.setPoint(2, sf::Vector2f(1600.0f, 150.0f));
+        rundenkasten.setPoint(3, sf::Vector2f(1600.0f, 90.0f));
+        rundenkasten.setFillColor(Color(150, 150, 150, 150));
+        spiel.draw(rundenkasten);
 
-        sf::Text rundentext(rundentext, font);
-        rundentext.setCharacterSize(30);
-        rundentext.setFillColor(sf::Color::Black);
-        rundentext.setPosition(1350.0f, 100.0f);
-        spiel.draw(rundentext);
+        sf::Text srundentext(srundentext, font);
+        srundentext.setCharacterSize(30);
+        srundentext.setFillColor(sf::Color::Black);
+        srundentext.setPosition(1350.0f, 100.0f);
+        spiel.draw(srundentext);
 
 
-        //Spieler 1 Kasten
-        sf::ConvexShape spieler1kasten;
-        spieler1kasten.setPointCount(4);
-        spieler1kasten.setPoint(0, sf::Vector2f(1252.0f, 200.0f));
-        spieler1kasten.setPoint(1, sf::Vector2f(1600.0f, 200.0f));
-        spieler1kasten.setPoint(2, sf::Vector2f(1600.0f, 305.0f));
-        spieler1kasten.setPoint(3, sf::Vector2f(1252.0f, 305.0f));
-        spieler1kasten.setFillColor(farben[0] - sf::Color(0, 0, 0, 200));
-        spiel.draw(spieler1kasten);
+        //ispieler 1 Kasten
+        sf::ConvexShape ispieler1kasten;
+        ispieler1kasten.setPointCount(4);
+        ispieler1kasten.setPoint(0, sf::Vector2f(1252.0f, 200.0f));
+        ispieler1kasten.setPoint(1, sf::Vector2f(1600.0f, 200.0f));
+        ispieler1kasten.setPoint(2, sf::Vector2f(1600.0f, 305.0f));
+        ispieler1kasten.setPoint(3, sf::Vector2f(1252.0f, 305.0f));
+        ispieler1kasten.setFillColor(farben[0] - sf::Color(0, 0, 0, 200));
+        spiel.draw(ispieler1kasten);
 
-        sf::Text spieler1text("Spieler 1", font);
-        spieler1text.setCharacterSize(25);
-        spieler1text.setFillColor(farben[0]);
-        spieler1text.setPosition(1385.0f, 205.0f);
-        spiel.draw(spieler1text);
+        sf::Text ispieler1text("ispieler 1", font);
+        ispieler1text.setCharacterSize(25);
+        ispieler1text.setFillColor(farben[0]);
+        ispieler1text.setPosition(1385.0f, 205.0f);
+        spiel.draw(ispieler1text);
 
-        sf::Text spieler1geld(kontostandtext1, font);
-        spieler1geld.setCharacterSize(20);
-        spieler1geld.setFillColor(farben[0]);
-        spieler1geld.setPosition(1260.0f, 235.0f);
-        spiel.draw(spieler1geld);
+        sf::Text ispieler1geld(ikontostandtext1, font);
+        ispieler1geld.setCharacterSize(20);
+        ispieler1geld.setFillColor(farben[0]);
+        ispieler1geld.setPosition(1260.0f, 235.0f);
+        spiel.draw(ispieler1geld);
 
-        sf::Text spieler1würfelzahl(wuerfelzahl1, font);
-        spieler1würfelzahl.setCharacterSize(20);
-        spieler1würfelzahl.setFillColor(farben[0]);
-        spieler1würfelzahl.setPosition(1260.0f, 255.0f);
-        spiel.draw(spieler1würfelzahl);
+        sf::Text ispieler1würfelzahl(swuerfelzahl1, font);
+        ispieler1würfelzahl.setCharacterSize(20);
+        ispieler1würfelzahl.setFillColor(farben[0]);
+        ispieler1würfelzahl.setPosition(1260.0f, 255.0f);
+        spiel.draw(ispieler1würfelzahl);
 
-        sf::Text spieler1zuletztaktion(letzteaktion[0], font);
-        spieler1zuletztaktion.setCharacterSize(20);
-        spieler1zuletztaktion.setFillColor(farben[0]);
-        spieler1zuletztaktion.setPosition(1260.0f, 275.0f);
-        spiel.draw(spieler1zuletztaktion);
+        sf::Text ispieler1zuletztaktion(ssletzteaktion[0], font);
+        ispieler1zuletztaktion.setCharacterSize(20);
+        ispieler1zuletztaktion.setFillColor(farben[0]);
+        ispieler1zuletztaktion.setPosition(1260.0f, 275.0f);
+        spiel.draw(ispieler1zuletztaktion);
 
-        //Spieler 2 Kasten
-        sf::ConvexShape spieler2kasten;
-        spieler2kasten.setPointCount(4);
-        spieler2kasten.setPoint(0, sf::Vector2f(1252.0f, 400.0f));
-        spieler2kasten.setPoint(1, sf::Vector2f(1600.0f, 400.0f));
-        spieler2kasten.setPoint(2, sf::Vector2f(1600.0f, 505.0f));
-        spieler2kasten.setPoint(3, sf::Vector2f(1252.0f, 505.0f));
-        spieler2kasten.setFillColor(farben[1] - sf::Color(0, 0, 0, 200));
-        spiel.draw(spieler2kasten);
+        //ispieler 2 Kasten
+        sf::ConvexShape ispieler2kasten;
+        ispieler2kasten.setPointCount(4);
+        ispieler2kasten.setPoint(0, sf::Vector2f(1252.0f, 400.0f));
+        ispieler2kasten.setPoint(1, sf::Vector2f(1600.0f, 400.0f));
+        ispieler2kasten.setPoint(2, sf::Vector2f(1600.0f, 505.0f));
+        ispieler2kasten.setPoint(3, sf::Vector2f(1252.0f, 505.0f));
+        ispieler2kasten.setFillColor(farben[1] - sf::Color(0, 0, 0, 200));
+        spiel.draw(ispieler2kasten);
 
-        sf::Text spieler2text("Spieler 2", font);
-        spieler2text.setCharacterSize(25);
-        spieler2text.setFillColor(farben[1]);
-        spieler2text.setPosition(1385.0f, 405.0f);
-        spiel.draw(spieler2text);
+        sf::Text ispieler2text("ispieler 2", font);
+        ispieler2text.setCharacterSize(25);
+        ispieler2text.setFillColor(farben[1]);
+        ispieler2text.setPosition(1385.0f, 405.0f);
+        spiel.draw(ispieler2text);
 
-        sf::Text spieler2geld(kontostandtext2, font);
-        spieler2geld.setCharacterSize(20);
-        spieler2geld.setFillColor(farben[1]);
-        spieler2geld.setPosition(1260.0f, 435.0f);
-        spiel.draw(spieler2geld);
+        sf::Text ispieler2geld(ikontostandtext2, font);
+        ispieler2geld.setCharacterSize(20);
+        ispieler2geld.setFillColor(farben[1]);
+        ispieler2geld.setPosition(1260.0f, 435.0f);
+        spiel.draw(ispieler2geld);
 
-        sf::Text spieler2würfelzahl(wuerfelzahl2, font);
-        spieler2würfelzahl.setCharacterSize(20);
-        spieler2würfelzahl.setFillColor(farben[1]);
-        spieler2würfelzahl.setPosition(1260.0f, 455.0f);
-        spiel.draw(spieler2würfelzahl);
+        sf::Text ispieler2würfelzahl(swuerfelzahl2, font);
+        ispieler2würfelzahl.setCharacterSize(20);
+        ispieler2würfelzahl.setFillColor(farben[1]);
+        ispieler2würfelzahl.setPosition(1260.0f, 455.0f);
+        spiel.draw(ispieler2würfelzahl);
 
-        sf::Text spieler2zuletztaktion(letzteaktion[1], font);
-        spieler2zuletztaktion.setCharacterSize(20);
-        spieler2zuletztaktion.setFillColor(farben[1]);
-        spieler2zuletztaktion.setPosition(1260.0f, 475.0f);
-        spiel.draw(spieler2zuletztaktion);
+        sf::Text ispieler2zuletztaktion(ssletzteaktion[1], font);
+        ispieler2zuletztaktion.setCharacterSize(20);
+        ispieler2zuletztaktion.setFillColor(farben[1]);
+        ispieler2zuletztaktion.setPosition(1260.0f, 475.0f);
+        spiel.draw(ispieler2zuletztaktion);
 
-        //Spieler 3 Kasten
-        sf::ConvexShape spieler3kasten;
-        spieler3kasten.setPointCount(4);
-        spieler3kasten.setPoint(0, sf::Vector2f(1252.0f, 600.0f));
-        spieler3kasten.setPoint(1, sf::Vector2f(1600.0f, 600.0f));
-        spieler3kasten.setPoint(2, sf::Vector2f(1600.0f, 705.0f));
-        spieler3kasten.setPoint(3, sf::Vector2f(1252.0f, 705.0f));
-        spieler3kasten.setFillColor(farben[2] - sf::Color(0, 0, 0, 200));
-        spiel.draw(spieler3kasten);
+        //ispieler 3 Kasten
+        sf::ConvexShape ispieler3kasten;
+        ispieler3kasten.setPointCount(4);
+        ispieler3kasten.setPoint(0, sf::Vector2f(1252.0f, 600.0f));
+        ispieler3kasten.setPoint(1, sf::Vector2f(1600.0f, 600.0f));
+        ispieler3kasten.setPoint(2, sf::Vector2f(1600.0f, 705.0f));
+        ispieler3kasten.setPoint(3, sf::Vector2f(1252.0f, 705.0f));
+        ispieler3kasten.setFillColor(farben[2] - sf::Color(0, 0, 0, 200));
+        spiel.draw(ispieler3kasten);
 
-        sf::Text spieler3text("Spieler 3", font);
-        spieler3text.setCharacterSize(25);
-        spieler3text.setFillColor(farben[2]);
-        spieler3text.setPosition(1385.0f, 605.0f);
-        spiel.draw(spieler3text);
+        sf::Text ispieler3text("ispieler 3", font);
+        ispieler3text.setCharacterSize(25);
+        ispieler3text.setFillColor(farben[2]);
+        ispieler3text.setPosition(1385.0f, 605.0f);
+        spiel.draw(ispieler3text);
 
-        sf::Text spieler3geld(kontostandtext3, font);
-        spieler3geld.setCharacterSize(20);
-        spieler3geld.setFillColor(farben[2]);
-        spieler3geld.setPosition(1260.0f, 635.0f);
-        spiel.draw(spieler3geld);
+        sf::Text ispieler3geld(ikontostandtext3, font);
+        ispieler3geld.setCharacterSize(20);
+        ispieler3geld.setFillColor(farben[2]);
+        ispieler3geld.setPosition(1260.0f, 635.0f);
+        spiel.draw(ispieler3geld);
 
-        sf::Text spieler3würfelzahl(wuerfelzahl3, font);
-        spieler3würfelzahl.setCharacterSize(20);
-        spieler3würfelzahl.setFillColor(farben[2]);
-        spieler3würfelzahl.setPosition(1260.0f, 655.0f);
-        spiel.draw(spieler3würfelzahl);
+        sf::Text ispieler3würfelzahl(swuerfelzahl3, font);
+        ispieler3würfelzahl.setCharacterSize(20);
+        ispieler3würfelzahl.setFillColor(farben[2]);
+        ispieler3würfelzahl.setPosition(1260.0f, 655.0f);
+        spiel.draw(ispieler3würfelzahl);
 
-        sf::Text spieler3zuletztaktion(letzteaktion[2], font);
-        spieler3zuletztaktion.setCharacterSize(20);
-        spieler3zuletztaktion.setFillColor(farben[2]);
-        spieler3zuletztaktion.setPosition(1260.0f, 675.0f);
-        spiel.draw(spieler3zuletztaktion);
+        sf::Text ispieler3zuletztaktion(ssletzteaktion[2], font);
+        ispieler3zuletztaktion.setCharacterSize(20);
+        ispieler3zuletztaktion.setFillColor(farben[2]);
+        ispieler3zuletztaktion.setPosition(1260.0f, 675.0f);
+        spiel.draw(ispieler3zuletztaktion);
 
         //
         //Kasten für Casinos
@@ -1781,12 +1813,12 @@ void Spielzeichnung() {
         spiel.draw(schrifttab);
 
         //Eigentlicher Text
-        sf::Text subtext(subtextstring, font);
+        sf::Text subtext(ssubtextstring, font);
         subtext.setCharacterSize(25);
         //Setze den Text in die Mitte
-        float xPos = (0.0f + 1600.0f / 2) - (subtext.getLocalBounds().width / 2);
-        float yPos = (900.0f + 35.0f / 2.6) - (subtext.getLocalBounds().height / 2);
-        subtext.setPosition(xPos, yPos);
+        float fxPos = (0.0f + 1600.0f / 2) - (subtext.getLocalBounds().width / 2);
+        float fyPos = (900.0f + 35.0f / 2.6) - (subtext.getLocalBounds().height / 2);
+        subtext.setPosition(fxPos, fyPos);
         //subtext.setPosition(sf::Vector2f(600.0f, 900.0f));
         subtext.setFillColor(sf::Color::Black);
         spiel.draw(subtext);
@@ -1810,7 +1842,7 @@ void Spielzeichnung() {
         Button undobutton("Einen Schritt zurück", { 170, 50 }, 20, sf::Color::Yellow, sf::Color::Black);
         undobutton.setFont(font);
         undobutton.setPosition({15.0f, 942.5f});
-        if (aufWuerfelGedrueckt == true) {
+        if (baufwuerfelgedrueckt == true) {
             undobutton.drawTo(spiel);
         }
         
@@ -1818,14 +1850,14 @@ void Spielzeichnung() {
         Button donebutton("Zug beenden", { 170, 50 }, 20, sf::Color::Yellow, sf::Color::Black);
         donebutton.setFont(font);
         donebutton.setPosition({ 1410.0f, 942.5f });
-        if (aufWuerfelGedrueckt == true) {
+        if (baufwuerfelgedrueckt == true) {
             donebutton.drawTo(spiel);
         }
 
         //
         //Geldscheine
         sf::Texture c1gs1;
-        int geldscheinc1gs1 = casinogelder1[0];
+        int geldscheinc1gs1 = iicasinogelder1[0];
         switch (geldscheinc1gs1) {
             case 10000:
                 c1gs1.loadFromFile("res/Bilder/Assets/10000.png");
@@ -1853,7 +1885,7 @@ void Spielzeichnung() {
         spiel.draw(c1gs1sprite);
 
         sf::Texture c1gs2;
-        switch (casinogelder1[1]) {
+        switch (iicasinogelder1[1]) {
         case 10000:
             c1gs2.loadFromFile("res/Bilder/Assets/10000.png");
             break;
@@ -1880,7 +1912,7 @@ void Spielzeichnung() {
         spiel.draw(c1gs2sprite);
 
         sf::Texture c1gs3;
-        switch (casinogelder1[2]) {
+        switch (iicasinogelder1[2]) {
         case 10000:
             c1gs3.loadFromFile("res/Bilder/Assets/10000.png");
             break;
@@ -1907,7 +1939,7 @@ void Spielzeichnung() {
         spiel.draw(c1gs3sprite);
 
         sf::Texture c1gs4;
-        switch (casinogelder1[3]) {
+        switch (iicasinogelder1[3]) {
         case 10000:
             c1gs4.loadFromFile("res/Bilder/Assets/10000.png");
             break;
@@ -1934,7 +1966,7 @@ void Spielzeichnung() {
         spiel.draw(c1gs4sprite);
 
         sf::Texture c1gs5;
-        switch (casinogelder1[4]) {
+        switch (iicasinogelder1[4]) {
         case 10000:
             c1gs5.loadFromFile("res/Bilder/Assets/10000.png");
             break;
@@ -1961,7 +1993,7 @@ void Spielzeichnung() {
         spiel.draw(c1gs5sprite);
 
         sf::Texture c2gs1;
-        switch (casinogelder2[0]) {
+        switch (iicasinogelder2[0]) {
         case 10000:
             c2gs1.loadFromFile("res/Bilder/Assets/10000.png");
             break;
@@ -1988,7 +2020,7 @@ void Spielzeichnung() {
         spiel.draw(c2gs1sprite);
 
         sf::Texture c2gs2;
-        switch (casinogelder2[1]) {
+        switch (iicasinogelder2[1]) {
         case 10000:
             c2gs2.loadFromFile("res/Bilder/Assets/10000.png");
             break;
@@ -2015,7 +2047,7 @@ void Spielzeichnung() {
         spiel.draw(c2gs2sprite);
 
         sf::Texture c2gs3;
-        switch (casinogelder2[2]) {
+        switch (iicasinogelder2[2]) {
         case 10000:
             c2gs3.loadFromFile("res/Bilder/Assets/10000.png");
             break;
@@ -2042,7 +2074,7 @@ void Spielzeichnung() {
         spiel.draw(c2gs3sprite);
 
         sf::Texture c2gs4;
-        switch (casinogelder2[3]) {
+        switch (iicasinogelder2[3]) {
         case 10000:
             c2gs4.loadFromFile("res/Bilder/Assets/10000.png");
             break;
@@ -2069,7 +2101,7 @@ void Spielzeichnung() {
         spiel.draw(c2gs4sprite);
 
         sf::Texture c2gs5;
-        switch (casinogelder2[4]) {
+        switch (iicasinogelder2[4]) {
         case 10000:
             c2gs5.loadFromFile("res/Bilder/Assets/10000.png");
             break;
@@ -2096,7 +2128,7 @@ void Spielzeichnung() {
         spiel.draw(c2gs5sprite);
 
         sf::Texture c3gs1;
-        switch (casinogelder3[0]) {
+        switch (iicasinogelder3[0]) {
         case 10000:
             c3gs1.loadFromFile("res/Bilder/Assets/10000.png");
             break;
@@ -2123,7 +2155,7 @@ void Spielzeichnung() {
         spiel.draw(c3gs1sprite);
 
         sf::Texture c3gs2;
-        switch (casinogelder3[1]) {
+        switch (iicasinogelder3[1]) {
         case 10000:
             c3gs2.loadFromFile("res/Bilder/Assets/10000.png");
             break;
@@ -2150,7 +2182,7 @@ void Spielzeichnung() {
         spiel.draw(c3gs2sprite);
 
         sf::Texture c3gs3;
-        switch (casinogelder3[2]) {
+        switch (iicasinogelder3[2]) {
         case 10000:
             c3gs3.loadFromFile("res/Bilder/Assets/10000.png");
             break;
@@ -2177,7 +2209,7 @@ void Spielzeichnung() {
         spiel.draw(c3gs3sprite);
 
         sf::Texture c3gs4;
-        switch (casinogelder3[3]) {
+        switch (iicasinogelder3[3]) {
         case 10000:
             c3gs4.loadFromFile("res/Bilder/Assets/10000.png");
             break;
@@ -2204,7 +2236,7 @@ void Spielzeichnung() {
         spiel.draw(c3gs4sprite);
 
         sf::Texture c3gs5;
-        switch (casinogelder3[4]) {
+        switch (iicasinogelder3[4]) {
         case 10000:
             c3gs5.loadFromFile("res/Bilder/Assets/10000.png");
             break;
@@ -2231,7 +2263,7 @@ void Spielzeichnung() {
         spiel.draw(c3gs5sprite);
 
         sf::Texture c4gs1;
-        switch (casinogelder4[0]) {
+        switch (iicasinogelder4[0]) {
         case 10000:
             c4gs1.loadFromFile("res/Bilder/Assets/10000.png");
             break;
@@ -2258,7 +2290,7 @@ void Spielzeichnung() {
         spiel.draw(c4gs1sprite);
 
         sf::Texture c4gs2;
-        switch (casinogelder4[1]) {
+        switch (iicasinogelder4[1]) {
         case 10000:
             c4gs2.loadFromFile("res/Bilder/Assets/10000.png");
             break;
@@ -2285,7 +2317,7 @@ void Spielzeichnung() {
         spiel.draw(c4gs2sprite);
 
         sf::Texture c4gs3;
-        switch (casinogelder4[2]) {
+        switch (iicasinogelder4[2]) {
         case 10000:
             c4gs3.loadFromFile("res/Bilder/Assets/10000.png");
             break;
@@ -2312,7 +2344,7 @@ void Spielzeichnung() {
         spiel.draw(c4gs3sprite);
 
         sf::Texture c4gs4;
-        switch (casinogelder4[3]) {
+        switch (iicasinogelder4[3]) {
         case 10000:
             c4gs4.loadFromFile("res/Bilder/Assets/10000.png");
             break;
@@ -2339,7 +2371,7 @@ void Spielzeichnung() {
         spiel.draw(c4gs4sprite);
 
         sf::Texture c4gs5;
-        switch (casinogelder4[4]) {
+        switch (iicasinogelder4[4]) {
         case 10000:
             c4gs5.loadFromFile("res/Bilder/Assets/10000.png");
             break;
@@ -2366,7 +2398,7 @@ void Spielzeichnung() {
         spiel.draw(c4gs5sprite);
 
         sf::Texture c5gs1;
-        switch (casinogelder5[0]) {
+        switch (iicasinogelder5[0]) {
         case 10000:
             c5gs1.loadFromFile("res/Bilder/Assets/10000.png");
             break;
@@ -2393,7 +2425,7 @@ void Spielzeichnung() {
         spiel.draw(c5gs1sprite);
 
         sf::Texture c5gs2;
-        switch (casinogelder5[1]) {
+        switch (iicasinogelder5[1]) {
         case 10000:
             c5gs2.loadFromFile("res/Bilder/Assets/10000.png");
             break;
@@ -2420,7 +2452,7 @@ void Spielzeichnung() {
         spiel.draw(c5gs2sprite);
 
         sf::Texture c5gs3;
-        switch (casinogelder5[2]) {
+        switch (iicasinogelder5[2]) {
         case 10000:
             c5gs3.loadFromFile("res/Bilder/Assets/10000.png");
             break;
@@ -2447,7 +2479,7 @@ void Spielzeichnung() {
         spiel.draw(c5gs3sprite);
 
         sf::Texture c5gs4;
-        switch (casinogelder5[3]) {
+        switch (iicasinogelder5[3]) {
         case 10000:
             c5gs4.loadFromFile("res/Bilder/Assets/10000.png");
             break;
@@ -2474,7 +2506,7 @@ void Spielzeichnung() {
         spiel.draw(c5gs4sprite);
 
         sf::Texture c5gs5;
-        switch (casinogelder5[4]) {
+        switch (iicasinogelder5[4]) {
         case 10000:
             c5gs5.loadFromFile("res/Bilder/Assets/10000.png");
             break;
@@ -2501,7 +2533,7 @@ void Spielzeichnung() {
         spiel.draw(c5gs5sprite);
 
         sf::Texture c6gs1;
-        switch (casinogelder6[0]) {
+        switch (iicasinogelder6[0]) {
         case 10000:
             c6gs1.loadFromFile("res/Bilder/Assets/10000.png");
             break;
@@ -2528,7 +2560,7 @@ void Spielzeichnung() {
         spiel.draw(c6gs1sprite);
 
         sf::Texture c6gs2;
-        switch (casinogelder6[1]) {
+        switch (iicasinogelder6[1]) {
         case 10000:
             c6gs2.loadFromFile("res/Bilder/Assets/10000.png");
             break;
@@ -2555,7 +2587,7 @@ void Spielzeichnung() {
         spiel.draw(c6gs2sprite);
 
         sf::Texture c6gs3;
-        switch (casinogelder6[2]) {
+        switch (iicasinogelder6[2]) {
         case 10000:
             c6gs3.loadFromFile("res/Bilder/Assets/10000.png");
             break;
@@ -2582,7 +2614,7 @@ void Spielzeichnung() {
         spiel.draw(c6gs3sprite);
 
         sf::Texture c6gs4;
-        switch (casinogelder6[3]) {
+        switch (iicasinogelder6[3]) {
         case 10000:
             c6gs4.loadFromFile("res/Bilder/Assets/10000.png");
             break;
@@ -2609,7 +2641,7 @@ void Spielzeichnung() {
         spiel.draw(c6gs4sprite);
 
         sf::Texture c6gs5;
-        switch (casinogelder6[4]) {
+        switch (iicasinogelder6[4]) {
         case 10000:
             c6gs5.loadFromFile("res/Bilder/Assets/10000.png");
             break;
@@ -2636,7 +2668,7 @@ void Spielzeichnung() {
         spiel.draw(c6gs5sprite);
 
         //Würfel auf Casinos zeichnen
-        //Aufbau der Namen: c = Casino, z = Zeile, s = Spalte
+        //Aufbau der snamen: c = Casino, z = Zeile, s = Spalte
         //Es wird von oben nach unten gezählt sprich von links nach rechts: c1z6s4 ist rechtsunten
 
         sf::Texture c1z1s1;
@@ -3487,2062 +3519,2062 @@ void Spielzeichnung() {
         //Algorithmus für kleine Würfel bei den Casinos
         //Casino 1
         //c1z1s1
-        if (c1spieler1 != 0) {
+        if (ic1ispieler1 != 0) {
             c1z1s1sprite.setColor(farben[0]);
             spiel.draw(c1z1s1sprite);
-            c1spieler1--;
+            ic1ispieler1--;
         }
-        else if (c1spieler2 != 0) {
+        else if (ic1ispieler2 != 0) {
             c1z1s1sprite.setColor(farben[1]);
             spiel.draw(c1z1s1sprite);
-            c1spieler2--;
+            ic1ispieler2--;
         }
-        else if (c1spieler3 != 0) {
+        else if (ic1ispieler3 != 0) {
             c1z1s1sprite.setColor(farben[2]);
             spiel.draw(c1z1s1sprite);
-            c1spieler3--;   
+            ic1ispieler3--;   
         }
         else {
             //Mach nichts
         }
         
         //c1z1s2
-        if (c1spieler1 != 0) {
+        if (ic1ispieler1 != 0) {
             c1z1s2sprite.setColor(farben[0]);
             spiel.draw(c1z1s2sprite);
-            c1spieler1--;
+            ic1ispieler1--;
         }
-        else if (c1spieler2 != 0) {
+        else if (ic1ispieler2 != 0) {
             c1z1s2sprite.setColor(farben[1]);
             spiel.draw(c1z1s2sprite);
-            c1spieler2--;
+            ic1ispieler2--;
         }
-        else if (c1spieler3 != 0) {
+        else if (ic1ispieler3 != 0) {
             c1z1s2sprite.setColor(farben[2]);
             spiel.draw(c1z1s2sprite);
-            c1spieler3--;
+            ic1ispieler3--;
         }
         
         //c1z1s3
-        if (c1spieler1 != 0) {
+        if (ic1ispieler1 != 0) {
             c1z1s3sprite.setColor(farben[0]);
             spiel.draw(c1z1s3sprite);
-            c1spieler1--;
+            ic1ispieler1--;
         }
-        else if (c1spieler2 != 0) {
+        else if (ic1ispieler2 != 0) {
             c1z1s3sprite.setColor(farben[1]);
             spiel.draw(c1z1s3sprite);
-            c1spieler2--;
+            ic1ispieler2--;
         }
-        else if (c1spieler3 != 0) {
+        else if (ic1ispieler3 != 0) {
             c1z1s3sprite.setColor(farben[2]);
             spiel.draw(c1z1s3sprite);
-            c1spieler3--;
+            ic1ispieler3--;
         }
 
         //c1z1s4
-        if (c1spieler1 != 0) {
+        if (ic1ispieler1 != 0) {
             c1z1s4sprite.setColor(farben[0]);
             spiel.draw(c1z1s4sprite);
-            c1spieler1--;
+            ic1ispieler1--;
         }
-        else if (c1spieler2 != 0) {
+        else if (ic1ispieler2 != 0) {
             c1z1s4sprite.setColor(farben[1]);
             spiel.draw(c1z1s4sprite);
-            c1spieler2--;
+            ic1ispieler2--;
         }
-        else if (c1spieler3 != 0) {
+        else if (ic1ispieler3 != 0) {
             c1z1s4sprite.setColor(farben[2]);
             spiel.draw(c1z1s4sprite);
-            c1spieler3--;
+            ic1ispieler3--;
         }
 
         //c1z2s1
-        if (c1spieler1 != 0) {
+        if (ic1ispieler1 != 0) {
             c1z2s1sprite.setColor(farben[0]);
             spiel.draw(c1z2s1sprite);
-            c1spieler1--;
+            ic1ispieler1--;
         }
-        else if (c1spieler2 != 0) {
+        else if (ic1ispieler2 != 0) {
             c1z2s1sprite.setColor(farben[1]);
             spiel.draw(c1z2s1sprite);
-            c1spieler2--;
+            ic1ispieler2--;
         }
-        else if (c1spieler3 != 0) {
+        else if (ic1ispieler3 != 0) {
             c1z2s1sprite.setColor(farben[2]);
             spiel.draw(c1z2s1sprite);
-            c1spieler3--;
+            ic1ispieler3--;
         }
 
         //c1z2s2
-        if (c1spieler1 != 0) {
+        if (ic1ispieler1 != 0) {
             c1z2s2sprite.setColor(farben[0]);
             spiel.draw(c1z2s2sprite);
-            c1spieler1--;
+            ic1ispieler1--;
         }
-        else if (c1spieler2 != 0) {
+        else if (ic1ispieler2 != 0) {
             c1z2s2sprite.setColor(farben[1]);
             spiel.draw(c1z2s2sprite);
-            c1spieler2--;
+            ic1ispieler2--;
         }
-        else if (c1spieler3 != 0) {
+        else if (ic1ispieler3 != 0) {
             c1z2s2sprite.setColor(farben[2]);
             spiel.draw(c1z2s2sprite);
-            c1spieler3--;
+            ic1ispieler3--;
         }
 
         //c1z2s3
-        if (c1spieler1 != 0) {
+        if (ic1ispieler1 != 0) {
             c1z2s3sprite.setColor(farben[0]);
             spiel.draw(c1z2s3sprite);
-            c1spieler1--;
+            ic1ispieler1--;
         }
-        else if (c1spieler2 != 0) {
+        else if (ic1ispieler2 != 0) {
             c1z2s3sprite.setColor(farben[1]);
             spiel.draw(c1z2s3sprite);
-            c1spieler2--;
+            ic1ispieler2--;
         }
-        else if (c1spieler3 != 0) {
+        else if (ic1ispieler3 != 0) {
             c1z2s3sprite.setColor(farben[2]);
             spiel.draw(c1z2s3sprite);
-            c1spieler3--;
+            ic1ispieler3--;
         }
 
         //c1z2s4
-        if (c1spieler1 != 0) {
+        if (ic1ispieler1 != 0) {
             c1z2s4sprite.setColor(farben[0]);
             spiel.draw(c1z2s4sprite);
-            c1spieler1--;
+            ic1ispieler1--;
         }
-        else if (c1spieler2 != 0) {
+        else if (ic1ispieler2 != 0) {
             c1z2s4sprite.setColor(farben[1]);
             spiel.draw(c1z2s4sprite);
-            c1spieler2--;
+            ic1ispieler2--;
         }
-        else if (c1spieler3 != 0) {
+        else if (ic1ispieler3 != 0) {
             c1z2s4sprite.setColor(farben[2]);
             spiel.draw(c1z2s4sprite);
-            c1spieler3--;
+            ic1ispieler3--;
         }
 
         //c1z3s1
-        if (c1spieler1 != 0) {
+        if (ic1ispieler1 != 0) {
             c1z3s1sprite.setColor(farben[0]);
             spiel.draw(c1z3s1sprite);
-            c1spieler1--;
+            ic1ispieler1--;
         }
-        else if (c1spieler2 != 0) {
+        else if (ic1ispieler2 != 0) {
             c1z3s1sprite.setColor(farben[1]);
             spiel.draw(c1z3s1sprite);
-            c1spieler2--;
+            ic1ispieler2--;
         }
-        else if (c1spieler3 != 0) {
+        else if (ic1ispieler3 != 0) {
             c1z3s1sprite.setColor(farben[2]);
             spiel.draw(c1z3s1sprite);
-            c1spieler3--;
+            ic1ispieler3--;
         }
 
         //c1z3s2
-        if (c1spieler1 != 0) {
+        if (ic1ispieler1 != 0) {
             c1z3s2sprite.setColor(farben[0]);
             spiel.draw(c1z3s2sprite);
-            c1spieler1--;
+            ic1ispieler1--;
         }
-        else if (c1spieler2 != 0) {
+        else if (ic1ispieler2 != 0) {
             c1z3s2sprite.setColor(farben[1]);
             spiel.draw(c1z3s2sprite);
-            c1spieler2--;
+            ic1ispieler2--;
         }
-        else if (c1spieler3 != 0) {
+        else if (ic1ispieler3 != 0) {
             c1z3s2sprite.setColor(farben[2]);
             spiel.draw(c1z3s2sprite);
-            c1spieler3--;
+            ic1ispieler3--;
         }
 
         //c1z3s3
-        if (c1spieler1 != 0) {
+        if (ic1ispieler1 != 0) {
             c1z3s3sprite.setColor(farben[0]);
             spiel.draw(c1z3s3sprite);
-            c1spieler1--;
+            ic1ispieler1--;
         }
-        else if (c1spieler2 != 0) {
+        else if (ic1ispieler2 != 0) {
             c1z3s3sprite.setColor(farben[1]);
             spiel.draw(c1z3s3sprite);
-            c1spieler2--;
+            ic1ispieler2--;
         }
-        else if (c1spieler3 != 0) {
+        else if (ic1ispieler3 != 0) {
             c1z3s3sprite.setColor(farben[2]);
             spiel.draw(c1z3s3sprite);
-            c1spieler3--;
+            ic1ispieler3--;
         }
 
         //c1z3s4
-        if (c1spieler1 != 0) {
+        if (ic1ispieler1 != 0) {
             c1z3s4sprite.setColor(farben[0]);
             spiel.draw(c1z3s4sprite);
-            c1spieler1--;
+            ic1ispieler1--;
         }
-        else if (c1spieler2 != 0) {
+        else if (ic1ispieler2 != 0) {
             c1z3s4sprite.setColor(farben[1]);
             spiel.draw(c1z3s4sprite);
-            c1spieler2--;
+            ic1ispieler2--;
         }
-        else if (c1spieler3 != 0) {
+        else if (ic1ispieler3 != 0) {
             c1z3s4sprite.setColor(farben[2]);
             spiel.draw(c1z3s4sprite);
-            c1spieler3--;
+            ic1ispieler3--;
         }
 
         //c1z4s1
-        if (c1spieler1 != 0) {
+        if (ic1ispieler1 != 0) {
             c1z4s1sprite.setColor(farben[0]);
             spiel.draw(c1z4s1sprite);
-            c1spieler1--;
+            ic1ispieler1--;
         }
-        else if (c1spieler2 != 0) {
+        else if (ic1ispieler2 != 0) {
             c1z4s1sprite.setColor(farben[1]);
             spiel.draw(c1z4s1sprite);
-            c1spieler2--;
+            ic1ispieler2--;
         }
-        else if (c1spieler3 != 0) {
+        else if (ic1ispieler3 != 0) {
             c1z4s1sprite.setColor(farben[2]);
             spiel.draw(c1z4s1sprite);
-            c1spieler3--;
+            ic1ispieler3--;
         }
 
         //c1z4s2
-        if (c1spieler1 != 0) {
+        if (ic1ispieler1 != 0) {
             c1z4s2sprite.setColor(farben[0]);
             spiel.draw(c1z4s2sprite);
-            c1spieler1--;
+            ic1ispieler1--;
         }
-        else if (c1spieler2 != 0) {
+        else if (ic1ispieler2 != 0) {
             c1z4s2sprite.setColor(farben[1]);
             spiel.draw(c1z4s2sprite);
-            c1spieler2--;
+            ic1ispieler2--;
         }
-        else if (c1spieler3 != 0) {
+        else if (ic1ispieler3 != 0) {
             c1z4s2sprite.setColor(farben[2]);
             spiel.draw(c1z4s2sprite);
-            c1spieler3--;
+            ic1ispieler3--;
         }
 
         //c1z4s3
-        if (c1spieler1 != 0) {
+        if (ic1ispieler1 != 0) {
             c1z4s3sprite.setColor(farben[0]);
             spiel.draw(c1z4s3sprite);
-            c1spieler1--;
+            ic1ispieler1--;
         }
-        else if (c1spieler2 != 0) {
+        else if (ic1ispieler2 != 0) {
             c1z4s3sprite.setColor(farben[1]);
             spiel.draw(c1z4s3sprite);
-            c1spieler2--;
+            ic1ispieler2--;
         }
-        else if (c1spieler3 != 0) {
+        else if (ic1ispieler3 != 0) {
             c1z4s3sprite.setColor(farben[2]);
             spiel.draw(c1z4s3sprite);
-            c1spieler3--;
+            ic1ispieler3--;
         }
 
         //c1z4s4
-        if (c1spieler1 != 0) {
+        if (ic1ispieler1 != 0) {
             c1z4s4sprite.setColor(farben[0]);
             spiel.draw(c1z4s4sprite);
-            c1spieler1--;
+            ic1ispieler1--;
         }
-        else if (c1spieler2 != 0) {
+        else if (ic1ispieler2 != 0) {
             c1z4s4sprite.setColor(farben[1]);
             spiel.draw(c1z4s4sprite);
-            c1spieler2--;
+            ic1ispieler2--;
         }
-        else if (c1spieler3 != 0) {
+        else if (ic1ispieler3 != 0) {
             c1z4s4sprite.setColor(farben[2]);
             spiel.draw(c1z4s4sprite);
-            c1spieler3--;
+            ic1ispieler3--;
         }
 
         //c1z5s1
-        if (c1spieler1 != 0) {
+        if (ic1ispieler1 != 0) {
             c1z5s1sprite.setColor(farben[0]);
             spiel.draw(c1z5s1sprite);
-            c1spieler1--;
+            ic1ispieler1--;
         }
-        else if (c1spieler2 != 0) {
+        else if (ic1ispieler2 != 0) {
             c1z5s1sprite.setColor(farben[1]);
             spiel.draw(c1z5s1sprite);
-            c1spieler2--;
+            ic1ispieler2--;
         }
-        else if (c1spieler3 != 0) {
+        else if (ic1ispieler3 != 0) {
             c1z5s1sprite.setColor(farben[2]);
             spiel.draw(c1z5s1sprite);
-            c1spieler3--;
+            ic1ispieler3--;
         }
 
         //c1z5s2
-        if (c1spieler1 != 0) {
+        if (ic1ispieler1 != 0) {
             c1z5s2sprite.setColor(farben[0]);
             spiel.draw(c1z5s2sprite);
-            c1spieler1--;
+            ic1ispieler1--;
         }
-        else if (c1spieler2 != 0) {
+        else if (ic1ispieler2 != 0) {
             c1z5s2sprite.setColor(farben[1]);
             spiel.draw(c1z5s2sprite);
-            c1spieler2--;
+            ic1ispieler2--;
         }
-        else if (c1spieler3 != 0) {
+        else if (ic1ispieler3 != 0) {
             c1z5s2sprite.setColor(farben[2]);
             spiel.draw(c1z5s2sprite);
-            c1spieler3--;
+            ic1ispieler3--;
         }
 
         //c1z5s3
-        if (c1spieler1 != 0) {
+        if (ic1ispieler1 != 0) {
             c1z5s3sprite.setColor(farben[0]);
             spiel.draw(c1z5s3sprite);
-            c1spieler1--;
+            ic1ispieler1--;
         }
-        else if (c1spieler2 != 0) {
+        else if (ic1ispieler2 != 0) {
             c1z5s3sprite.setColor(farben[1]);
             spiel.draw(c1z5s3sprite);
-            c1spieler2--;
+            ic1ispieler2--;
         }
-        else if (c1spieler3 != 0) {
+        else if (ic1ispieler3 != 0) {
             c1z5s3sprite.setColor(farben[2]);
             spiel.draw(c1z5s3sprite);
-            c1spieler3--;
+            ic1ispieler3--;
         }
 
         //c1z5s4
-        if (c1spieler1 != 0) {
+        if (ic1ispieler1 != 0) {
             c1z5s4sprite.setColor(farben[0]);
             spiel.draw(c1z5s4sprite);
-            c1spieler1--;
+            ic1ispieler1--;
         }
-        else if (c1spieler2 != 0) {
+        else if (ic1ispieler2 != 0) {
             c1z5s4sprite.setColor(farben[1]);
             spiel.draw(c1z5s4sprite);
-            c1spieler2--;
+            ic1ispieler2--;
         }
-        else if (c1spieler3 != 0) {
+        else if (ic1ispieler3 != 0) {
             c1z5s4sprite.setColor(farben[2]);
             spiel.draw(c1z5s4sprite);
-            c1spieler3--;
+            ic1ispieler3--;
         }
 
         //Casino 2
         //c2z1s1
-        if (c2spieler1 != 0) {
+        if (ic2ispieler1 != 0) {
             c2z1s1sprite.setColor(farben[0]);
             spiel.draw(c2z1s1sprite);
-            c2spieler1--;
+            ic2ispieler1--;
         }
-        else if (c2spieler2 != 0) {
+        else if (ic2ispieler2 != 0) {
             c2z1s1sprite.setColor(farben[1]);
             spiel.draw(c2z1s1sprite);
-            c2spieler2--;
+            ic2ispieler2--;
         }
-        else if (c2spieler3 != 0) {
+        else if (ic2ispieler3 != 0) {
             c2z1s1sprite.setColor(farben[2]);
             spiel.draw(c2z1s1sprite);
-            c2spieler3--;
+            ic2ispieler3--;
         }
 
         //c2z1s2
-        if (c2spieler1 != 0) {
+        if (ic2ispieler1 != 0) {
             c2z1s2sprite.setColor(farben[0]);
             spiel.draw(c2z1s2sprite);
-            c2spieler1--;
+            ic2ispieler1--;
         }
-        else if (c2spieler2 != 0) {
+        else if (ic2ispieler2 != 0) {
             c2z1s2sprite.setColor(farben[1]);
             spiel.draw(c2z1s2sprite);
-            c2spieler2--;
+            ic2ispieler2--;
         }
-        else if (c2spieler3 != 0) {
+        else if (ic2ispieler3 != 0) {
             c2z1s2sprite.setColor(farben[2]);
             spiel.draw(c2z1s2sprite);
-            c2spieler3--;
+            ic2ispieler3--;
         }
 
         //c2z1s3
-        if (c2spieler1 != 0) {
+        if (ic2ispieler1 != 0) {
             c2z1s3sprite.setColor(farben[0]);
             spiel.draw(c2z1s3sprite);
-            c2spieler1--;
+            ic2ispieler1--;
         }
-        else if (c2spieler2 != 0) {
+        else if (ic2ispieler2 != 0) {
             c2z1s3sprite.setColor(farben[1]);
             spiel.draw(c2z1s3sprite);
-            c2spieler2--;
+            ic2ispieler2--;
         }
-        else if (c2spieler3 != 0) {
+        else if (ic2ispieler3 != 0) {
             c2z1s3sprite.setColor(farben[2]);
             spiel.draw(c2z1s3sprite);
-            c2spieler3--;
+            ic2ispieler3--;
         }
 
         //c2z1s4
-        if (c2spieler1 != 0) {
+        if (ic2ispieler1 != 0) {
             c2z1s4sprite.setColor(farben[0]);
             spiel.draw(c2z1s4sprite);
-            c2spieler1--;
+            ic2ispieler1--;
         }
-        else if (c2spieler2 != 0) {
+        else if (ic2ispieler2 != 0) {
             c2z1s4sprite.setColor(farben[1]);
             spiel.draw(c2z1s4sprite);
-            c2spieler2--;
+            ic2ispieler2--;
         }
-        else if (c2spieler3 != 0) {
+        else if (ic2ispieler3 != 0) {
             c2z1s4sprite.setColor(farben[2]);
             spiel.draw(c2z1s4sprite);
-            c2spieler3--;
+            ic2ispieler3--;
         }
 
         //c2z2s1
-        if (c2spieler1 != 0) {
+        if (ic2ispieler1 != 0) {
             c2z2s1sprite.setColor(farben[0]);
             spiel.draw(c2z2s1sprite);
-            c2spieler1--;
+            ic2ispieler1--;
         }
-        else if (c2spieler2 != 0) {
+        else if (ic2ispieler2 != 0) {
             c2z2s1sprite.setColor(farben[1]);
             spiel.draw(c2z2s1sprite);
-            c2spieler2--;
+            ic2ispieler2--;
         }
-        else if (c2spieler3 != 0) {
+        else if (ic2ispieler3 != 0) {
             c2z2s1sprite.setColor(farben[2]);
             spiel.draw(c2z2s1sprite);
-            c2spieler3--;
+            ic2ispieler3--;
         }
 
         //c2z2s2
-        if (c2spieler1 != 0) {
+        if (ic2ispieler1 != 0) {
             c2z2s2sprite.setColor(farben[0]);
             spiel.draw(c2z2s2sprite);
-            c2spieler1--;
+            ic2ispieler1--;
         }
-        else if (c2spieler2 != 0) {
+        else if (ic2ispieler2 != 0) {
             c2z2s2sprite.setColor(farben[1]);
             spiel.draw(c2z2s2sprite);
-            c2spieler2--;
+            ic2ispieler2--;
         }
-        else if (c2spieler3 != 0) {
+        else if (ic2ispieler3 != 0) {
             c2z2s2sprite.setColor(farben[2]);
             spiel.draw(c2z2s2sprite);
-            c2spieler3--;
+            ic2ispieler3--;
         }
 
         //c2z2s3
-        if (c2spieler1 != 0) {
+        if (ic2ispieler1 != 0) {
             c2z2s3sprite.setColor(farben[0]);
             spiel.draw(c2z2s3sprite);
-            c2spieler1--;
+            ic2ispieler1--;
         }
-        else if (c2spieler2 != 0) {
+        else if (ic2ispieler2 != 0) {
             c2z2s3sprite.setColor(farben[1]);
             spiel.draw(c2z2s3sprite);
-            c2spieler2--;
+            ic2ispieler2--;
         }
-        else if (c2spieler3 != 0) {
+        else if (ic2ispieler3 != 0) {
             c2z2s3sprite.setColor(farben[2]);
             spiel.draw(c2z2s3sprite);
-            c2spieler3--;
+            ic2ispieler3--;
         }
 
         //c2z2s4
-        if (c2spieler1 != 0) {
+        if (ic2ispieler1 != 0) {
             c2z2s4sprite.setColor(farben[0]);
             spiel.draw(c2z2s4sprite);
-            c2spieler1--;
+            ic2ispieler1--;
         }
-        else if (c2spieler2 != 0) {
+        else if (ic2ispieler2 != 0) {
             c2z2s4sprite.setColor(farben[1]);
             spiel.draw(c2z2s4sprite);
-            c2spieler2--;
+            ic2ispieler2--;
         }
-        else if (c2spieler3 != 0) {
+        else if (ic2ispieler3 != 0) {
             c2z2s4sprite.setColor(farben[2]);
             spiel.draw(c2z2s4sprite);
-            c2spieler3--;
+            ic2ispieler3--;
         }
 
         //c2z3s1
-        if (c2spieler1 != 0) {
+        if (ic2ispieler1 != 0) {
             c2z3s1sprite.setColor(farben[0]);
             spiel.draw(c2z3s1sprite);
-            c2spieler1--;
+            ic2ispieler1--;
         }
-        else if (c2spieler2 != 0) {
+        else if (ic2ispieler2 != 0) {
             c2z3s1sprite.setColor(farben[1]);
             spiel.draw(c2z3s1sprite);
-            c2spieler2--;
+            ic2ispieler2--;
         }
-        else if (c2spieler3 != 0) {
+        else if (ic2ispieler3 != 0) {
             c2z3s1sprite.setColor(farben[2]);
             spiel.draw(c2z3s1sprite);
-            c2spieler3--;
+            ic2ispieler3--;
         }
 
         //c2z3s2
-        if (c2spieler1 != 0) {
+        if (ic2ispieler1 != 0) {
             c2z3s2sprite.setColor(farben[0]);
             spiel.draw(c2z3s2sprite);
-            c2spieler1--;
+            ic2ispieler1--;
         }
-        else if (c2spieler2 != 0) {
+        else if (ic2ispieler2 != 0) {
             c2z3s2sprite.setColor(farben[1]);
             spiel.draw(c2z3s2sprite);
-            c2spieler2--;
+            ic2ispieler2--;
         }
-        else if (c2spieler3 != 0) {
+        else if (ic2ispieler3 != 0) {
             c2z3s2sprite.setColor(farben[2]);
             spiel.draw(c2z3s2sprite);
-            c2spieler3--;
+            ic2ispieler3--;
         }
 
         //c2z3s3
-        if (c2spieler1 != 0) {
+        if (ic2ispieler1 != 0) {
             c2z3s3sprite.setColor(farben[0]);
             spiel.draw(c2z3s3sprite);
-            c2spieler1--;
+            ic2ispieler1--;
         }
-        else if (c2spieler2 != 0) {
+        else if (ic2ispieler2 != 0) {
             c2z3s3sprite.setColor(farben[1]);
             spiel.draw(c2z3s3sprite);
-            c2spieler2--;
+            ic2ispieler2--;
         }
-        else if (c2spieler3 != 0) {
+        else if (ic2ispieler3 != 0) {
             c2z3s3sprite.setColor(farben[2]);
             spiel.draw(c2z3s3sprite);
-            c2spieler3--;
+            ic2ispieler3--;
         }
 
         //c2z3s4
-        if (c2spieler1 != 0) {
+        if (ic2ispieler1 != 0) {
             c2z3s4sprite.setColor(farben[0]);
             spiel.draw(c2z3s4sprite);
-            c2spieler1--;
+            ic2ispieler1--;
         }
-        else if (c2spieler2 != 0) {
+        else if (ic2ispieler2 != 0) {
             c2z3s4sprite.setColor(farben[1]);
             spiel.draw(c2z3s4sprite);
-            c2spieler2--;
+            ic2ispieler2--;
         }
-        else if (c2spieler3 != 0) {
+        else if (ic2ispieler3 != 0) {
             c2z3s4sprite.setColor(farben[2]);
             spiel.draw(c2z3s4sprite);
-            c2spieler3--;
+            ic2ispieler3--;
         }
 
         //c2z4s1
-        if (c2spieler1 != 0) {
+        if (ic2ispieler1 != 0) {
             c2z4s1sprite.setColor(farben[0]);
             spiel.draw(c2z4s1sprite);
-            c2spieler1--;
+            ic2ispieler1--;
         }
-        else if (c2spieler2 != 0) {
+        else if (ic2ispieler2 != 0) {
             c2z4s1sprite.setColor(farben[1]);
             spiel.draw(c2z4s1sprite);
-            c2spieler2--;
+            ic2ispieler2--;
         }
-        else if (c2spieler3 != 0) {
+        else if (ic2ispieler3 != 0) {
             c2z4s1sprite.setColor(farben[2]);
             spiel.draw(c2z4s1sprite);
-            c2spieler3--;
+            ic2ispieler3--;
         }
 
         //c2z4s2
-        if (c2spieler1 != 0) {
+        if (ic2ispieler1 != 0) {
             c2z4s2sprite.setColor(farben[0]);
             spiel.draw(c2z4s2sprite);
-            c2spieler1--;
+            ic2ispieler1--;
         }
-        else if (c2spieler2 != 0) {
+        else if (ic2ispieler2 != 0) {
             c2z4s2sprite.setColor(farben[1]);
             spiel.draw(c2z4s2sprite);
-            c2spieler2--;
+            ic2ispieler2--;
         }
-        else if (c2spieler3 != 0) {
+        else if (ic2ispieler3 != 0) {
             c2z4s2sprite.setColor(farben[2]);
             spiel.draw(c2z4s2sprite);
-            c2spieler3--;
+            ic2ispieler3--;
         }
 
         //c2z4s3
-        if (c2spieler1 != 0) {
+        if (ic2ispieler1 != 0) {
             c2z4s3sprite.setColor(farben[0]);
             spiel.draw(c2z4s3sprite);
-            c2spieler1--;
+            ic2ispieler1--;
         }
-        else if (c2spieler2 != 0) {
+        else if (ic2ispieler2 != 0) {
             c2z4s3sprite.setColor(farben[1]);
             spiel.draw(c2z4s3sprite);
-            c2spieler2--;
+            ic2ispieler2--;
         }
-        else if (c2spieler3 != 0) {
+        else if (ic2ispieler3 != 0) {
             c2z4s3sprite.setColor(farben[2]);
             spiel.draw(c2z4s3sprite);
-            c2spieler3--;
+            ic2ispieler3--;
         }
 
         //c2z4s4
-        if (c2spieler1 != 0) {
+        if (ic2ispieler1 != 0) {
             c2z4s4sprite.setColor(farben[0]);
             spiel.draw(c2z4s4sprite);
-            c2spieler1--;
+            ic2ispieler1--;
         }
-        else if (c2spieler2 != 0) {
+        else if (ic2ispieler2 != 0) {
             c2z4s4sprite.setColor(farben[1]);
             spiel.draw(c2z4s4sprite);
-            c2spieler2--;
+            ic2ispieler2--;
         }
-        else if (c2spieler3 != 0) {
+        else if (ic2ispieler3 != 0) {
             c2z4s4sprite.setColor(farben[2]);
             spiel.draw(c2z4s4sprite);
-            c2spieler3--;
+            ic2ispieler3--;
         }
 
         //c2z5s1
-        if (c2spieler1 != 0) {
+        if (ic2ispieler1 != 0) {
             c2z5s1sprite.setColor(farben[0]);
             spiel.draw(c2z5s1sprite);
-            c2spieler1--;
+            ic2ispieler1--;
         }
-        else if (c2spieler2 != 0) {
+        else if (ic2ispieler2 != 0) {
             c2z5s1sprite.setColor(farben[1]);
             spiel.draw(c2z5s1sprite);
-            c2spieler2--;
+            ic2ispieler2--;
         }
-        else if (c2spieler3 != 0) {
+        else if (ic2ispieler3 != 0) {
             c2z5s1sprite.setColor(farben[2]);
             spiel.draw(c2z5s1sprite);
-            c2spieler3--;
+            ic2ispieler3--;
         }
 
         //c2z5s2
-        if (c2spieler1 != 0) {
+        if (ic2ispieler1 != 0) {
             c2z5s2sprite.setColor(farben[0]);
             spiel.draw(c2z5s2sprite);
-            c2spieler1--;
+            ic2ispieler1--;
         }
-        else if (c2spieler2 != 0) {
+        else if (ic2ispieler2 != 0) {
             c2z5s2sprite.setColor(farben[1]);
             spiel.draw(c2z5s2sprite);
-            c2spieler2--;
+            ic2ispieler2--;
         }
-        else if (c2spieler3 != 0) {
+        else if (ic2ispieler3 != 0) {
             c2z5s2sprite.setColor(farben[2]);
             spiel.draw(c2z5s2sprite);
-            c2spieler3--;
+            ic2ispieler3--;
         }
 
         //c2z5s3
-        if (c2spieler1 != 0) {
+        if (ic2ispieler1 != 0) {
             c2z5s3sprite.setColor(farben[0]);
             spiel.draw(c2z5s3sprite);
-            c2spieler1--;
+            ic2ispieler1--;
         }
-        else if (c2spieler2 != 0) {
+        else if (ic2ispieler2 != 0) {
             c2z5s3sprite.setColor(farben[1]);
             spiel.draw(c2z5s3sprite);
-            c2spieler2--;
+            ic2ispieler2--;
         }
-        else if (c2spieler3 != 0) {
+        else if (ic2ispieler3 != 0) {
             c2z5s3sprite.setColor(farben[2]);
             spiel.draw(c2z5s3sprite);
-            c2spieler3--;
+            ic2ispieler3--;
         }
 
         //c2z5s4
-        if (c2spieler1 != 0) {
+        if (ic2ispieler1 != 0) {
             c2z5s4sprite.setColor(farben[0]);
             spiel.draw(c2z5s4sprite);
-            c2spieler1--;
+            ic2ispieler1--;
         }
-        else if (c2spieler2 != 0) {
+        else if (ic2ispieler2 != 0) {
             c2z5s4sprite.setColor(farben[1]);
             spiel.draw(c2z5s4sprite);
-            c2spieler2--;
+            ic2ispieler2--;
         }
-        else if (c2spieler3 != 0) {
+        else if (ic2ispieler3 != 0) {
             c2z5s4sprite.setColor(farben[2]);
             spiel.draw(c2z5s4sprite);
-            c2spieler3--;
+            ic2ispieler3--;
         }
 
         //Casino 3
         //c3z1s1
-        if (c3spieler1 != 0) {
+        if (ic3ispieler1 != 0) {
             c3z1s1sprite.setColor(farben[0]);
             spiel.draw(c3z1s1sprite);
-            c3spieler1--;
+            ic3ispieler1--;
         }
-        else if (c3spieler2 != 0) {
+        else if (ic3ispieler2 != 0) {
             c3z1s1sprite.setColor(farben[1]);
             spiel.draw(c3z1s1sprite);
-            c3spieler2--;
+            ic3ispieler2--;
         }
-        else if (c3spieler3 != 0) {
+        else if (ic3ispieler3 != 0) {
             c3z1s1sprite.setColor(farben[2]);
             spiel.draw(c3z1s1sprite);
-            c3spieler3--;
+            ic3ispieler3--;
         }
 
         //c3z1s2
-        if (c3spieler1 != 0) {
+        if (ic3ispieler1 != 0) {
             c3z1s2sprite.setColor(farben[0]);
             spiel.draw(c3z1s2sprite);
-            c3spieler1--;
+            ic3ispieler1--;
         }
-        else if (c3spieler2 != 0) {
+        else if (ic3ispieler2 != 0) {
             c3z1s2sprite.setColor(farben[1]);
             spiel.draw(c3z1s2sprite);
-            c3spieler2--;
+            ic3ispieler2--;
         }
-        else if (c3spieler3 != 0) {
+        else if (ic3ispieler3 != 0) {
             c3z1s2sprite.setColor(farben[2]);
             spiel.draw(c3z1s2sprite);
-            c3spieler3--;
+            ic3ispieler3--;
         }
 
         //c3z1s3
-        if (c3spieler1 != 0) {
+        if (ic3ispieler1 != 0) {
             c3z1s3sprite.setColor(farben[0]);
             spiel.draw(c3z1s3sprite);
-            c3spieler1--;
+            ic3ispieler1--;
         }
-        else if (c3spieler2 != 0) {
+        else if (ic3ispieler2 != 0) {
             c3z1s3sprite.setColor(farben[1]);
             spiel.draw(c3z1s3sprite);
-            c3spieler2--;
+            ic3ispieler2--;
         }
-        else if (c3spieler3 != 0) {
+        else if (ic3ispieler3 != 0) {
             c3z1s3sprite.setColor(farben[2]);
             spiel.draw(c3z1s3sprite);
-            c3spieler3--;
+            ic3ispieler3--;
         }
 
         //c3z1s4
-        if (c3spieler1 != 0) {
+        if (ic3ispieler1 != 0) {
             c3z1s4sprite.setColor(farben[0]);
             spiel.draw(c3z1s4sprite);
-            c3spieler1--;
+            ic3ispieler1--;
         }
-        else if (c3spieler2 != 0) {
+        else if (ic3ispieler2 != 0) {
             c3z1s4sprite.setColor(farben[1]);
             spiel.draw(c3z1s4sprite);
-            c3spieler2--;
+            ic3ispieler2--;
         }
-        else if (c3spieler3 != 0) {
+        else if (ic3ispieler3 != 0) {
             c3z1s4sprite.setColor(farben[2]);
             spiel.draw(c3z1s4sprite);
-            c3spieler3--;
+            ic3ispieler3--;
         }
 
         //c3z2s1
-        if (c3spieler1 != 0) {
+        if (ic3ispieler1 != 0) {
             c3z2s1sprite.setColor(farben[0]);
             spiel.draw(c3z2s1sprite);
-            c3spieler1--;
+            ic3ispieler1--;
         }
-        else if (c3spieler2 != 0) {
+        else if (ic3ispieler2 != 0) {
             c3z2s1sprite.setColor(farben[1]);
             spiel.draw(c3z2s1sprite);
-            c3spieler2--;
+            ic3ispieler2--;
         }
-        else if (c3spieler3 != 0) {
+        else if (ic3ispieler3 != 0) {
             c3z2s1sprite.setColor(farben[2]);
             spiel.draw(c3z2s1sprite);
-            c3spieler3--;
+            ic3ispieler3--;
         }
 
         //c3z2s2
-        if (c3spieler1 != 0) {
+        if (ic3ispieler1 != 0) {
             c3z2s2sprite.setColor(farben[0]);
             spiel.draw(c3z2s2sprite);
-            c3spieler1--;
+            ic3ispieler1--;
         }
-        else if (c3spieler2 != 0) {
+        else if (ic3ispieler2 != 0) {
             c3z2s2sprite.setColor(farben[1]);
             spiel.draw(c3z2s2sprite);
-            c3spieler2--;
+            ic3ispieler2--;
         }
-        else if (c3spieler3 != 0) {
+        else if (ic3ispieler3 != 0) {
             c3z2s2sprite.setColor(farben[2]);
             spiel.draw(c3z2s2sprite);
-            c3spieler3--;
+            ic3ispieler3--;
         }
 
         //c3z2s3
-        if (c3spieler1 != 0) {
+        if (ic3ispieler1 != 0) {
             c3z2s3sprite.setColor(farben[0]);
             spiel.draw(c3z2s3sprite);
-            c3spieler1--;
+            ic3ispieler1--;
         }
-        else if (c3spieler2 != 0) {
+        else if (ic3ispieler2 != 0) {
             c3z2s3sprite.setColor(farben[1]);
             spiel.draw(c3z2s3sprite);
-            c3spieler2--;
+            ic3ispieler2--;
         }
-        else if (c3spieler3 != 0) {
+        else if (ic3ispieler3 != 0) {
             c3z2s3sprite.setColor(farben[2]);
             spiel.draw(c3z2s3sprite);
-            c3spieler3--;
+            ic3ispieler3--;
         }
 
         //c3z2s4
-        if (c3spieler1 != 0) {
+        if (ic3ispieler1 != 0) {
             c3z2s4sprite.setColor(farben[0]);
             spiel.draw(c3z2s4sprite);
-            c3spieler1--;
+            ic3ispieler1--;
         }
-        else if (c3spieler2 != 0) {
+        else if (ic3ispieler2 != 0) {
             c3z2s4sprite.setColor(farben[1]);
             spiel.draw(c3z2s4sprite);
-            c3spieler2--;
+            ic3ispieler2--;
         }
-        else if (c3spieler3 != 0) {
+        else if (ic3ispieler3 != 0) {
             c3z2s4sprite.setColor(farben[2]);
             spiel.draw(c3z2s4sprite);
-            c3spieler3--;
+            ic3ispieler3--;
         }
 
         //c3z3s1
-        if (c3spieler1 != 0) {
+        if (ic3ispieler1 != 0) {
             c3z3s1sprite.setColor(farben[0]);
             spiel.draw(c3z3s1sprite);
-            c3spieler1--;
+            ic3ispieler1--;
         }
-        else if (c3spieler2 != 0) {
+        else if (ic3ispieler2 != 0) {
             c3z3s1sprite.setColor(farben[1]);
             spiel.draw(c3z3s1sprite);
-            c3spieler2--;
+            ic3ispieler2--;
         }
-        else if (c3spieler3 != 0) {
+        else if (ic3ispieler3 != 0) {
             c3z3s1sprite.setColor(farben[2]);
             spiel.draw(c3z3s1sprite);
-            c3spieler3--;
+            ic3ispieler3--;
         }
 
         //c3z3s2
-        if (c3spieler1 != 0) {
+        if (ic3ispieler1 != 0) {
             c3z3s2sprite.setColor(farben[0]);
             spiel.draw(c3z3s2sprite);
-            c3spieler1--;
+            ic3ispieler1--;
         }
-        else if (c3spieler2 != 0) {
+        else if (ic3ispieler2 != 0) {
             c3z3s2sprite.setColor(farben[1]);
             spiel.draw(c3z3s2sprite);
-            c3spieler2--;
+            ic3ispieler2--;
         }
-        else if (c3spieler3 != 0) {
+        else if (ic3ispieler3 != 0) {
             c3z3s2sprite.setColor(farben[2]);
             spiel.draw(c3z3s2sprite);
-            c3spieler3--;
+            ic3ispieler3--;
         }
 
         //c3z3s3
-        if (c3spieler1 != 0) {
+        if (ic3ispieler1 != 0) {
             c3z3s3sprite.setColor(farben[0]);
             spiel.draw(c3z3s3sprite);
-            c3spieler1--;
+            ic3ispieler1--;
         }
-        else if (c3spieler2 != 0) {
+        else if (ic3ispieler2 != 0) {
             c3z3s3sprite.setColor(farben[1]);
             spiel.draw(c3z3s3sprite);
-            c3spieler2--;
+            ic3ispieler2--;
         }
-        else if (c3spieler3 != 0) {
+        else if (ic3ispieler3 != 0) {
             c3z3s3sprite.setColor(farben[2]);
             spiel.draw(c3z3s3sprite);
-            c3spieler3--;
+            ic3ispieler3--;
         }
 
         //c3z3s4
-        if (c3spieler1 != 0) {
+        if (ic3ispieler1 != 0) {
             c3z3s4sprite.setColor(farben[0]);
             spiel.draw(c3z3s4sprite);
-            c3spieler1--;
+            ic3ispieler1--;
         }
-        else if (c3spieler2 != 0) {
+        else if (ic3ispieler2 != 0) {
             c3z3s4sprite.setColor(farben[1]);
             spiel.draw(c3z3s4sprite);
-            c3spieler2--;
+            ic3ispieler2--;
         }
-        else if (c3spieler3 != 0) {
+        else if (ic3ispieler3 != 0) {
             c3z3s4sprite.setColor(farben[2]);
             spiel.draw(c3z3s4sprite);
-            c3spieler3--;
+            ic3ispieler3--;
         }
 
         //c3z4s1
-        if (c3spieler1 != 0) {
+        if (ic3ispieler1 != 0) {
             c3z4s1sprite.setColor(farben[0]);
             spiel.draw(c3z4s1sprite);
-            c3spieler1--;
+            ic3ispieler1--;
         }
-        else if (c3spieler2 != 0) {
+        else if (ic3ispieler2 != 0) {
             c3z4s1sprite.setColor(farben[1]);
             spiel.draw(c3z4s1sprite);
-            c3spieler2--;
+            ic3ispieler2--;
         }
-        else if (c3spieler3 != 0) {
+        else if (ic3ispieler3 != 0) {
             c3z4s1sprite.setColor(farben[2]);
             spiel.draw(c3z4s1sprite);
-            c3spieler3--;
+            ic3ispieler3--;
         }
 
         //c3z4s2
-        if (c3spieler1 != 0) {
+        if (ic3ispieler1 != 0) {
             c3z4s2sprite.setColor(farben[0]);
             spiel.draw(c3z4s2sprite);
-            c3spieler1--;
+            ic3ispieler1--;
         }
-        else if (c3spieler2 != 0) {
+        else if (ic3ispieler2 != 0) {
             c3z4s2sprite.setColor(farben[1]);
             spiel.draw(c3z4s2sprite);
-            c3spieler2--;
+            ic3ispieler2--;
         }
-        else if (c3spieler3 != 0) {
+        else if (ic3ispieler3 != 0) {
             c3z4s2sprite.setColor(farben[2]);
             spiel.draw(c3z4s2sprite);
-            c3spieler3--;
+            ic3ispieler3--;
         }
 
         //c3z4s3
-        if (c3spieler1 != 0) {
+        if (ic3ispieler1 != 0) {
             c3z4s3sprite.setColor(farben[0]);
             spiel.draw(c3z4s3sprite);
-            c3spieler1--;
+            ic3ispieler1--;
         }
-        else if (c3spieler2 != 0) {
+        else if (ic3ispieler2 != 0) {
             c3z4s3sprite.setColor(farben[1]);
             spiel.draw(c3z4s3sprite);
-            c3spieler2--;
+            ic3ispieler2--;
         }
-        else if (c3spieler3 != 0) {
+        else if (ic3ispieler3 != 0) {
             c3z4s3sprite.setColor(farben[2]);
             spiel.draw(c3z4s3sprite);
-            c3spieler3--;
+            ic3ispieler3--;
         }
 
         //c3z4s4
-        if (c3spieler1 != 0) {
+        if (ic3ispieler1 != 0) {
             c3z4s4sprite.setColor(farben[0]);
             spiel.draw(c3z4s4sprite);
-            c3spieler1--;
+            ic3ispieler1--;
         }
-        else if (c3spieler2 != 0) {
+        else if (ic3ispieler2 != 0) {
             c3z4s4sprite.setColor(farben[1]);
             spiel.draw(c3z4s4sprite);
-            c3spieler2--;
+            ic3ispieler2--;
         }
-        else if (c3spieler3 != 0) {
+        else if (ic3ispieler3 != 0) {
             c3z4s4sprite.setColor(farben[2]);
             spiel.draw(c3z4s4sprite);
-            c3spieler3--;
+            ic3ispieler3--;
         }
 
         //c3z5s1
-        if (c3spieler1 != 0) {
+        if (ic3ispieler1 != 0) {
             c3z5s1sprite.setColor(farben[0]);
             spiel.draw(c3z5s1sprite);
-            c3spieler1--;
+            ic3ispieler1--;
         }
-        else if (c3spieler2 != 0) {
+        else if (ic3ispieler2 != 0) {
             c3z5s1sprite.setColor(farben[1]);
             spiel.draw(c3z5s1sprite);
-            c3spieler2--;
+            ic3ispieler2--;
         }
-        else if (c3spieler3 != 0) {
+        else if (ic3ispieler3 != 0) {
             c3z5s1sprite.setColor(farben[2]);
             spiel.draw(c3z5s1sprite);
-            c3spieler3--;
+            ic3ispieler3--;
         }
 
         //c3z5s2
-        if (c3spieler1 != 0) {
+        if (ic3ispieler1 != 0) {
             c3z5s2sprite.setColor(farben[0]);
             spiel.draw(c3z5s2sprite);
-            c3spieler1--;
+            ic3ispieler1--;
         }
-        else if (c3spieler2 != 0) {
+        else if (ic3ispieler2 != 0) {
             c3z5s2sprite.setColor(farben[1]);
             spiel.draw(c3z5s2sprite);
-            c3spieler2--;
+            ic3ispieler2--;
         }
-        else if (c3spieler3 != 0) {
+        else if (ic3ispieler3 != 0) {
             c3z5s2sprite.setColor(farben[2]);
             spiel.draw(c3z5s2sprite);
-            c3spieler3--;
+            ic3ispieler3--;
         }
 
         //c3z5s3
-        if (c3spieler1 != 0) {
+        if (ic3ispieler1 != 0) {
             c3z5s3sprite.setColor(farben[0]);
             spiel.draw(c3z5s3sprite);
-            c3spieler1--;
+            ic3ispieler1--;
         }
-        else if (c3spieler2 != 0) {
+        else if (ic3ispieler2 != 0) {
             c3z5s3sprite.setColor(farben[1]);
             spiel.draw(c3z5s3sprite);
-            c3spieler2--;
+            ic3ispieler2--;
         }
-        else if (c3spieler3 != 0) {
+        else if (ic3ispieler3 != 0) {
             c3z5s3sprite.setColor(farben[2]);
             spiel.draw(c3z5s3sprite);
-            c3spieler3--;
+            ic3ispieler3--;
         }
 
         //c3z5s4
-        if (c3spieler1 != 0) {
+        if (ic3ispieler1 != 0) {
             c3z5s4sprite.setColor(farben[0]);
             spiel.draw(c3z5s4sprite);
-            c3spieler1--;
+            ic3ispieler1--;
         }
-        else if (c3spieler2 != 0) {
+        else if (ic3ispieler2 != 0) {
             c3z5s4sprite.setColor(farben[1]);
             spiel.draw(c3z5s4sprite);
-            c3spieler2--;
+            ic3ispieler2--;
         }
-        else if (c3spieler3 != 0) {
+        else if (ic3ispieler3 != 0) {
             c3z5s4sprite.setColor(farben[2]);
             spiel.draw(c3z5s4sprite);
-            c3spieler3--;
+            ic3ispieler3--;
         }
 
         //Casino 4
         //c4z1s1
-        if (c4spieler1 != 0) {
+        if (ic4ispieler1 != 0) {
             c4z1s1sprite.setColor(farben[0]);
             spiel.draw(c4z1s1sprite);
-            c4spieler1--;
+            ic4ispieler1--;
         }
-        else if (c4spieler2 != 0) {
+        else if (ic4ispieler2 != 0) {
             c4z1s1sprite.setColor(farben[1]);
             spiel.draw(c4z1s1sprite);
-            c4spieler2--;
+            ic4ispieler2--;
         }
-        else if (c4spieler3 != 0) {
+        else if (ic4ispieler3 != 0) {
             c4z1s1sprite.setColor(farben[2]);
             spiel.draw(c4z1s1sprite);
-            c4spieler3--;
+            ic4ispieler3--;
         }
 
         //c4z1s2
-        if (c4spieler1 != 0) {
+        if (ic4ispieler1 != 0) {
             c4z1s2sprite.setColor(farben[0]);
             spiel.draw(c4z1s2sprite);
-            c4spieler1--;
+            ic4ispieler1--;
         }
-        else if (c4spieler2 != 0) {
+        else if (ic4ispieler2 != 0) {
             c4z1s2sprite.setColor(farben[1]);
             spiel.draw(c4z1s2sprite);
-            c4spieler2--;
+            ic4ispieler2--;
         }
-        else if (c4spieler3 != 0) {
+        else if (ic4ispieler3 != 0) {
             c4z1s2sprite.setColor(farben[2]);
             spiel.draw(c4z1s2sprite);
-            c4spieler3--;
+            ic4ispieler3--;
         }
 
         //c4z1s3
-        if (c4spieler1 != 0) {
+        if (ic4ispieler1 != 0) {
             c4z1s3sprite.setColor(farben[0]);
             spiel.draw(c4z1s3sprite);
-            c4spieler1--;
+            ic4ispieler1--;
         }
-        else if (c4spieler2 != 0) {
+        else if (ic4ispieler2 != 0) {
             c4z1s3sprite.setColor(farben[1]);
             spiel.draw(c4z1s3sprite);
-            c4spieler2--;
+            ic4ispieler2--;
         }
-        else if (c4spieler3 != 0) {
+        else if (ic4ispieler3 != 0) {
             c4z1s3sprite.setColor(farben[2]);
             spiel.draw(c4z1s3sprite);
-            c4spieler3--;
+            ic4ispieler3--;
         }
 
         //c4z1s4
-        if (c4spieler1 != 0) {
+        if (ic4ispieler1 != 0) {
             c4z1s4sprite.setColor(farben[0]);
             spiel.draw(c4z1s4sprite);
-            c4spieler1--;
+            ic4ispieler1--;
         }
-        else if (c4spieler2 != 0) {
+        else if (ic4ispieler2 != 0) {
             c4z1s4sprite.setColor(farben[1]);
             spiel.draw(c4z1s4sprite);
-            c4spieler2--;
+            ic4ispieler2--;
         }
-        else if (c4spieler3 != 0) {
+        else if (ic4ispieler3 != 0) {
             c4z1s4sprite.setColor(farben[2]);
             spiel.draw(c4z1s4sprite);
-            c4spieler3--;
+            ic4ispieler3--;
         }
 
         //c4z2s1
-        if (c4spieler1 != 0) {
+        if (ic4ispieler1 != 0) {
             c4z2s1sprite.setColor(farben[0]);
             spiel.draw(c4z2s1sprite);
-            c4spieler1--;
+            ic4ispieler1--;
         }
-        else if (c4spieler2 != 0) {
+        else if (ic4ispieler2 != 0) {
             c4z2s1sprite.setColor(farben[1]);
             spiel.draw(c4z2s1sprite);
-            c4spieler2--;
+            ic4ispieler2--;
         }
-        else if (c4spieler3 != 0) {
+        else if (ic4ispieler3 != 0) {
             c4z2s1sprite.setColor(farben[2]);
             spiel.draw(c4z2s1sprite);
-            c4spieler3--;
+            ic4ispieler3--;
         }
 
         //c4z2s2
-        if (c4spieler1 != 0) {
+        if (ic4ispieler1 != 0) {
             c4z2s2sprite.setColor(farben[0]);
             spiel.draw(c4z2s2sprite);
-            c4spieler1--;
+            ic4ispieler1--;
         }
-        else if (c4spieler2 != 0) {
+        else if (ic4ispieler2 != 0) {
             c4z2s2sprite.setColor(farben[1]);
             spiel.draw(c4z2s2sprite);
-            c4spieler2--;
+            ic4ispieler2--;
         }
-        else if (c4spieler3 != 0) {
+        else if (ic4ispieler3 != 0) {
             c4z2s2sprite.setColor(farben[2]);
             spiel.draw(c4z2s2sprite);
-            c4spieler3--;
+            ic4ispieler3--;
         }
 
         //c4z2s3
-        if (c4spieler1 != 0) {
+        if (ic4ispieler1 != 0) {
             c4z2s3sprite.setColor(farben[0]);
             spiel.draw(c4z2s3sprite);
-            c4spieler1--;
+            ic4ispieler1--;
         }
-        else if (c4spieler2 != 0) {
+        else if (ic4ispieler2 != 0) {
             c4z2s3sprite.setColor(farben[1]);
             spiel.draw(c4z2s3sprite);
-            c4spieler2--;
+            ic4ispieler2--;
         }
-        else if (c4spieler3 != 0) {
+        else if (ic4ispieler3 != 0) {
             c4z2s3sprite.setColor(farben[2]);
             spiel.draw(c4z2s3sprite);
-            c4spieler3--;
+            ic4ispieler3--;
         }
 
         //c4z2s4
-        if (c4spieler1 != 0) {
+        if (ic4ispieler1 != 0) {
             c4z2s4sprite.setColor(farben[0]);
             spiel.draw(c4z2s4sprite);
-            c4spieler1--;
+            ic4ispieler1--;
         }
-        else if (c4spieler2 != 0) {
+        else if (ic4ispieler2 != 0) {
             c4z2s4sprite.setColor(farben[1]);
             spiel.draw(c4z2s4sprite);
-            c4spieler2--;
+            ic4ispieler2--;
         }
-        else if (c4spieler3 != 0) {
+        else if (ic4ispieler3 != 0) {
             c4z2s4sprite.setColor(farben[2]);
             spiel.draw(c4z2s4sprite);
-            c4spieler3--;
+            ic4ispieler3--;
         }
 
         //c4z3s1
-        if (c4spieler1 != 0) {
+        if (ic4ispieler1 != 0) {
             c4z3s1sprite.setColor(farben[0]);
             spiel.draw(c4z3s1sprite);
-            c4spieler1--;
+            ic4ispieler1--;
         }
-        else if (c4spieler2 != 0) {
+        else if (ic4ispieler2 != 0) {
             c4z3s1sprite.setColor(farben[1]);
             spiel.draw(c4z3s1sprite);
-            c4spieler2--;
+            ic4ispieler2--;
         }
-        else if (c4spieler3 != 0) {
+        else if (ic4ispieler3 != 0) {
             c4z3s1sprite.setColor(farben[2]);
             spiel.draw(c4z3s1sprite);
-            c4spieler3--;
+            ic4ispieler3--;
         }
 
         //c4z3s2
-        if (c4spieler1 != 0) {
+        if (ic4ispieler1 != 0) {
             c4z3s2sprite.setColor(farben[0]);
             spiel.draw(c4z3s2sprite);
-            c4spieler1--;
+            ic4ispieler1--;
         }
-        else if (c4spieler2 != 0) {
+        else if (ic4ispieler2 != 0) {
             c4z3s2sprite.setColor(farben[1]);
             spiel.draw(c4z3s2sprite);
-            c4spieler2--;
+            ic4ispieler2--;
         }
-        else if (c4spieler3 != 0) {
+        else if (ic4ispieler3 != 0) {
             c4z3s2sprite.setColor(farben[2]);
             spiel.draw(c4z3s2sprite);
-            c4spieler3--;
+            ic4ispieler3--;
         }
 
         //c4z3s3
-        if (c4spieler1 != 0) {
+        if (ic4ispieler1 != 0) {
             c4z3s3sprite.setColor(farben[0]);
             spiel.draw(c4z3s3sprite);
-            c4spieler1--;
+            ic4ispieler1--;
         }
-        else if (c4spieler2 != 0) {
+        else if (ic4ispieler2 != 0) {
             c4z3s3sprite.setColor(farben[1]);
             spiel.draw(c4z3s3sprite);
-            c4spieler2--;
+            ic4ispieler2--;
         }
-        else if (c4spieler3 != 0) {
+        else if (ic4ispieler3 != 0) {
             c4z3s3sprite.setColor(farben[2]);
             spiel.draw(c4z3s3sprite);
-            c4spieler3--;
+            ic4ispieler3--;
         }
 
         //c4z3s4
-        if (c4spieler1 != 0) {
+        if (ic4ispieler1 != 0) {
             c4z3s4sprite.setColor(farben[0]);
             spiel.draw(c4z3s4sprite);
-            c4spieler1--;
+            ic4ispieler1--;
         }
-        else if (c4spieler2 != 0) {
+        else if (ic4ispieler2 != 0) {
             c4z3s4sprite.setColor(farben[1]);
             spiel.draw(c4z3s4sprite);
-            c4spieler2--;
+            ic4ispieler2--;
         }
-        else if (c4spieler3 != 0) {
+        else if (ic4ispieler3 != 0) {
             c4z3s4sprite.setColor(farben[2]);
             spiel.draw(c4z3s4sprite);
-            c4spieler3--;
+            ic4ispieler3--;
         }
 
         //c4z4s1
-        if (c4spieler1 != 0) {
+        if (ic4ispieler1 != 0) {
             c4z4s1sprite.setColor(farben[0]);
             spiel.draw(c4z4s1sprite);
-            c4spieler1--;
+            ic4ispieler1--;
         }
-        else if (c4spieler2 != 0) {
+        else if (ic4ispieler2 != 0) {
             c4z4s1sprite.setColor(farben[1]);
             spiel.draw(c4z4s1sprite);
-            c4spieler2--;
+            ic4ispieler2--;
         }
-        else if (c4spieler3 != 0) {
+        else if (ic4ispieler3 != 0) {
             c4z4s1sprite.setColor(farben[2]);
             spiel.draw(c4z4s1sprite);
-            c4spieler3--;
+            ic4ispieler3--;
         }
 
         //c4z4s2
-        if (c4spieler1 != 0) {
+        if (ic4ispieler1 != 0) {
             c4z4s2sprite.setColor(farben[0]);
             spiel.draw(c4z4s2sprite);
-            c4spieler1--;
+            ic4ispieler1--;
         }
-        else if (c4spieler2 != 0) {
+        else if (ic4ispieler2 != 0) {
             c4z4s2sprite.setColor(farben[1]);
             spiel.draw(c4z4s2sprite);
-            c4spieler2--;
+            ic4ispieler2--;
         }
-        else if (c4spieler3 != 0) {
+        else if (ic4ispieler3 != 0) {
             c4z4s2sprite.setColor(farben[2]);
             spiel.draw(c4z4s2sprite);
-            c4spieler3--;
+            ic4ispieler3--;
         }
 
         //c4z4s3
-        if (c4spieler1 != 0) {
+        if (ic4ispieler1 != 0) {
             c4z4s3sprite.setColor(farben[0]);
             spiel.draw(c4z4s3sprite);
-            c4spieler1--;
+            ic4ispieler1--;
         }
-        else if (c4spieler2 != 0) {
+        else if (ic4ispieler2 != 0) {
             c4z4s3sprite.setColor(farben[1]);
             spiel.draw(c4z4s3sprite);
-            c4spieler2--;
+            ic4ispieler2--;
         }
-        else if (c4spieler3 != 0) {
+        else if (ic4ispieler3 != 0) {
             c4z4s3sprite.setColor(farben[2]);
             spiel.draw(c4z4s3sprite);
-            c4spieler3--;
+            ic4ispieler3--;
         }
 
         //c4z4s4
-        if (c4spieler1 != 0) {
+        if (ic4ispieler1 != 0) {
             c4z4s4sprite.setColor(farben[0]);
             spiel.draw(c4z4s4sprite);
-            c4spieler1--;
+            ic4ispieler1--;
         }
-        else if (c4spieler2 != 0) {
+        else if (ic4ispieler2 != 0) {
             c4z4s4sprite.setColor(farben[1]);
             spiel.draw(c4z4s4sprite);
-            c4spieler2--;
+            ic4ispieler2--;
         }
-        else if (c4spieler3 != 0) {
+        else if (ic4ispieler3 != 0) {
             c4z4s4sprite.setColor(farben[2]);
             spiel.draw(c4z4s4sprite);
-            c4spieler3--;
+            ic4ispieler3--;
         }
 
         //c4z5s1
-        if (c4spieler1 != 0) {
+        if (ic4ispieler1 != 0) {
             c4z5s1sprite.setColor(farben[0]);
             spiel.draw(c4z5s1sprite);
-            c4spieler1--;
+            ic4ispieler1--;
         }
-        else if (c4spieler2 != 0) {
+        else if (ic4ispieler2 != 0) {
             c4z5s1sprite.setColor(farben[1]);
             spiel.draw(c4z5s1sprite);
-            c4spieler2--;
+            ic4ispieler2--;
         }
-        else if (c4spieler3 != 0) {
+        else if (ic4ispieler3 != 0) {
             c4z5s1sprite.setColor(farben[2]);
             spiel.draw(c4z5s1sprite);
-            c4spieler3--;
+            ic4ispieler3--;
         }
 
         //c4z5s2
-        if (c4spieler1 != 0) {
+        if (ic4ispieler1 != 0) {
             c4z5s2sprite.setColor(farben[0]);
             spiel.draw(c4z5s2sprite);
-            c4spieler1--;
+            ic4ispieler1--;
         }
-        else if (c4spieler2 != 0) {
+        else if (ic4ispieler2 != 0) {
             c4z5s2sprite.setColor(farben[1]);
             spiel.draw(c4z5s2sprite);
-            c4spieler2--;
+            ic4ispieler2--;
         }
-        else if (c4spieler3 != 0) {
+        else if (ic4ispieler3 != 0) {
             c4z5s2sprite.setColor(farben[2]);
             spiel.draw(c4z5s2sprite);
-            c4spieler3--;
+            ic4ispieler3--;
         }
 
         //c4z5s3
-        if (c4spieler1 != 0) {
+        if (ic4ispieler1 != 0) {
             c4z5s3sprite.setColor(farben[0]);
             spiel.draw(c4z5s3sprite);
-            c4spieler1--;
+            ic4ispieler1--;
         }
-        else if (c4spieler2 != 0) {
+        else if (ic4ispieler2 != 0) {
             c4z5s3sprite.setColor(farben[1]);
             spiel.draw(c4z5s3sprite);
-            c4spieler2--;
+            ic4ispieler2--;
         }
-        else if (c4spieler3 != 0) {
+        else if (ic4ispieler3 != 0) {
             c4z5s3sprite.setColor(farben[2]);
             spiel.draw(c4z5s3sprite);
-            c4spieler3--;
+            ic4ispieler3--;
         }
 
         //c4z5s4
-        if (c4spieler1 != 0) {
+        if (ic4ispieler1 != 0) {
             c4z5s4sprite.setColor(farben[0]);
             spiel.draw(c4z5s4sprite);
-            c4spieler1--;
+            ic4ispieler1--;
         }
-        else if (c4spieler2 != 0) {
+        else if (ic4ispieler2 != 0) {
             c4z5s4sprite.setColor(farben[1]);
             spiel.draw(c4z5s4sprite);
-            c4spieler2--;
+            ic4ispieler2--;
         }
-        else if (c4spieler3 != 0) {
+        else if (ic4ispieler3 != 0) {
             c4z5s4sprite.setColor(farben[2]);
             spiel.draw(c4z5s4sprite);
-            c4spieler3--;
+            ic4ispieler3--;
         }
 
         //Casino 5
         //c5z1s1
-        if (c5spieler1 != 0) {
+        if (ic5ispieler1 != 0) {
             c5z1s1sprite.setColor(farben[0]);
             spiel.draw(c5z1s1sprite);
-            c5spieler1--;
+            ic5ispieler1--;
         }
-        else if (c5spieler2 != 0) {
+        else if (ic5ispieler2 != 0) {
             c5z1s1sprite.setColor(farben[1]);
             spiel.draw(c5z1s1sprite);
-            c5spieler2--;
+            ic5ispieler2--;
         }
-        else if (c5spieler3 != 0) {
+        else if (ic5ispieler3 != 0) {
             c5z1s1sprite.setColor(farben[2]);
             spiel.draw(c5z1s1sprite);
-            c5spieler3--;
+            ic5ispieler3--;
         }
 
         //c5z1s2
-        if (c5spieler1 != 0) {
+        if (ic5ispieler1 != 0) {
             c5z1s2sprite.setColor(farben[0]);
             spiel.draw(c5z1s2sprite);
-            c5spieler1--;
+            ic5ispieler1--;
         }
-        else if (c5spieler2 != 0) {
+        else if (ic5ispieler2 != 0) {
             c5z1s2sprite.setColor(farben[1]);
             spiel.draw(c5z1s2sprite);
-            c5spieler2--;
+            ic5ispieler2--;
         }
-        else if (c5spieler3 != 0) {
+        else if (ic5ispieler3 != 0) {
             c5z1s2sprite.setColor(farben[2]);
             spiel.draw(c5z1s2sprite);
-            c5spieler3--;
+            ic5ispieler3--;
         }
 
         //c5z1s3
-        if (c5spieler1 != 0) {
+        if (ic5ispieler1 != 0) {
             c5z1s3sprite.setColor(farben[0]);
             spiel.draw(c5z1s3sprite);
-            c5spieler1--;
+            ic5ispieler1--;
         }
-        else if (c5spieler2 != 0) {
+        else if (ic5ispieler2 != 0) {
             c5z1s3sprite.setColor(farben[1]);
             spiel.draw(c5z1s3sprite);
-            c5spieler2--;
+            ic5ispieler2--;
         }
-        else if (c5spieler3 != 0) {
+        else if (ic5ispieler3 != 0) {
             c5z1s3sprite.setColor(farben[2]);
             spiel.draw(c5z1s3sprite);
-            c5spieler3--;
+            ic5ispieler3--;
         }
 
         //c5z1s4
-        if (c5spieler1 != 0) {
+        if (ic5ispieler1 != 0) {
             c5z1s4sprite.setColor(farben[0]);
             spiel.draw(c5z1s4sprite);
-            c5spieler1--;
+            ic5ispieler1--;
         }
-        else if (c5spieler2 != 0) {
+        else if (ic5ispieler2 != 0) {
             c5z1s4sprite.setColor(farben[1]);
             spiel.draw(c5z1s4sprite);
-            c5spieler2--;
+            ic5ispieler2--;
         }
-        else if (c5spieler3 != 0) {
+        else if (ic5ispieler3 != 0) {
             c5z1s4sprite.setColor(farben[2]);
             spiel.draw(c5z1s4sprite);
-            c5spieler3--;
+            ic5ispieler3--;
         }
 
         //c5z2s1
-        if (c5spieler1 != 0) {
+        if (ic5ispieler1 != 0) {
             c5z2s1sprite.setColor(farben[0]);
             spiel.draw(c5z2s1sprite);
-            c5spieler1--;
+            ic5ispieler1--;
         }
-        else if (c5spieler2 != 0) {
+        else if (ic5ispieler2 != 0) {
             c5z2s1sprite.setColor(farben[1]);
             spiel.draw(c5z2s1sprite);
-            c5spieler2--;
+            ic5ispieler2--;
         }
-        else if (c5spieler3 != 0) {
+        else if (ic5ispieler3 != 0) {
             c5z2s1sprite.setColor(farben[2]);
             spiel.draw(c5z2s1sprite);
-            c5spieler3--;
+            ic5ispieler3--;
         }
 
         //c5z2s2
-        if (c5spieler1 != 0) {
+        if (ic5ispieler1 != 0) {
             c5z2s2sprite.setColor(farben[0]);
             spiel.draw(c5z2s2sprite);
-            c5spieler1--;
+            ic5ispieler1--;
         }
-        else if (c5spieler2 != 0) {
+        else if (ic5ispieler2 != 0) {
             c5z2s2sprite.setColor(farben[1]);
             spiel.draw(c5z2s2sprite);
-            c5spieler2--;
+            ic5ispieler2--;
         }
-        else if (c5spieler3 != 0) {
+        else if (ic5ispieler3 != 0) {
             c5z2s2sprite.setColor(farben[2]);
             spiel.draw(c5z2s2sprite);
-            c5spieler3--;
+            ic5ispieler3--;
         }
 
         //c5z2s3
-        if (c5spieler1 != 0) {
+        if (ic5ispieler1 != 0) {
             c5z2s3sprite.setColor(farben[0]);
             spiel.draw(c5z2s3sprite);
-            c5spieler1--;
+            ic5ispieler1--;
         }
-        else if (c5spieler2 != 0) {
+        else if (ic5ispieler2 != 0) {
             c5z2s3sprite.setColor(farben[1]);
             spiel.draw(c5z2s3sprite);
-            c5spieler2--;
+            ic5ispieler2--;
         }
-        else if (c5spieler3 != 0) {
+        else if (ic5ispieler3 != 0) {
             c5z2s3sprite.setColor(farben[2]);
             spiel.draw(c5z2s3sprite);
-            c5spieler3--;
+            ic5ispieler3--;
         }
 
         //c5z2s4
-        if (c5spieler1 != 0) {
+        if (ic5ispieler1 != 0) {
             c5z2s4sprite.setColor(farben[0]);
             spiel.draw(c5z2s4sprite);
-            c5spieler1--;
+            ic5ispieler1--;
         }
-        else if (c5spieler2 != 0) {
+        else if (ic5ispieler2 != 0) {
             c5z2s4sprite.setColor(farben[1]);
             spiel.draw(c5z2s4sprite);
-            c5spieler2--;
+            ic5ispieler2--;
         }
-        else if (c5spieler3 != 0) {
+        else if (ic5ispieler3 != 0) {
             c5z2s4sprite.setColor(farben[2]);
             spiel.draw(c5z2s4sprite);
-            c5spieler3--;
+            ic5ispieler3--;
         }
 
         //c5z3s1
-        if (c5spieler1 != 0) {
+        if (ic5ispieler1 != 0) {
             c5z3s1sprite.setColor(farben[0]);
             spiel.draw(c5z3s1sprite);
-            c5spieler1--;
+            ic5ispieler1--;
         }
-        else if (c5spieler2 != 0) {
+        else if (ic5ispieler2 != 0) {
             c5z3s1sprite.setColor(farben[1]);
             spiel.draw(c5z3s1sprite);
-            c5spieler2--;
+            ic5ispieler2--;
         }
-        else if (c5spieler3 != 0) {
+        else if (ic5ispieler3 != 0) {
             c5z3s1sprite.setColor(farben[2]);
             spiel.draw(c5z3s1sprite);
-            c5spieler3--;
+            ic5ispieler3--;
         }
 
         //c5z3s2
-        if (c5spieler1 != 0) {
+        if (ic5ispieler1 != 0) {
             c5z3s2sprite.setColor(farben[0]);
             spiel.draw(c5z3s2sprite);
-            c5spieler1--;
+            ic5ispieler1--;
         }
-        else if (c5spieler2 != 0) {
+        else if (ic5ispieler2 != 0) {
             c5z3s2sprite.setColor(farben[1]);
             spiel.draw(c5z3s2sprite);
-            c5spieler2--;
+            ic5ispieler2--;
         }
-        else if (c5spieler3 != 0) {
+        else if (ic5ispieler3 != 0) {
             c5z3s2sprite.setColor(farben[2]);
             spiel.draw(c5z3s2sprite);
-            c5spieler3--;
+            ic5ispieler3--;
         }
 
         //c5z3s3
-        if (c5spieler1 != 0) {
+        if (ic5ispieler1 != 0) {
             c5z3s3sprite.setColor(farben[0]);
             spiel.draw(c5z3s3sprite);
-            c5spieler1--;
+            ic5ispieler1--;
         }
-        else if (c5spieler2 != 0) {
+        else if (ic5ispieler2 != 0) {
             c5z3s3sprite.setColor(farben[1]);
             spiel.draw(c5z3s3sprite);
-            c5spieler2--;
+            ic5ispieler2--;
         }
-        else if (c5spieler3 != 0) {
+        else if (ic5ispieler3 != 0) {
             c5z3s3sprite.setColor(farben[2]);
             spiel.draw(c5z3s3sprite);
-            c5spieler3--;
+            ic5ispieler3--;
         }
 
         //c5z3s4
-        if (c5spieler1 != 0) {
+        if (ic5ispieler1 != 0) {
             c5z3s4sprite.setColor(farben[0]);
             spiel.draw(c5z3s4sprite);
-            c5spieler1--;
+            ic5ispieler1--;
         }
-        else if (c5spieler2 != 0) {
+        else if (ic5ispieler2 != 0) {
             c5z3s4sprite.setColor(farben[1]);
             spiel.draw(c5z3s4sprite);
-            c5spieler2--;
+            ic5ispieler2--;
         }
-        else if (c5spieler3 != 0) {
+        else if (ic5ispieler3 != 0) {
             c5z3s4sprite.setColor(farben[2]);
             spiel.draw(c5z3s4sprite);
-            c5spieler3--;
+            ic5ispieler3--;
         }
 
         //c5z4s1
-        if (c5spieler1 != 0) {
+        if (ic5ispieler1 != 0) {
             c5z4s1sprite.setColor(farben[0]);
             spiel.draw(c5z4s1sprite);
-            c5spieler1--;
+            ic5ispieler1--;
         }
-        else if (c5spieler2 != 0) {
+        else if (ic5ispieler2 != 0) {
             c5z4s1sprite.setColor(farben[1]);
             spiel.draw(c5z4s1sprite);
-            c5spieler2--;
+            ic5ispieler2--;
         }
-        else if (c5spieler3 != 0) {
+        else if (ic5ispieler3 != 0) {
             c5z4s1sprite.setColor(farben[2]);
             spiel.draw(c5z4s1sprite);
-            c5spieler3--;
+            ic5ispieler3--;
         }
 
         //c5z4s2
-        if (c5spieler1 != 0) {
+        if (ic5ispieler1 != 0) {
             c5z4s2sprite.setColor(farben[0]);
             spiel.draw(c5z4s2sprite);
-            c5spieler1--;
+            ic5ispieler1--;
         }
-        else if (c5spieler2 != 0) {
+        else if (ic5ispieler2 != 0) {
             c5z4s2sprite.setColor(farben[1]);
             spiel.draw(c5z4s2sprite);
-            c5spieler2--;
+            ic5ispieler2--;
         }
-        else if (c5spieler3 != 0) {
+        else if (ic5ispieler3 != 0) {
             c5z4s2sprite.setColor(farben[2]);
             spiel.draw(c5z4s2sprite);
-            c5spieler3--;
+            ic5ispieler3--;
         }
 
         //c5z4s3
-        if (c5spieler1 != 0) {
+        if (ic5ispieler1 != 0) {
             c5z4s3sprite.setColor(farben[0]);
             spiel.draw(c5z4s3sprite);
-            c5spieler1--;
+            ic5ispieler1--;
         }
-        else if (c5spieler2 != 0) {
+        else if (ic5ispieler2 != 0) {
             c5z4s3sprite.setColor(farben[1]);
             spiel.draw(c5z4s3sprite);
-            c5spieler2--;
+            ic5ispieler2--;
         }
-        else if (c5spieler3 != 0) {
+        else if (ic5ispieler3 != 0) {
             c5z4s3sprite.setColor(farben[2]);
             spiel.draw(c5z4s3sprite);
-            c5spieler3--;
+            ic5ispieler3--;
         }
 
         //c5z4s4
-        if (c5spieler1 != 0) {
+        if (ic5ispieler1 != 0) {
             c5z4s4sprite.setColor(farben[0]);
             spiel.draw(c5z4s4sprite);
-            c5spieler1--;
+            ic5ispieler1--;
         }
-        else if (c5spieler2 != 0) {
+        else if (ic5ispieler2 != 0) {
             c5z4s4sprite.setColor(farben[1]);
             spiel.draw(c5z4s4sprite);
-            c5spieler2--;
+            ic5ispieler2--;
         }
-        else if (c5spieler3 != 0) {
+        else if (ic5ispieler3 != 0) {
             c5z4s4sprite.setColor(farben[2]);
             spiel.draw(c5z4s4sprite);
-            c5spieler3--;
+            ic5ispieler3--;
         }
 
         //c5z5s1
-        if (c5spieler1 != 0) {
+        if (ic5ispieler1 != 0) {
             c5z5s1sprite.setColor(farben[0]);
             spiel.draw(c5z5s1sprite);
-            c5spieler1--;
+            ic5ispieler1--;
         }
-        else if (c5spieler2 != 0) {
+        else if (ic5ispieler2 != 0) {
             c5z5s1sprite.setColor(farben[1]);
             spiel.draw(c5z5s1sprite);
-            c5spieler2--;
+            ic5ispieler2--;
         }
-        else if (c5spieler3 != 0) {
+        else if (ic5ispieler3 != 0) {
             c5z5s1sprite.setColor(farben[2]);
             spiel.draw(c5z5s1sprite);
-            c5spieler3--;
+            ic5ispieler3--;
         }
 
         //c5z5s2
-        if (c5spieler1 != 0) {
+        if (ic5ispieler1 != 0) {
             c5z5s2sprite.setColor(farben[0]);
             spiel.draw(c5z5s2sprite);
-            c5spieler1--;
+            ic5ispieler1--;
         }
-        else if (c5spieler2 != 0) {
+        else if (ic5ispieler2 != 0) {
             c5z5s2sprite.setColor(farben[1]);
             spiel.draw(c5z5s2sprite);
-            c5spieler2--;
+            ic5ispieler2--;
         }
-        else if (c5spieler3 != 0) {
+        else if (ic5ispieler3 != 0) {
             c5z5s2sprite.setColor(farben[2]);
             spiel.draw(c5z5s2sprite);
-            c5spieler3--;
+            ic5ispieler3--;
         }
 
         //c5z5s3
-        if (c5spieler1 != 0) {
+        if (ic5ispieler1 != 0) {
             c5z5s3sprite.setColor(farben[0]);
             spiel.draw(c5z5s3sprite);
-            c5spieler1--;
+            ic5ispieler1--;
         }
-        else if (c5spieler2 != 0) {
+        else if (ic5ispieler2 != 0) {
             c5z5s3sprite.setColor(farben[1]);
             spiel.draw(c5z5s3sprite);
-            c5spieler2--;
+            ic5ispieler2--;
         }
-        else if (c5spieler3 != 0) {
+        else if (ic5ispieler3 != 0) {
             c5z5s3sprite.setColor(farben[2]);
             spiel.draw(c5z5s3sprite);
-            c5spieler3--;
+            ic5ispieler3--;
         }
 
         //c5z5s4
-        if (c5spieler1 != 0) {
+        if (ic5ispieler1 != 0) {
             c5z5s4sprite.setColor(farben[0]);
             spiel.draw(c5z5s4sprite);
-            c5spieler1--;
+            ic5ispieler1--;
         }
-        else if (c5spieler2 != 0) {
+        else if (ic5ispieler2 != 0) {
             c5z5s4sprite.setColor(farben[1]);
             spiel.draw(c5z5s4sprite);
-            c5spieler2--;
+            ic5ispieler2--;
         }
-        else if (c5spieler3 != 0) {
+        else if (ic5ispieler3 != 0) {
             c5z5s4sprite.setColor(farben[2]);
             spiel.draw(c5z5s4sprite);
-            c5spieler3--;
+            ic5ispieler3--;
         }
 
         //Casino 6
         //c6z1s1
-        if (c6spieler1 != 0) {
+        if (ic6ispieler1 != 0) {
             c6z1s1sprite.setColor(farben[0]);
             spiel.draw(c6z1s1sprite);
-            c6spieler1--;
+            ic6ispieler1--;
         }
-        else if (c6spieler2 != 0) {
+        else if (ic6ispieler2 != 0) {
             c6z1s1sprite.setColor(farben[1]);
             spiel.draw(c6z1s1sprite);
-            c6spieler2--;
+            ic6ispieler2--;
         }
-        else if (c6spieler3 != 0) {
+        else if (ic6ispieler3 != 0) {
             c6z1s1sprite.setColor(farben[2]);
             spiel.draw(c6z1s1sprite);
-            c6spieler3--;
+            ic6ispieler3--;
         }
 
         //c6z1s2
-        if (c6spieler1 != 0) {
+        if (ic6ispieler1 != 0) {
             c6z1s2sprite.setColor(farben[0]);
             spiel.draw(c6z1s2sprite);
-            c6spieler1--;
+            ic6ispieler1--;
         }
-        else if (c6spieler2 != 0) {
+        else if (ic6ispieler2 != 0) {
             c6z1s2sprite.setColor(farben[1]);
             spiel.draw(c6z1s2sprite);
-            c6spieler2--;
+            ic6ispieler2--;
         }
-        else if (c6spieler3 != 0) {
+        else if (ic6ispieler3 != 0) {
             c6z1s2sprite.setColor(farben[2]);
             spiel.draw(c6z1s2sprite);
-            c6spieler3--;
+            ic6ispieler3--;
         }
 
         //c6z1s3
-        if (c6spieler1 != 0) {
+        if (ic6ispieler1 != 0) {
             c6z1s3sprite.setColor(farben[0]);
             spiel.draw(c6z1s3sprite);
-            c6spieler1--;
+            ic6ispieler1--;
         }
-        else if (c6spieler2 != 0) {
+        else if (ic6ispieler2 != 0) {
             c6z1s3sprite.setColor(farben[1]);
             spiel.draw(c6z1s3sprite);
-            c6spieler2--;
+            ic6ispieler2--;
         }
-        else if (c6spieler3 != 0) {
+        else if (ic6ispieler3 != 0) {
             c6z1s3sprite.setColor(farben[2]);
             spiel.draw(c6z1s3sprite);
-            c6spieler3--;
+            ic6ispieler3--;
         }
 
         //c6z1s4
-        if (c6spieler1 != 0) {
+        if (ic6ispieler1 != 0) {
             c6z1s4sprite.setColor(farben[0]);
             spiel.draw(c6z1s4sprite);
-            c6spieler1--;
+            ic6ispieler1--;
         }
-        else if (c6spieler2 != 0) {
+        else if (ic6ispieler2 != 0) {
             c6z1s4sprite.setColor(farben[1]);
             spiel.draw(c6z1s4sprite);
-            c6spieler2--;
+            ic6ispieler2--;
         }
-        else if (c6spieler3 != 0) {
+        else if (ic6ispieler3 != 0) {
             c6z1s4sprite.setColor(farben[2]);
             spiel.draw(c6z1s4sprite);
-            c6spieler3--;
+            ic6ispieler3--;
         }
 
         //c6z2s1
-        if (c6spieler1 != 0) {
+        if (ic6ispieler1 != 0) {
             c6z2s1sprite.setColor(farben[0]);
             spiel.draw(c6z2s1sprite);
-            c6spieler1--;
+            ic6ispieler1--;
         }
-        else if (c6spieler2 != 0) {
+        else if (ic6ispieler2 != 0) {
             c6z2s1sprite.setColor(farben[1]);
             spiel.draw(c6z2s1sprite);
-            c6spieler2--;
+            ic6ispieler2--;
         }
-        else if (c6spieler3 != 0) {
+        else if (ic6ispieler3 != 0) {
             c6z2s1sprite.setColor(farben[2]);
             spiel.draw(c6z2s1sprite);
-            c6spieler3--;
+            ic6ispieler3--;
         }
 
         //c6z2s2
-        if (c6spieler1 != 0) {
+        if (ic6ispieler1 != 0) {
             c6z2s2sprite.setColor(farben[0]);
             spiel.draw(c6z2s2sprite);
-            c6spieler1--;
+            ic6ispieler1--;
         }
-        else if (c6spieler2 != 0) {
+        else if (ic6ispieler2 != 0) {
             c6z2s2sprite.setColor(farben[1]);
             spiel.draw(c6z2s2sprite);
-            c6spieler2--;
+            ic6ispieler2--;
         }
-        else if (c6spieler3 != 0) {
+        else if (ic6ispieler3 != 0) {
             c6z2s2sprite.setColor(farben[2]);
             spiel.draw(c6z2s2sprite);
-            c6spieler3--;
+            ic6ispieler3--;
         }
 
         //c6z2s3
-        if (c6spieler1 != 0) {
+        if (ic6ispieler1 != 0) {
             c6z2s3sprite.setColor(farben[0]);
             spiel.draw(c6z2s3sprite);
-            c6spieler1--;
+            ic6ispieler1--;
         }
-        else if (c6spieler2 != 0) {
+        else if (ic6ispieler2 != 0) {
             c6z2s3sprite.setColor(farben[1]);
             spiel.draw(c6z2s3sprite);
-            c6spieler2--;
+            ic6ispieler2--;
         }
-        else if (c6spieler3 != 0) {
+        else if (ic6ispieler3 != 0) {
             c6z2s3sprite.setColor(farben[2]);
             spiel.draw(c6z2s3sprite);
-            c6spieler3--;
+            ic6ispieler3--;
         }
 
         //c6z2s4
-        if (c6spieler1 != 0) {
+        if (ic6ispieler1 != 0) {
             c6z2s4sprite.setColor(farben[0]);
             spiel.draw(c6z2s4sprite);
-            c6spieler1--;
+            ic6ispieler1--;
         }
-        else if (c6spieler2 != 0) {
+        else if (ic6ispieler2 != 0) {
             c6z2s4sprite.setColor(farben[1]);
             spiel.draw(c6z2s4sprite);
-            c6spieler2--;
+            ic6ispieler2--;
         }
-        else if (c6spieler3 != 0) {
+        else if (ic6ispieler3 != 0) {
             c6z2s4sprite.setColor(farben[2]);
             spiel.draw(c6z2s4sprite);
-            c6spieler3--;
+            ic6ispieler3--;
         }
 
         //c6z3s1
-        if (c6spieler1 != 0) {
+        if (ic6ispieler1 != 0) {
             c6z3s1sprite.setColor(farben[0]);
             spiel.draw(c6z3s1sprite);
-            c6spieler1--;
+            ic6ispieler1--;
         }
-        else if (c6spieler2 != 0) {
+        else if (ic6ispieler2 != 0) {
             c6z3s1sprite.setColor(farben[1]);
             spiel.draw(c6z3s1sprite);
-            c6spieler2--;
+            ic6ispieler2--;
         }
-        else if (c6spieler3 != 0) {
+        else if (ic6ispieler3 != 0) {
             c6z3s1sprite.setColor(farben[2]);
             spiel.draw(c6z3s1sprite);
-            c6spieler3--;
+            ic6ispieler3--;
         }
 
         //c6z3s2
-        if (c6spieler1 != 0) {
+        if (ic6ispieler1 != 0) {
             c6z3s2sprite.setColor(farben[0]);
             spiel.draw(c6z3s2sprite);
-            c6spieler1--;
+            ic6ispieler1--;
         }
-        else if (c6spieler2 != 0) {
+        else if (ic6ispieler2 != 0) {
             c6z3s2sprite.setColor(farben[1]);
             spiel.draw(c6z3s2sprite);
-            c6spieler2--;
+            ic6ispieler2--;
         }
-        else if (c6spieler3 != 0) {
+        else if (ic6ispieler3 != 0) {
             c6z3s2sprite.setColor(farben[2]);
             spiel.draw(c6z3s2sprite);
-            c6spieler3--;
+            ic6ispieler3--;
         }
 
         //c6z3s3
-        if (c6spieler1 != 0) {
+        if (ic6ispieler1 != 0) {
             c6z3s3sprite.setColor(farben[0]);
             spiel.draw(c6z3s3sprite);
-            c6spieler1--;
+            ic6ispieler1--;
         }
-        else if (c6spieler2 != 0) {
+        else if (ic6ispieler2 != 0) {
             c6z3s3sprite.setColor(farben[1]);
             spiel.draw(c6z3s3sprite);
-            c6spieler2--;
+            ic6ispieler2--;
         }
-        else if (c6spieler3 != 0) {
+        else if (ic6ispieler3 != 0) {
             c6z3s3sprite.setColor(farben[2]);
             spiel.draw(c6z3s3sprite);
-            c6spieler3--;
+            ic6ispieler3--;
         }
 
         //c6z3s4
-        if (c6spieler1 != 0) {
+        if (ic6ispieler1 != 0) {
             c6z3s4sprite.setColor(farben[0]);
             spiel.draw(c6z3s4sprite);
-            c6spieler1--;
+            ic6ispieler1--;
         }
-        else if (c6spieler2 != 0) {
+        else if (ic6ispieler2 != 0) {
             c6z3s4sprite.setColor(farben[1]);
             spiel.draw(c6z3s4sprite);
-            c6spieler2--;
+            ic6ispieler2--;
         }
-        else if (c6spieler3 != 0) {
+        else if (ic6ispieler3 != 0) {
             c6z3s4sprite.setColor(farben[2]);
             spiel.draw(c6z3s4sprite);
-            c6spieler3--;
+            ic6ispieler3--;
         }
 
         //c6z4s1
-        if (c6spieler1 != 0) {
+        if (ic6ispieler1 != 0) {
             c6z4s1sprite.setColor(farben[0]);
             spiel.draw(c6z4s1sprite);
-            c6spieler1--;
+            ic6ispieler1--;
         }
-        else if (c6spieler2 != 0) {
+        else if (ic6ispieler2 != 0) {
             c6z4s1sprite.setColor(farben[1]);
             spiel.draw(c6z4s1sprite);
-            c6spieler2--;
+            ic6ispieler2--;
         }
-        else if (c6spieler3 != 0) {
+        else if (ic6ispieler3 != 0) {
             c6z4s1sprite.setColor(farben[2]);
             spiel.draw(c6z4s1sprite);
-            c6spieler3--;
+            ic6ispieler3--;
         }
 
         //c6z4s2
-        if (c6spieler1 != 0) {
+        if (ic6ispieler1 != 0) {
             c6z4s2sprite.setColor(farben[0]);
             spiel.draw(c6z4s2sprite);
-            c6spieler1--;
+            ic6ispieler1--;
         }
-        else if (c6spieler2 != 0) {
+        else if (ic6ispieler2 != 0) {
             c6z4s2sprite.setColor(farben[1]);
             spiel.draw(c6z4s2sprite);
-            c6spieler2--;
+            ic6ispieler2--;
         }
-        else if (c6spieler3 != 0) {
+        else if (ic6ispieler3 != 0) {
             c6z4s2sprite.setColor(farben[2]);
             spiel.draw(c6z4s2sprite);
-            c6spieler3--;
+            ic6ispieler3--;
         }
 
         //c6z4s3
-        if (c6spieler1 != 0) {
+        if (ic6ispieler1 != 0) {
             c6z4s3sprite.setColor(farben[0]);
             spiel.draw(c6z4s3sprite);
-            c6spieler1--;
+            ic6ispieler1--;
         }
-        else if (c6spieler2 != 0) {
+        else if (ic6ispieler2 != 0) {
             c6z4s3sprite.setColor(farben[1]);
             spiel.draw(c6z4s3sprite);
-            c6spieler2--;
+            ic6ispieler2--;
         }
-        else if (c6spieler3 != 0) {
+        else if (ic6ispieler3 != 0) {
             c6z4s3sprite.setColor(farben[2]);
             spiel.draw(c6z4s3sprite);
-            c6spieler3--;
+            ic6ispieler3--;
         }
 
         //c6z4s4
-        if (c6spieler1 != 0) {
+        if (ic6ispieler1 != 0) {
             c6z4s4sprite.setColor(farben[0]);
             spiel.draw(c6z4s4sprite);
-            c6spieler1--;
+            ic6ispieler1--;
         }
-        else if (c6spieler2 != 0) {
+        else if (ic6ispieler2 != 0) {
             c6z4s4sprite.setColor(farben[1]);
             spiel.draw(c6z4s4sprite);
-            c6spieler2--;
+            ic6ispieler2--;
         }
-        else if (c6spieler3 != 0) {
+        else if (ic6ispieler3 != 0) {
             c6z4s4sprite.setColor(farben[2]);
             spiel.draw(c6z4s4sprite);
-            c6spieler3--;
+            ic6ispieler3--;
         }
 
         //c6z5s1
-        if (c6spieler1 != 0) {
+        if (ic6ispieler1 != 0) {
             c6z5s1sprite.setColor(farben[0]);
             spiel.draw(c6z5s1sprite);
-            c6spieler1--;
+            ic6ispieler1--;
         }
-        else if (c6spieler2 != 0) {
+        else if (ic6ispieler2 != 0) {
             c6z5s1sprite.setColor(farben[1]);
             spiel.draw(c6z5s1sprite);
-            c6spieler2--;
+            ic6ispieler2--;
         }
-        else if (c6spieler3 != 0) {
+        else if (ic6ispieler3 != 0) {
             c6z5s1sprite.setColor(farben[2]);
             spiel.draw(c6z5s1sprite);
-            c6spieler3--;
+            ic6ispieler3--;
         }
 
         //c6z5s2
-        if (c6spieler1 != 0) {
+        if (ic6ispieler1 != 0) {
             c6z5s2sprite.setColor(farben[0]);
             spiel.draw(c6z5s2sprite);
-            c6spieler1--;
+            ic6ispieler1--;
         }
-        else if (c6spieler2 != 0) {
+        else if (ic6ispieler2 != 0) {
             c6z5s2sprite.setColor(farben[1]);
             spiel.draw(c6z5s2sprite);
-            c6spieler2--;
+            ic6ispieler2--;
         }
-        else if (c6spieler3 != 0) {
+        else if (ic6ispieler3 != 0) {
             c6z5s2sprite.setColor(farben[2]);
             spiel.draw(c6z5s2sprite);
-            c6spieler3--;
+            ic6ispieler3--;
         }
 
         //c6z5s3
-        if (c6spieler1 != 0) {
+        if (ic6ispieler1 != 0) {
             c6z5s3sprite.setColor(farben[0]);
             spiel.draw(c6z5s3sprite);
-            c6spieler1--;
+            ic6ispieler1--;
         }
-        else if (c6spieler2 != 0) {
+        else if (ic6ispieler2 != 0) {
             c6z5s3sprite.setColor(farben[1]);
             spiel.draw(c6z5s3sprite);
-            c6spieler2--;
+            ic6ispieler2--;
         }
-        else if (c6spieler3 != 0) {
+        else if (ic6ispieler3 != 0) {
             c6z5s3sprite.setColor(farben[2]);
             spiel.draw(c6z5s3sprite);
-            c6spieler3--;
+            ic6ispieler3--;
         }
 
         //c6z5s4
-        if (c6spieler1 != 0) {
+        if (ic6ispieler1 != 0) {
             c6z5s4sprite.setColor(farben[0]);
             spiel.draw(c6z5s4sprite);
-            c6spieler1--;
+            ic6ispieler1--;
         }
-        else if (c6spieler2 != 0) {
+        else if (ic6ispieler2 != 0) {
             c6z5s4sprite.setColor(farben[1]);
             spiel.draw(c6z5s4sprite);
-            c6spieler2--;
+            ic6ispieler2--;
         }
-        else if (c6spieler3 != 0) {
+        else if (ic6ispieler3 != 0) {
             c6z5s4sprite.setColor(farben[2]);
             spiel.draw(c6z5s4sprite);
-            c6spieler3--;
+            ic6ispieler3--;
         }
 
         //Würfelsprites zeichnen
-        wuerfelsprite.setColor(farben[spielernummer]);
-        wuerfelsprite2.setColor(farben[spielernummer]);
-        wuerfelsprite3.setColor(farben[spielernummer]);
-        wuerfelsprite4.setColor(farben[spielernummer]);
-        wuerfelsprite5.setColor(farben[spielernummer]);
-        wuerfelsprite6.setColor(farben[spielernummer]);
-        wuerfelsprite7.setColor(farben[spielernummer]);
-        wuerfelsprite8.setColor(farben[spielernummer]);
+        wuerfelsprite.setColor(farben[iispielernummer]);
+        wuerfelsprite2.setColor(farben[iispielernummer]);
+        wuerfelsprite3.setColor(farben[iispielernummer]);
+        wuerfelsprite4.setColor(farben[iispielernummer]);
+        wuerfelsprite5.setColor(farben[iispielernummer]);
+        wuerfelsprite6.setColor(farben[iispielernummer]);
+        wuerfelsprite7.setColor(farben[iispielernummer]);
+        wuerfelsprite8.setColor(farben[iispielernummer]);
         spiel.draw(wuerfelsprite);
         spiel.draw(wuerfelsprite2);
         spiel.draw(wuerfelsprite3);
@@ -5577,9 +5609,9 @@ void Spielzeichnung() {
 
             if (event.type == sf::Event::MouseButtonPressed) {
                 if (donebutton.isMouseOver(spiel)) {
-                    if (aufWuerfelGedrueckt == true) {
-                        zugbeendet = true;
-                        aufWuerfelGedrueckt = false;
+                    if (baufwuerfelgedrueckt == true) {
+                        bzugbeendet = true;
+                        baufwuerfelgedrueckt = false;
                     }
                 }
 
@@ -5608,50 +5640,50 @@ void Spielzeichnung() {
                 {
                     // mouse is on sprite!
                     //TODO: Setze Würfel auf Casino
-                    int wuerfelplatzwert = wuerfelwert[0];
+                    int wuerfelplatzwert = iiwuerfelwert[0];
                     switch (wuerfelplatzwert) {
                     case 1:
-                        setzeWürfel(spielernummer, 1);
+                        setzeWürfel(iispielernummer, 1);
                         break;
                     case 2:
-                        setzeWürfel(spielernummer, 2);
+                        setzeWürfel(iispielernummer, 2);
                         break;
                     case 3:
-                        setzeWürfel(spielernummer, 3);
+                        setzeWürfel(iispielernummer, 3);
                         break;
                     case 4:
-                        setzeWürfel(spielernummer, 4);
+                        setzeWürfel(iispielernummer, 4);
                         break;
                     case 5:
-                        setzeWürfel(spielernummer, 5);
+                        setzeWürfel(iispielernummer, 5);
                         break;
                     case 6:
-                        setzeWürfel(spielernummer, 6);
+                        setzeWürfel(iispielernummer, 6);
                         break;
                     }
                 }
                 if (wuerfelcoords2.contains(mouse))
                 {
                     // mouse is on sprite!
-                    int wuerfelplatzwert = wuerfelwert[1];
+                    int wuerfelplatzwert = iiwuerfelwert[1];
                     switch (wuerfelplatzwert) {
                     case 1:
-                        setzeWürfel(spielernummer, 1);
+                        setzeWürfel(iispielernummer, 1);
                         break;
                     case 2:
-                        setzeWürfel(spielernummer, 2);
+                        setzeWürfel(iispielernummer, 2);
                         break;
                     case 3:
-                        setzeWürfel(spielernummer, 3);
+                        setzeWürfel(iispielernummer, 3);
                         break;
                     case 4:
-                        setzeWürfel(spielernummer, 4);
+                        setzeWürfel(iispielernummer, 4);
                         break;
                     case 5:
-                        setzeWürfel(spielernummer, 5);
+                        setzeWürfel(iispielernummer, 5);
                         break;
                     case 6:
-                        setzeWürfel(spielernummer, 6);
+                        setzeWürfel(iispielernummer, 6);
                         break;
                     }
 
@@ -5659,25 +5691,25 @@ void Spielzeichnung() {
                 if (wuerfelcoords3.contains(mouse))
                 {
                     // mouse is on sprite!
-                    int wuerfelplatzwert = wuerfelwert[2];
+                    int wuerfelplatzwert = iiwuerfelwert[2];
                     switch (wuerfelplatzwert) {
                     case 1:
-                        setzeWürfel(spielernummer, 1);
+                        setzeWürfel(iispielernummer, 1);
                         break;
                     case 2:
-                        setzeWürfel(spielernummer, 2);
+                        setzeWürfel(iispielernummer, 2);
                         break;
                     case 3:
-                        setzeWürfel(spielernummer, 3);
+                        setzeWürfel(iispielernummer, 3);
                         break;
                     case 4:
-                        setzeWürfel(spielernummer, 4);
+                        setzeWürfel(iispielernummer, 4);
                         break;
                     case 5:
-                        setzeWürfel(spielernummer, 5);
+                        setzeWürfel(iispielernummer, 5);
                         break;
                     case 6:
-                        setzeWürfel(spielernummer, 6);
+                        setzeWürfel(iispielernummer, 6);
                         break;
                     }
 
@@ -5685,25 +5717,25 @@ void Spielzeichnung() {
                 if (wuerfelcoords4.contains(mouse))
                 {
                     // mouse is on sprite!
-                    int wuerfelplatzwert = wuerfelwert[3];
+                    int wuerfelplatzwert = iiwuerfelwert[3];
                     switch (wuerfelplatzwert) {
                     case 1:
-                        setzeWürfel(spielernummer, 1);
+                        setzeWürfel(iispielernummer, 1);
                         break;
                     case 2:
-                        setzeWürfel(spielernummer, 2);
+                        setzeWürfel(iispielernummer, 2);
                         break;
                     case 3:
-                        setzeWürfel(spielernummer, 3);
+                        setzeWürfel(iispielernummer, 3);
                         break;
                     case 4:
-                        setzeWürfel(spielernummer, 4);
+                        setzeWürfel(iispielernummer, 4);
                         break;
                     case 5:
-                        setzeWürfel(spielernummer, 5);
+                        setzeWürfel(iispielernummer, 5);
                         break;
                     case 6:
-                        setzeWürfel(spielernummer, 6);
+                        setzeWürfel(iispielernummer, 6);
                         break;
                     }
 
@@ -5711,25 +5743,25 @@ void Spielzeichnung() {
                 if (wuerfelcoords5.contains(mouse))
                 {
                     // mouse is on sprite!
-                    int wuerfelplatzwert = wuerfelwert[4];
+                    int wuerfelplatzwert = iiwuerfelwert[4];
                     switch (wuerfelplatzwert) {
                     case 1:
-                        setzeWürfel(spielernummer, 1);
+                        setzeWürfel(iispielernummer, 1);
                         break;
                     case 2:
-                        setzeWürfel(spielernummer, 2);
+                        setzeWürfel(iispielernummer, 2);
                         break;
                     case 3:
-                        setzeWürfel(spielernummer, 3);
+                        setzeWürfel(iispielernummer, 3);
                         break;
                     case 4:
-                        setzeWürfel(spielernummer, 4);
+                        setzeWürfel(iispielernummer, 4);
                         break;
                     case 5:
-                        setzeWürfel(spielernummer, 5);
+                        setzeWürfel(iispielernummer, 5);
                         break;
                     case 6:
-                        setzeWürfel(spielernummer, 6);
+                        setzeWürfel(iispielernummer, 6);
                         break;
                     }
 
@@ -5737,25 +5769,25 @@ void Spielzeichnung() {
                 if (wuerfelcoords6.contains(mouse))
                 {
                     // mouse is on sprite!
-                    int wuerfelplatzwert = wuerfelwert[5];
+                    int wuerfelplatzwert = iiwuerfelwert[5];
                     switch (wuerfelplatzwert) {
                     case 1:
-                        setzeWürfel(spielernummer, 1);
+                        setzeWürfel(iispielernummer, 1);
                         break;
                     case 2:
-                        setzeWürfel(spielernummer, 2);
+                        setzeWürfel(iispielernummer, 2);
                         break;
                     case 3:
-                        setzeWürfel(spielernummer, 3);
+                        setzeWürfel(iispielernummer, 3);
                         break;
                     case 4:
-                        setzeWürfel(spielernummer, 4);
+                        setzeWürfel(iispielernummer, 4);
                         break;
                     case 5:
-                        setzeWürfel(spielernummer, 5);
+                        setzeWürfel(iispielernummer, 5);
                         break;
                     case 6:
-                        setzeWürfel(spielernummer, 6);
+                        setzeWürfel(iispielernummer, 6);
                         break;
                     }
 
@@ -5763,25 +5795,25 @@ void Spielzeichnung() {
                 if (wuerfelcoords7.contains(mouse))
                 {
                     // mouse is on sprite!
-                    int wuerfelplatzwert = wuerfelwert[6];
+                    int wuerfelplatzwert = iiwuerfelwert[6];
                     switch (wuerfelplatzwert) {
                     case 1:
-                        setzeWürfel(spielernummer, 1);
+                        setzeWürfel(iispielernummer, 1);
                         break;
                     case 2:
-                        setzeWürfel(spielernummer, 2);
+                        setzeWürfel(iispielernummer, 2);
                         break;
                     case 3:
-                        setzeWürfel(spielernummer, 3);
+                        setzeWürfel(iispielernummer, 3);
                         break;
                     case 4:
-                        setzeWürfel(spielernummer, 4);
+                        setzeWürfel(iispielernummer, 4);
                         break;
                     case 5:
-                        setzeWürfel(spielernummer, 5);
+                        setzeWürfel(iispielernummer, 5);
                         break;
                     case 6:
-                        setzeWürfel(spielernummer, 6);
+                        setzeWürfel(iispielernummer, 6);
                         break;
                     }
 
@@ -5789,25 +5821,25 @@ void Spielzeichnung() {
                 if (wuerfelcoords8.contains(mouse))
                 {
                     // mouse is on sprite!
-                    int wuerfelplatzwert = wuerfelwert[7];
+                    int wuerfelplatzwert = iiwuerfelwert[7];
                     switch (wuerfelplatzwert) {
                     case 1:
-                        setzeWürfel(spielernummer, 1);
+                        setzeWürfel(iispielernummer, 1);
                         break;
                     case 2:
-                        setzeWürfel(spielernummer, 2);
+                        setzeWürfel(iispielernummer, 2);
                         break;
                     case 3:
-                        setzeWürfel(spielernummer, 3);
+                        setzeWürfel(iispielernummer, 3);
                         break;
                     case 4:
-                        setzeWürfel(spielernummer, 4);
+                        setzeWürfel(iispielernummer, 4);
                         break;
                     case 5:
-                        setzeWürfel(spielernummer, 5);
+                        setzeWürfel(iispielernummer, 5);
                         break;
                     case 6:
-                        setzeWürfel(spielernummer, 6);
+                        setzeWürfel(iispielernummer, 6);
                         break;
                     }
 
@@ -5825,23 +5857,23 @@ void neuesSpiel() {
     sf::Thread zeichenthread(&Spielzeichnung);
     zeichenthread.launch();
     //Ganz normale Spiellogik
-    while(spielBeendet == false) {
-        //Rundentext verändern
+    while(bspielbeendet == false) {
+        //srundentext verändern
 
         //Geldscheine zufällig auswählen und anzeigen (i <=5 machen nicht vergessen)
         srand(time(NULL));
-        if (spielgeladen == false) {
+        if (bspielgeladen == false) {
             for (int i = 0; i <= 5; i++) {
                 switch (i) {
                 case 0:
                     for (int k = 0; ; k++) {
                         //int k = 0;
                         int j = rand() % 6;
-                        casinogelder1[k] = geldwerte[j];
-                        printf("Gerade gezogen: %i\n", casinogelder1[k]);
-                        summe1 += casinogelder1[k];
-                        if (summe1 >= 50000) {
-                            printf("Summe Casino 1: %i\n", summe1);
+                        iicasinogelder1[k] = igeldwerte[j];
+                        printf("Gerade gezogen: %i\n", iicasinogelder1[k]);
+                        isumme1 += iicasinogelder1[k];
+                        if (isumme1 >= 50000) {
+                            printf("Summe Casino 1: %i\n", isumme1);
                             break;
                         }
 
@@ -5851,11 +5883,11 @@ void neuesSpiel() {
                     for (int k = 0; ; k++) {
                         //int k = 0;
                         int j = rand() % 6;
-                        casinogelder2[k] = geldwerte[j];
-                        printf("Gerade gezogen: %i\n", casinogelder2[k]);
-                        summe2 += casinogelder2[k];
-                        if (summe2 >= 50000) {
-                            printf("Summe Casino 2: %i\n", summe2);
+                        iicasinogelder2[k] = igeldwerte[j];
+                        printf("Gerade gezogen: %i\n", iicasinogelder2[k]);
+                        isumme2 += iicasinogelder2[k];
+                        if (isumme2 >= 50000) {
+                            printf("Summe Casino 2: %i\n", isumme2);
                             break;
                         }
 
@@ -5865,11 +5897,11 @@ void neuesSpiel() {
                     for (int k = 0; ; k++) {
                         //int k = 0;
                         int j = rand() % 6;
-                        casinogelder3[k] = geldwerte[j];
-                        printf("Gerade gezogen: %i\n", casinogelder3[k]);
-                        summe3 += casinogelder3[k];
-                        if (summe3 >= 50000) {
-                            printf("Summe Casino 3: %i\n", summe3);
+                        iicasinogelder3[k] = igeldwerte[j];
+                        printf("Gerade gezogen: %i\n", iicasinogelder3[k]);
+                        isumme3 += iicasinogelder3[k];
+                        if (isumme3 >= 50000) {
+                            printf("Summe Casino 3: %i\n", isumme3);
                             break;
                         }
                     }
@@ -5878,11 +5910,11 @@ void neuesSpiel() {
                     for (int k = 0; ; k++) {
                         //int k = 0;
                         int j = rand() % 6;
-                        casinogelder4[k] = geldwerte[j];
-                        printf("Gerade gezogen: %i\n", casinogelder4[k]);
-                        summe4 += casinogelder4[k];
-                        if (summe4 >= 50000) {
-                            printf("Summe Casino 4: %i\n", summe4);
+                        iicasinogelder4[k] = igeldwerte[j];
+                        printf("Gerade gezogen: %i\n", iicasinogelder4[k]);
+                        isumme4 += iicasinogelder4[k];
+                        if (isumme4 >= 50000) {
+                            printf("Summe Casino 4: %i\n", isumme4);
                             break;
                         }
                     }
@@ -5891,11 +5923,11 @@ void neuesSpiel() {
                     for (int k = 0; ; k++) {
                         //int k = 0;
                         int j = rand() % 6;
-                        casinogelder5[k] = geldwerte[j];
-                        printf("Gerade gezogen: %i\n", casinogelder5[k]);
-                        summe5 += casinogelder5[k];
-                        if (summe5 >= 50000) {
-                            printf("Summe Casino 5: %i\n", summe5);
+                        iicasinogelder5[k] = igeldwerte[j];
+                        printf("Gerade gezogen: %i\n", iicasinogelder5[k]);
+                        isumme5 += iicasinogelder5[k];
+                        if (isumme5 >= 50000) {
+                            printf("Summe Casino 5: %i\n", isumme5);
                             break;
                         }
                     }
@@ -5904,11 +5936,11 @@ void neuesSpiel() {
                     for (int k = 0; ; k++) {
                         //int k = 0;
                         int j = rand() % 6;
-                        casinogelder6[k] = geldwerte[j];
-                        printf("Gerade gezogen: %i\n", casinogelder6[k]);
-                        summe6 += casinogelder6[k];
-                        if (summe6 >= 50000) {
-                            printf("Summe Casino 6: %i\n", summe6);
+                        iicasinogelder6[k] = igeldwerte[j];
+                        printf("Gerade gezogen: %i\n", iicasinogelder6[k]);
+                        isumme6 += iicasinogelder6[k];
+                        if (isumme6 >= 50000) {
+                            printf("Summe Casino 6: %i\n", isumme6);
                             break;
                         }
                     }
@@ -5922,12 +5954,12 @@ void neuesSpiel() {
         {
             for (int j = i + 1; j <= 4; j++)
             {
-                if (casinogelder1[i] < casinogelder1[j])
+                if (iicasinogelder1[i] < iicasinogelder1[j])
                 {
                     //-----Tausch-----
-                    int h = casinogelder1[i];
-                    casinogelder1[i] = casinogelder1[j];
-                    casinogelder1[j] = h;
+                    int h = iicasinogelder1[i];
+                    iicasinogelder1[i] = iicasinogelder1[j];
+                    iicasinogelder1[j] = h;
                 }
             }
         }
@@ -5937,12 +5969,12 @@ void neuesSpiel() {
         {
             for (int j = i + 1; j <= 4; j++)
             {
-                if (casinogelder2[i] < casinogelder2[j])
+                if (iicasinogelder2[i] < iicasinogelder2[j])
                 {
                     //-----Tausch-----
-                    int h = casinogelder2[i];
-                    casinogelder2[i] = casinogelder2[j];
-                    casinogelder2[j] = h;
+                    int h = iicasinogelder2[i];
+                    iicasinogelder2[i] = iicasinogelder2[j];
+                    iicasinogelder2[j] = h;
                 }
             }
         }
@@ -5952,12 +5984,12 @@ void neuesSpiel() {
         {
             for (int j = i + 1; j <= 4; j++)
             {
-                if (casinogelder3[i] < casinogelder3[j])
+                if (iicasinogelder3[i] < iicasinogelder3[j])
                 {
                     //-----Tausch-----
-                    int h = casinogelder3[i];
-                    casinogelder3[i] = casinogelder3[j];
-                    casinogelder3[j] = h;
+                    int h = iicasinogelder3[i];
+                    iicasinogelder3[i] = iicasinogelder3[j];
+                    iicasinogelder3[j] = h;
                 }
             }
         }
@@ -5967,12 +5999,12 @@ void neuesSpiel() {
         {
             for (int j = i + 1; j <= 4; j++)
             {
-                if (casinogelder4[i] < casinogelder4[j])
+                if (iicasinogelder4[i] < iicasinogelder4[j])
                 {
                     //-----Tausch-----
-                    int h = casinogelder4[i];
-                    casinogelder4[i] = casinogelder4[j];
-                    casinogelder4[j] = h;
+                    int h = iicasinogelder4[i];
+                    iicasinogelder4[i] = iicasinogelder4[j];
+                    iicasinogelder4[j] = h;
                 }
             }
         }
@@ -5982,12 +6014,12 @@ void neuesSpiel() {
         {
             for (int j = i + 1; j <= 4; j++)
             {
-                if (casinogelder5[i] < casinogelder5[j])
+                if (iicasinogelder5[i] < iicasinogelder5[j])
                 {
                     //-----Tausch-----
-                    int h = casinogelder5[i];
-                    casinogelder5[i] = casinogelder5[j];
-                    casinogelder5[j] = h;
+                    int h = iicasinogelder5[i];
+                    iicasinogelder5[i] = iicasinogelder5[j];
+                    iicasinogelder5[j] = h;
                 }
             }
         }
@@ -5997,92 +6029,92 @@ void neuesSpiel() {
         {
             for (int j = i + 1; j <= 4; j++)
             {
-                if (casinogelder6[i] < casinogelder6[j])
+                if (iicasinogelder6[i] < iicasinogelder6[j])
                 {
                     //-----Tausch----- 
-                    int h = casinogelder6[i];
-                    casinogelder6[i] = casinogelder6[j];
-                    casinogelder6[j] = h;
+                    int h = iicasinogelder6[i];
+                    iicasinogelder6[i] = iicasinogelder6[j];
+                    iicasinogelder6[j] = h;
                 }
             }
         }
 
-        while (spielerhabenwürfel == true) {
-            rundentext = "Runde " + to_string(rundenzahlfürtext) + " von 4";
+        while (ispielerhabenwürfel == true) {
+            srundentext = "Runde " + to_string(iirundenzahlfürtext) + " von 4";
             //Würfeln, bis keiner mehr würfeln mehr hat
-            if (spielgeladen == false) {
-                spieler = 0;
+            if (bspielgeladen == false) {
+                ispieler = 0;
             }
-            for (spieler; spieler <= 2; spieler++) {
+            for (ispieler; ispieler <= 2; ispieler++) {
                 //Schreiben von Arrays
-                wuerfelzahl1 = "Spieler 1 hat " + to_string(wuerfelanzahl[0]) + " Würfeln übrig";
-                wuerfelzahl2 = "Spieler 2 hat " + to_string(wuerfelanzahl[1]) + " Würfeln übrig";
-                wuerfelzahl3 = "Spieler 3 hat " + to_string(wuerfelanzahl[2]) + " Würfeln übrig";
-                rundenzahlfürtext = rundenzahl + 1;
-                rundentext = "Runde " + to_string(rundenzahlfürtext) + " von 4";
-                //Temporäre Variable fürs Überprüfen, ob ein Spieler kein Würfel hat
-                int tempanzwuerfel = wuerfelanzahl[spieler];
+                swuerfelzahl1 = "ispieler 1 hat " + to_string(iiwuerfelanzahl[0]) + " Würfeln übrig";
+                swuerfelzahl2 = "ispieler 2 hat " + to_string(iiwuerfelanzahl[1]) + " Würfeln übrig";
+                swuerfelzahl3 = "ispieler 3 hat " + to_string(iiwuerfelanzahl[2]) + " Würfeln übrig";
+                iirundenzahlfürtext = iirundenzahl + 1;
+                srundentext = "Runde " + to_string(iirundenzahlfürtext) + " von 4";
+                //Temporäre Variable fürs Überprüfen, ob ein ispieler kein Würfel hat
+                int tempanzwuerfel = iiwuerfelanzahl[ispieler];
                 if (tempanzwuerfel == 0) {
                     continue;
                 }
-                spielernummer = spieler;
-                int anzahlwuerfel = wuerfelanzahl[spieler];
+                iispielernummer = ispieler;
+                int anzahlwuerfel = iiwuerfelanzahl[ispieler];
 
-                if(spielgeladen == false){
+                if(bspielgeladen == false){
                     //Würfel würfeln
                     for (int i = 0; i <= 7; i++) {
                         if (i > anzahlwuerfel - 1) {
-                            wuerfelwert[i] = 8;
+                            iiwuerfelwert[i] = 8;
                         }
                         else {
-                            wuerfelwert[i] = gen();
-                            cout << wuerfelwert[i];
+                            iiwuerfelwert[i] = gen();
+                            cout << iiwuerfelwert[i];
                         }
                     }
                     printf("\n");
                 }
-                spielgeladen = false;
+                bspielgeladen = false;
                 //Würfeln sortieren
                 for (int i = 0; i <= 6; i++)
                 {
                     for (int j = i + 1; j <= 7; j++)
                     {
-                        if (wuerfelwert[i] > wuerfelwert[j])
+                        if (iiwuerfelwert[i] > iiwuerfelwert[j])
                         {
                             //-----Tausch-----
-                            int h = wuerfelwert[i];
-                            wuerfelwert[i] = wuerfelwert[j];
-                            wuerfelwert[j] = h;
+                            int h = iiwuerfelwert[i];
+                            iiwuerfelwert[i] = iiwuerfelwert[j];
+                            iiwuerfelwert[j] = h;
                         }
                     }
                 }
 
                 //Warten bis auf Würfel gedrückt wird
-                while (zugbeendet == false) {
+                while (bzugbeendet == false) {
                     //Unten den Nutzer drauf hinweisen, auf einen Würfel zu klicken!
-                    switch (spielernummer) {
+                    switch (iispielernummer) {
                     case 0:
-                        if (aufWuerfelGedrueckt == false) {
-                            subtextstring = "Spieler 1: Bitte wählen Sie einen Würfel!";
+                        if (baufwuerfelgedrueckt == false) {
+                            ssubtextstring = "ispieler 1: Bitte wählen Sie einen Würfel!";
                         }
                         else {
-                            subtextstring = "Spieler 1: Beenden Sie den Zug oder setzen Sie den Schritt zurück!";
+                            ssubtextstring = "ispieler 1: Beenden Sie den Zug oder setzen Sie den Schritt zurück!";
                         }
                         break;
                     case 1:
-                        if (aufWuerfelGedrueckt == false) {
-                            subtextstring = "Spieler 2: Bitte wählen Sie einen Würfel!";
+                        if (baufwuerfelgedrueckt == false) {
+                            ssubtextstring = "ispieler 2: Bitte wählen Sie einen Würfel!";
                         }
                         else {
-                            subtextstring = "Spieler 2: Beenden Sie den Zug oder setzen Sie den Schritt zurück!";
+                            ssubtextstring = "ispieler 2: Beenden Sie den Zug oder setzen Sie den Schritt zurück!";
                         }
                         break;
                     case 2:
-                        if (aufWuerfelGedrueckt == false) {
-                            subtextstring = "Spieler 3: Bitte wählen Sie einen Würfel!";
+                        if (baufwuerfelgedrueckt == false) {
+                            ssubtextstring = "ispieler 3: Bitte wählen Sie einen Würfel!";
                         }
                         else {
-                            subtextstring = "Spieler 3: Beenden Sie den Zug oder setzen Sie den Schritt zurück!";
+                            ssubtextstring = "ispieler 3: Beenden Sie den Zug oder setzen Sie den Schritt zurück!";
                         }
                         break;
                     default:
@@ -6090,48 +6122,48 @@ void neuesSpiel() {
                     }
                 }
                 //Resetten
-                aufWuerfelGedrueckt = false;
-                zugbeendet = false;
+                baufwuerfelgedrueckt = false;
+                bzugbeendet = false;
 
-                if (wuerfelanzahl[0] == 0 && wuerfelanzahl[1] == 0 && wuerfelanzahl[2] == 0) {
+                if (iiwuerfelanzahl[0] == 0 && iiwuerfelanzahl[1] == 0 && iiwuerfelanzahl[2] == 0) {
                     para();
-                    if (rundenzahl == 3) {
+                    if (iirundenzahl == 3) {
                         //Gewinner zeigen, dass er gewonnen hat!
                         printf("Spiel zu Ende!\n");
-                        spielBeendet = true;
-                        if (kontostand[0] > kontostand[1] && kontostand[0] > kontostand[2]) {
+                        bspielbeendet = true;
+                        if (ikontostand[0] > ikontostand[1] && ikontostand[0] > ikontostand[2]) {
                             zeichenthread.terminate();
                             gewinner(1);
                         }
-                        else if (kontostand[0]< kontostand[1] && kontostand[1] > kontostand[2]) {
+                        else if (ikontostand[0]< ikontostand[1] && ikontostand[1] > ikontostand[2]) {
                             zeichenthread.terminate();
                             gewinner(2);
                         }
-                        else if (kontostand[0] < kontostand[2] && kontostand[1] < kontostand[2]) {
+                        else if (ikontostand[0] < ikontostand[2] && ikontostand[1] < ikontostand[2]) {
                             zeichenthread.terminate();
                             gewinner(3);
                         }
                     }
                     else {
-                        printf("Rundenzahl ist unter 3!\n");
-                        rundenzahl++;
-                        rundenzahlfürtext = rundenzahl + 1;
+                        printf("iirundenzahl ist unter 3!\n");
+                        iirundenzahl++;
+                        iirundenzahlfürtext = iirundenzahl + 1;
                     }
                 }
             }
 
             /*
-            if (wuerfelanzahl[0] == 0 && wuerfelanzahl[1] == 0 && wuerfelanzahl[2] == 0) {
-                printf("Spieler haben keine Würfel mehr!\n");
+            if (iiwuerfelanzahl[0] == 0 && iiwuerfelanzahl[1] == 0 && iiwuerfelanzahl[2] == 0) {
+                printf("ispieler haben keine Würfel mehr!\n");
                 para();
-                if (rundenzahl <= 3) {
+                if (iirundenzahl <= 3) {
                     //Funktion fürs Resetten und Geldzuteilen
                     
-                    rundenzahl++;
+                    iirundenzahl++;
                 }
                 else {
                     //Spiel vorbei!
-                    spielBeendet = true;
+                    bspielbeendet = true;
                 }
 
             }*/
@@ -6152,6 +6184,8 @@ void Systemthread() {
     if (einstellungsdateiprüfer() == false) {
         printf("[WARNUNG] Einstellungsdatei nicht gefunden! Wird erstellt!\n");
         einstellungsdateierstellung();
+        fehleranzeige("Datei-Fehler", "Einstellungsdateifehler! Bitte neustarten");
+
     }
     else {
         //Gähnix
@@ -6198,14 +6232,9 @@ int main(){
     
     //Prüfe, ob es Einstellungdatei existiert und erstelle sie, falls nicht
     ifstream leser("einstellungen.einstellungen", std::ios::out | std::ios::binary);
-    if (!leser) {
-        fehleranzeige("Fehler", "Einstellungsdatei nicht gefunden! Es wird neuerstellt!");
-        printf("Einstellungsdatei wird erstellt! \n");
-        einstellungsdateierstellung();
-    }
     
     //Prüfe, ob Einstellung auf An ist
-    einstellung items[1];
+    einstellung items[1]; 
     //Daten lesen
     for (int i = 0; i < 2; i++) {
         leser.read((char*)&items[i], sizeof(einstellung));
@@ -6216,14 +6245,14 @@ int main(){
     //Erzeuge das Audio-Objekt und fange an zu spielen!
     //AUSLASSEN BITTE KEIN BOCK MEHR DASS ES SPACKT
     //Fehler: Es spackt, wenn man im Anruf ist und der ganze Audiotreiber ist dann verwirrt
-    /*sf::Music music;
+    sf::Music music;
     music.openFromFile("res/Audio/titelmusik.wav");
     music.setVolume(50);
     music.setLoop(true);
     //Musik spielen, falls Einstellung erlaubt
     if (e == 1) {
         music.play();
-    }*/
+    }
     
     //Lade die Schriftart
     sf::Font font;
@@ -6287,6 +6316,30 @@ int main(){
                     //test fehleranzeige("Kritischer Fehler", "Fehler! Bitte starten Sie das Spiel neu!");
                     window.setActive(false);
                     window.setVisible(false);
+                    //Variablen setzen
+                    for (int i = 0; i <= 4; i++) {
+                        iicasinogelder1[i] = 0;
+                        iicasinogelder2[i] = 0;
+                        iicasinogelder3[i] = 0;
+                        iicasinogelder4[i] = 0;
+                        iicasinogelder5[i] = 0;
+                        iicasinogelder6[i] = 0;
+                    }
+
+                    for (int i = 0; i <= 2; i++) {
+                        icasinoiiwuerfelanzahl1[i] = 0;
+                        icasinoiiwuerfelanzahl2[i] = 0;
+                        icasinoiiwuerfelanzahl3[i] = 0;
+                        icasinoiiwuerfelanzahl4[i] = 0;
+                        icasinoiiwuerfelanzahl5[i] = 0;
+                        icasinoiiwuerfelanzahl6[i] = 0;
+                        iiwuerfelanzahl[i] = 8;
+                    }
+                    iirundenzahl = 0;
+                    ispielerhabenwürfel = true;
+                    baufwuerfelgedrueckt = false;
+                    bspielbeendet = false; 
+                    bzugbeendet = false;
                     neuesSpiel();
                 }
 
@@ -6304,7 +6357,7 @@ int main(){
                 if (loadbtn1.isMouseOver(window)) {
                     //Öffne Ladebildschirm für Spielstand
                     dateienmanager(false);
-                    //gewinner(3);
+                    
                 }
 
                 //Wenn sich die Maus bewegt hat

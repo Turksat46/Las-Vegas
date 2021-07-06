@@ -10,22 +10,22 @@ Dieses Array dient als Liste von gültigen Geldscheinen
 int kontostand[3];
 Dieses Array dient zur Speicherung des Kontostandes jedes Spielers Sprich kontostand[0] ist für Spieler 1
 
-int casinogelder1[5];
-int casinogelder2[5];
-int casinogelder3[5];
-int casinogelder4[5];
-int casinogelder5[5];
-int casinogelder6[5];
+int icasinogelder1[5];
+int icasinogelder2[5];
+int icasinogelder3[5];
+int icasinogelder4[5];
+int icasinogelder5[5];
+int icasinogelder6[5];
 Diese Arraygruppe dient zur Lagerung von Geldscheinen auf jeweiligen Casinos. 
 Jedes Casino hat eine Kapazität von 5 Geldscheine, da man 50000 mit 5 10000-Geldscheinen erreichen kann und
 nicht niedriger.
 
-int casinowuerfelanzahl1[3];
-int casinowuerfelanzahl2[3];
-int casinowuerfelanzahl3[3];
-int casinowuerfelanzahl4[3];
-int casinowuerfelanzahl5[3];
-int casinowuerfelanzahl6[3];
+int icasinoiwuerfelanzahl1[3];
+int icasinoiwuerfelanzahl2[3];
+int icasinoiwuerfelanzahl3[3];
+int icasinoiwuerfelanzahl4[3];
+int icasinoiwuerfelanzahl5[3];
+int icasinoiwuerfelanzahl6[3];
 Diese Arraygruppe dient dazu, dass man den Anzahl der Würfeln von jeden Spieler speichert und
 somit sichert, dass ein Spieler gewinnt.
 
@@ -38,17 +38,17 @@ int summe6 = 0;
 Diese Variablengruppe diendazu, um das Zusammenrechnen von Geldscheinen zu vereinfachen und
 somit gleich diese Summe aller Casinos parat zu haben
 
-int wuerfelanzahl[3] = { 8, 8, 8 };
+int iwuerfelanzahl[3] = { 8, 8, 8 };
 Dieses Array ist dafür da, um den verfügbaren Würfelanzahl jedes Spielers zu speichern
 
-int wuerfelwert[8];
+int iwuerfelwert[8];
 Dieses Array ist ein Kritisches Array und dient zur Speicherung von randomgewürfelten Würfeln
 und Nutzung dieser Würfeln.
 
-int spielernummer;
+int ispielernummer;
 Diese Variable ist dazu da, um den aktuell spielenden Spieler zu speichern
 
-int rundenzahl = 0;
+int irundenzahl = 0;
 Diese Variable dient dazu, um zu speichern, welche Runde gerade von den 4 Runden gespielt wird.
 
 int ausgewählteAuge[2] = { 0,0 }; //Ein leeres Array erstellen für den ersten Index, welcher Würfel und der zweite Index, wie viele.
@@ -78,36 +78,36 @@ string vergangenezeitstring;
 Diese Variable dient dazu, die vergangene Zeit des gesamten Spiels zu speichern. (Wird nicht benutzt)
 
 Variablen für Casino 1
-int c1spieler1 = casinowuerfelanzahl1[0];
-int c1spieler2 = casinowuerfelanzahl1[1];
-int c1spieler3 = casinowuerfelanzahl1[2];
+int c1spieler1 = icasinoiwuerfelanzahl1[0];
+int c1spieler2 = icasinoiwuerfelanzahl1[1];
+int c1spieler3 = icasinoiwuerfelanzahl1[2];
 
 int c1spieler1 = 3;
 int c1spieler2 = 4;
 int c1spieler3 = 6;
 
 //Variablen für Casino 2
-int c2spieler1 = casinowuerfelanzahl2[0];
-int c2spieler2 = casinowuerfelanzahl2[1];
-int c2spieler3 = casinowuerfelanzahl2[2];
+int c2spieler1 = icasinoiwuerfelanzahl2[0];
+int c2spieler2 = icasinoiwuerfelanzahl2[1];
+int c2spieler3 = icasinoiwuerfelanzahl2[2];
 
 //Variablen für Casino 3
-int c3spieler1 = casinowuerfelanzahl3[0];
-int c3spieler2 = casinowuerfelanzahl3[1];
-int c3spieler3 = casinowuerfelanzahl3[2];
+int c3spieler1 = icasinoiwuerfelanzahl3[0];
+int c3spieler2 = icasinoiwuerfelanzahl3[1];
+int c3spieler3 = icasinoiwuerfelanzahl3[2];
 
 //Variablen für Casino 4
-int c4spieler1 = casinowuerfelanzahl4[0];
-int c4spieler2 = casinowuerfelanzahl4[1];
-int c4spieler3 = casinowuerfelanzahl4[2];
+int c4spieler1 = icasinoiwuerfelanzahl4[0];
+int c4spieler2 = icasinoiwuerfelanzahl4[1];
+int c4spieler3 = icasinoiwuerfelanzahl4[2];
 
 //Variablen für Casino 5
-int c5spieler1 = casinowuerfelanzahl5[0];
-int c5spieler2 = casinowuerfelanzahl5[1];
-int c5spieler3 = casinowuerfelanzahl5[2];
+int c5spieler1 = icasinoiwuerfelanzahl5[0];
+int c5spieler2 = icasinoiwuerfelanzahl5[1];
+int c5spieler3 = icasinoiwuerfelanzahl5[2];
 
 //Variablen für Casino 6
-int c6spieler1 = casinowuerfelanzahl6[0];
-int c6spieler2 = casinowuerfelanzahl6[1];
-int c6spieler3 = casinowuerfelanzahl6[2];
+int c6spieler1 = icasinoiwuerfelanzahl6[0];
+int c6spieler2 = icasinoiwuerfelanzahl6[1];
+int c6spieler3 = icasinoiwuerfelanzahl6[2];
 Diese Array-zu-Variablen-Gruppe dient zur einfachen Speicherung und Aufruf von Daten, die für die Miniaturwürfeln auf den Casinos da ist.
