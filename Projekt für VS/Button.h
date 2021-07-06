@@ -53,10 +53,10 @@ public:
 		button.setPosition(point);
 		shadow.setPosition(point);
 		//Setze den Text automatisch in die Mitte
-		float xPos = (point.x + btnWidth / 2) - (text.getLocalBounds().width / 2);
-		float xPos = (point.x + btnWidth / 2) - (text.getLocalBounds().width / 2);
-		float yPos = (point.y + btnHeight / 2.6) - (text.getLocalBounds().height / 2);
-		text.setPosition(xPos, yPos);
+		float ixPos = (point.x + ibtnWidth / 2) - (text.getLocalBounds().width / 2);
+		float ixPos = (point.x + ibtnWidth / 2) - (text.getLocalBounds().width / 2);
+		float iyPos = (point.y + ibtnHeight / 2.6) - (text.getLocalBounds().height / 2);
+		text.setPosition(ixPos, iyPos);
 	}
 
 	//Befehl fürs Rendering auf das Fenster
@@ -73,13 +73,13 @@ public:
 		int imouseX = sf::Mouse::getPosition(window).x;
 		int imouseY = sf::Mouse::getPosition(window).y;
 
-		int btnPosX = button.getPosition().x;
-		int btnPosY = button.getPosition().y;
+		int ibtnPosX = button.getPosition().x;
+		int ibtnPosY = button.getPosition().y;
 
-		int btnxPosWidth = button.getPosition().x + btnWidth;
-		int btnyPosHeight = button.getPosition().y + btnHeight;
+		int ibtnxPosWidth = button.getPosition().x + ibtnWidth;
+		int ibtnyPosHeight = button.getPosition().y + ibtnHeight;
 
-		if (imouseX < btnxPosWidth && imouseX > btnPosX && imouseY < btnyPosHeight && imouseY > btnPosY)
+		if (imouseX < ibtnxPosWidth && imouseX > ibtnPosX && imouseY < ibtnyPosHeight && imouseY > ibtnPosY)
 		{
 			return true;
 		}
@@ -92,6 +92,6 @@ private:
 	sf::RectangleShape shadow;
 	sf::Text text;
 
-	int btnWidth;
-	int btnHeight;
+	int ibtnWidth;
+	int ibtnHeight;
 };
